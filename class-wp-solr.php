@@ -444,13 +444,13 @@ class wp_Solr {
 		return $result;
 	}
 
+	/*
+	 * Fetch posts and attachments,
+	 * Transorm them in Solr documents,
+	 * Send them in packs to Solr
+	 */
 	public function index_data() {
 
-		return wp_Solr::build_query();
-
-	}
-
-	public function build_query() {
 		global $wpdb;
 
 		$batchsize = 100;
@@ -536,7 +536,7 @@ class wp_Solr {
 						// Count this post
 						$doc_count ++;
 						// Get the posts data
-						$documents[] = wp_Solr::get_single_document( $updateQuery, $ind_opt, get_post( $postid ) );
+						$documents[] = wp_Solr::create_solr_document_from_post_or_attachment( $updateQuery, $ind_opt, get_post( $postid ) );
 					} else {
 						// Post is of type "attachment"
 						// Post's parent has been published
@@ -546,7 +546,7 @@ class wp_Solr {
 							// Get the attachments body
 							$attachment_body = wp_Solr::get_attachment_body( $extractQuery, get_post( $postid ) );
 							// Get the posts data
-							$documents[] = wp_Solr::get_single_document( $updateQuery, $ind_opt, get_post( $postid ), $attachment_body );
+							$documents[] = wp_Solr::create_solr_document_from_post_or_attachment( $updateQuery, $ind_opt, get_post( $postid ), $attachment_body );
 						}
 					}
 				}
@@ -558,7 +558,7 @@ class wp_Solr {
 			}
 
 			// Send batch documents to Solr
-			$res_final = wp_Solr::add_data_to_index( $updateQuery, $documents );
+			$res_final = wp_Solr::send_posts_or_attachments_to_solr_index( $updateQuery, $documents );
 
 			// Solr error: exit loop
 			if ( ! $res_final ) {
@@ -586,7 +586,7 @@ class wp_Solr {
 
 	}
 
-	public function get_single_document( $updateQuery, $opt, $post, $attachment_body = false ) {
+	public function create_solr_document_from_post_or_attachment( $updateQuery, $opt, $post, $attachment_body = false ) {
 
 		$pid    = $post->ID;
 		$ptitle = $post->post_title;
@@ -749,7 +749,7 @@ class wp_Solr {
 		return $body;
 	}
 
-	public function add_data_to_index( $updateQuery, $documents ) {
+	public function send_posts_or_attachments_to_solr_index( $updateQuery, $documents ) {
 
 		$client = $this->client;
 		$updateQuery->addDocuments( $documents );
