@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 1.6
+Current Version: 1.7
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.0
 
-Stable tag: 1.6
+Stable tag: 1.7
 
 World class Enterprise Search with facets, autocompletion, suggestions, and optional hosting
 
