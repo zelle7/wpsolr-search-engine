@@ -10,6 +10,7 @@ class wp_Solr {
 
 		$path = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 		require_once $path;
+
 		$solr_options = get_option( 'wdm_solr_conf_data' );
 
 		if ( $solr_options['host_type'] == 'self_hosted' ) {
@@ -84,15 +85,10 @@ class wp_Solr {
 
 		$ping = $client->createPing();
 
-		try {
-			$result = $client->ping( $ping );
-			$res    = $result->getStatus();
+		$result = $client->ping( $ping );
+		$res    = $result->getStatus();
 
-			return $res;
-
-		} catch ( Exception $e ) {
-			return 1;
-		}
+		return $res;
 
 	}
 
@@ -126,9 +122,9 @@ class wp_Solr {
 		$output        = array();
 		$search_result = array();
 
-		$ind_opt      = get_option( 'wdm_solr_form_data' );
-		$res_opt      = get_option( 'wdm_solr_res_data' );
-		$fac_opt      = get_option( 'wdm_solr_facet_data' );
+		$ind_opt = get_option( 'wdm_solr_form_data' );
+		$res_opt = get_option( 'wdm_solr_res_data' );
+		$fac_opt = get_option( 'wdm_solr_facet_data' );
 
 		$number_of_res = $res_opt['no_res'];
 		if ( $number_of_res == '' ) {

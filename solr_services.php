@@ -200,75 +200,49 @@ function fun_search_indexed_data() {
 	echo '</div>';
 }
 
-function return_goto_solr_instance() {
-	$host     = $_POST['shost'];
-	$path     = $_POST['spath'];
+
+function return_solr_instance() {
+
+	$path = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+	require_once $path;
+
+
+	$spath    = $_POST['spath'];
 	$port     = $_POST['sport'];
+	$host     = $_POST['shost'];
 	$username = $_POST['skey'];
 	$password = $_POST['spwd'];
-	$protocol = $_POST['proto'];
-	$url      = "$protocol://" . $host . ":" . $port . $path . "/admin/ping";
-	$ch       = curl_init();
-	curl_setopt( $ch, CURLOPT_URL, $url );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-	curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
-	curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-	curl_setopt( $ch, CURLOPT_USERPWD, "$username:$password" );
+	$protocol = $_POST['sproto'];
 
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+	if ( $username == '' ) {
+		$config = array(
+			"endpoint" =>
+				array(
+					"localhost" => array(
+						'scheme'   => $protocol,
+						"host" => $host,
+						"port" => $port,
+						"path" => $spath
+					)
+				)
+		);
 
-	if ( ( $res = curl_exec( $ch ) ) === false ) {
-
-		if ( curl_errno( $ch ) == 6 ) {
-			echo "Could not resolve host =>The Solr Host does not seem to exist. Please check your settings.";
-		} else if ( curl_errno( $ch ) == 7 ) {
-			echo "Could not connect to host.";
-		} else {
-			echo 'Curl Error: ' . curl_errno( $ch );
-		}
 	} else {
-
-		if ( strpos( $res, 'OK' ) != false ) {
-			echo 0;
-		} else if ( strpos( $res, 'HTTP Status 401' ) != false ) {
-			echo "401 => This Solr path requires a Key/Secret to be accessed. Please check that your Key/Secret and Solr path are correct and retry.";
-		} else {
-			$str = '';
-			$fp  = fsockopen( $host, $port, $errno, $errstr, 30 );
-			if ( ! $fp ) {
-				$str = "<span style=\"color:red;margin-left:10px\">Could Not be connnected to $host";
-				$str .= "$errstr ($errno)</span><br /><br />\n";
-			} else {
-				$str = 1;
-			}
-			echo $str;
-		}
-
-
+		$config = array(
+			'endpoint' => array(
+				'localhost1' => array(
+					'scheme'   => $protocol,
+					'host'     => $host,
+					'port'     => $port,
+					'path'     => $spath,
+					'username' => $username,
+					'password' => $password
+				)
+			)
+		);
 	}
 
 
-	die();
-}
-
-add_action( 'wp_ajax_nopriv_return_goto_solr_instance', 'return_goto_solr_instance' );
-add_action( 'wp_ajax_return_goto_solr_instance', 'return_goto_solr_instance' );
-function return_solr_instance() {
-	$spath = $_POST['spath'];
-	$port  = $_POST['sport'];
-	$host  = $_POST['shost'];
-	$path  = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-	require_once $path;
-	$config = array(
-		"endpoint" =>
-			array(
-				"localhost" => array(
-					"host" => $host,
-					"port" => $port,
-					"path" => $spath
-				)
-			)
-	);
 	$client = new Solarium\Client( $config );
 
 	$ping = $client->createPing();
@@ -276,31 +250,41 @@ function return_solr_instance() {
 	try {
 		$result = $client->ping( $ping );
 
-		$res = $result->getStatus();
-		if ( empty( $result ) ) {
-			$fp = fsockopen( $host, $port, $errno, $errstr, 30 );
-			if ( ! $fp ) {
-				$str_err = "<span style=\"color:red;margin-left:10px\">Could Not be connnected to $host</span><br />";
-				$str_err .= "<span style=\"color:red;margin-left:10px\">$errstr ($errno)</span><br /><br />\n";
-			}
-			echo $str_err;
-		} else {
-			echo $res;
-		}
-
-
 	} catch ( Exception $e ) {
 
-		$fp = fsockopen( $host, $port, $errno, $errstr, 30 );
-		if ( ! $fp ) {
-			$str_err = "<span >Could Not be connnected to $host</span><br />";
-			$str_err .= "<span>$errstr ($errno)</span><br /><br />\n";
+		$str_err = "";
+		$solrCode = $e->getCode();
+		$solrMessage = $e->getMessage();
+
+		// 401: authentification
+		switch ($e->getCode()) {
+
+			case 401:
+				$str_err .= "<br /><span>The server authentification failed. Please check your user/password (Solr code http $solrCode)</span><br />";
+				break;
+
+			case 400:
+			case 404:
+
+				$str_err .= "<br /><span>Your Solr path could be malformed (Solr code $solrCode)</span><br />";
+				break;
+
+			default:
+
+
+				$str_err .= "<span>$solrMessage ($solrCode)</span><br /><br />\n";
+
+				break;
+
 		}
+
+
 		echo $str_err;
+		return;
 
 	}
 
-	die();
+
 }
 
 add_action( 'wp_ajax_nopriv_return_solr_instance', 'return_solr_instance' );

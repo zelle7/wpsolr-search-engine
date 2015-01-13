@@ -21,10 +21,16 @@ function fun_add_solr_settings() {
 }
 
 function fun_set_solr_options() {
+
+
+	// Button Index
 	if ( isset( $_POST['solr_index_data'] ) ) {
+
 		$solr = new wp_Solr();
-		$res  = $solr->get_solr_status();
-		if ( $res == 0 ) {
+
+		try {
+			$res = $solr->get_solr_status();
+
 			$solr->delete_documents();
 			$val = $solr->index_data();
 
@@ -43,20 +49,30 @@ function fun_set_solr_options() {
                 });
             </script>";
 			}
-		} else {
+
+		} catch ( Exception $e ) {
+
+			$errorMessage = $e->getMessage();
+
 			echo "<script type='text/javascript'>
             jQuery(document).ready(function(){
                jQuery('.status_index_message').removeClass('loading');
                jQuery('.status_index_message').addClass('warning');
+               jQuery('.wdm_note').html('<b>Error: <p>{$errorMessage}</p></b>');
             });
             </script>";
+
 		}
 
 	}
+
+	// Button delete
 	if ( isset( $_POST['solr_delete_index'] ) ) {
 		$solr = new wp_Solr();
-		$res  = $solr->get_solr_status();
-		if ( $res == 0 ) {
+
+		try {
+			$res = $solr->get_solr_status();
+
 			$val = $solr->delete_documents();
 
 			if ( $val == 0 ) {
@@ -75,11 +91,15 @@ function fun_set_solr_options() {
             </script>";
 			}
 
-		} else {
+		} catch ( Exception $e ) {
+
+			$errorMessage = $e->getMessage();
+
 			echo "<script type='text/javascript'>
             jQuery(document).ready(function(){
                jQuery('.status_del_message').removeClass('loading');
-                              jQuery('.status_del_message').addClass('warning');
+               jQuery('.status_del_message').addClass('warning');
+               jQuery('.wdm_note').html('<b>Error: <p>{$errorMessage}</p></b>');
             })
             </script>";
 		}
@@ -204,7 +224,7 @@ function fun_set_solr_options() {
 
 							</div>
 							<div class="wdm_row">
-								<div class='solr_error' style='color:#808080'></div>
+								<div class='solr_error' ></div>
 							</div>
 							<div class="wdm_row">
 								<div class='col_left'>Solr Protocol</div>
@@ -303,7 +323,7 @@ function fun_set_solr_options() {
 
 							</div>
 							<div class="wdm_row">
-								<div class='solr_error'></div>
+								<div class='solr_error' ></div>
 							</div>
 							<div class="wdm_row">
 								<div class='col_left'>Solr Protocol</div>

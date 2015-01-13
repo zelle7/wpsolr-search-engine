@@ -96,7 +96,6 @@ class Curl extends Configurable implements AdapterInterface
         $handle = $this->createHandle($request, $endpoint);
 
         curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($handle, CURLOPT_SSL_VERIFYHOST,  2);
 
         $httpResponse = curl_exec($handle);
 

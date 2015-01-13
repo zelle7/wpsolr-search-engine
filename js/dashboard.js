@@ -93,6 +93,8 @@ jQuery(document).ready(function () {
         host = jQuery('#solr_host').val();
         port = jQuery('#solr_port').val();
         spath = jQuery('#solr_path').val();
+        protocol = jQuery('#solr_protocol').val();
+
 
         if (spath.substr(spath.length - 1, 1) == '/')
             spath = spath.substr(0, spath.length - 1);
@@ -133,8 +135,8 @@ jQuery(document).ready(function () {
             jQuery.ajax({
                 url: path + 'admin-ajax.php',
                 type: "post",
-                timeout: 3000,
-                data: {action: 'return_solr_instance', 'shost': host, 'sport': port, 'spath': spath},
+                timeout: 10000,
+                data: {action: 'return_solr_instance', 'sproto' : protocol,'shost': host, 'sport': port, 'spath': spath},
                 success: function (data1) {
 
                     jQuery('.img-load').css('display', 'none');
@@ -143,16 +145,19 @@ jQuery(document).ready(function () {
                         jQuery('.img-succ').css('display', 'inline');
                         jQuery('#settings_conf_form').submit();
                     }
-                    else {
+                    else if (data1 == 1)
+                        jQuery('.solr_error').text('Error in detecting solr instance');
+                    else
                         jQuery('.solr_error').html(data1);
-                    }
+
                 },
-                error: function () {
+                error: function(req, status, error) {
+
                     jQuery('.img-load').css('display', 'none');
 
-                    jQuery('.solr_error').text('We could not contact your Solr server. It\'s probably because port ' + port + ' is blocked. Please try another port, for instance 443, or contact your hosting provider to unblock port ' + port + '.');
-
+                    jQuery('.solr_error').text('Timeout: we had no response from your Solr server in less than 10 seconds. It\'s probably because port ' + port + ' is blocked. Please try another port, for instance 443, or contact your hosting provider to unblock port ' + port + '.');
                 }
+
             });
 
         }
@@ -215,16 +220,17 @@ jQuery(document).ready(function () {
                 url: path + 'admin-ajax.php',
                 type: "post",
                 data: {
-                    action: 'return_goto_solr_instance',
-                    'proto': protocol,
+                    action: 'return_solr_instance',
+                    'sproto': protocol,
                     'shost': host,
                     'sport': port,
                     'spath': spath,
                     'spwd': pwd,
                     'skey': user
                 },
-                timeout: 3000,
+                timeout: 10000,
                 success: function (data1) {
+
                     jQuery('.img-load').css('display', 'none');
                     if (data1 == 0) {
                         jQuery('.solr_error').html('');
@@ -237,11 +243,11 @@ jQuery(document).ready(function () {
                         jQuery('.solr_error').html(data1);
 
                 },
-                error: function () {
+                error: function(req, status, error) {
 
                     jQuery('.img-load').css('display', 'none');
 
-                    jQuery('.solr_error').text('We could not contact your Solr server. It\'s probably because port ' + port + ' is blocked. Please try another port, for instance 443, or contact your hosting provider to unblock port ' + port + '.');
+                    jQuery('.solr_error').text('Timeout: we had no response from your Solr server in less than 10 seconds. It\'s probably because port ' + port + ' is blocked. Please try another port, for instance 443, or contact your hosting provider to unblock port ' + port + '.');
                 }
             });
 

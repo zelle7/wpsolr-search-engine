@@ -62,6 +62,10 @@ For a live demo visit <a href='http://www.gotosolr.com/search-results/?search=so
 
 == Changelog ==
 
+= 1.7 =
+* Add attachements checkbox in menu Solr Options -> Indexing Options -> Post types to be indexed.
+* Improve Solr error messages in Solr hosting tab, and Solr operations tab, including timeout messages.
+
 = 1.6 =
 * Can now index tens of thousands of documents without freezing or timeout
 
