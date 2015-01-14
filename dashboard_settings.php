@@ -31,7 +31,6 @@ function fun_set_solr_options() {
 		try {
 			$res = $solr->get_solr_status();
 
-			$solr->delete_documents();
 			$val = $solr->index_data();
 
 			if ( count( $val ) == 1 || $val == 1 ) {
@@ -224,7 +223,7 @@ function fun_set_solr_options() {
 
 							</div>
 							<div class="wdm_row">
-								<div class='solr_error' ></div>
+								<div class='solr_error'></div>
 							</div>
 							<div class="wdm_row">
 								<div class='col_left'>Solr Protocol</div>
@@ -323,7 +322,7 @@ function fun_set_solr_options() {
 
 							</div>
 							<div class="wdm_row">
-								<div class='solr_error' ></div>
+								<div class='solr_error'></div>
 							</div>
 							<div class="wdm_row">
 								<div class='col_left'>Solr Protocol</div>
@@ -816,6 +815,11 @@ function fun_set_solr_options() {
 				<?php
 				break;
 			case 'solr_operations':
+
+				$solr = new wp_Solr();
+
+				$count_documents_indexed_last_operation = $solr->get_count_documents_indexed_last_operation();
+
 				?>
 
 				<div id="solr-operations-tab">
@@ -824,40 +828,43 @@ function fun_set_solr_options() {
 							<h4 class='head_div'>Solr Operations</h4>
 
 							<div class="wdm_note">
-								<b>
-									<?php
-									$solr_options = get_option( 'wdm_solr_conf_data' );
+								<div>
+									A total of
+									<b>
+										<?php
+										echo $solr->get_count_documents();
+										?>
+									</b>
+									documents are currently in your index
+								</div>
+								<?php if ( $count_documents_indexed_last_operation >= 0 ): ?>
+									<div><b>
+											<?php
+											echo $count_documents_indexed_last_operation;
 
-									if ( $solr_options['host_type'] == 'self_hosted' ) {
-										$doc_count = get_option( 'solr_docs_in_self_index' );
-										if ( $doc_count != '' ) {
-											echo $doc_count;
-										} else {
-											echo 0;
-										}
-									} else {
-										$doc_count = get_option( 'solr_docs_in_cloud_index' );
-										if ( $doc_count != '' ) {
-											echo $doc_count;
-										} else {
-											echo 0;
-										}
-									}
-
-									?>
-								</b> documents are currently in your index
-
+											// Reset value so it's not displayed next time this page is displayed.
+											$solr->update_count_documents_indexed_last_operation();
+											?>
+										</b> documents were added or updated during the last operation
+									</div>
+								<?php endif ?>
+							</div>
+							<div class="wdm_row">
+								<p>The indexing is <b>incremental</b>: only documents updated after the last operation are sent to the index.</p>
+								<p>So, the first operation will index all documents, by packs of 100.</p>
+								<p>If a <b>timeout</b> occurs, you just have to click on the button again: the process will restart from where it stopped.</p>
+								<p>If you need to reindex all again, delete the index first.</p>
 							</div>
 							<div class="wdm_row">
 								<div class="submit">
 									<input name="solr_index_data" type="submit" class="button-primary wdm-save"
-									       id='solr_index_data' value="Load Data"/>
+									       id='solr_index_data' value="Load documents incrementally in the Solr index"/>
                                         <span class='status_index_message'>
                               
                                         </span>
 
 									<input name="solr_delete_index" id="solr_delete_index" type="submit"
-									       class="button-primary wdm-save" value="Delete Data"/>
+									       class="button-primary wdm-save" value="Empty the Solr index"/>
                             
                                         <span class='status_del_message'>
                               

@@ -93,18 +93,72 @@ class wp_Solr {
 	}
 
 	public function delete_documents() {
-		$solr_options = get_option( 'wdm_solr_conf_data' );
 
 		$client      = $this->client;
+
 		$deleteQuery = $client->createUpdate();
 		$deleteQuery->addDeleteQuery( '*:*' );
 		$deleteQuery->addCommit();
+
 		$result = $client->update( $deleteQuery );
-		$res    = $result->getData();
 
-		update_option( 'solr_docs_in_self_index', 0 );
+		// Store 0 in # of index documents
+		wp_Solr::update_hosting_option( 'solr_docs' , 0);
 
-		return isset( $res['status'] ) ? $res['status'] : '';
+		// Reset last indexed post date
+		wp_Solr::update_hosting_option( 'solr_last_post_date_indexed' , '1000-01-01 00:00:00' );
+
+		// Update nb of documents updated/added
+		wp_Solr::update_hosting_option( 'solr_docs_added_or_updated_last_operation' , -1 );
+
+		return $result->getStatus();
+
+	}
+
+	public function delete_document($post) {
+
+		$client      = $this->client;
+
+		$deleteQuery = $client->createUpdate();
+		$deleteQuery->addDeleteQuery( 'id:' . $post->ID );
+		$deleteQuery->addCommit();
+
+		$result = $client->update( $deleteQuery );
+
+
+		return $result->getStatus();
+
+	}
+
+	public function get_count_documents() {
+		$solr_options = get_option( 'wdm_solr_conf_data' );
+
+		$client      = $this->client;
+
+		$query = $client->createSelect();
+		$query->setQuery('*:*');
+		$query->setRows(0);
+		$resultset = $client->select($query);
+
+		// Store 0 in # of index documents
+		wp_Solr::update_hosting_option( 'solr_docs' , $resultset->getNumFound() );
+
+		return $resultset->getNumFound();
+
+	}
+
+	/*
+	 * How many documents were updated/added during last indexing operation
+	 */
+	public function get_count_documents_indexed_last_operation($default_value = -1) {
+
+		return wp_Solr::get_hosting_option( 'solr_docs_added_or_updated_last_operation' , $default_value );
+
+	}
+
+	public function update_count_documents_indexed_last_operation($count = null) {
+
+		return wp_Solr::update_hosting_option( 'solr_docs_added_or_updated_last_operation' , is_null($count) ? -1 : $count );
 
 	}
 
@@ -444,16 +498,68 @@ class wp_Solr {
 		return $result;
 	}
 
+
+	/*
+	 * Manage options by hosting mode
+	 * Use a dedicated postfix added to the option name.
+	 */
+	public function get_hosting_postfixed_option( $option ) {
+
+		$result  = $option;
+
+		$solr_options = get_option( 'wdm_solr_conf_data' );
+
+		switch ( $solr_options['host_type'] ) {
+			case 'self_hosted':
+				$postfix = '_in_self_index';
+				break;
+
+			default:
+				$postfix = '_in_cloud_index';
+				break;
+		}
+
+		return $result . $postfix;
+	}
+
+	/*
+	 * Manage options by hosting mode
+	 * Use a dedicated postfix added to the option name.
+	 */
+	public function get_hosting_option( $option , $default_value) {
+
+		// Get option value. Replace by default value if undefined.
+		$result = get_option( wp_Solr::get_hosting_postfixed_option( $option ) , $default_value);
+
+		return $result;
+	}
+
+	/*
+	 * Manage options by hosting mode
+	 * Use a dedicated postfix added to the option name.
+	 */
+	public function update_hosting_option( $option , $option_value) {
+
+		update_option( wp_Solr::get_hosting_postfixed_option( $option ), $option_value);
+	}
+
+
 	/*
 	 * Fetch posts and attachments,
 	 * Transorm them in Solr documents,
 	 * Send them in packs to Solr
 	 */
-	public function index_data() {
+	public function index_data($post = null) {
 
 		global $wpdb;
 
-		$batchsize = 100;
+		// Last post date set in previous call. We begin with posts published after.
+		$lastPostDate = wp_Solr::get_hosting_option( 'solr_last_post_date_indexed' , '1000-01-01 00:00:00' );
+
+		// Reset last operation result
+		wp_Solr::update_count_documents_indexed_last_operation(0);
+
+		$batch_size = 100;
 		$res_final = 0;
 		$cnt       = 0;
 
@@ -496,28 +602,42 @@ class wp_Solr {
 			$where = $where_a;
 		}
 
-		$lastFetchedID = - 1;
 
 		// Build the query
 		$query = "";
 		// We need post_parent and post_type, too, to handle attachments
-		$query .= " SELECT ID, post_parent, post_type ";
+		$query .= " SELECT ID, post_modified, post_parent, post_type ";
 		$query .= " FROM $tbl ";
 		$query .= " WHERE ";
-		$query .= " ID > %d ";
+		$query .= " post_modified > %s ";
+		if (isset($post)) {
+			// Add condition on the $post
+			$query .= " AND ID = %d";
+		}
 		$query .= " AND ( $where ) ";
-		$query .= " ORDER BY ID ASC";
-		$query .= " LIMIT $batchsize ";
+		$query .= " ORDER BY ID ASC ";
+		$query .= " LIMIT $batch_size ";
 
 		$documents = array();
-		$doc_count = 0;
 		while ( true ) {
 
 			// Execute query (retrieve posts IDs, parents and types)
-			$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $lastFetchedID ), ARRAY_A );
+			if (isset($post)) {
+				$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $lastPostDate , $post->ID ), ARRAY_A );
+			} else {
+				$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $lastPostDate ), ARRAY_A );
+			}
 
 			// Aggregate current batch IDs in one Solr update statement
 			$postcount = count( $ids_array );
+
+			if ( $postcount == 0 ) {
+				// No more documents to index, stop now by exiting the loop
+				break;
+			}
+
+
+			$lastPostDate = end( $ids_array )['post_modified'];
 
 			// Get the ID of every published post
 			// We need these to be able to check whether a parent post of an attachment has been published
@@ -560,25 +680,19 @@ class wp_Solr {
 			// Send batch documents to Solr
 			$res_final = wp_Solr::send_posts_or_attachments_to_solr_index( $updateQuery, $documents );
 
-			// Solr error: exit loop
-			if ( ! $res_final ) {
+			// Solr error, or only $post to index: exit loop
+			if ( ( ! $res_final ) OR isset($post) ) {
 				break;
 			}
 
 			// Don't send twice the same documents
 			$documents = array();
 
-			// Store last post ID sent to Solr
-			$lastFetchedID = $postid;
+			// Store last post date sent to Solr
+			wp_Solr::update_hosting_option( 'solr_last_post_date_indexed' , $lastPostDate );
 
-			// Update admin UI with nb of documents indexed
-			$solr_options = get_option( 'wdm_solr_conf_data' );
-
-			if ( $solr_options['host_type'] == 'self_hosted' ) {
-				update_option( 'solr_docs_in_self_index', $doc_count );
-			} else {
-				update_option( 'solr_docs_in_cloud_index', $doc_count );
-			}
+			// Update nb of documents updated/added
+			wp_Solr::update_count_documents_indexed_last_operation( $doc_count );
 
 		}
 
