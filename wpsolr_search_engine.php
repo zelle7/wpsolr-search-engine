@@ -25,6 +25,29 @@ add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'func_reg_solr_form_setting' );
 
 
+/*
+ * Add/remove document to/from Solr index when status changes to/from published
+ */
+function add_remove_document_to_solr_index( $new_status, $old_status, $post ) {
+
+	if ( $old_status == 'publish'  &&  $new_status != 'publish' ) {
+		// post unpublished, remove it from Solr index
+		$solr = new wp_Solr();
+
+		$solr->delete_document($post);
+	}
+
+	if ( $new_status == 'publish') {
+		// post published, add/update it from Solr index
+
+		$solr = new wp_Solr();
+
+		$solr->index_data($post);
+	}
+
+}
+add_action(  'transition_post_status',  'add_remove_document_to_solr_index', 10, 3 );
+
 /* Replace WordPress search
  * Default WordPress will be replaced with Solr search
  */
