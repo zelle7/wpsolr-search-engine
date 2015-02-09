@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - local_eostisolr_api@vvv.dev" uuid="768cc5b7-5b10-4a20-9b4c-0270030bc27c">
+    <database-info product="MySQL" version="5.5.38-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="dev-wpsolr-search-engine"/>
+    <table name="wp_commentmeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="meta_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="comment_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="meta_id"/>
+      <index name="comment_id" unique="false" columns="comment_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+    </table>
+    <table name="wp_comments" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="comment_ID" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="comment_post_ID" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="comment_author" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="comment_author_email" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_author_url" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_author_IP" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="comment_date_gmt" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="comment_content" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="comment_karma" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="comment_approved" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="JzEn"/>
+      <column name="comment_agent" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_type" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_parent" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <primary-key name="PRIMARY" columns="comment_ID"/>
+      <index name="comment_approved_date_gmt" unique="false" columns="comment_approved,comment_date_gmt"/>
+      <index name="comment_author_email" unique="false" columns="comment_author_email"/>
+      <index name="comment_date_gmt" unique="false" columns="comment_date_gmt"/>
+      <index name="comment_parent" unique="false" columns="comment_parent"/>
+      <index name="comment_post_ID" unique="false" columns="comment_post_ID"/>
+    </table>
+    <table name="wp_groups_capability" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="capability_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="capability" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="class" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="object" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="capability_id"/>
+      <index name="capability" unique="true" columns="capability"/>
+      <index name="capability_kco" unique="false" columns="capability,class,object"/>
+    </table>
+    <table name="wp_groups_group" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="group_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="parent_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="creator_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="datetime" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="group_id"/>
+      <index name="group_n" unique="true" columns="name"/>
+    </table>
+    <table name="wp_groups_group_capability" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="group_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="capability_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="group_id,capability_id"/>
+      <index name="group_capability_cg" unique="false" columns="capability_id,group_id"/>
+    </table>
+    <table name="wp_groups_user_capability" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="capability_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="user_id,capability_id"/>
+      <index name="user_capability_cu" unique="false" columns="capability_id,user_id"/>
+    </table>
+    <table name="wp_groups_user_group" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="group_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="user_id,group_id"/>
+      <index name="user_group_gu" unique="false" columns="group_id,user_id"/>
+    </table>
+    <table name="wp_layerslider" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="MEDIUMTEXT" precision="16777215" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="date_c" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date_m" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="flag_hidden" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="flag_deleted" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="author" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="slug" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="wp_links" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="link_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="link_url" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_image" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_target" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_description" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_visible" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J1kn"/>
+      <column name="link_owner" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MQ=="/>
+      <column name="link_rating" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="link_updated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="link_rel" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="link_notes" sqlType="MEDIUMTEXT" precision="16777215" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="link_rss" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="link_id"/>
+      <index name="link_visible" unique="false" columns="link_visible"/>
+    </table>
+    <table name="wp_options" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="option_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="option_name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="option_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="autoload" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J3llcyc="/>
+      <primary-key name="PRIMARY" columns="option_id"/>
+      <index name="option_name" unique="true" columns="option_name"/>
+    </table>
+    <table name="wp_post_relationships" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="relate_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="post_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="has_post_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="relate_id"/>
+      <index name="has_post_id" unique="false" columns="has_post_id"/>
+      <index name="post_id" unique="false" columns="post_id"/>
+    </table>
+    <table name="wp_postmeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="meta_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="post_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="meta_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+      <index name="post_id" unique="false" columns="post_id"/>
+    </table>
+    <table name="wp_posts" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="ID" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="post_author" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="post_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="post_date_gmt" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="post_content" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="post_title" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="post_excerpt" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="post_status" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J3B1Ymxpc2gn"/>
+      <column name="comment_status" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J29wZW4n"/>
+      <column name="ping_status" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J29wZW4n"/>
+      <column name="post_password" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="post_name" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="to_ping" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="pinged" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="post_modified" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="post_modified_gmt" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="post_content_filtered" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="post_parent" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="guid" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="menu_order" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="post_type" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J3Bvc3Qn"/>
+      <column name="post_mime_type" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="comment_count" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <primary-key name="PRIMARY" columns="ID"/>
+      <index name="post_author" unique="false" columns="post_author"/>
+      <index name="post_name" unique="false" columns="post_name"/>
+      <index name="post_parent" unique="false" columns="post_parent"/>
+      <index name="type_status_date" unique="false" columns="post_type,post_status,post_date,ID"/>
+    </table>
+    <table name="wp_relevanssi" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="doc" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="term" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="term_reverse" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="content" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="title" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="comment" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tag" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="link" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="author" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="category" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="excerpt" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="taxonomy" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="customfield" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="mysqlcolumn" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="taxonomy_detail" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="customfield_detail" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="mysqlcolumn_detail" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="type" sqlType="VARCHAR" precision="210" scale="0" nullable="false" jdbcType="12" def="J3Bvc3Qn"/>
+      <column name="item" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <index name="doctermitem" unique="true" columns="doc,term,item"/>
+      <index name="docs" unique="false" columns="doc"/>
+      <index name="relevanssi_term_reverse_idx" unique="false" columns="term_reverse"/>
+      <index name="terms" unique="false" columns="term"/>
+      <index name="typeitem" unique="false" columns="type,item"/>
+    </table>
+    <table name="wp_relevanssi_log" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="query" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="hits" sqlType="MEDIUMINT" precision="7" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="time" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="ip" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="wp_relevanssi_stopwords" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="stopword" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <index name="stopword" unique="true" columns="stopword"/>
+    </table>
+    <table name="wp_term_relationships" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="object_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="term_taxonomy_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="term_order" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="object_id,term_taxonomy_id"/>
+      <index name="term_taxonomy_id" unique="false" columns="term_taxonomy_id"/>
+    </table>
+    <table name="wp_term_taxonomy" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="term_taxonomy_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="term_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="taxonomy" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="parent" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="count" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <primary-key name="PRIMARY" columns="term_taxonomy_id"/>
+      <index name="term_id_taxonomy" unique="true" columns="term_id,taxonomy"/>
+      <index name="taxonomy" unique="false" columns="taxonomy"/>
+    </table>
+    <table name="wp_termmeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="meta_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="term_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="meta_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+      <index name="term_id" unique="false" columns="term_id"/>
+    </table>
+    <table name="wp_terms" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="term_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="slug" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="term_group" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <primary-key name="PRIMARY" columns="term_id"/>
+      <index name="name" unique="false" columns="name"/>
+      <index name="slug" unique="false" columns="slug"/>
+    </table>
+    <table name="wp_usermeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="umeta_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="umeta_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+      <index name="user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="wp_users" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="ID" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_login" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_pass" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_nicename" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_email" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_url" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_registered" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="user_activation_key" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="display_name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="ID"/>
+      <index name="user_login_key" unique="false" columns="user_login"/>
+      <index name="user_nicename" unique="false" columns="user_nicename"/>
+    </table>
+  </data-source>
+</component>
