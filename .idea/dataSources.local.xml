@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - local_eostisolr_api@vvv.dev" uuid="768cc5b7-5b10-4a20-9b4c-0270030bc27c">
+      <secret-storage>master_key</secret-storage>
+      <user-name>external</user-name>
+      <schema-pattern>dev-wpsolr-search-engine.*</schema-pattern>
+      <default-schemas>local_eostisolr_api.*</default-schemas>
+    </data-source>
+  </component>
+</project>
