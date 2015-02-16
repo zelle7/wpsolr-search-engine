@@ -261,5 +261,83 @@
       <index name="user_login_key" unique="false" columns="user_login"/>
       <index name="user_nicename" unique="false" columns="user_nicename"/>
     </table>
+    <table name="wp_woocommerce_attribute_taxonomies" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="attribute_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="attribute_name" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="attribute_label" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="attribute_type" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="attribute_orderby" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="attribute_id"/>
+      <index name="attribute_name" unique="false" columns="attribute_name"/>
+    </table>
+    <table name="wp_woocommerce_downloadable_product_permissions" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="permission_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="download_id" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="product_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="order_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="order_key" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="user_email" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="downloads_remaining" sqlType="VARCHAR" precision="9" scale="0" nullable="true" jdbcType="12"/>
+      <column name="access_granted" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="access_expires" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="download_count" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <primary-key name="PRIMARY" columns="permission_id"/>
+      <index name="download_order_key_product" unique="false" columns="product_id,order_id,order_key,download_id"/>
+      <index name="download_order_product" unique="false" columns="download_id,order_id,product_id"/>
+    </table>
+    <table name="wp_woocommerce_order_itemmeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="meta_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="order_item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="meta_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+      <index name="order_item_id" unique="false" columns="order_item_id"/>
+    </table>
+    <table name="wp_woocommerce_order_items" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="order_item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="order_item_name" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="order_item_type" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="order_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="order_item_id"/>
+      <index name="order_id" unique="false" columns="order_id"/>
+    </table>
+    <table name="wp_woocommerce_tax_rate_locations" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="location_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="location_code" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tax_rate_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="location_type" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="location_id"/>
+      <index name="location_type" unique="false" columns="location_type"/>
+      <index name="location_type_code" unique="false" columns="location_type,location_code"/>
+      <index name="tax_rate_id" unique="false" columns="tax_rate_id"/>
+    </table>
+    <table name="wp_woocommerce_tax_rates" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="tax_rate_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="tax_rate_country" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="tax_rate_state" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="tax_rate" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="tax_rate_name" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="tax_rate_priority" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="tax_rate_compound" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tax_rate_shipping" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="tax_rate_order" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="tax_rate_class" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="tax_rate_id"/>
+      <index name="tax_rate_class" unique="false" columns="tax_rate_class"/>
+      <index name="tax_rate_country" unique="false" columns="tax_rate_country"/>
+      <index name="tax_rate_priority" unique="false" columns="tax_rate_priority"/>
+      <index name="tax_rate_state" unique="false" columns="tax_rate_state"/>
+    </table>
+    <table name="wp_woocommerce_termmeta" schema="" catalog="dev-wpsolr-search-engine" type="TABLE">
+      <column name="meta_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="woocommerce_term_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="meta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="meta_value" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="meta_id"/>
+      <index name="meta_key" unique="false" columns="meta_key"/>
+      <index name="woocommerce_term_id" unique="false" columns="woocommerce_term_id"/>
+    </table>
   </data-source>
 </component>
