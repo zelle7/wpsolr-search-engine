@@ -36,52 +36,6 @@ class WpSolrGroups extends WpSolrExtensions {
 
 	}
 
-	public static function update_custom_field_capabilities() {
-
-		// Get options contening custom fields
-		$array_wdm_solr_form_data = get_option( 'wdm_solr_form_data' );
-
-		// is extension active checked in options ?
-		$extension_is_active = self::is_extension_option_activate( self::EXTENSION_GROUPS );
-
-
-		if ( $extension_is_active
-		     && ! self::get_custom_field_capabilities()
-		     && isset( $array_wdm_solr_form_data )
-		     && isset( $array_wdm_solr_form_data['cust_fields'] )
-		) {
-
-			$custom_fields = explode( ',', $array_wdm_solr_form_data['cust_fields'] );
-
-			$custom_field_capabilities = $custom_fields[ self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES ];
-
-			if ( ! isset( $custom_field_capabilities ) ) {
-
-				$custom_fields[ self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES ] = self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES;
-
-				$custom_fields_str = implode( ',', $custom_fields );
-
-				$array_wdm_solr_form_data['cust_fields'] = $custom_fields_str;
-
-				update_option( 'wdm_solr_form_data', $array_wdm_solr_form_data );
-			}
-		}
-	}
-
-	public
-	static function get_custom_field_capabilities() {
-
-		// Get custom fields selected for indexing
-		$array_options = get_option( 'wdm_solr_form_data' );
-		$array_cust_fields = explode( ',', $array_options['cust_fields'] );
-
-		if ( ! is_array( $array_cust_fields ) ) {
-			return false;
-		}
-
-		return false !== array_search( self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES, $array_cust_fields );
-	}
-
 	/**
 	 *
 	 * Add user's capabilities filters to the Solr query.
@@ -90,19 +44,21 @@ class WpSolrGroups extends WpSolrExtensions {
 	 *
 	 * @throws Exception
 	 */
-	public function set_custom_query( $user_id, $query ) {
+	public function set_custom_query( $user, $query ) {
+
+		if (! $user) return;
 
 		$is_users_without_groups_see_all_results          = $this->_extension_groups_options['is_users_without_groups_see_all_results'];
 		$is_result_without_capabilities_seen_by_all_users = $this->_extension_groups_options['is_result_without_capabilities_seen_by_all_users'];
 
 		// Get custom fields selected for indexing
-		$array_options = get_option( 'wdm_solr_form_data' );
+		$array_options     = get_option( 'wdm_solr_form_data' );
 		$array_cust_fields = explode( ',', $array_options['cust_fields'] );
 
 		// Is the custom field used by Groups plugin to store posts capabilities indexed ?
 		if ( false !== array_search( self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES, $array_cust_fields ) ) {
 
-			$user_capability_and_group_array = $this->get_user_capabilities_and_groups( $user_id );
+			$user_capability_and_group_array = $this->get_user_capabilities_and_groups( $user->ID );
 
 			if ( ( count( $user_capability_and_group_array ) == 0 ) && ! isset( $is_users_without_groups_see_all_results ) ) {
 
