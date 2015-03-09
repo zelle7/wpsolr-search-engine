@@ -97,8 +97,7 @@ function fun_search_indexed_data() {
 			try {
 
 				$final_result = $solr->get_search_results( $search_que, '', '', '', '' );
-			}
-			catch ( Exception $e ) {
+			} catch ( Exception $e ) {
 
 				$message = $e->getMessage();
 				echo "<span class='infor'>$message</span>";
@@ -265,7 +264,6 @@ function return_solr_instance() {
 		$solrCode    = $e->getCode();
 		$solrMessage = $e->getMessage();
 
-		// 401: authentification
 		switch ( $e->getCode() ) {
 
 			case 401:
@@ -275,20 +273,20 @@ function return_solr_instance() {
 			case 400:
 			case 404:
 
-				$str_err .= "<br /><span>Your Solr path could be malformed (Solr code $solrCode)</span><br />";
+				$str_err .= "<br /><span>We could not join your Solr server. Your Solr path could be malformed, or your Solr server down (Solr code $solrCode)</span><br />";
 				break;
 
 			default:
 
-
 				$str_err .= "<span>$solrMessage ($solrCode)</span><br /><br />\n";
-
 				break;
 
 		}
 
 
 		echo $str_err;
+		echo '<br>';
+		echo htmlentities( $solrMessage );
 
 		return;
 
@@ -297,8 +295,10 @@ function return_solr_instance() {
 
 }
 
-add_action( 'wp_ajax_nopriv_return_solr_instance', 'return_solr_instance' );
-add_action( 'wp_ajax_return_solr_instance', 'return_solr_instance' );
+add_action( 'wp_ajax_nopriv_' . 'return_solr_instance', 'return_solr_instance' );
+add_action( 'wp_ajax_' . 'return_solr_instance', 'return_solr_instance' );
+
+
 function return_solr_status() {
 
 	$solr = new wp_Solr();
@@ -306,8 +306,8 @@ function return_solr_status() {
 
 }
 
-add_action( 'wp_ajax_nopriv_return_solr_status', 'return_solr_status' );
-add_action( 'wp_ajax_return_solr_status', 'return_solr_status' );
+add_action( 'wp_ajax_nopriv_' . 'return_solr_status', 'return_solr_status' );
+add_action( 'wp_ajax_' . 'return_solr_status', 'return_solr_status' );
 
 
 function return_solr_results() {
@@ -355,6 +355,75 @@ function return_solr_results() {
 	die();
 }
 
-add_action( 'wp_ajax_nopriv_return_solr_results', 'return_solr_results' );
-add_action( 'wp_ajax_return_solr_results', 'return_solr_results' );
+add_action( 'wp_ajax_nopriv_' . 'return_solr_results', 'return_solr_results' );
+add_action( 'wp_ajax_' . 'return_solr_results', 'return_solr_results' );
 
+
+/*
+ * Ajax call to index Solr documents
+ */
+function return_solr_index_data() {
+
+	try {
+		// Batch size
+		$batch_size = intval( $_POST['batch_size'] );
+
+		// nb of document sent until now
+		$nb_results = intval( $_POST['nb_results'] );
+
+		$solr      = new wp_Solr();
+		$res_final = $solr->index_data( $batch_size, null );
+
+		// Increment nb of document sent until now
+		$res_final['nb_results'] += $nb_results;
+
+		echo json_encode( $res_final );
+
+	} catch ( Exception $e ) {
+
+		echo json_encode(
+			array(
+				'nb_results'        => 0,
+				'status'            => $e->getCode(),
+				'message'           => htmlentities( $e->getMessage() ),
+				'indexing_complete' => false
+			)
+		);
+
+	}
+
+	ob_flush();
+	flush();
+
+	die();
+}
+
+add_action( 'wp_ajax_nopriv_' . 'return_solr_index_data', 'return_solr_index_data' );
+add_action( 'wp_ajax_' . 'return_solr_index_data', 'return_solr_index_data' );
+
+
+/*
+ * Ajax call to retieve nb of documents indexed so far by index_data()
+ */
+function return_solr_index_current_documents_indexed() {
+
+	echo rand( 1, 100 );
+
+	die();
+}
+
+add_action( 'wp_ajax_nopriv_' . 'return_solr_index_current_documents_indexed', 'return_solr_index_current_documents_indexed' );
+add_action( 'wp_ajax_' . 'return_solr_index_current_documents_indexed', 'return_solr_index_current_documents_indexed' );
+
+/*
+ * Ajax call to clear Solr documents
+ */
+function return_solr_delete_index() {
+
+	$solr = new wp_Solr();
+	$solr->delete_documents();
+
+}
+
+add_action( 'wp_ajax_nopriv_' . 'return_solr_delete_index', 'return_solr_delete_index' );
+add_action( 'wp_ajax_' . 'return_solr_delete_index', 'return_solr_delete_index' );
