@@ -358,7 +358,6 @@ function return_solr_results() {
 add_action( 'wp_ajax_nopriv_' . 'return_solr_results', 'return_solr_results' );
 add_action( 'wp_ajax_' . 'return_solr_results', 'return_solr_results' );
 
-
 /*
  * Ajax call to index Solr documents
  */

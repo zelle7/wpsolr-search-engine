@@ -29,7 +29,7 @@ class WpSolrGroups extends WpSolrExtensions {
 
 		add_action( WpSolrExtensions::ACTION_SOLR_ADD_QUERY_FIELDS, array( $this, 'set_custom_query' ), 10, 2 );
 
-		add_filter( WpSolrExtensions::FILTER_SOLR_DOCUMENT_ADD_GROUPS, array(
+		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_DOCUMENT_GROUPS_INFOS, array(
 			$this,
 			'get_groups_of_user_document'
 		), 10, 2 );

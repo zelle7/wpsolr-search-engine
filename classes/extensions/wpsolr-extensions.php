@@ -35,12 +35,6 @@ class WpSolrExtensions {
 	// Action to add custom query fields to a Solr select query
 	const ACTION_SOLR_ADD_QUERY_FIELDS = 'wpsolr_action_solr_add_query_fields';
 
-	// Filter to add custom infos to a document returned by Solr
-	const FILTER_SOLR_DOCUMENT_ADD_GROUPS = 'wpsolr_filter_solr_document';
-
-	// Filter on a document custom fields
-	const FILTER_SOLR_DOCUMENT_CUSTOM_FIELD = 'wpsolr_filter_solr_document_custom_fields';
-
 	/*
 	 * Extensions configuration
 	 */

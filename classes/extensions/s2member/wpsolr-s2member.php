@@ -30,7 +30,7 @@ class WpSolrS2Member extends WpSolrExtensions {
 
 		add_action( WpSolrExtensions::ACTION_SOLR_ADD_QUERY_FIELDS, array( $this, 'set_custom_query' ), 10, 2 );
 
-		add_filter( WpSolrExtensions::FILTER_SOLR_DOCUMENT_CUSTOM_FIELD, array(
+		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, array(
 			$this,
 			'filter_custom_fields'
 		), 10, 2 );
