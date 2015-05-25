@@ -18,10 +18,6 @@ function add_scripts() {
 }
 
 function fun_search_indexed_data() {
-	if ( session_id() == '' ) {
-		session_start();
-	}
-
 
 	$search_que = '';
 	if ( isset( $_GET['search'] ) ) {
