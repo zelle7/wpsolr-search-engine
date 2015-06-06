@@ -187,7 +187,7 @@ class WpSolrS2Member extends WpSolrExtensions {
 	 *
 	 * return array Custom fields with unserialized array of capabilities in self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES
 	 */
-	public function filter_custom_fields( $post_id, $custom_fields ) {
+	public function filter_custom_fields( $custom_fields, $post_id ) {
 
 		// Remove the '_str' at the end of the custom field
 		$custom_field_name = str_replace( '_str', '', self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES );
