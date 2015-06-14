@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "224da38278c2c12c5e00bf671f3689c1",
+    "hash": "454e0b798fefc18f20e190cae625cda6",
     "packages": [
         {
             "name": "solarium/solarium",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/solariumphp/solarium.git",
-                "reference": "a9c1c5fb59991721fe5426acfe7f5f59c1d3d5c1"
+                "reference": "90d006c65efffcbcbfa8a31920e93c10d0657b96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solariumphp/solarium/zipball/a9c1c5fb59991721fe5426acfe7f5f59c1d3d5c1",
-                "reference": "a9c1c5fb59991721fe5426acfe7f5f59c1d3d5c1",
+                "url": "https://api.github.com/repos/solariumphp/solarium/zipball/90d006c65efffcbcbfa8a31920e93c10d0657b96",
+                "reference": "90d006c65efffcbcbfa8a31920e93c10d0657b96",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "search",
                 "solr"
             ],
-            "time": "2015-06-14 07:09:46"
+            "time": "2015-06-14 17:22:39"
         },
         {
             "name": "symfony/event-dispatcher",

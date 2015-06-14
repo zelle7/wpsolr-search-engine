@@ -1,5 +1,5 @@
 {
   "require": {
-    "solarium/solarium": "3.4.0"
+    "solarium/solarium": "3.4.1"
   }
 }
