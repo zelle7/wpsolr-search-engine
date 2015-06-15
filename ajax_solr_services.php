@@ -366,8 +366,11 @@ function return_solr_index_data() {
 		// nb of document sent until now
 		$nb_results = intval( $_POST['nb_results'] );
 
+		// Debug infos displayed on screen ?
+		$is_debug_indexing = ( $_POST['is_debug_indexing'] === "true" );
+
 		$solr      = new wp_Solr();
-		$res_final = $solr->index_data( $batch_size, null );
+		$res_final = $solr->index_data( $batch_size, null, $is_debug_indexing );
 
 		// Increment nb of document sent until now
 		$res_final['nb_results'] += $nb_results;
