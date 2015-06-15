@@ -398,26 +398,32 @@ add_action( 'wp_ajax_' . 'return_solr_index_data', 'return_solr_index_data' );
 
 
 /*
- * Ajax call to retieve nb of documents indexed so far by index_data()
- */
-function return_solr_index_current_documents_indexed() {
-
-	echo rand( 1, 100 );
-
-	die();
-}
-
-add_action( 'wp_ajax_nopriv_' . 'return_solr_index_current_documents_indexed', 'return_solr_index_current_documents_indexed' );
-add_action( 'wp_ajax_' . 'return_solr_index_current_documents_indexed', 'return_solr_index_current_documents_indexed' );
-
-/*
  * Ajax call to clear Solr documents
  */
 function return_solr_delete_index() {
 
-	$solr = new wp_Solr();
-	$solr->delete_documents();
+	try {
 
+		$solr = new wp_Solr();
+		$solr->delete_documents();
+
+	} catch ( Exception $e ) {
+
+		echo json_encode(
+			array(
+				'nb_results'        => 0,
+				'status'            => $e->getCode(),
+				'message'           => htmlentities( $e->getMessage() ),
+				'indexing_complete' => false
+			)
+		);
+
+	}
+
+	ob_flush();
+	flush();
+
+	die();
 }
 
 add_action( 'wp_ajax_nopriv_' . 'return_solr_delete_index', 'return_solr_delete_index' );
