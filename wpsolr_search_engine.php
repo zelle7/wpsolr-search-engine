@@ -215,6 +215,10 @@ function solr_search_form() {
 
 	}
 
+	$localization_options = OptionLocalization::get_options();
+	// Get localized sections
+	$localized_section_search_form = OptionLocalization::get_section( $localization_options, OptionLocalization::SECTION_CODE_SEARCH_FORM );
+
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
 	$get_page_info = get_page_by_title( 'Search Results' );
@@ -235,8 +239,8 @@ function solr_search_form() {
        <div class="ui-widget search-box">
         <input type="hidden" name="page_id" value="' . $get_page_info->ID . '" />
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-        <input type="text" placeholder="Search ..." value="' . $search_que . '" name="search" id="search_que" class="search-field sfl1" autocomplete="off"/>
-	<input type="submit" value="Search" id="searchsubmit" style="position:relative;width:auto">
+        <input type="text" placeholder="' . OptionLocalization::get_section_term( $localized_section_search_form, 'search_form_edit_placeholder' )  . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl1" autocomplete="off"/>
+	<input type="submit" value="' . OptionLocalization::get_section_term( $localized_section_search_form, 'search_form_button_label' )  . '" id="searchsubmit" style="position:relative;width:auto">
         <div style="clear:both"></div>
         </div>
 	</div>
@@ -245,5 +249,13 @@ function solr_search_form() {
 	return $form;
 
 
+}
+
+/*
+ * Load WPSOLR text domain to local /lang/ directory
+ */
+add_action( 'plugins_loaded', 'wpsolr_load_textdomain' );
+function wpsolr_load_textdomain() {
+	load_plugin_textdomain( 'wpsolr', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 }
 

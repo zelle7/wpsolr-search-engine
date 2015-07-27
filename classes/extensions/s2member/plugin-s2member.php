@@ -7,7 +7,7 @@
  * @link https://wordpress.org/plugins/s2member/
  * @link http://www.s2member.com/
  */
-class WpSolrS2Member extends WpSolrExtensions {
+class PluginS2Member extends WpSolrExtensions {
 
 	const CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES = 's2member_ccaps_req_str';
 	const CUSTOM_FIELD_NAME_STORING_POST_LEVEL = 's2member_level_req';

@@ -7,7 +7,7 @@
  * @link https://wordpress.org/plugins/groups/
  * @link http://api.itthinx.com/groups/package-groups.html
  */
-class WpSolrGroups extends WpSolrExtensions {
+class PluginGroups extends WpSolrExtensions {
 
 	const CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES = 'groups-groups_read_post_str';
 	const DEFAULT_MESSAGE_NOT_AUTHORIZED = 'Sorry, your profile is not associated whith any group, therefore you are not allowed to see any results.
