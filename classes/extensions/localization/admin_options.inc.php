@@ -19,7 +19,7 @@ $options = OptionLocalization::get_options( true );
 
 		<?php
 		settings_fields( $settings_fields_name );
-		$localization = OptionLocalization::get_terms( $options );
+		$presentation = OptionLocalization::get_presentation_options();
 		?>
 
 		<div class='wrapper'>
@@ -68,13 +68,13 @@ $options = OptionLocalization::get_options( true );
 			<div style="clear:both"></div>
 
 			<?php
-			foreach ( $localization as $section_code => $section ) {
+			foreach ( $presentation as $section_name => $section ) {
 				?>
 
 				<div class='wdm_row'>
 
 					<div class='wdm_row'><h4
-							class='head_div'><?php echo OptionLocalization::get_section_name( $section ); ?></h4></div>
+							class='head_div'><?php echo $section_name; ?></h4></div>
 
 					<?php
 					foreach ( OptionLocalization::get_section_terms( $section ) as $term_code => $term_content ) {
@@ -82,13 +82,14 @@ $options = OptionLocalization::get_options( true );
 
 						<div class='wdm_row'>
 							<div class='col_left'>
-								<?php echo $term_code; ?>
+								<?php echo $term_content[0]; ?>
 							</div>
 							<div class='col_right'>
 
 								<?php
-								echo "<textarea id='message_user_without_capabilities_shown_no_results' name='wdm_solr_localization_data[terms][$section_code][section_terms][$term_code]'
-						          rows='4' cols='100'>$term_content</textarea >"
+								$term_localized = OptionLocalization::get_term( $options, $term_code );
+								echo "<textarea id='message_user_without_capabilities_shown_no_results' name='wdm_solr_localization_data[terms][$term_code]'
+						          rows='4' cols='100'>$term_localized</textarea >"
 								?>
 
 							</div>

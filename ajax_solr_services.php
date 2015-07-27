@@ -58,10 +58,6 @@ function fun_search_indexed_data() {
 
 	// Load all localization sections and terms
 	$localization_options = OptionLocalization::get_options();
-	// Get localized sections
-	$localized_section_search_form = OptionLocalization::get_section( $localization_options, OptionLocalization::SECTION_CODE_SEARCH_FORM );
-	$localized_section_sort        = OptionLocalization::get_section( $localization_options, OptionLocalization::SECTION_CODE_SORT );
-	$localized_section_facets      = OptionLocalization::get_section( $localization_options, OptionLocalization::SECTION_CODE_FACETS );
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
@@ -85,8 +81,8 @@ function fun_search_indexed_data() {
         <div class="ui-widget">
 	<input type="hidden" name="page_id" value="' . $get_page_info->ID . '" />
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-        <input type="text" placeholder="' . OptionLocalization::get_section_term( $localized_section_search_form, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
-	<input type="submit" value="' . OptionLocalization::get_section_term( $localized_section_search_form, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
+        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
+	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
 	<div style="clear:both"></div>
         </div>
         </form>';
@@ -127,14 +123,14 @@ function fun_search_indexed_data() {
 					$selected_sort_values = $all_sort_options['sort'];
 					if ( isset( $selected_sort_values ) && ( $selected_sort_values != '' ) ) {
 
-						$term        = OptionLocalization::get_section_term( $localized_section_sort, 'sort_header' );
+						$term        = OptionLocalization::get_term( $localization_options, 'sort_header' );
 						$sort_select = "<label class='wdm_label'>$term</label><select class='select_field'>";
 
 						// Add options
 						$sort_options = wp_Solr::get_sort_options();
 						foreach ( explode( ',', $selected_sort_values ) as $sort_code ) {
 
-							$sort_label = OptionLocalization::get_section_term( $localized_section_sort, $sort_code );
+							$sort_label = OptionLocalization::get_term( $localization_options, $sort_code );
 
 							$selected = ( $sort_default == $sort_code ) ? 'selected' : '';
 							$sort_select .= "<option value='$sort_code' $selected>$sort_label</option>";
@@ -158,12 +154,12 @@ function fun_search_indexed_data() {
 						$groups = sprintf( "<div><label class='wdm_label'>%s</label>
                                     <input type='hidden' name='sel_fac_field' id='sel_fac_field' value='all' >
                                     <ul class='wdm_ul'><li class='select_opt' id='all'>%s</li>",
-							OptionLocalization::get_section_term( $localized_section_facets, 'facets_header' ),
-							OptionLocalization::get_section_term( $localized_section_facets, 'facets_element_all_results' )
+							OptionLocalization::get_term( $localization_options, 'facets_header' ),
+							OptionLocalization::get_term( $localization_options, 'facets_element_all_results' )
 						);
 
-						$facet_element = OptionLocalization::get_section_term( $localized_section_facets, 'facets_element' );
-						$facet_title   = OptionLocalization::get_section_term( $localized_section_facets, 'facets_title' );
+						$facet_element = OptionLocalization::get_term( $localization_options, 'facets_element' );
+						$facet_title   = OptionLocalization::get_term( $localization_options, 'facets_title' );
 						foreach ( $facets_array as $arr ) {
 							$field = ucfirst( $arr );
 							if ( isset( $final_result[1][ $arr ] ) && count( $final_result[1][ $arr ] ) > 0 ) {

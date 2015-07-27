@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/classes/extensions/groups/wpsolr-groups.php" afterPath="$PROJECT_DIR$/classes/extensions/groups/plugin-groups.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/classes/extensions/s2member/wpsolr-s2member.php" afterPath="$PROJECT_DIR$/classes/extensions/s2member/plugin-s2member.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/s2member/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/s2member/admin_options.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax_solr_services.php" afterPath="$PROJECT_DIR$/ajax_solr_services.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard_settings.php" afterPath="$PROJECT_DIR$/dashboard_settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" afterPath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" afterPath="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
     <ignored path="wpsolr-search-engine.iws" />
@@ -91,63 +86,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.875">
-              <caret line="219" column="130" selection-start-line="219" selection-start-column="130" selection-end-line="219" selection-end-column="130" />
+            <state vertical-scroll-proportion="0.70164347">
+              <caret line="241" column="87" selection-start-line="241" selection-start-column="87" selection-end-line="241" selection-end-column="87" />
               <folding>
                 <element signature="e#6#297#0#PHP" expanded="true" />
-                <marker date="1438013315000" expanded="true" signature="6661:6671" placeholder="..." />
-                <marker date="1438013315000" expanded="true" signature="6672:6731" placeholder="..." />
-                <marker date="1438013315000" expanded="true" signature="6726:6731" placeholder="..." />
-                <marker date="1438013315000" expanded="true" signature="7126:7436" placeholder="..." />
-                <marker date="1438013315000" expanded="true" signature="7126:7782" placeholder="..." />
-                <marker date="1438013315000" expanded="false" signature="7699:7727" placeholder="..." />
-                <marker date="1438013315000" expanded="false" signature="7750:7760" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="6525:6535" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="6536:6595" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="6590:6595" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="6990:7610" placeholder="..." />
+                <marker date="1438030478000" expanded="false" signature="7527:7555" placeholder="..." />
+                <marker date="1438030478000" expanded="false" signature="7578:7588" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="option-localization.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="option-localization.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/extensions/localization/option-localization.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.912037">
-              <caret line="67" column="49" selection-start-line="67" selection-start-column="49" selection-end-line="67" selection-end-column="49" />
+            <state vertical-scroll-proportion="-90.625">
+              <caret line="179" column="28" selection-start-line="179" selection-start-column="28" selection-end-line="179" selection-end-column="28" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.875">
-              <caret line="172" column="33" selection-start-line="172" selection-start-column="33" selection-end-line="172" selection-end-column="33" />
-              <folding>
-                <marker date="1438022859000" expanded="true" signature="2536:2546" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3186:3371" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3186:3488" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3186:3617" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3186:3727" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3186:3826" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="3750:3778" placeholder="..." />
-                <marker date="1438022859000" expanded="false" signature="3794:3804" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="4559:4602" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5900" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5907" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5914" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5928" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5933" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5947" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5955" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:5959" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:6009" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="5816:6058" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="6018:6058" placeholder="..." />
-                <marker date="1438022859000" expanded="true" signature="8416:8427" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -155,55 +117,31 @@
       <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.791667">
-              <caret line="90" column="39" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
+            <state vertical-scroll-proportion="-16.0">
+              <caret line="90" column="144" selection-start-line="90" selection-start-column="144" selection-end-line="90" selection-end-column="144" />
               <folding>
-                <marker date="1438018205000" expanded="true" signature="639:705" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="716:834" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2027:3185" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2053:2063" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2174:2592" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2202:2304" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2206:2298" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2454:2592" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2484:2532" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2563:2592" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2660:2802" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2895:2905" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2960:2976" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="2985:3185" placeholder="..." />
-                <marker date="1438018205000" expanded="true" signature="3036:3173" placeholder="..." />
+                <element signature="n#style#0;n#div#5;n#div#0;n#form#0;n#div#0;n#!!top" expanded="true" />
+                <marker date="1438030116000" expanded="true" signature="2768:2805" placeholder="..." />
+                <marker date="1438030116000" expanded="true" signature="2768:2831" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/s2member/admin_options.inc.php">
+      <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625">
-              <caret line="12" column="23" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="class-wp-solr.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class-wp-solr.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="29.125">
-              <caret line="302" column="20" selection-start-line="302" selection-start-column="20" selection-end-line="302" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wpsolr-extensions.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="10.862745">
-              <caret line="212" column="47" selection-start-line="212" selection-start-column="47" selection-end-line="212" selection-end-column="47" />
-              <folding />
+            <state vertical-scroll-proportion="-15.625">
+              <caret line="161" column="96" selection-start-line="161" selection-start-column="96" selection-end-line="161" selection-end-column="96" />
+              <folding>
+                <marker date="1438030478000" expanded="true" signature="2107:2117" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="2757:3363" placeholder="..." />
+                <marker date="1438030478000" expanded="false" signature="3287:3315" placeholder="..." />
+                <marker date="1438030478000" expanded="false" signature="3331:3341" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="4096:4139" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="5333:5574" placeholder="..." />
+                <marker date="1438030478000" expanded="true" signature="7885:7896" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -260,10 +198,10 @@
         <option value="$PROJECT_DIR$/dashboard_settings.php" />
         <option value="$PROJECT_DIR$/class-wp-solr.php" />
         <option value="$PROJECT_DIR$/wpml-config.xml" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/ajax_solr_services.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
       </list>
     </option>
   </component>
@@ -290,10 +228,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="192" />
-    <option name="y" value="25" />
-    <option name="width" value="1673" />
-    <option name="height" value="1079" />
+    <option name="width" value="1920" />
+    <option name="height" value="1200" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -481,7 +417,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="false" />
+    <property name="FullScreen" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="LayoutCode.rearrangeEntriesPHP" value="true" />
@@ -507,6 +443,7 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="full.screen.before.presentation.mode" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -578,30 +515,52 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="192" y="25" width="1673" height="1079" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917964" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917964" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27159208" sideWeight="0.48497853" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23641305" sideWeight="0.48497853" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2146402" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19068056" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2112383" sideWeight="0.48497853" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1656017" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21105072" sideWeight="0.48497853" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27159208" sideWeight="0.51502144" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56490135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27159208" sideWeight="0.51502144" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56490135" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917964" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27159208" sideWeight="0.48497853" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2146402" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2112383" sideWeight="0.48497853" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27159208" sideWeight="0.51502144" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56490135" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19068056" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -634,7 +593,7 @@
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="874" />
+      <option name="time" value="881" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -942,7 +901,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.862745">
+        <state vertical-scroll-proportion="-0.8921095">
           <caret line="212" column="47" selection-start-line="212" selection-start-column="47" selection-end-line="212" selection-end-column="47" />
           <folding />
         </state>
@@ -950,7 +909,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/s2member/admin_options.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
+        <state vertical-scroll-proportion="0.023148147">
           <caret line="12" column="23" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="23" />
           <folding />
         </state>
@@ -992,88 +951,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/class-wp-solr.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="29.125">
+        <state vertical-scroll-proportion="-1.0787038">
           <caret line="302" column="20" selection-start-line="302" selection-start-column="20" selection-end-line="302" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/localization/option-localization.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-90.625">
+          <caret line="179" column="28" selection-start-line="179" selection-start-column="28" selection-end-line="179" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.791667">
-          <caret line="90" column="39" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
+        <state vertical-scroll-proportion="-16.0">
+          <caret line="90" column="144" selection-start-line="90" selection-start-column="144" selection-end-line="90" selection-end-column="144" />
           <folding>
-            <marker date="1438018205000" expanded="true" signature="639:705" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="716:834" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2027:3185" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2053:2063" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2174:2592" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2202:2304" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2206:2298" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2454:2592" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2484:2532" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2563:2592" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2660:2802" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2895:2905" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2960:2976" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="2985:3185" placeholder="..." />
-            <marker date="1438018205000" expanded="true" signature="3036:3173" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.875">
-          <caret line="219" column="130" selection-start-line="219" selection-start-column="130" selection-end-line="219" selection-end-column="130" />
-          <folding>
-            <element signature="e#6#297#0#PHP" expanded="true" />
-            <marker date="1438013315000" expanded="true" signature="6661:6671" placeholder="..." />
-            <marker date="1438013315000" expanded="true" signature="6672:6731" placeholder="..." />
-            <marker date="1438013315000" expanded="true" signature="6726:6731" placeholder="..." />
-            <marker date="1438013315000" expanded="true" signature="7126:7436" placeholder="..." />
-            <marker date="1438013315000" expanded="true" signature="7126:7782" placeholder="..." />
-            <marker date="1438013315000" expanded="false" signature="7699:7727" placeholder="..." />
-            <marker date="1438013315000" expanded="false" signature="7750:7760" placeholder="..." />
+            <element signature="n#style#0;n#div#5;n#div#0;n#form#0;n#div#0;n#!!top" expanded="true" />
+            <marker date="1438030116000" expanded="true" signature="2768:2805" placeholder="..." />
+            <marker date="1438030116000" expanded="true" signature="2768:2831" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.875">
-          <caret line="172" column="33" selection-start-line="172" selection-start-column="33" selection-end-line="172" selection-end-column="33" />
+        <state vertical-scroll-proportion="-15.625">
+          <caret line="161" column="96" selection-start-line="161" selection-start-column="96" selection-end-line="161" selection-end-column="96" />
           <folding>
-            <marker date="1438022859000" expanded="true" signature="2536:2546" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3186:3371" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3186:3488" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3186:3617" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3186:3727" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3186:3826" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="3750:3778" placeholder="..." />
-            <marker date="1438022859000" expanded="false" signature="3794:3804" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="4559:4602" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5900" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5907" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5914" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5928" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5933" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5947" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5955" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:5959" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:6009" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="5816:6058" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="6018:6058" placeholder="..." />
-            <marker date="1438022859000" expanded="true" signature="8416:8427" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="2107:2117" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="2757:3363" placeholder="..." />
+            <marker date="1438030478000" expanded="false" signature="3287:3315" placeholder="..." />
+            <marker date="1438030478000" expanded="false" signature="3331:3341" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="4096:4139" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="5333:5574" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="7885:7896" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/localization/option-localization.php">
+    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.912037">
-          <caret line="67" column="49" selection-start-line="67" selection-start-column="49" selection-end-line="67" selection-end-column="49" />
-          <folding />
+        <state vertical-scroll-proportion="0.70164347">
+          <caret line="241" column="87" selection-start-line="241" selection-start-column="87" selection-end-line="241" selection-end-column="87" />
+          <folding>
+            <element signature="e#6#297#0#PHP" expanded="true" />
+            <marker date="1438030478000" expanded="true" signature="6525:6535" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="6536:6595" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="6590:6595" placeholder="..." />
+            <marker date="1438030478000" expanded="true" signature="6990:7610" placeholder="..." />
+            <marker date="1438030478000" expanded="false" signature="7527:7555" placeholder="..." />
+            <marker date="1438030478000" expanded="false" signature="7578:7588" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

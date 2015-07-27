@@ -35,6 +35,7 @@ class OptionLocalization extends WpSolrExtensions {
 
 	}
 
+
 	/**
 	 * Get the whole array of default options
 	 *
@@ -45,37 +46,61 @@ class OptionLocalization extends WpSolrExtensions {
 		return array(
 			'localization_method' => 'localization_by_admin_options',
 			self::TERMS           => array(
-				self::SECTION_CODE_SEARCH_FORM =>
-					array(
-						self::KEY_SECTION_NAME  => 'Search Form',
-						self::KEY_SECTION_TERMS => array(
-							'search_form_button_label'     => _x( 'Search', 'Search form button label', 'wpsolr' ),
-							'search_form_edit_placeholder' => _x( 'Search ....', 'Search edit placeholder', 'wpsolr' ),
-						)
-					),
-				self::SECTION_CODE_SORT        =>
-					array(
-						self::KEY_SECTION_NAME  => 'Sort list',
-						self::KEY_SECTION_TERMS => array(
-							'sort_header'                              => _x( 'Sort by', 'Sort list header', 'wpsolr' ),
-							wp_Solr::SORT_CODE_BY_RELEVANCY_DESC       => _x( 'More relevant', 'Sort list element', 'wpsolr' ),
-							wp_Solr::SORT_CODE_BY_DATE_ASC             => _x( 'Newest', 'Sort list element', 'wpsolr' ),
-							wp_Solr::SORT_CODE_BY_DATE_DESC            => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
-							wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => _x( 'The more commented', 'Sort list element', 'wpsolr' ),
-							wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => _x( 'The least commented', 'Sort list element', 'wpsolr' ),
-						)
-					),
-				self::SECTION_CODE_FACETS      =>
-					array(
-						self::KEY_SECTION_NAME  => 'Facets',
-						self::KEY_SECTION_TERMS => array(
-							'facets_header'              => _x( 'Filters', 'Facets list header', 'wpsolr' ),
-							'facets_title'               => _x( 'By %s', 'Facets list title', 'wpsolr' ),
-							'facets_element_all_results' => _x( 'All results', 'Facets list element all results', 'wpsolr' ),
-							'facets_element'             => _x( '%s (%d)', 'Facets list element name with #results', 'wpsolr' ),
-						)
-					)
+				/* Search Form */
+				'search_form_button_label'                 => _x( 'Search', 'Search form button label', 'wpsolr' ),
+				'search_form_edit_placeholder'             => _x( 'Search ....', 'Search edit placeholder', 'wpsolr' ),
+				'sort_header'                              => _x( 'Sort by', 'Sort list header', 'wpsolr' ),
+				/* Sort */
+				wp_Solr::SORT_CODE_BY_RELEVANCY_DESC       => _x( 'More relevant', 'Sort list element', 'wpsolr' ),
+				wp_Solr::SORT_CODE_BY_DATE_ASC             => _x( 'Newest', 'Sort list element', 'wpsolr' ),
+				wp_Solr::SORT_CODE_BY_DATE_DESC            => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
+				wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => _x( 'The more commented', 'Sort list element', 'wpsolr' ),
+				wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => _x( 'The least commented', 'Sort list element', 'wpsolr' ),
+				'facets_header'                            => _x( 'Filters', 'Facets list header', 'wpsolr' ),
+				/* Facets */
+				'facets_title'                             => _x( 'By %s', 'Facets list title', 'wpsolr' ),
+				'facets_element_all_results'               => _x( 'All results', 'Facets list element all results', 'wpsolr' ),
+				'facets_element'                           => _x( '%s (%d)', 'Facets list element name with #results', 'wpsolr' ),
 			)
+		);
+	}
+
+
+	/**
+	 * Get the presentation array
+	 *
+	 * @return array Array presentation options
+	 */
+	static function get_presentation_options() {
+
+		return array(
+			'Search Form' =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'search_form_button_label'     => array( 'Search form button label' ),
+						'search_form_edit_placeholder' => array( 'Search edit placeholder' ),
+					)
+				),
+			'Sort list'   =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'sort_header'                              => array( 'Sort list header' ),
+						wp_Solr::SORT_CODE_BY_RELEVANCY_DESC       => array( 'Sort list element' ),
+						wp_Solr::SORT_CODE_BY_DATE_ASC             => array( 'Sort list element' ),
+						wp_Solr::SORT_CODE_BY_DATE_DESC            => array( 'Sort list element' ),
+						wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => array( 'Sort list element' ),
+						wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => array( 'Sort list element' ),
+					)
+				),
+			'Facets'      =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'facets_header'              => array( 'Facets list header' ),
+						'facets_title'               => array( 'Facets list title' ),
+						'facets_element_all_results' => array( 'Facets list element all results' ),
+						'facets_element'             => array( 'Facets list element name with #results' ),
+					)
+				)
 		);
 	}
 
@@ -135,39 +160,9 @@ class OptionLocalization extends WpSolrExtensions {
 			: array();
 	}
 
-	/**
-	 * Get a section of terms
-	 *
-	 * @param $options    Array of all localized terms
-	 * @param $section_code A section of terms
-	 *
-	 * @return array Section of terms
-	 */
-	static function get_section( $options, $section_code ) {
-
-		return
-			( isset( $options[ self::TERMS ] ) && isset( $options[ self::TERMS ][ $section_code ] ) )
-				? $options[ self::TERMS ][ $section_code ]
-				: array();
-	}
 
 	/**
-	 * Get a section name
-	 *
-	 * @param $section A section of terms
-	 *
-	 * @return string The section name
-	 */
-	static function get_section_name( $section ) {
-
-		return
-			( ! empty( $section ) )
-				? $section[ self::KEY_SECTION_NAME ]
-				: '';
-	}
-
-	/**
-	 * Get terms of a section
+	 * Get terms of a presentation section
 	 *
 	 * @param $section Section
 	 *
@@ -183,18 +178,18 @@ class OptionLocalization extends WpSolrExtensions {
 
 	/**
 	 * Get a localized term.
-	 * If it does not exist, send by the term code instead.
+	 * If it does not exist, send the term code instead.
 	 *
-	 * @param $section A section of terms
+	 * @param $option Options
 	 * @param $term_code A term code
 	 *
 	 * @return string Term
 	 */
-	static function get_section_term( $section, $term_code ) {
+	static function get_term( $option, $term_code ) {
 
 		return
-			( isset( $section[ self::KEY_SECTION_TERMS ][ $term_code ] ) )
-				? $section[ self::KEY_SECTION_TERMS ][ $term_code ]
+			( isset( $option[ self::TERMS ][ $term_code ] ) )
+				? $option[ self::TERMS ][ $term_code ]
 				: $term_code;
 	}
 
