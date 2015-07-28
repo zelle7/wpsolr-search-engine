@@ -30,13 +30,6 @@ $options = OptionLocalization::get_options( true );
 				In this section, you will configure (localize) all the texts displayed on the front-end forms.<br/>
 			</div>
 
-			<div class="wdm_note">
-
-				If WPML is activated, no need to use this section. All localizations are made in the WPML string
-				translation plugin.<br>
-				See https://wpml.org/documentation/support/language-configuration-files/<br>
-			</div>
-
 			<div class='wdm_row'>
 				<div class='col_left'>
 					Click here if you do not want to use this page localization texts.<br>
@@ -47,7 +40,7 @@ $options = OptionLocalization::get_options( true );
 					<?php
 					$select_options = array(
 						'localization_by_admin_options' => 'Use this page to localize all front-end texts',
-						'localization_by_other_means'   => 'Use your theme/plugin .mo files to localize all front-end texts',
+						'localization_by_other_means'   => 'Use your theme/plugin .mo files or WPML string module to localize all front-end texts',
 					);
 					?>
 

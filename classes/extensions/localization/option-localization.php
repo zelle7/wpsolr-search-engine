@@ -44,7 +44,9 @@ class OptionLocalization extends WpSolrExtensions {
 	static function get_default_options() {
 
 		return array(
+			/* Choice of localization method */
 			'localization_method' => 'localization_by_admin_options',
+			/* Localization terms */
 			self::TERMS           => array(
 				/* Search Form */
 				'search_form_button_label'                 => _x( 'Search', 'Search form button label', 'wpsolr' ),
@@ -61,6 +63,14 @@ class OptionLocalization extends WpSolrExtensions {
 				'facets_title'                             => _x( 'By %s', 'Facets list title', 'wpsolr' ),
 				'facets_element_all_results'               => _x( 'All results', 'Facets list element all results', 'wpsolr' ),
 				'facets_element'                           => _x( '%s (%d)', 'Facets list element name with #results', 'wpsolr' ),
+				/* Results header */
+				'results_header_did_you_mean'              => _x( 'Did you mean: %s', 'Results header: did you mean ?', 'wpsolr' ),
+				'results_header_pagination_numbers'        => _x( 'Showing %d to %d results out of %d', 'Results header: pagination numbers', 'wpsolr' ),
+				'results_header_no_results_found'          => _x( 'No results found for %s', 'Results header: no results found', 'wpsolr' ),
+				'results_row_by_author'                    => _x( 'By %s', 'Result row information box: by author', 'wpsolr' ),
+				'results_row_in_category'                  => _x( ', in %s', 'Result row information box: in category', 'wpsolr' ),
+				'results_row_on_date'                      => _x( ', on %s', 'Result row information box: on date', 'wpsolr' ),
+				'results_row_number_comments'              => _x( ', %d comments', 'Result row information box: number of comments', 'wpsolr' ),
 			)
 		);
 	}
@@ -74,14 +84,14 @@ class OptionLocalization extends WpSolrExtensions {
 	static function get_presentation_options() {
 
 		return array(
-			'Search Form' =>
+			'Search Form box'            =>
 				array(
 					self::KEY_SECTION_TERMS => array(
 						'search_form_button_label'     => array( 'Search form button label' ),
 						'search_form_edit_placeholder' => array( 'Search edit placeholder' ),
 					)
 				),
-			'Sort list'   =>
+			'Sort list box'              =>
 				array(
 					self::KEY_SECTION_TERMS => array(
 						'sort_header'                              => array( 'Sort list header' ),
@@ -92,13 +102,30 @@ class OptionLocalization extends WpSolrExtensions {
 						wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => array( 'Sort list element' ),
 					)
 				),
-			'Facets'      =>
+			'Facets box'                 =>
 				array(
 					self::KEY_SECTION_TERMS => array(
 						'facets_header'              => array( 'Facets list header' ),
 						'facets_title'               => array( 'Facets list title' ),
 						'facets_element_all_results' => array( 'Facets list element all results' ),
 						'facets_element'             => array( 'Facets list element name with #results' ),
+					)
+				),
+			'Results Header box'         =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'results_header_did_you_mean'       => array( 'Did you mean (automatic keyword spell correction)' ),
+						'results_header_pagination_numbers' => array( 'Pagination header on top of results' ),
+						'results_header_no_results_found'   => array( 'Message no results found' ),
+					)
+				),
+			'Result Row information box' =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'results_row_by_author'       => array( 'Author of the result row' ),
+						'results_row_in_category'     => array( 'Category of the result row' ),
+						'results_row_on_date'         => array( 'Date of the result row' ),
+						'results_row_number_comments' => array( 'Number of comments of the result row' ),
 					)
 				)
 		);

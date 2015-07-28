@@ -56,7 +56,7 @@ function fun_search_indexed_data() {
 
 	}
 
-	// Load all localization sections and terms
+	// Load localization options
 	$localization_options = OptionLocalization::get_options();
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
@@ -112,7 +112,7 @@ function fun_search_indexed_data() {
 			}
 
 			if ( $final_result[2] == 0 ) {
-				echo "<span class='infor'>No results found for $search_que</span>";
+				echo "<span class='infor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_header_no_results_found' ), $search_que ) . "</span>";
 			} else {
 				echo '<div class="wdm_resultContainer">
                     <div class="wdm_list">';

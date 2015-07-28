@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Apache Solr search by WPSOLR\n"
-"POT-Creation-Date: 2015-07-27 18:49+0200\n"
+"POT-Creation-Date: 2015-07-28 14:09+0200\n"
 "PO-Revision-Date: 2015-07-27 15:27+0200\n"
 "Last-Translator: Patrice Bourgougnon <patrice.bourgougnon@eostis.com>\n"
 "Language-Team: Patrice Bourgougnon <patrice.bourgougnon@eostis.com>\n"
@@ -29,56 +29,98 @@ msgctxt "Search edit placeholder"
 msgid "Search ...."
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:60
+#: classes/extensions/localization/option-localization.php:54
 msgctxt "Sort list header"
 msgid "Sort by"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:61
+#: classes/extensions/localization/option-localization.php:56
 msgctxt "Sort list element"
 msgid "More relevant"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:62
+#: classes/extensions/localization/option-localization.php:57
 msgctxt "Sort list element"
 msgid "Newest"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:63
+#: classes/extensions/localization/option-localization.php:58
 msgctxt "Sort list element"
 msgid "Oldest"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:64
+#: classes/extensions/localization/option-localization.php:59
 msgctxt "Sort list element"
 msgid "The more commented"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:65
+#: classes/extensions/localization/option-localization.php:60
 msgctxt "Sort list element"
 msgid "The least commented"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:72
+#: classes/extensions/localization/option-localization.php:61
 msgctxt "Facets list header"
 msgid "Filters"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:73
+#: classes/extensions/localization/option-localization.php:63
 #, php-format
 msgctxt "Facets list title"
 msgid "By %s"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:74
+#: classes/extensions/localization/option-localization.php:64
 msgctxt "Facets list element all results"
 msgid "All results"
 msgstr ""
 
-#: classes/extensions/localization/option-localization.php:75
+#: classes/extensions/localization/option-localization.php:65
 #, php-format
 msgctxt "Facets list element name with #results"
 msgid "%s (%d)"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:67
+#, php-format
+msgctxt "Results header: did you mean ?"
+msgid "Did you mean: %s"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:68
+#, php-format
+msgctxt "Results header: pagination numbers"
+msgid "Showing %d to %d results out of %d"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:69
+#, php-format
+msgctxt "Results header: no results found"
+msgid "No results found for %s"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:70
+#, php-format
+msgctxt "Result row information box: by author"
+msgid "By %s"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:71
+#, php-format
+msgctxt "Result row information box: in category"
+msgid ", in %s"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:72
+#, php-format
+msgctxt "Result row information box: on date"
+msgid ", on %s"
+msgstr ""
+
+#: classes/extensions/localization/option-localization.php:73
+#, php-format
+msgctxt "Result row information box: number of comments"
+msgid ", %d comments"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
