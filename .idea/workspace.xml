@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/class-wp-solr.php" afterPath="$PROJECT_DIR$/class-wp-solr.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard_settings.php" afterPath="$PROJECT_DIR$/dashboard_settings.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
     <ignored path="wpsolr-search-engine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,7 +87,7 @@
       <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="395" column="12" selection-start-line="395" selection-start-column="11" selection-end-line="395" selection-end-column="12" />
               <folding>
                 <marker date="1438087831000" expanded="true" signature="2092:2102" placeholder="..." />
@@ -117,46 +115,46 @@
       <file leaf-file-name="class-wp-solr.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class-wp-solr.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.375">
-              <caret line="555" column="0" selection-start-line="555" selection-start-column="0" selection-end-line="555" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.0">
+              <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard_settings.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dashboard_settings.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.764706">
-              <caret line="620" column="73" selection-start-line="620" selection-start-column="73" selection-end-line="620" selection-end-column="73" />
+            <state vertical-scroll-proportion="0.3504823">
+              <caret line="121" column="143" selection-start-line="121" selection-start-column="143" selection-end-line="121" selection-end-column="143" />
               <folding>
-                <marker date="1438159081000" expanded="true" signature="1614:1848" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="1665:1825" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="1904:2134" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="1951:2111" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="2251:2556" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="2298:2533" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="2806:3026" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="2853:3003" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="3082:3317" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="3129:3294" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="3434:3734" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="3481:3712" placeholder="{...}" />
-                <marker date="1438159081000" expanded="true" signature="22798:23276" placeholder="SELECT meta_..wp_postmeta..." />
-                <marker date="1438159081000" expanded="true" signature="23807:23866" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="23836:23866" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="31880:32252" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="32038:32050" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="32198:32212" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="32852:33221" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="33010:33024" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="33203:33215" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="36601:36982" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="36764:36776" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="36929:36943" placeholder="..." />
-                <marker date="1438159081000" expanded="true" signature="37343:37721" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="37506:37520" placeholder="..." />
-                <marker date="1438159081000" expanded="false" signature="37703:37715" placeholder="..." />
+                <element signature="e#4030#4047#0#HTML" expanded="true" />
+                <element signature="e#4461#4478#0#HTML" expanded="true" />
+                <marker date="1438258885000" expanded="true" signature="1614:1848" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="1665:1825" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="1904:2134" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="1951:2111" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="2251:2556" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="2298:2533" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="2806:3026" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="2853:3003" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="3082:3317" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="3129:3294" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="3434:3734" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="3481:3712" placeholder="{...}" />
+                <marker date="1438258885000" expanded="true" signature="22590:23068" placeholder="SELECT meta_..wp_postmeta..." />
+                <marker date="1438258885000" expanded="true" signature="31672:32044" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="31830:31842" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="31990:32004" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="32644:33013" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="32802:32816" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="32995:33007" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="36393:36774" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="36556:36568" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="36721:36735" placeholder="..." />
+                <marker date="1438258885000" expanded="true" signature="37135:37513" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="37298:37312" placeholder="..." />
+                <marker date="1438258885000" expanded="false" signature="37495:37507" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -165,7 +163,7 @@
       <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/readme.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.344828">
+            <state vertical-scroll-proportion="0.0">
               <caret line="83" column="51" selection-start-line="83" selection-start-column="51" selection-end-line="83" selection-end-column="51" />
               <folding />
             </state>
@@ -175,19 +173,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4945055">
+            <state vertical-scroll-proportion="0.0">
               <caret line="27" column="73" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
               <folding>
                 <element signature="e#6#297#0#PHP" expanded="true" />
-                <marker date="1438159372000" expanded="true" signature="6525:6535" placeholder="..." />
-                <marker date="1438159372000" expanded="true" signature="6536:6595" placeholder="..." />
-                <marker date="1438159372000" expanded="true" signature="6590:6595" placeholder="..." />
-                <marker date="1438159372000" expanded="true" signature="6990:7610" placeholder="..." />
-                <marker date="1438159372000" expanded="false" signature="7527:7555" placeholder="..." />
-                <marker date="1438159372000" expanded="false" signature="7578:7588" placeholder="..." />
+                <marker date="1438167001000" expanded="true" signature="6525:6535" placeholder="..." />
+                <marker date="1438167001000" expanded="true" signature="6536:6595" placeholder="..." />
+                <marker date="1438167001000" expanded="true" signature="6590:6595" placeholder="..." />
+                <marker date="1438167001000" expanded="true" signature="6990:7610" placeholder="..." />
+                <marker date="1438167001000" expanded="false" signature="7527:7555" placeholder="..." />
+                <marker date="1438167001000" expanded="false" signature="7578:7588" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -245,10 +243,10 @@
         <option value="$PROJECT_DIR$/ajax_solr_services.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php" />
-        <option value="$PROJECT_DIR$/dashboard_settings.php" />
         <option value="$PROJECT_DIR$/class-wp-solr.php" />
         <option value="$PROJECT_DIR$/readme.txt" />
         <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/dashboard_settings.php" />
       </list>
     </option>
   </component>
@@ -275,8 +273,9 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1920" />
-    <option name="height" value="1200" />
+    <option name="height" value="1108" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -317,6 +316,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -351,7 +351,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -464,7 +463,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="LayoutCode.rearrangeEntriesPHP" value="true" />
@@ -562,18 +561,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
+    <frame x="0" y="23" width="1920" height="1108" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917964" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23641305" sideWeight="0.48497853" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2146402" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1687966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21105072" sideWeight="0.48497853" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17039403" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27159208" sideWeight="0.51502144" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56490135" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -581,10 +577,13 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23641305" sideWeight="0.48497853" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21105072" sideWeight="0.48497853" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -604,9 +603,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19068056" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -625,13 +624,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/wpsolr_search_engine.php</url>
-          <line>50</line>
-          <option name="timeStamp" value="761" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
@@ -945,10 +937,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11233211">
           <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding>
-            <marker date="1438087831000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438087831000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -976,53 +964,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.764706">
-          <caret line="620" column="73" selection-start-line="620" selection-start-column="73" selection-end-line="620" selection-end-column="73" />
-          <folding>
-            <marker date="1438159081000" expanded="true" signature="1614:1848" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="1665:1825" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="1904:2134" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="1951:2111" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="2251:2556" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="2298:2533" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="2806:3026" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="2853:3003" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="3082:3317" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="3129:3294" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="3434:3734" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="3481:3712" placeholder="{...}" />
-            <marker date="1438159081000" expanded="true" signature="22798:23276" placeholder="SELECT meta_..wp_postmeta..." />
-            <marker date="1438159081000" expanded="true" signature="23807:23866" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="23836:23866" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="31880:32252" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="32038:32050" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="32198:32212" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="32852:33221" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="33010:33024" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="33203:33215" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="36601:36982" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="36764:36776" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="36929:36943" placeholder="..." />
-            <marker date="1438159081000" expanded="true" signature="37343:37721" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="37506:37520" placeholder="..." />
-            <marker date="1438159081000" expanded="false" signature="37703:37715" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class-wp-solr.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.375">
-          <caret line="555" column="0" selection-start-line="555" selection-start-column="0" selection-end-line="555" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.344828">
+        <state vertical-scroll-proportion="0.0">
           <caret line="83" column="51" selection-start-line="83" selection-start-column="51" selection-end-line="83" selection-end-column="51" />
           <folding />
         </state>
@@ -1033,16 +977,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4945055">
+        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="73" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
           <folding>
             <element signature="e#6#297#0#PHP" expanded="true" />
-            <marker date="1438159372000" expanded="true" signature="6525:6535" placeholder="..." />
-            <marker date="1438159372000" expanded="true" signature="6536:6595" placeholder="..." />
-            <marker date="1438159372000" expanded="true" signature="6590:6595" placeholder="..." />
-            <marker date="1438159372000" expanded="true" signature="6990:7610" placeholder="..." />
-            <marker date="1438159372000" expanded="false" signature="7527:7555" placeholder="..." />
-            <marker date="1438159372000" expanded="false" signature="7578:7588" placeholder="..." />
+            <marker date="1438167001000" expanded="true" signature="6525:6535" placeholder="..." />
+            <marker date="1438167001000" expanded="true" signature="6536:6595" placeholder="..." />
+            <marker date="1438167001000" expanded="true" signature="6590:6595" placeholder="..." />
+            <marker date="1438167001000" expanded="true" signature="6990:7610" placeholder="..." />
+            <marker date="1438167001000" expanded="false" signature="7527:7555" placeholder="..." />
+            <marker date="1438167001000" expanded="false" signature="7578:7588" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class-wp-solr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.0">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3504823">
+          <caret line="121" column="143" selection-start-line="121" selection-start-column="143" selection-end-line="121" selection-end-column="143" />
+          <folding>
+            <element signature="e#4030#4047#0#HTML" expanded="true" />
+            <element signature="e#4461#4478#0#HTML" expanded="true" />
+            <marker date="1438258885000" expanded="true" signature="1614:1848" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="1665:1825" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="1904:2134" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="1951:2111" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="2251:2556" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="2298:2533" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="2806:3026" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="2853:3003" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="3082:3317" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="3129:3294" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="3434:3734" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="3481:3712" placeholder="{...}" />
+            <marker date="1438258885000" expanded="true" signature="22590:23068" placeholder="SELECT meta_..wp_postmeta..." />
+            <marker date="1438258885000" expanded="true" signature="31672:32044" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="31830:31842" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="31990:32004" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="32644:33013" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="32802:32816" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="32995:33007" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="36393:36774" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="36556:36568" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="36721:36735" placeholder="..." />
+            <marker date="1438258885000" expanded="true" signature="37135:37513" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="37298:37312" placeholder="..." />
+            <marker date="1438258885000" expanded="false" signature="37495:37507" placeholder="..." />
           </folding>
         </state>
       </provider>
