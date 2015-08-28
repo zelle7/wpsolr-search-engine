@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 4.7
+Current Version: 4.8
 
 Author:  WPSOLR.COM
 
@@ -12,9 +12,9 @@ Tags: Solr in WordPress, relevance, Solr search, fast search, wpsolr, apache sol
 
 Requires at least: 3.7.1
 
-Tested up to: 4.2.2
+Tested up to: 4.3
 
-Stable tag: 4.7
+Stable tag: 4.8
 
 Replace your sluggish and rigid SQL search with the world open source leader Apache Solr wich powers the leading internet websites
 
@@ -85,6 +85,10 @@ For a live demo visit <a href='http://www.gotosolr.com/search-results/?search=so
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 4.8 =
+* Index the shortcodes content when stripping shorcodes tags.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 4.7 =
 * (Screenshot 6) A new option can prevent/enforce submitting the search form after selecting a value from the autocomplete list.
