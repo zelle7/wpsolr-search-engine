@@ -2,12 +2,9 @@
 
 require_once plugin_dir_path( __FILE__ ) . 'classes/extensions/wpsolr-extensions.php';
 require_once plugin_dir_path( __FILE__ ) . 'classes/wpsolr-filters.php';
-
+require_once plugin_dir_path( __FILE__ ) . 'classes/wpsolr-schema.php';
 
 class wp_Solr {
-
-	// Field queried by default. Necessary to get highlighting good.
-	const DEFAULT_QUERY_FIELD = 'text:';
 
 	// Timeout in seconds when calling Solr
 	const DEFAULT_SOLR_TIMEOUT_IN_SECOND = 30;
@@ -18,6 +15,9 @@ class wp_Solr {
 
 	// Array of active extension objects
 	protected $wpsolr_extensions;
+
+	//
+	const _SEARCH_PAGE_PATH = 'wpsolr-search';
 
 	// Do not change - Sort by most relevant
 	const SORT_CODE_BY_RELEVANCY_DESC = 'sort_by_relevancy_desc';
@@ -114,13 +114,55 @@ class wp_Solr {
 
 
 	/**
+	 * Retrieve or create the search page
+	 */
+	static function get_search_page() {
+
+		// Search page is found by it's path (hard-coded).
+		$search_page = get_page_by_path( self::_SEARCH_PAGE_PATH );
+
+		if ( ! $search_page ) {
+
+			$_p = array(
+				'post_type'      => 'page',
+				'post_title'     => 'Search Results',
+				'post_content'   => '[solr_search_shortcode]',
+				'post_status'    => 'publish',
+				'post_author'    => 1,
+				'comment_status' => 'closed',
+				'post_name'      => self::_SEARCH_PAGE_PATH
+			);
+
+			$search_page_id = wp_insert_post( $_p );
+
+			update_post_meta( $search_page_id, 'bwps_enable_ssl', '1' );
+
+			$search_page = get_post( $search_page_id );
+
+		} else {
+
+			if ( $search_page->post_status != 'publish' ) {
+
+				$search_page->post_status = 'publish';
+
+				wp_update_post( $search_page );
+			}
+		}
+
+
+		return $search_page;
+	}
+
+
+	/**
 	 * Get all sort by options available
 	 *
 	 * @param string $sort_code_to_retrieve
 	 *
 	 * @return array
 	 */
-	public static function get_sort_options() {
+	public
+	static function get_sort_options() {
 
 		$results = array(
 
@@ -325,25 +367,30 @@ class wp_Solr {
 		//$term   = str_replace( ' ', '\ ', $term );
 
 		$query = $client->createSelect();
+		$query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . $term );
 
-		$query->setQuery( self::DEFAULT_QUERY_FIELD . $term );
-
-		// Add extensions query filters
-		do_action( WpSolrExtensions::ACTION_SOLR_ADD_QUERY_FIELDS, wp_get_current_user(), $query );
+		// Let extensions change query
+		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
+			array(
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $term,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
+			)
+		);
 
 
 		switch ( $sort ) {
 			case self::SORT_CODE_BY_DATE_DESC:
-				$query->addSort( 'date', $query::SORT_DESC );
+				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_DESC );
 				break;
 			case self::SORT_CODE_BY_DATE_ASC:
-				$query->addSort( 'date', $query::SORT_ASC );
+				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_ASC );
 				break;
 			case self::SORT_CODE_BY_NUMBER_COMMENTS_DESC:
-				$query->addSort( 'numcomments', $query::SORT_DESC );
+				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_DESC );
 				break;
 			case self::SORT_CODE_BY_NUMBER_COMMENTS_ASC:
-				$query->addSort( 'numcomments', $query::SORT_ASC );
+				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_ASC );
 				break;
 			case self::SORT_CODE_BY_RELEVANCY_DESC:
 			default:
@@ -370,7 +417,7 @@ class wp_Solr {
 				$queryTermsCorrected = $term; // original query
 				foreach ( $collations as $collation ) {
 					foreach ( $collation->getCorrections() as $input => $correction ) {
-						$queryTermsCorrected = str_replace( $input, $correction, $queryTermsCorrected );
+						$queryTermsCorrected = str_replace( $input, is_array( $correction ) ? $correction[0] : $correction, $queryTermsCorrected );
 					}
 
 				}
@@ -485,12 +532,12 @@ class wp_Solr {
 		}
 
 		$hl = $query->getHighlighting();
-		$hl->getField( 'title' )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
-		$hl->getField( 'content' )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+		$hl->getField( WpSolrSchema::_FIELD_NAME_TITLE )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+		$hl->getField( WpSolrSchema::_FIELD_NAME_CONTENT )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
 
 
 		if ( $field_comment == 1 ) {
-			$hl->getField( 'comments' )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+			$hl->getField( WpSolrSchema::_FIELD_NAME_COMMENTS )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
 		}
 
 		$resultSet = '';
@@ -535,13 +582,13 @@ class wp_Solr {
 
 				foreach ( $highlightedDoc as $field => $highlight ) {
 					$msg = '';
-					if ( $field == 'title' ) {
+					if ( $field == WpSolrSchema::_FIELD_NAME_TITLE ) {
 						$name = implode( ' (...) ', $highlight );
 
-					} else if ( $field == 'content' ) {
+					} else if ( $field == WpSolrSchema::_FIELD_NAME_CONTENT ) {
 						$cont    = implode( ' (...) ', $highlight );
 						$cont_no = 1;
-					} else if ( $field == 'comments' ) {
+					} else if ( $field == WpSolrSchema::_FIELD_NAME_COMMENTS ) {
 						$comments = implode( ' (...) ', $highlight );
 						$comm_no  = 1;
 					}
@@ -973,7 +1020,7 @@ class wp_Solr {
 		$purl             = get_permalink( $pid );
 		$pcomments        = array();
 		$comments_con     = array();
-		$comm             = isset( $solr_indexing_options['comments'] ) ? $solr_indexing_options['comments'] : '';
+		$comm             = isset( $solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] ) ? $solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] : '';
 
 		$numcomments = 0;
 		if ( $comm ) {
@@ -1036,32 +1083,30 @@ class wp_Solr {
 		$solarium_document_for_update = $solarium_update_query->createDocument();
 		$numcomments                  = 0;
 
-		$solarium_document_for_update->id    = $pid;
-		$solarium_document_for_update->PID   = $pid;
-		$solarium_document_for_update->title = $ptitle;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $pid;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
 
 		// Remove shortcodes tags, but not their content.
+		// strip_shortcodes() does nothing, probably because shortcodes from themes are not loaded in admin.
 		// Credit: https://wordpress.org/support/topic/stripping-shortcodes-keeping-the-content.
 		// Modified to enable "/" in attributes
-		$content_with_shortcode_expanded = preg_replace("~(?:\[/?)[^\]]+/?\]~s", '', $pcontent);  # strip shortcodes, keep shortcode content;
+		$content_with_shortcode_expanded = preg_replace( "~(?:\[/?)[^\]]+/?\]~s", '', $pcontent );  # strip shortcodes, keep shortcode content;
 		// Remove HTML tags
-		$solarium_document_for_update->content         = strip_tags( $content_with_shortcode_expanded );
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] = strip_tags( $content_with_shortcode_expanded );
 
-
-		$solarium_document_for_update->author          = $pauthor;
-		$solarium_document_for_update->author_s        = $pauthor_s;
-		$solarium_document_for_update->type            = $ptype;
-		$solarium_document_for_update->date            = $pdate;
-		$solarium_document_for_update->modified        = $pmodified;
-		$solarium_document_for_update->displaydate     = $pdisplaydate;
-		$solarium_document_for_update->displaymodified = $pdisplaymodified;
-
-		$solarium_document_for_update->permalink   = $purl;
-		$solarium_document_for_update->comments    = $pcomments;
-		$solarium_document_for_update->numcomments = $pnumcomments;
-		$solarium_document_for_update->categories  = $cats;
-
-		$solarium_document_for_update->tags = $tag_array;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_AUTHOR ]             = $pauthor;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_AUTHOR_S ]           = $pauthor_s;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TYPE ]               = $ptype;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_DATE ]               = $pdate;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_MODIFIED ]           = $pmodified;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_DISPLAY_DATE ]       = $pdisplaydate;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_DISPLAY_MODIFIED ]   = $pdisplaymodified;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PERMALINK ]          = $purl;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_COMMENTS ]           = $pcomments;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS ] = $pnumcomments;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES ]         = $cats;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TAGS ]               = $tag_array;
 
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
 		foreach ( $taxonomies as $parent ) {

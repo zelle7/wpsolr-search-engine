@@ -8,6 +8,7 @@ function func_reg_solr_form_setting() {
 	register_setting( 'solr_localization_options', 'wdm_solr_localization_data' );
 	register_setting( 'solr_extension_groups_options', 'wdm_solr_extension_groups_data' );
 	register_setting( 'solr_extension_s2member_options', 'wdm_solr_extension_s2member_data' );
+	register_setting( 'solr_extension_wpml_options', 'wdm_solr_extension_wpml_data' );
 	register_setting( 'solr_operations_options', 'wdm_solr_operations_data' );
 }
 
@@ -527,7 +528,7 @@ function fun_set_solr_options() {
 												<input type='checkbox'
 												       name='wdm_solr_res_data[<?php echo 'spellchecker' ?>]'
 												       value='spellchecker'
-													<?php checked( 'spellchecker', $solr_res_options['spellchecker'] ); ?>>
+													<?php checked( 'spellchecker', isset( $solr_res_options['spellchecker'] ) ? $solr_res_options['spellchecker'] : '?' ); ?>>
 											</div>
 											<div class="clear"></div>
 										</div>
@@ -536,7 +537,7 @@ function fun_set_solr_options() {
 											<div class='col_right'>
 												<input type='checkbox' name='wdm_solr_res_data[res_info]'
 												       value='res_info'
-													<?php checked( 'res_info', $solr_res_options['res_info'] ); ?>>
+													<?php checked( 'res_info', isset( $solr_res_options['res_info'] ) ? $solr_res_options['res_info'] : '?' ); ?>>
 											</div>
 											<div class="clear"></div>
 										</div>
@@ -545,7 +546,7 @@ function fun_set_solr_options() {
 											<div class='col_right'>
 												<input type='checkbox' name='wdm_solr_res_data[default_search]'
 												       value='1'
-													<?php checked( '1', $solr_res_options['default_search'] ); ?>>
+													<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
 											</div>
 											<div class="clear"></div>
 										</div>
@@ -1006,6 +1007,9 @@ function fun_set_solr_options() {
 							WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_S2MEMBER );
 							break;
 
+						case 'extension_wpml_opt':
+							WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_WPML );
+							break;
 					}
 
 					?>
@@ -1159,7 +1163,8 @@ function wpsolr_admin_sub_tabs( $current = 'index_opt' ) {
 		'sort_opt'               => 'Sort Options',
 		'localization_options'   => 'Localization Options',
 		'extension_groups_opt'   => 'Groups plugin options',
-		'extension_s2member_opt' => 's2Member plugin options'
+		'extension_s2member_opt' => 's2Member plugin options',
+		'extension_wpml_opt'     => 'WPML plugin options'
 	);
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper wdm-vertical-tabs">';

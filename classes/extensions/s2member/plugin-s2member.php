@@ -28,7 +28,7 @@ class PluginS2Member extends WpSolrExtensions {
 
 		$this->_extension_groups_options = $this->get_option_data( self::EXTENSION_S2MEMBER );
 
-		add_action( WpSolrExtensions::ACTION_SOLR_ADD_QUERY_FIELDS, array( $this, 'set_custom_query' ), 10, 2 );
+		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array( $this, 'set_custom_query' ), 10, 1 );
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, array(
 			$this,
@@ -60,11 +60,14 @@ class PluginS2Member extends WpSolrExtensions {
 	 * Post as level1, capability1, User has level2, capability1 and capability2 => post is retrieved from Solr
 	 * Post as level1, capability1, User has level0, capability1 and capability2 => post is not retrieved from Solr
 	 *
-	 * @param $query solr select query
+	 * @param $parameters array
 	 *
 	 * @throws Exception
 	 */
-	public function set_custom_query( $user, $query ) {
+	public function set_custom_query( $parameters ) {
+
+		$query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY ];
+		$user  = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER ];
 
 		if ( ! $user ) {
 			return;

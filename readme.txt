@@ -87,7 +87,7 @@ For a live demo visit <a href='http://www.gotosolr.com/search-results/?search=so
 == Changelog ==
 
 = 4.8 =
-* Index the shortcodes content when stripping shorcodes tags.
+* Index the shortcodes content when stripping shortcodes tags.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 4.7 =

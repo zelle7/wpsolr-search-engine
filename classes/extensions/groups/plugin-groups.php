@@ -27,7 +27,7 @@ class PluginGroups extends WpSolrExtensions {
 
 		$this->_extension_groups_options = $this->get_option_data( self::EXTENSION_GROUPS );
 
-		add_action( WpSolrExtensions::ACTION_SOLR_ADD_QUERY_FIELDS, array( $this, 'set_custom_query' ), 10, 2 );
+		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array( $this, 'set_custom_query' ), 10, 1 );
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_DOCUMENT_GROUPS_INFOS, array(
 			$this,
@@ -40,13 +40,18 @@ class PluginGroups extends WpSolrExtensions {
 	 *
 	 * Add user's capabilities filters to the Solr query.
 	 *
-	 * @param $query solr select query
+	 * @param $parameters array
 	 *
 	 * @throws Exception
 	 */
-	public function set_custom_query( $user, $query ) {
+	public function set_custom_query( $parameters ) {
 
-		if (! $user) return;
+		$query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY ];
+		$user  = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER ];
+
+		if ( ! $user ) {
+			return;
+		}
 
 		$is_users_without_groups_see_all_results          = $this->_extension_groups_options['is_users_without_groups_see_all_results'];
 		$is_result_without_capabilities_seen_by_all_users = $this->_extension_groups_options['is_result_without_capabilities_seen_by_all_users'];

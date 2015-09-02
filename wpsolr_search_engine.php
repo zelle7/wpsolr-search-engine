@@ -124,7 +124,7 @@ function delete_attachment_to_solr_index( $attachment_id ) {
 
 function check_default_options_and_function() {
 	$solr_options = get_option( 'wdm_solr_res_data' );
-	if ( $solr_options['default_search'] == 1 ) {
+	if ( isset( $solr_options['default_search'] ) ) {
 
 		add_filter( 'get_search_form', 'solr_search_form' );
 
@@ -140,9 +140,11 @@ function fun_dis_search() {
 	echo solr_search_form();
 }
 
+
+/*
 register_activation_hook( __FILE__, 'fun_add_result_page' );
 function fun_add_result_page() {
-	$the_page = get_page_by_title( 'Search Results', 'OBJECT', 'page' );
+	$the_page = get_page_by_path( 'search-results' );
 	if ( ! $the_page ) {
 
 		$_p = array(
@@ -174,6 +176,7 @@ function fun_add_result_page() {
 
 
 }
+*/
 
 add_action( 'admin_notices', 'curl_dependency_check' );
 function curl_dependency_check() {
@@ -223,11 +226,15 @@ function solr_search_form() {
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
-	$get_page_info = get_page_by_title( 'Search Results' );
+	$get_page_info = wp_Solr::get_search_page();
 	$ajax_nonce    = wp_create_nonce( "nonce_for_autocomplete" );
 
 
-	$url  = get_permalink( $get_page_info->ID );
+	$url = get_permalink( $get_page_info->ID );
+	// Filter the search page url
+	$wpsolr_extensions = new WpSolrExtensions();
+	$url               = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );
+
 	$form = "<div class='cls_search' style='width:100%'><form action='$url' method='get'  class='search-frm2' >";
 	$form .= '<input type="hidden" value="' . $wdm_typehead_request_handler . '" id="path_to_fold">';
 	$form .= '<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">';
@@ -235,12 +242,8 @@ function solr_search_form() {
 	$form .= '<input type="hidden" value="' . $ad_url . '" id="path_to_admin">';
 	$form .= '<input type="hidden" value="' . $search_que . '" id="search_opt">';
 
-	$is_after_autocomplete_block_submit = isset( $results_options['is_after_autocomplete_block_submit'] ) ? $results_options['is_after_autocomplete_block_submit'] : '0';
-	$form .= "<input type='hidden' value='$is_after_autocomplete_block_submit' id='is_after_autocomplete_block_submit'>";
-
 	$form .= '
        <div class="ui-widget search-box">
-        <input type="hidden" name="page_id" value="' . $get_page_info->ID . '" />
  	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
         <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl1" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
@@ -255,10 +258,13 @@ function solr_search_form() {
 }
 
 /*
- * Load WPSOLR text domain to local /lang/ directory
+ * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
+ * Copy your .mo files there
+ * Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo
+ * You can find our template file in this plugin /languages/wpsolr.pot file
  */
 add_action( 'plugins_loaded', 'wpsolr_load_textdomain' );
 function wpsolr_load_textdomain() {
-	load_plugin_textdomain( 'wpsolr', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+	load_plugin_textdomain( 'wpsolr', false, false );
 }
 

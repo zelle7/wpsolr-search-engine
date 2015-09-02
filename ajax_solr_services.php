@@ -28,9 +28,13 @@ function fun_search_indexed_data() {
 	}
 
 	$ad_url        = admin_url();
-	$get_page_info = get_page_by_title( 'Search Results' );
+	$get_page_info = wp_Solr::get_search_page();
 	$url           = get_permalink( $get_page_info->ID );
-	$solr_options  = get_option( 'wdm_solr_conf_data' );
+	// Filter the search page url
+	$wpsolr_extensions = new WpSolrExtensions();
+	$url               = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );
+
+	$solr_options = get_option( 'wdm_solr_conf_data' );
 
 
 	$k     = '';
@@ -70,18 +74,14 @@ function fun_search_indexed_data() {
 
 
 	$solr_form_options = get_option( 'wdm_solr_res_data' );
-	$opt               = $solr_form_options['default_search'];
 
 	$fac_opt = get_option( 'wdm_solr_facet_data' );
-
-	$get_page_info = get_page_by_title( 'Search Results' );
 
 	// Block or start search after autocomplete selecton
 	$is_after_autocomplete_block_submit = isset( $solr_form_options['is_after_autocomplete_block_submit'] ) ? $solr_form_options['is_after_autocomplete_block_submit'] : '0';
 
 	echo $form = '
         <div class="ui-widget">
-	<input type="hidden" name="page_id" value="' . $get_page_info->ID . '" />
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
         <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
