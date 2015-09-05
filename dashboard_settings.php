@@ -179,7 +179,7 @@ function fun_set_solr_options() {
 						</div>
 						<div class="wdm_row">
 							<div class="submit">
-								<a href='admin.php?page=solr_settings&tab=solr_hosting' class="button-primary wdm-save">I
+								<a href='admin.php?page=solr_settings&tab=solr_indexes' class="button-primary wdm-save">I
 									uploaded my 2 compatible configuration files to my Solr core >></a>
 							</div>
 						</div>
@@ -188,256 +188,200 @@ function fun_set_solr_options() {
 				<?php
 				break;
 
-			case 'solr_hosting' :
+			case 'solr_indexes' :
 				?>
 
 				<div id="solr-hosting-tab">
-					<form action="options.php" method="POST" id='settings_conf_form'>
 
-						<?php
+					<?php
 
-						settings_fields( 'solr_conf_options' );
+					$solr_options = get_option( 'wdm_solr_conf_data' );
 
-
-						$solr_options = get_option( 'wdm_solr_conf_data' );
+					$subtabs = array();
 
 
-						$solr_type = $solr_options['host_type'];
+					// Move the 2 old style indexes in the new structure
+					foreach (
+						array(
+							''      => 0,
+							'_goto' => 1,
+						) as $old_index_postfix => $old_index_indice
+					) {
+						if ( ! empty( $solr_options[ 'solr_host' . $old_index_postfix ] ) ) {
+
+							// Copy the old index structure in the new index structure
+							$index_array                   = array();
+							$index_array['index_name']     = 'Index with no name';
+							$index_array['index_protocol'] = isset( $solr_options[ 'solr_protocol' . $old_index_postfix ] ) ? $solr_options[ 'solr_protocol' . $old_index_postfix ] : 'http';
+							$index_array['index_host']     = isset( $solr_options[ 'solr_host' . $old_index_postfix ] ) ? $solr_options[ 'solr_host' . $old_index_postfix ] : 'localhost';
+							$index_array['index_port']     = isset( $solr_options[ 'solr_port' . $old_index_postfix ] ) ? $solr_options[ 'solr_port' . $old_index_postfix ] : '8983';
+							$index_array['index_path']     = isset( $solr_options[ 'solr_path' . $old_index_postfix ] ) ? $solr_options[ 'solr_path' . $old_index_postfix ] : '/sol/index_name';
+							$index_array['index_key']      = isset( $solr_options[ 'solr_key' . $old_index_postfix ] ) ? $solr_options[ 'solr_key' . $old_index_postfix ] : '';
+							$index_array['index_secret']   = isset( $solr_options[ 'solr_secret' . $old_index_postfix ] ) ? $solr_options[ 'solr_secret' . $old_index_postfix ] : '';
+
+							// Save the new index structure
+							$solr_options['solr_indexes'][ $old_index_indice ] = $index_array;
+						}
+					}
+
+					// Create the tabs from the Solr indexes already configured
+					foreach ( $solr_options['solr_indexes'] as $index_indice => $index ) {
+						$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
+					}
 
 
-						?>
+					if ( ! empty( $subtabs ) ) {
+						$subtabs['new_index'] = 'Configure another index';
+					}
 
-						<!--  <div class="wdm_heading wrapper"><h3>Configure Solr</h3></div>-->
-						<input type='hidden' id='adm_path' value='<?php echo admin_url(); ?>'>
+					$subtab = wpsolr_admin_sub_tabs( '0', $subtabs );
+					if ( 'new_index' === $subtab ) {
+						$subtab                                  = strtoupper( md5( uniqid( rand(), true ) ) );
+						$solr_options['solr_indexes'][ $subtab ] = array();
+					}
 
-						<div class='wrapper'>
-							<h4 class='head_div'>Solr Hosting Choice</h4>
+					?>
+					<div id="solr-results-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='settings_conf_form'>
 
-							<div class="wdm_row">
-								<div class='col_left'>Select Solr Hosting</div>
-								<div class='col_right'>
-									<input type='radio' name='wdm_solr_conf_data[host_type]' value='self_hosted'
-									       class='radio_type' id='self_host'
-										<?php if ( $solr_options['host_type'] == 'self_hosted' ) { ?> checked <?php } ?>
+							<?php
+							settings_fields( 'solr_conf_options' );
+							?>
 
-										> Self Hosted <br>
-									<input type='radio' name='wdm_solr_conf_data[host_type]' value='other_hosted'
-									       class='radio_type' id='other_host'
-										<?php if ( $solr_options['host_type'] == 'other_hosted' ) { ?> checked <?php } ?>
-										> Cloud Hosting
-									(Click <a target='_blank'
-									          href='http://www.wpsolr.com/solr-certified-hosting-providers'> here </a>
-									to visit our certified Solr hosting providers)
-									<br>
+							<!--  <div class="wdm_heading wrapper"><h3>Configure Solr</h3></div>-->
+							<input type='hidden' id='adm_path' value='<?php echo admin_url(); ?>'>
+
+							<?php
+							foreach ( $solr_options['solr_indexes'] as $index_indice => $index ) {
+								?>
+								<div id='hosted_on_other'
+								     class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
+									<h4 class='head_div'>Configure a Solr index</h4>
+
+									<div class="wdm_row">
+										<div class='solr_error'></div>
+									</div>
+
+									<div class="wdm_row">
+										<div class='col_left'>Index name</div>
+
+										<div class='col_right'><input type='text'
+										                              placeholder="Give a name to your index"
+										                              name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_name]"
+												<?php echo $subtab === $index_indice ? "id='index_name'" : "" ?>
+												                      value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_name'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_name']; ?>">
+
+											<div class="clear"></div>
+											<span class='name_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+
+									<div class="wdm_row">
+										<div class='col_left'>Solr Protocol</div>
+
+										<div class='col_right'>
+											<select
+												name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
+												<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
+												>
+												<option value='http'
+													<?php selected( 'http', empty( $solr_options['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $solr_options['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>
+													>http
+												</option>
+												<option value='https'
+													<?php selected( 'https', empty( $solr_options['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $solr_options['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>
+													>https
+												</option>
+
+											</select>
+
+											<div class="clear"></div>
+											<span class='protocol_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="wdm_row">
+										<div class='col_left'>Solr Host</div>
+
+										<div class='col_right'>
+											<input type='text'
+											       placeholder="localhost or ip adress or hostname. No 'http', no '/', no ':'"
+											       name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_host]"
+												<?php echo $subtab === $index_indice ? "id='index_host'" : "" ?>
+												   value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_host'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_host']; ?>">
+
+											<div class="clear"></div>
+											<span class='host_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="wdm_row">
+										<div class='col_left'>Solr Port</div>
+										<div class='col_right'>
+											<input type="text"
+											       placeholder="8983 or 443 or any other port"
+											       name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_port]"
+												<?php echo $subtab === $index_indice ? "id='index_port'" : "" ?>
+												   value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_port'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_port']; ?>">
+
+											<div class="clear"></div>
+											<span class='port_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="wdm_row">
+										<div class='col_left'>Solr Path</div>
+										<div class='col_right'>
+											<input type='text'
+											       placeholder="For instance /solr/index_name. Begins with '/', no '/' at the end"
+											       name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_path]"
+												<?php echo $subtab === $index_indice ? "id='index_path'" : "" ?>
+												   value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_path'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_path']; ?>">
+
+											<div class="clear"></div>
+											<span class='path_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="wdm_row">
+										<div class='col_left'>Key</div>
+										<div class='col_right'>
+											<input type='text'
+											       placeholder="Optional security user if the index is protected with Http Basic Authentication"
+											       name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_key]"
+												<?php echo $subtab === $index_indice ? "id='index_key'" : "" ?>
+												   value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_key'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_key']; ?>">
+
+											<div class="clear"></div>
+											<span class='key_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="wdm_row">
+										<div class='col_left'>Secret</div>
+										<div class='col_right'>
+											<input type='text'
+											       placeholder="Optional security password if the index is protected with Http Basic Authentication"
+											       name="wdm_solr_conf_data[solr_indexes][<?php echo $index_indice ?>][index_secret]"
+												<?php echo $subtab === $index_indice ? "id='index_secret'" : "" ?>
+												   value="<?php echo empty( $solr_options['solr_indexes'][ $index_indice ]['index_secret'] ) ? '' : $solr_options['solr_indexes'][ $index_indice ]['index_secret']; ?>">
+
+											<div class="clear"></div>
+											<span class='sec_err'></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+
 								</div>
-								<div class="clear"></div>
+							<?php } // foreach
+							?>
 
-							</div>
-
-						</div>
-
-						<div id='div_self_hosted' class="wrapper"
-							<?php if ( $solr_type == 'self_hosted' ) {
-								echo "style='display:block'";
-							} else if ( $solr_type == 'other_hosted' ) {
-								echo "style='display:none'";
-							} else {
-								echo "style='display:none'";
-							} ?> >
-							<h4 class='head_div'>Solr Hosting Settings</h4>
-
-							<div class="wdm_note">
-
-								<b> If your index url is:</b><br>
-                                            <span style='margin-left:10px'>
-                                               http://localhost:8983/solr/myindex/select 
-                                            </span><br><br/>
-								<b>Then your details will be </b><br>
-								<span style='margin-left:10px'> <b>Protocol:</b> http</span><br>
-								<span style='margin-left:10px'> <b>Host:</b> localhost</span><br>
-								<span style='margin-left:10px'> <b>Port:</b> 8983 </span><br>
-								<span style='margin-left:10px'>  <b> path:</b> /solr/myindex</span>
-
-							</div>
-							<div class="wdm_row">
-								<div class='solr_error'></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Protocol</div>
-
-								<div class='col_right'>
-
-									<select name='wdm_solr_conf_data[solr_protocol]' id='solr_protocol'>
-										<option value='http'
-											<?php if ( $solr_options['solr_protocol'] == 'http' || $solr_options['solr_protocol'] == '' ) { ?>
-												selected
-											<?php } ?>
-											>http
-										</option>
-										<option value='https'
-											<?php if ( $solr_options['solr_protocol'] == 'https' ) { ?>
-												selected
-											<?php } ?>
-
-											>https
-										</option>
-									</select>
-
-									<span class='ghost_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Host</div>
-
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_host]'
-								                              id='solr_host'
-								                              value="<?php echo empty( $solr_options['solr_host'] ) ? 'localhost' : $solr_options['solr_host']; ?>">
-									<span class='host_err'></span></div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Port</div>
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_port]'
-								                              id='solr_port'
-								                              value="<?php echo empty( $solr_options['solr_port'] ) ? '8983' : $solr_options['solr_port']; ?>">
-									<span class='port_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Path</div>
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_path]'
-								                              id='solr_path'
-								                              value="<?php echo empty( $solr_options['solr_path'] ) ? '/solr' : $solr_options['solr_path']; ?>">
-									<span class='path_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class='wdm_row'>
-								<div class="submit">
-									<!--<input name="save_selected_options" id='save_selected_options' type="submit" class="button-primary wdm-save" value="<?php //esc_attr_e('Save Changes');
-									?>" />-->
-									<input name="check_solr_status" id='check_solr_status' type="button"
-									       class="button-primary wdm-save" value="Check Solr Status, Then Save"/>
-                                            <span>
-                                                <img
-	                                                src='<?php echo plugins_url( 'images/gif-load_cir.gif', __FILE__ ) ?>'
-	                                                style='height:18px;width:18px;margin-top: 10px;display: none'
-	                                                class='img-load'/>
-                                                <img src='<?php echo plugins_url( 'images/success.png', __FILE__ ) ?>'
-                                                     style='height:18px;width:18px;margin-top: 10px;display: none'
-                                                     class='img-succ'/>
-                                                <img src='<?php echo plugins_url( 'images/warning.png', __FILE__ ) ?>'
-                                                     style='height:18px;width:18px;margin-top: 10px;display: none'
-                                                     class='img-err'/>
-                                            </span>
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-
-						<div id='hosted_on_other' class="wrapper" <?php if ( $solr_type == 'self_hosted' ) {
-							echo "style='display:none'";
-						} else if ( $solr_type == 'other_hosted' ) {
-							echo "style='display:block'";
-						} else {
-							echo "style='display:none'";
-						} ?>>
-							<h4 class='head_div'>Solr Hosting Connection</h4>
-
-							<div class="wdm_note">
-
-								<b> If your index url is:</b><br>
-                                            <span style='margin-left:10px'> https://877d83f3-1055-4086-9fe6-cecd1b48411f-index.solrdata.com:8983/solr/e86f82a682564c23b7802b6827f3ccd4.24b7729e02dc47d19c15f1310098f93f/select
-                                            </span><br><br/>
-								<b>Then your details will be </b><br>
-								<span style='margin-left:10px'> <b>Protocol:</b> https</span><br>
-								<span style='margin-left:10px'> <b>Host:</b>  877d83f3-1055-4086-9fe6-cecd1b48411f-index.solrdata.com</span><br>
-								<span style='margin-left:10px'> <b>Port:</b> 8983 </span><br>
-								<span style='margin-left:10px'>  <b> path:</b> /solr/e86f82a682564c23b7802b6827f3ccd4.24b7729e02dc47d19c15f1310098f93f</span>
-
-							</div>
-
-							<div class="wdm_row">
-								<div class='solr_error'></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Protocol</div>
-
-								<div class='col_right'>
-
-
-									<select name='wdm_solr_conf_data[solr_protocol_goto]' id='gtsolr_protocol'>
-										<option value='http'
-											<?php if ( $solr_options['solr_protocol_goto'] == 'http' ) { ?>
-												selected
-											<?php } ?>
-
-											>http
-										</option>
-										<option value='https'
-											<?php if ( $solr_options['solr_protocol_goto'] == 'https' || $solr_options['solr_protocol_goto'] == null ) { ?>
-												selected
-											<?php } ?>
-											>https
-										</option>
-
-									</select>
-									<span class='ghost_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Host</div>
-
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_host_goto]'
-								                              id='gtsolr_host'
-								                              value="<?php echo empty( $solr_options['solr_host_goto'] ) ? 'localhost' : $solr_options['solr_host_goto']; ?>">
-									<span class='ghost_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Port</div>
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_port_goto]'
-								                              id='gtsolr_port'
-								                              value="<?php echo empty( $solr_options['solr_port_goto'] ) ? '8983' : $solr_options['solr_port_goto']; ?>">
-									<span class='gport_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Solr Path</div>
-								<div class='col_right'><input type='text' name='wdm_solr_conf_data[solr_path_goto]'
-								                              id='gtsolr_path'
-								                              value="<?php echo empty( $solr_options['solr_path_goto'] ) ? '/solr' : $solr_options['solr_path_goto']; ?>">
-									<span class='gpath_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Key</div>
-								<div class='col_right'>
-									<input type='text' name='wdm_solr_conf_data[solr_key_goto]' id='gtsolr_key'
-									       value="<?php echo empty( $solr_options['solr_key_goto'] ) ? '' : $solr_options['solr_key_goto']; ?>">
-									<span class='gkey_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="wdm_row">
-								<div class='col_left'>Secret</div>
-								<div class='col_right'>
-									<input type='text' name='wdm_solr_conf_data[solr_secret_goto]' id='gtsolr_secret'
-									       value="<?php echo empty( $solr_options['solr_secret_goto'] ) ? '' : $solr_options['solr_secret_goto']; ?>">
-									<span class='gsec_err'></span>
-								</div>
-								<div class="clear"></div>
-							</div>
 							<div class="wdm_row">
 								<div class="submit">
-									<input name="check_solr_status_third" id='check_solr_status_third' type="button"
-									       class="button-primary wdm-save" value="Check Solr Status, Then Save"/> <span><img
+									<input name="check_solr_status" id='check_index_status' type="button"
+									       class="button-primary wdm-save"
+									       value="Check Solr Status, Then Save"/> <span><img
 											src='<?php echo plugins_url( 'images/gif-load_cir.gif', __FILE__ ) ?>'
 											style='height:18px;width:18px;margin-top: 10px;display: none'
 											class='img-load'>
@@ -451,10 +395,10 @@ function fun_set_solr_options() {
 								</div>
 							</div>
 							<div class="clear"></div>
-						</div>
 
+						</form>
+					</div>
 
-					</form>
 				</div>
 
 
@@ -465,21 +409,19 @@ function fun_set_solr_options() {
 				<div id="solr-option-tab">
 
 					<?php
-					if ( isset ( $_GET['tab'] ) ) {
-						if ( $_GET['tab'] == 'solr_option' ) {
-							if ( isset ( $_GET['subtab'] ) ) {
-								wpsolr_admin_sub_tabs( $_GET['subtab'] );
-							} else {
-								wpsolr_admin_sub_tabs( 'index_opt' );
-							}
-						}
-					}
 
-					if ( isset ( $_GET['subtab'] ) ) {
-						$subtab = $_GET['subtab'];
-					} else {
-						$subtab = 'index_opt';
-					}
+					$subtabs = array(
+						'index_opt'              => 'Indexing Options',
+						'result_opt'             => 'Result Options',
+						'facet_opt'              => 'Facets Options',
+						'sort_opt'               => 'Sort Options',
+						'localization_options'   => 'Localization Options',
+						'extension_groups_opt'   => 'Groups plugin options',
+						'extension_s2member_opt' => 's2Member plugin options',
+						'extension_wpml_opt'     => 'WPML plugin options',
+					);
+
+					$subtab = wpsolr_admin_sub_tabs( 'index_opt', $subtabs );
 
 					switch ( $subtab ) {
 						case 'result_opt':
@@ -1139,9 +1081,9 @@ function fun_set_solr_options() {
 function wpsolr_admin_tabs( $current = 'solr_config' ) {
 	$tabs = array(
 		'solr_config'     => 'Solr Configuration',
-		'solr_hosting'    => 'Solr Hosting',
+		'solr_indexes'    => 'Solr Indexes',
 		'solr_option'     => 'Solr Options',
-		'solr_operations' => 'Solr Operations'
+		'solr_operations' => 'Solr Indexing Batch'
 	);
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper">';
@@ -1154,25 +1096,21 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 }
 
 
-function wpsolr_admin_sub_tabs( $current = 'index_opt' ) {
-	$tab     = $_GET['tab'];
-	$subtabs = array(
-		'index_opt'              => 'Indexing Options',
-		'result_opt'             => 'Result Options',
-		'facet_opt'              => 'Facets Options',
-		'sort_opt'               => 'Sort Options',
-		'localization_options'   => 'Localization Options',
-		'extension_groups_opt'   => 'Groups plugin options',
-		'extension_s2member_opt' => 's2Member plugin options',
-		'extension_wpml_opt'     => 'WPML plugin options'
-	);
+function wpsolr_admin_sub_tabs( $default_subtab, $subtabs ) {
+
+	$tab            = $_GET['tab'];
+	$current_subtab = isset ( $_GET['subtab'] ) ? $_GET['subtab'] : $default_subtab;
+
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper wdm-vertical-tabs">';
 	foreach ( $subtabs as $subtab => $name ) {
-		$class = ( $subtab == $current ) ? ' nav-tab-active' : '';
+		$class = ( $subtab == $current_subtab ) ? ' nav-tab-active' : '';
 		echo "<a class='nav-tab$class' href='admin.php?page=solr_settings&tab=$tab&subtab=$subtab'>$name</a>";
 
 	}
+
 	echo '</h2>';
+
+	return $current_subtab;
 }
 

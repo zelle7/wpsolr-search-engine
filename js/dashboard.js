@@ -264,23 +264,43 @@ jQuery(document).ready(function () {
             return false;
     })
 
-    jQuery('#check_solr_status').click(function () {
+    jQuery('#check_index_status').click(function () {
         path = jQuery('#adm_path').val();
 
-        host = jQuery('#solr_host').val();
-        port = jQuery('#solr_port').val();
-        spath = jQuery('#solr_path').val();
-        protocol = jQuery('#solr_protocol').val();
-
-
-        if (spath.substr(spath.length - 1, 1) == '/')
-            spath = spath.substr(0, spath.length - 1);
-
-        jQuery('#solr_path').val(spath);
+        name = jQuery('#index_name').val();
+        host = jQuery('#index_host').val();
+        port = jQuery('#index_port').val();
+        spath = jQuery('#index_path').val();
+        pwd = jQuery('#index_secret').val();
+        user = jQuery('#index_key').val();
+        protocol = jQuery('#index_protocol').val();
 
         error = 0;
+
+        if (name == '') {
+            jQuery('.name_err').text('Please enter an index name');
+            error = 1;
+        }
+        else {
+            jQuery('.name_err').text('');
+        }
+
+        if (spath == '') {
+            jQuery('.path_err').text('Please enter a path for your index');
+            error = 1;
+        }
+        else {
+            // Remove last '/'
+            if (spath.substr(spath.length - 1, 1) == '/') {
+                spath = spath.substr(0, spath.length - 1);
+                jQuery('#index_path').val(spath);
+            }
+
+            jQuery('.path_err').text('');
+        }
+
         if (host == '') {
-            jQuery('.host_err').text('Please enter solr host');
+            jQuery('.host_err').text('Please enter an index host');
             error = 1;
         }
         else {
@@ -288,113 +308,13 @@ jQuery(document).ready(function () {
         }
 
         if (isNaN(port) || port.length < 2) {
-            jQuery('.port_err').text('Please enter valid port');
+            jQuery('.port_err').text('Please enter a valid port');
             error = 1;
         }
         else
             jQuery('.port_err').text('');
 
-        if (spath == '') {
-            jQuery('.path_err').text('Please enter solr path');
-            error = 1;
-        }
-        else
-            jQuery('.path_err').text('');
-        if (error == 1) {
-            return false;
 
-        }
-        else {
-            jQuery('.img-succ').css('display', 'none');
-            jQuery('.img-err').css('display', 'none');
-            jQuery('.img-load').css('display', 'inline');
-
-            jQuery.ajax({
-                url: path + 'admin-ajax.php',
-                type: "post",
-                timeout: 10000,
-                data: {
-                    action: 'return_solr_instance',
-                    'sproto': protocol,
-                    'shost': host,
-                    'sport': port,
-                    'spath': spath,
-                    'spwd': '',
-                    'skey': ''
-                },
-                success: function (data1) {
-
-                    jQuery('.img-load').css('display', 'none');
-                    if (data1 == 0) {
-                        jQuery('.solr_error').html('');
-                        jQuery('.img-succ').css('display', 'inline');
-                        jQuery('#settings_conf_form').submit();
-                    }
-                    else if (data1 == 1)
-                        jQuery('.solr_error').text('Error in detecting solr instance');
-                    else
-                        jQuery('.solr_error').html(data1);
-
-                },
-                error: function (req, status, error) {
-
-                    jQuery('.img-load').css('display', 'none');
-
-                    jQuery('.solr_error').text('Timeout: we had no response from your Solr server in less than 10 seconds. It\'s probably because port ' + port + ' is blocked. Please try another port, for instance 443, or contact your hosting provider to unblock port ' + port + '.');
-                }
-
-            });
-
-        }
-
-    })
-    jQuery('#check_solr_status_third').click(function () {
-        path = jQuery('#adm_path').val();
-        host = jQuery('#gtsolr_host').val();
-        port = jQuery('#gtsolr_port').val();
-        spath = jQuery('#gtsolr_path').val();
-        pwd = jQuery('#gtsolr_secret').val();
-        user = jQuery('#gtsolr_key').val();
-        protocol = jQuery('#gtsolr_protocol').val();
-
-
-        if (spath.substr(spath.length - 1, 1) == '/')
-            spath = spath.substr(0, spath.length - 1);
-        jQuery('#gtsolr_path').val(spath);
-        error = 0;
-        if (host == '') {
-            jQuery('.ghost_err').text('Please enter solr host');
-            error = 1;
-        }
-        else {
-            jQuery('.ghost_err').text('');
-        }
-
-        if (isNaN(port) || port.length < 2) {
-            jQuery('.gport_err').text('Please enter valid port');
-            error = 1;
-        }
-        else
-            jQuery('.gport_err').text('');
-
-        if (spath == '') {
-            jQuery('.gpath_err').text('Please enter solr path');
-            error = 1;
-        }
-        else
-            jQuery('.gpath_err').text('');
-        if (pwd == '') {
-            jQuery('.gsec_err').text('Please enter solr secret');
-            error = 1;
-        }
-        else
-            jQuery('.gsec_err').text('');
-        if (user == '') {
-            jQuery('.gkey_err').text('Please enter solr key');
-            error = 1;
-        }
-        else
-            jQuery('.gkey_err').text('');
         if (error == 1)
             return false;
         else {
