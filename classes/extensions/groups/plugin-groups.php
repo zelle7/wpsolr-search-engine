@@ -25,7 +25,7 @@ class PluginGroups extends WpSolrExtensions {
 	 */
 	function __construct() {
 
-		$this->_extension_groups_options = $this->get_option_data( self::EXTENSION_GROUPS );
+		$this->_extension_groups_options = self::get_option_data( self::EXTENSION_GROUPS );
 
 		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array( $this, 'set_custom_query' ), 10, 1 );
 
