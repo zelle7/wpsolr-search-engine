@@ -903,8 +903,15 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 
 function wpsolr_admin_sub_tabs( $default_subtab, $subtabs ) {
 
-	$tab            = $_GET['tab'];
-	$current_subtab = isset ( $_GET['subtab'] ) ? $_GET['subtab'] : $default_subtab;
+	// Tab selected by the user
+	$tab = $_GET['tab'];
+
+	if ( isset ( $_GET['subtab'] ) ) {
+		$current_subtab = $_GET['subtab'];
+	} else {
+		// No user selection: use the first subtab in the list
+		$current_subtab = key( $subtabs );
+	}
 
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper wdm-vertical-tabs">';
