@@ -161,591 +161,608 @@ function fun_set_solr_options() {
 	}
 
 	switch ( $tab ) {
-		case 'solr_config' :
-			?>
-			<div id="solr-configuration-tab">
-				<div class='wrapper'>
-					<h4 class='head_div'>Solr Configuration</h4>
+	case 'solr_config' :
+		?>
+		<div id="solr-configuration-tab">
+			<div class='wrapper'>
+				<h4 class='head_div'>Solr Configuration</h4>
 
-					<div class="wdm_note">
+				<div class="wdm_note">
 
-						WPSOLR is compatible with the Solr versions listed at the following page: <a
-							href="http://www.wpsolr.com/releases#1.0" target="__wpsolr">Compatible Solr versions</a>.
+					WPSOLR is compatible with the Solr versions listed at the following page: <a
+						href="http://www.wpsolr.com/releases#1.0" target="__wpsolr">Compatible Solr versions</a>.
 
-						Your first action must be to download the two configuration files (schema.xml,
-						solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
-						Everything is described online.
+					Your first action must be to download the two configuration files (schema.xml,
+					solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
+					Everything is described online.
 
-					</div>
-					<div class="wdm_row">
-						<div class="submit">
-							<a href='admin.php?page=solr_settings&tab=solr_indexes' class="button-primary wdm-save">I
-								uploaded my 2 compatible configuration files to my Solr core >></a>
-						</div>
+				</div>
+				<div class="wdm_row">
+					<div class="submit">
+						<a href='admin.php?page=solr_settings&tab=solr_indexes' class="button-primary wdm-save">I
+							uploaded my 2 compatible configuration files to my Solr core >></a>
 					</div>
 				</div>
 			</div>
+		</div>
+		<?php
+		break;
+
+	case 'solr_indexes' :
+		WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_INDEXES );
+		break;
+
+	case 'solr_option':
+		?>
+		<div id="solr-option-tab">
+
 			<?php
-			break;
 
-		case 'solr_indexes' :
-			WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_INDEXES );
-			break;
-		case 'solr_option':
-			?>
-			<div id="solr-option-tab">
+			$subtabs = array(
+				'index_opt'            => 'Indexing Options',
+				'result_opt'           => 'Result Options',
+				'facet_opt'            => 'Facets Options',
+				'sort_opt'             => 'Sort Options',
+				'localization_options' => 'Localization Options',
+			);
 
-				<?php
+			$subtab = wpsolr_admin_sub_tabs( 'index_opt', $subtabs );
 
-				$subtabs = array(
-					'index_opt'              => 'Indexing Options',
-					'result_opt'             => 'Result Options',
-					'facet_opt'              => 'Facets Options',
-					'sort_opt'               => 'Sort Options',
-					'localization_options'   => 'Localization Options',
-					'extension_groups_opt'   => 'Groups plugin options',
-					'extension_s2member_opt' => 's2Member plugin options',
-					'extension_wpml_opt'     => 'WPML plugin options',
-				);
-
-				$subtab = wpsolr_admin_sub_tabs( 'index_opt', $subtabs );
-
-				switch ( $subtab ) {
-					case 'result_opt':
+			switch ( $subtab ) {
+				case 'result_opt':
 
 
-						?>
-						<div id="solr-results-options" class="wdm-vertical-tabs-content">
-							<form action="options.php" method="POST" id='res_settings_form'>
-								<?php
-								settings_fields( 'solr_res_options' );
-								$solr_res_options = get_option( 'wdm_solr_res_data', array(
-									'default_search'                     => 0,
-									'res_info'                           => '0',
-									'spellchecker'                       => '0',
-									'is_after_autocomplete_block_submit' => '1',
-								) );
+					?>
+					<div id="solr-results-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='res_settings_form'>
+							<?php
+							settings_fields( 'solr_res_options' );
+							$solr_res_options = get_option( 'wdm_solr_res_data', array(
+								'default_search'                     => 0,
+								'res_info'                           => '0',
+								'spellchecker'                       => '0',
+								'is_after_autocomplete_block_submit' => '1',
+							) );
 
-								?>
+							?>
 
-								<div class='wrapper'>
-									<h4 class='head_div'>Result Options</h4>
+							<div class='wrapper'>
+								<h4 class='head_div'>Result Options</h4>
 
-									<div class="wdm_note">
+								<div class="wdm_note">
 
-										In this section, you will choose how to display the results returned by a
-										query to your Solr instance.
+									In this section, you will choose how to display the results returned by a
+									query to your Solr instance.
 
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Do not automatically trigger the search, when a user
+										clicks on the
+										autocomplete list
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>Do not automatically trigger the search, when a user
-											clicks on the
-											autocomplete list
-										</div>
-										<div class='col_right'>
-											<?php $is_after_autocomplete_block_submit = isset( $solr_res_options['is_after_autocomplete_block_submit'] ) ? '1' : '0'; ?>
-											<input type='checkbox'
-											       name='wdm_solr_res_data[is_after_autocomplete_block_submit]'
-											       value='1'
-												<?php checked( '1', $is_after_autocomplete_block_submit ); ?>>
-										</div>
-										<div class="clear"></div>
+									<div class='col_right'>
+										<?php $is_after_autocomplete_block_submit = isset( $solr_res_options['is_after_autocomplete_block_submit'] ) ? '1' : '0'; ?>
+										<input type='checkbox'
+										       name='wdm_solr_res_data[is_after_autocomplete_block_submit]'
+										       value='1'
+											<?php checked( '1', $is_after_autocomplete_block_submit ); ?>>
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>Display suggestions (Did you mean?)</div>
-										<div class='col_right'>
-											<input type='checkbox'
-											       name='wdm_solr_res_data[<?php echo 'spellchecker' ?>]'
-											       value='spellchecker'
-												<?php checked( 'spellchecker', isset( $solr_res_options['spellchecker'] ) ? $solr_res_options['spellchecker'] : '?' ); ?>>
-										</div>
-										<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Display suggestions (Did you mean?)</div>
+									<div class='col_right'>
+										<input type='checkbox'
+										       name='wdm_solr_res_data[<?php echo 'spellchecker' ?>]'
+										       value='spellchecker'
+											<?php checked( 'spellchecker', isset( $solr_res_options['spellchecker'] ) ? $solr_res_options['spellchecker'] : '?' ); ?>>
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>Display number of results and current page</div>
-										<div class='col_right'>
-											<input type='checkbox' name='wdm_solr_res_data[res_info]'
-											       value='res_info'
-												<?php checked( 'res_info', isset( $solr_res_options['res_info'] ) ? $solr_res_options['res_info'] : '?' ); ?>>
-										</div>
-										<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Display number of results and current page</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[res_info]'
+										       value='res_info'
+											<?php checked( 'res_info', isset( $solr_res_options['res_info'] ) ? $solr_res_options['res_info'] : '?' ); ?>>
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>Replace WordPress Default Search</div>
-										<div class='col_right'>
-											<input type='checkbox' name='wdm_solr_res_data[default_search]'
-											       value='1'
-												<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
-										</div>
-										<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Replace WordPress Default Search</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[default_search]'
+										       value='1'
+											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>No. of results per page</div>
-										<div class='col_right'>
-											<input type='text' id='number_of_res' name='wdm_solr_res_data[no_res]'
-											       placeholder="Enter a Number"
-											       value="<?php echo empty( $solr_res_options['no_res'] ) ? '20' : $solr_res_options['no_res']; ?>">
-											<span class='res_err'></span><br>
-										</div>
-										<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>No. of results per page</div>
+									<div class='col_right'>
+										<input type='text' id='number_of_res' name='wdm_solr_res_data[no_res]'
+										       placeholder="Enter a Number"
+										       value="<?php echo empty( $solr_res_options['no_res'] ) ? '20' : $solr_res_options['no_res']; ?>">
+										<span class='res_err'></span><br>
 									</div>
-									<div class="wdm_row">
-										<div class='col_left'>No. of values to be displayed by facets</div>
-										<div class='col_right'>
-											<input type='text' id='number_of_fac' name='wdm_solr_res_data[no_fac]'
-											       placeholder="Enter a Number"
-											       value="<?php echo empty( $solr_res_options['no_fac'] ) ? '20' : $solr_res_options['no_fac']; ?>"><span
-												class='fac_err'></span> <br>
-										</div>
-										<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>No. of values to be displayed by facets</div>
+									<div class='col_right'>
+										<input type='text' id='number_of_fac' name='wdm_solr_res_data[no_fac]'
+										       placeholder="Enter a Number"
+										       value="<?php echo empty( $solr_res_options['no_fac'] ) ? '20' : $solr_res_options['no_fac']; ?>"><span
+											class='fac_err'></span> <br>
 									</div>
-									<div class='wdm_row'>
-										<div class="submit">
-											<input name="save_selected_options_res_form"
-											       id="save_selected_res_options_form" type="submit"
-											       class="button-primary wdm-save" value="Save Options"/>
+									<div class="clear"></div>
+								</div>
+								<div class='wdm_row'>
+									<div class="submit">
+										<input name="save_selected_options_res_form"
+										       id="save_selected_res_options_form" type="submit"
+										       class="button-primary wdm-save" value="Save Options"/>
 
 
-										</div>
 									</div>
 								</div>
+							</div>
 
-							</form>
-						</div>
-						<?php
-						break;
-					case 'index_opt':
+						</form>
+					</div>
+					<?php
+					break;
+				case 'index_opt':
 
 
-						$posts                     = get_post_types();
-						$args       = array(
-							'public'   => true,
-							'_builtin' => false
+					$posts                     = get_post_types();
+					$args       = array(
+						'public'   => true,
+						'_builtin' => false
 
-						);
-						$output     = 'names'; // or objects
-						$operator   = 'and'; // 'and' or 'or'
-						$taxonomies = get_taxonomies( $args, $output, $operator );
-						global $wpdb;
-						$limit      = (int) apply_filters( 'postmeta_form_limit', 30 );
-						$keys       = $wpdb->get_col( "
+					);
+					$output     = 'names'; // or objects
+					$operator   = 'and'; // 'and' or 'or'
+					$taxonomies = get_taxonomies( $args, $output, $operator );
+					global $wpdb;
+					$limit      = (int) apply_filters( 'postmeta_form_limit', 30 );
+					$keys       = $wpdb->get_col( "
                                                                     SELECT meta_key
                                                                     FROM $wpdb->postmeta
                                                                     WHERE meta_key!='bwps_enable_ssl' 
                                                                     GROUP BY meta_key
                                                                     HAVING meta_key NOT LIKE '\_%'
                                                                     ORDER BY meta_key" );
-						$post_types = array();
-						foreach ( $posts as $ps ) {
-							if ( $ps != 'attachment' && $ps != 'revision' && $ps != 'nav_menu_item' ) {
-								array_push( $post_types, $ps );
-							}
+					$post_types = array();
+					foreach ( $posts as $ps ) {
+						if ( $ps != 'attachment' && $ps != 'revision' && $ps != 'nav_menu_item' ) {
+							array_push( $post_types, $ps );
 						}
+					}
 
-						$allowed_attachments_types = get_allowed_mime_types();
+					$allowed_attachments_types = get_allowed_mime_types();
 
-						?>
-						<div id="solr-indexing-options" class="wdm-vertical-tabs-content">
-							<form action="options.php" method="POST" id='settings_form'>
-								<?php
-								settings_fields( 'solr_form_options' );
-								$solr_options = get_option( 'wdm_solr_form_data', array(
-									'comments'         => 0,
-									'p_types'          => '',
-									'taxonomies'       => '',
-									'cust_fields'      => '',
-									'attachment_types' => ''
-								) );
-								?>
-
-
-								<div class='indexing_option wrapper'>
-									<h4 class='head_div'>Indexing Options</h4>
-
-									<div class="wdm_note">
-
-										In this section, you will choose among all the data stored in your Wordpress
-										site, which you want to load in your Solr index.
-
-									</div>
-
-									<div class="wdm_row">
-										<div class='col_left'>Post types to be indexed</div>
-										<div class='col_right'>
-											<input type='hidden' name='wdm_solr_form_data[p_types]' id='p_types'>
-											<?php
-											$post_types_opt = $solr_options['p_types'];
-											foreach ( $post_types as $type ) {
-												?>
-												<input type='checkbox' name='post_tys' value='<?php echo $type ?>'
-													<?php if ( strpos( $post_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
-												<br>
-												<?php
-											}
-											?>
-
-										</div>
-										<div class="clear"></div>
-									</div>
-
-									<div class="wdm_row">
-										<div class='col_left'>Attachment types to be indexed</div>
-										<div class='col_right'>
-											<input type='hidden' name='wdm_solr_form_data[attachment_types]'
-											       id='attachment_types'>
-											<?php
-											$attachment_types_opt = $solr_options['attachment_types'];
-											foreach ( $allowed_attachments_types as $type ) {
-												?>
-												<input type='checkbox' name='attachment_types'
-												       value='<?php echo $type ?>'
-													<?php if ( strpos( $attachment_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
-												<br>
-												<?php
-											}
-											?>
-										</div>
-										<div class="clear"></div>
-									</div>
-
-									<div class="wdm_row">
-										<div class='col_left'>Custom taxonomies to be indexed</div>
-										<div class='col_right'>
-											<div class='cust_tax'><!--new div class given-->
-												<input type='hidden' name='wdm_solr_form_data[taxonomies]'
-												       id='tax_types'>
-												<?php
-												$tax_types_opt = $solr_options['taxonomies'];
-												if ( count( $taxonomies ) > 0 ) {
-													foreach ( $taxonomies as $type ) {
-														?>
-
-														<input type='checkbox' name='taxon'
-														       value='<?php echo $type . "_str" ?>'
-															<?php if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) { ?> checked <?php } ?>
-															> <?php echo $type ?> <br>
-														<?php
-													}
-
-												} else {
-													echo 'None';
-												} ?>
-											</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-
-									<div class="wdm_row">
-										<div class='col_left'>Custom Fields to be indexed</div>
-
-										<div class='col_right'>
-											<input type='hidden' name='wdm_solr_form_data[cust_fields]'
-											       id='field_types'>
-
-											<div class='cust_fields'><!--new div class given-->
-												<?php
-												$field_types_opt = $solr_options['cust_fields'];
-												if ( count( $keys ) > 0 ) {
-													foreach ( $keys as $key ) {
-														?>
-
-														<input type='checkbox' name='cust_fields'
-														       value='<?php echo $key . "_str" ?>'
-															<?php if ( strpos( $field_types_opt, $key . "_str" ) !== false ) { ?> checked <?php } ?>> <?php echo $key ?>
-														<br>
-														<?php
-													}
-
-												} else {
-													echo 'None';
-												}
-												?>
-											</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-
-									<div class="wdm_row">
-										<div class='col_left'>Index Comments</div>
-										<div class='col_right'>
-											<input type='checkbox' name='wdm_solr_form_data[comments]'
-											       value='1' <?php checked( '1', isset( $solr_options['comments'] ) ? $solr_options['comments'] : '' ); ?>>
-
-										</div>
-										<div class="clear"></div>
-									</div>
-									<div class="wdm_row">
-										<div class='col_left'>Exclude items (Posts,Pages,...)</div>
-										<div class='col_right'>
-											<input type='text' name='wdm_solr_form_data[exclude_ids]'
-											       placeholder="Comma separated ID's list"
-											       value="<?php echo empty( $solr_options['exclude_ids'] ) ? '' : $solr_options['exclude_ids']; ?>">
-											<br>
-											(Comma separated ids list)
-										</div>
-										<div class="clear"></div>
-									</div>
-									<div class='wdm_row'>
-										<div class="submit">
-											<input name="save_selected_index_options_form"
-											       id="save_selected_index_options_form" type="submit"
-											       class="button-primary wdm-save" value="Save Options"/>
+					?>
+					<div id="solr-indexing-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='settings_form'>
+							<?php
+							settings_fields( 'solr_form_options' );
+							$solr_options = get_option( 'wdm_solr_form_data', array(
+								'comments'         => 0,
+								'p_types'          => '',
+								'taxonomies'       => '',
+								'cust_fields'      => '',
+								'attachment_types' => ''
+							) );
+							?>
 
 
-										</div>
-									</div>
+							<div class='indexing_option wrapper'>
+								<h4 class='head_div'>Indexing Options</h4>
+
+								<div class="wdm_note">
+
+									In this section, you will choose among all the data stored in your Wordpress
+									site, which you want to load in your Solr index.
 
 								</div>
-							</form>
-						</div>
-						<?php
-						break;
 
-					case 'facet_opt':
-						$solr_options   = get_option( 'wdm_solr_form_data' );
-						$checked_fls = $solr_options['cust_fields'] . ',' . $solr_options['taxonomies'];
-
-						$checked_fields = array();
-						$checked_fields = explode( ',', $checked_fls );
-						$img_path       = plugins_url( 'images/plus.png', __FILE__ );
-						$minus_path     = plugins_url( 'images/minus.png', __FILE__ );
-						$built_in       = array( 'Type', 'Author', 'Categories', 'Tags' );
-						$built_in       = array_merge( $built_in, $checked_fields );
-						?>
-						<div id="solr-facets-options" class="wdm-vertical-tabs-content">
-							<form action="options.php" method="POST" id='fac_settings_form'>
-								<?php
-								settings_fields( 'solr_facet_options' );
-								$solr_fac_options      = get_option( 'wdm_solr_facet_data' );
-								$selected_facets_value = $solr_fac_options['facets'];
-								if ( $selected_facets_value != '' ) {
-									$selected_array = explode( ',', $selected_facets_value );
-								} else {
-									$selected_array = array();
-								}
-								?>
-								<div class='wrapper'>
-									<h4 class='head_div'>Facets Options</h4>
-
-									<div class="wdm_note">
-
-										In this section, you will choose which data you want to display as facets in
-										your search results. Facets are extra filters usually seen in the left hand
-										side of the results, displayed as a list of links. You can add facets only
-										to data you've selected to be indexed.
+								<div class="wdm_row">
+									<div class='col_left'>Post types to be indexed</div>
+									<div class='col_right'>
+										<input type='hidden' name='wdm_solr_form_data[p_types]' id='p_types'>
+										<?php
+										$post_types_opt = $solr_options['p_types'];
+										foreach ( $post_types as $type ) {
+											?>
+											<input type='checkbox' name='post_tys' value='<?php echo $type ?>'
+												<?php if ( strpos( $post_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
+											<br>
+											<?php
+										}
+										?>
 
 									</div>
-									<div class="wdm_note">
-										<h4>Instructions</h4>
-										<ul class="wdm_ul wdm-instructions">
-											<li>Click on the 'Plus' icon to add the facets</li>
-											<li>Click on the 'Minus' icon to remove the facets</li>
-											<li>Sort the items in the order you want to display them by dragging and
-												dropping them at the desired plcae
-											</li>
-										</ul>
+									<div class="clear"></div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='col_left'>Attachment types to be indexed</div>
+									<div class='col_right'>
+										<input type='hidden' name='wdm_solr_form_data[attachment_types]'
+										       id='attachment_types'>
+										<?php
+										$attachment_types_opt = $solr_options['attachment_types'];
+										foreach ( $allowed_attachments_types as $type ) {
+											?>
+											<input type='checkbox' name='attachment_types'
+											       value='<?php echo $type ?>'
+												<?php if ( strpos( $attachment_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
+											<br>
+											<?php
+										}
+										?>
 									</div>
+									<div class="clear"></div>
+								</div>
 
-									<div class="wdm_row">
-										<div class='avail_fac'>
-											<h4>Available items for facets</h4>
-											<input type='hidden' id='select_fac' name='wdm_solr_facet_data[facets]'
-											       value='<?php echo $selected_facets_value ?>'>
+								<div class="wdm_row">
+									<div class='col_left'>Custom taxonomies to be indexed</div>
+									<div class='col_right'>
+										<div class='cust_tax'><!--new div class given-->
+											<input type='hidden' name='wdm_solr_form_data[taxonomies]'
+											       id='tax_types'>
+											<?php
+											$tax_types_opt = $solr_options['taxonomies'];
+											if ( count( $taxonomies ) > 0 ) {
+												foreach ( $taxonomies as $type ) {
+													?>
+
+													<input type='checkbox' name='taxon'
+													       value='<?php echo $type . "_str" ?>'
+														<?php if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) { ?> checked <?php } ?>
+														> <?php echo $type ?> <br>
+													<?php
+												}
+
+											} else {
+												echo 'None';
+											} ?>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='col_left'>Custom Fields to be indexed</div>
+
+									<div class='col_right'>
+										<input type='hidden' name='wdm_solr_form_data[cust_fields]'
+										       id='field_types'>
+
+										<div class='cust_fields'><!--new div class given-->
+											<?php
+											$field_types_opt = $solr_options['cust_fields'];
+											if ( count( $keys ) > 0 ) {
+												foreach ( $keys as $key ) {
+													?>
+
+													<input type='checkbox' name='cust_fields'
+													       value='<?php echo $key . "_str" ?>'
+														<?php if ( strpos( $field_types_opt, $key . "_str" ) !== false ) { ?> checked <?php } ?>> <?php echo $key ?>
+													<br>
+													<?php
+												}
+
+											} else {
+												echo 'None';
+											}
+											?>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='col_left'>Index Comments</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_form_data[comments]'
+										       value='1' <?php checked( '1', isset( $solr_options['comments'] ) ? $solr_options['comments'] : '' ); ?>>
+
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Exclude items (Posts,Pages,...)</div>
+									<div class='col_right'>
+										<input type='text' name='wdm_solr_form_data[exclude_ids]'
+										       placeholder="Comma separated ID's list"
+										       value="<?php echo empty( $solr_options['exclude_ids'] ) ? '' : $solr_options['exclude_ids']; ?>">
+										<br>
+										(Comma separated ids list)
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class='wdm_row'>
+									<div class="submit">
+										<input name="save_selected_index_options_form"
+										       id="save_selected_index_options_form" type="submit"
+										       class="button-primary wdm-save" value="Save Options"/>
 
 
-											<ul id="sortable1" class="wdm_ul connectedSortable">
-												<?php
-												if ( $selected_facets_value != '' ) {
-													foreach ( $selected_array as $selected_val ) {
-														if ( $selected_val != '' ) {
-															if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
-																$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
-															} else {
-																$dis_text = $selected_val;
-															}
+									</div>
+								</div>
+
+							</div>
+						</form>
+					</div>
+					<?php
+					break;
+
+				case 'facet_opt':
+					$solr_options   = get_option( 'wdm_solr_form_data' );
+					$checked_fls = $solr_options['cust_fields'] . ',' . $solr_options['taxonomies'];
+
+					$checked_fields = array();
+					$checked_fields = explode( ',', $checked_fls );
+					$img_path       = plugins_url( 'images/plus.png', __FILE__ );
+					$minus_path     = plugins_url( 'images/minus.png', __FILE__ );
+					$built_in       = array( 'Type', 'Author', 'Categories', 'Tags' );
+					$built_in       = array_merge( $built_in, $checked_fields );
+					?>
+					<div id="solr-facets-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='fac_settings_form'>
+							<?php
+							settings_fields( 'solr_facet_options' );
+							$solr_fac_options      = get_option( 'wdm_solr_facet_data' );
+							$selected_facets_value = $solr_fac_options['facets'];
+							if ( $selected_facets_value != '' ) {
+								$selected_array = explode( ',', $selected_facets_value );
+							} else {
+								$selected_array = array();
+							}
+							?>
+							<div class='wrapper'>
+								<h4 class='head_div'>Facets Options</h4>
+
+								<div class="wdm_note">
+
+									In this section, you will choose which data you want to display as facets in
+									your search results. Facets are extra filters usually seen in the left hand
+									side of the results, displayed as a list of links. You can add facets only
+									to data you've selected to be indexed.
+
+								</div>
+								<div class="wdm_note">
+									<h4>Instructions</h4>
+									<ul class="wdm_ul wdm-instructions">
+										<li>Click on the 'Plus' icon to add the facets</li>
+										<li>Click on the 'Minus' icon to remove the facets</li>
+										<li>Sort the items in the order you want to display them by dragging and
+											dropping them at the desired plcae
+										</li>
+									</ul>
+								</div>
+
+								<div class="wdm_row">
+									<div class='avail_fac'>
+										<h4>Available items for facets</h4>
+										<input type='hidden' id='select_fac' name='wdm_solr_facet_data[facets]'
+										       value='<?php echo $selected_facets_value ?>'>
 
 
-															echo "<li id='$selected_val' class='ui-state-default facets facet_selected'>$dis_text
+										<ul id="sortable1" class="wdm_ul connectedSortable">
+											<?php
+											if ( $selected_facets_value != '' ) {
+												foreach ( $selected_array as $selected_val ) {
+													if ( $selected_val != '' ) {
+														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
+															$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
+														} else {
+															$dis_text = $selected_val;
+														}
+
+
+														echo "<li id='$selected_val' class='ui-state-default facets facet_selected'>$dis_text
                                                                                                     <img src='$img_path'  class='plus_icon' style='display:none'>
                                                                                                 <img src='$minus_path' class='minus_icon' style='display:inline' title='Click to Remove the Facet'></li>";
-														}
 													}
 												}
-												foreach ( $built_in as $built_fac ) {
-													if ( $built_fac != '' ) {
-														$buil_fac = strtolower( $built_fac );
-														if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == "_str" ) {
-															$dis_text = substr( $buil_fac, 0, ( strlen( $buil_fac ) - 4 ) );
-														} else {
-															$dis_text = $buil_fac;
-														}
+											}
+											foreach ( $built_in as $built_fac ) {
+												if ( $built_fac != '' ) {
+													$buil_fac = strtolower( $built_fac );
+													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == "_str" ) {
+														$dis_text = substr( $buil_fac, 0, ( strlen( $buil_fac ) - 4 ) );
+													} else {
+														$dis_text = $buil_fac;
+													}
 
-														if ( ! in_array( $buil_fac, $selected_array ) ) {
+													if ( ! in_array( $buil_fac, $selected_array ) ) {
 
-															echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
+														echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
                                                                                                     <img src='$img_path'  class='plus_icon' style='display:inline' title='Click to Add the Facet'>
                                                                                                 <img src='$minus_path' class='minus_icon' style='display:none'></li>";
-														}
 													}
 												}
-												?>
+											}
+											?>
 
 
-											</ul>
-										</div>
-
-										<div class="clear"></div>
-									</div>
-
-									<div class='wdm_row'>
-										<div class="submit">
-											<input name="save_facets_options_form" id="save_facets_options_form"
-											       type="submit" class="button-primary wdm-save"
-											       value="Save Options"/>
-
-
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-						<?php
-						break;
-
-					case 'sort_opt':
-						$img_path    = plugins_url( 'images/plus.png', __FILE__ );
-						$minus_path = plugins_url( 'images/minus.png', __FILE__ );
-
-						$checked_fls = array();
-						$built_in    = wp_Solr::get_sort_options();
-
-						?>
-						<div id="solr-sort-options" class="wdm-vertical-tabs-content">
-							<form action="options.php" method="POST" id='sort_settings_form'>
-								<?php
-								settings_fields( 'solr_sort_options' );
-								$solr_sort_options   = get_option( 'wdm_solr_sortby_data' );
-								$selected_sort_value = $solr_sort_options['sort'];
-								if ( $selected_sort_value != '' ) {
-									$selected_array = explode( ',', $selected_sort_value );
-								} else {
-									$selected_array = array();
-								}
-								?>
-								<div class='wrapper'>
-									<h4 class='head_div'>Sort Options</h4>
-
-									<div class="wdm_note">
-
-										In this section, you will choose which elements will be displayed as sort
-										criteria for your search results, and in which order.
-
-									</div>
-									<div class="wdm_note">
-										<h4>Instructions</h4>
-										<ul class="wdm_ul wdm-instructions">
-											<li>Click on the 'Plus' icon to add the sort</li>
-											<li>Click on the 'Minus' icon to remove the sort</li>
-											<li>Sort the items in the order you want to display them by dragging and
-												dropping them at the desired place
-											</li>
 										</ul>
 									</div>
 
-									<div class="wdm_row">
-										<div class='col_left'>Default when no sort is selected by the user</div>
-										<div class='col_right'>
-											<select name="wdm_solr_sortby_data[sort_default]">
-												<?php foreach ( $built_in as $sort ) {
-													$selected = $solr_sort_options['sort_default'] == $sort['code'] ? 'selected' : '';
-													?>
-													<option
-														value="<?php echo $sort['code'] ?>" <?php echo $selected ?> ><?php echo $sort['label'] ?></option>
-												<?php } ?>
-											</select>
-										</div>
-									</div>
+									<div class="clear"></div>
+								</div>
 
-									<div class="wdm_row">
-										<div class='avail_fac'>
-											<h4>Activate/deactivate items in the sort list</h4>
-											<input type='hidden' id='select_sort' name='wdm_solr_sortby_data[sort]'
-											       value='<?php echo $selected_sort_value ?>'>
+								<div class='wdm_row'>
+									<div class="submit">
+										<input name="save_facets_options_form" id="save_facets_options_form"
+										       type="submit" class="button-primary wdm-save"
+										       value="Save Options"/>
 
 
-											<ul id="sortable_sort" class="wdm_ul connectedSortable_sort">
-												<?php
-												if ( $selected_sort_value != '' ) {
-													foreach ( $selected_array as $sort_code ) {
-														if ( $sort_code != '' ) {
-															$sort     = wp_Solr::get_sort_option_from_code( $sort_code, null );
-															$dis_text = is_array( $sort ) ? $sort['label'] : $sort_code;
-
-															echo "<li id='$sort_code' class='ui-state-default facets sort_selected'>$dis_text
-                                                                                                    <img src='$img_path'  class='plus_icon_sort' style='display:none'>
-                                                                                                <img src='$minus_path' class='minus_icon_sort' style='display:inline' title='Click to Remove the Sort'></li>";
-														}
-													}
-												}
-												foreach ( $built_in as $built ) {
-													if ( $built != '' ) {
-														$buil_fac = $built['code'];
-														$dis_text = $built['label'];
-
-														if ( ! in_array( $buil_fac, $selected_array ) ) {
-
-															echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
-                                                                                                    <img src='$img_path'  class='plus_icon_sort' style='display:inline' title='Click to Add the Sort'>
-                                                                                                <img src='$minus_path' class='minus_icon_sort' style='display:none'></li>";
-														}
-													}
-												}
-												?>
-
-
-											</ul>
-										</div>
-
-										<div class="clear"></div>
-									</div>
-
-									<div class='wdm_row'>
-										<div class="submit">
-											<input name="save_sort_options_form" id="save_sort_options_form"
-											       type="submit" class="button-primary wdm-save"
-											       value="Save Options"/>
-
-
-										</div>
 									</div>
 								</div>
-							</form>
-						</div>
-						<?php
-						break;
+							</div>
+						</form>
+					</div>
+					<?php
+					break;
 
-					case 'localization_options':
-						WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_LOCALIZATION );
-						break;
+				case 'sort_opt':
+					$img_path    = plugins_url( 'images/plus.png', __FILE__ );
+					$minus_path = plugins_url( 'images/minus.png', __FILE__ );
 
-					case 'extension_groups_opt':
-						WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_GROUPS );
-						break;
+					$checked_fls = array();
+					$built_in    = wp_Solr::get_sort_options();
 
-					case 'extension_s2member_opt':
-						WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_S2MEMBER );
-						break;
+					?>
+					<div id="solr-sort-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='sort_settings_form'>
+							<?php
+							settings_fields( 'solr_sort_options' );
+							$solr_sort_options   = get_option( 'wdm_solr_sortby_data' );
+							$selected_sort_value = $solr_sort_options['sort'];
+							if ( $selected_sort_value != '' ) {
+								$selected_array = explode( ',', $selected_sort_value );
+							} else {
+								$selected_array = array();
+							}
+							?>
+							<div class='wrapper'>
+								<h4 class='head_div'>Sort Options</h4>
 
-					case 'extension_wpml_opt':
-						WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_WPML );
-						break;
-				}
+								<div class="wdm_note">
 
-				?>
+									In this section, you will choose which elements will be displayed as sort
+									criteria for your search results, and in which order.
 
-			</div>
-			<?php
-			break;
+								</div>
+								<div class="wdm_note">
+									<h4>Instructions</h4>
+									<ul class="wdm_ul wdm-instructions">
+										<li>Click on the 'Plus' icon to add the sort</li>
+										<li>Click on the 'Minus' icon to remove the sort</li>
+										<li>Sort the items in the order you want to display them by dragging and
+											dropping them at the desired place
+										</li>
+									</ul>
+								</div>
+
+								<div class="wdm_row">
+									<div class='col_left'>Default when no sort is selected by the user</div>
+									<div class='col_right'>
+										<select name="wdm_solr_sortby_data[sort_default]">
+											<?php foreach ( $built_in as $sort ) {
+												$selected = $solr_sort_options['sort_default'] == $sort['code'] ? 'selected' : '';
+												?>
+												<option
+													value="<?php echo $sort['code'] ?>" <?php echo $selected ?> ><?php echo $sort['label'] ?></option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='avail_fac'>
+										<h4>Activate/deactivate items in the sort list</h4>
+										<input type='hidden' id='select_sort' name='wdm_solr_sortby_data[sort]'
+										       value='<?php echo $selected_sort_value ?>'>
+
+
+										<ul id="sortable_sort" class="wdm_ul connectedSortable_sort">
+											<?php
+											if ( $selected_sort_value != '' ) {
+												foreach ( $selected_array as $sort_code ) {
+													if ( $sort_code != '' ) {
+														$sort     = wp_Solr::get_sort_option_from_code( $sort_code, null );
+														$dis_text = is_array( $sort ) ? $sort['label'] : $sort_code;
+
+														echo "<li id='$sort_code' class='ui-state-default facets sort_selected'>$dis_text
+                                                                                                    <img src='$img_path'  class='plus_icon_sort' style='display:none'>
+                                                                                                <img src='$minus_path' class='minus_icon_sort' style='display:inline' title='Click to Remove the Sort'></li>";
+													}
+												}
+											}
+											foreach ( $built_in as $built ) {
+												if ( $built != '' ) {
+													$buil_fac = $built['code'];
+													$dis_text = $built['label'];
+
+													if ( ! in_array( $buil_fac, $selected_array ) ) {
+
+														echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
+                                                                                                    <img src='$img_path'  class='plus_icon_sort' style='display:inline' title='Click to Add the Sort'>
+                                                                                                <img src='$minus_path' class='minus_icon_sort' style='display:none'></li>";
+													}
+												}
+											}
+											?>
+
+
+										</ul>
+									</div>
+
+									<div class="clear"></div>
+								</div>
+
+								<div class='wdm_row'>
+									<div class="submit">
+										<input name="save_sort_options_form" id="save_sort_options_form"
+										       type="submit" class="button-primary wdm-save"
+										       value="Save Options"/>
+
+
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<?php
+					break;
+
+				case 'localization_options':
+					WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_LOCALIZATION );
+					break;
+
+			}
+
+			?>
+
+		</div>
+		<?php
+		break;
+
+	case 'solr_plugins':
+	?>
+	<div id="solr-option-tab">
+
+		<?php
+
+		$subtabs = array(
+			'extension_wpml_opt'     => 'WPML',
+			'extension_groups_opt'   => 'Groups',
+			'extension_s2member_opt' => 's2Member',
+		);
+
+		$subtab = wpsolr_admin_sub_tabs( 'extension_wpml_opt', $subtabs );
+
+		switch ( $subtab ) {
+			case 'extension_groups_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_GROUPS );
+				break;
+
+			case 'extension_s2member_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_S2MEMBER );
+				break;
+
+			case 'extension_wpml_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_WPML );
+				break;
+		}
+
+		break;
 
 		case 'solr_operations':
 
@@ -854,13 +871,13 @@ function fun_set_solr_options() {
 			break;
 
 
-	}
+		}
 
 		?>
 
 
 	</div>
-<?php
+	<?php
 
 
 }
@@ -870,6 +887,7 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 		'solr_config'     => 'Solr Configuration',
 		'solr_indexes'    => 'Solr Indexes',
 		'solr_option'     => 'Solr Options',
+		'solr_plugins'    => 'Plugins Integration',
 		'solr_operations' => 'Solr Indexing Batch'
 	);
 	echo '<div id="icon-themes" class="icon32"><br></div>';

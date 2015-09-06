@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" afterPath="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
     </list>
     <ignored path="wpsolr-search-engine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,32 +103,22 @@
       <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45887446">
-              <caret line="102" column="34" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.17316018">
+              <caret line="112" column="32" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
               <folding>
-                <marker date="1441530849000" expanded="true" signature="4387:4403" placeholder="..." />
-                <marker date="1441530849000" expanded="true" signature="4412:4605" placeholder="..." />
-                <marker date="1441530849000" expanded="true" signature="4463:4594" placeholder="..." />
+                <marker date="1441537551000" expanded="true" signature="5502:5518" placeholder="..." />
+                <marker date="1441537551000" expanded="true" signature="5527:5720" placeholder="..." />
+                <marker date="1441537551000" expanded="true" signature="5578:5709" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
+      <file leaf-file-name="plugin-wpml.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.75">
-              <caret line="204" column="67" selection-start-line="204" selection-start-column="67" selection-end-line="204" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="option-indexes.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+            <state vertical-scroll-proportion="-16.5">
+              <caret line="132" column="59" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -188,14 +179,14 @@
         <option value="$PROJECT_DIR$/autocomplete.php" />
         <option value="$PROJECT_DIR$/css/dashboard_css.css" />
         <option value="$PROJECT_DIR$/js/dashboard.js" />
-        <option value="$PROJECT_DIR$/dashboard_settings.php" />
         <option value="$PROJECT_DIR$/classes/extensions/groups/plugin-groups.php" />
         <option value="$PROJECT_DIR$/classes/extensions/s2member/plugin-s2member.php" />
         <option value="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
         <option value="$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php" />
         <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/dashboard_settings.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
         <option value="$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php" />
       </list>
     </option>
@@ -720,7 +711,7 @@
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1008" />
+      <option name="time" value="1012" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="admin.php">
@@ -735,13 +726,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36011904">
-          <caret line="65" column="16" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_2.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5991501">
@@ -1055,40 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.04735683">
-          <caret line="555" column="56" selection-start-line="555" selection-start-column="52" selection-end-line="555" selection-end-column="56" />
-          <folding>
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="SELECT meta_..wp_postmeta..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1441465428000" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49779737">
@@ -1119,14 +1069,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45742574">
           <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47524753">
-          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1169,30 +1111,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36936936">
+          <caret line="745" column="49" selection-start-line="745" selection-start-column="49" selection-end-line="745" selection-end-column="49" />
+          <folding>
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="SELECT meta_..wp_postmeta..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441532248000" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.75">
-          <caret line="204" column="67" selection-start-line="204" selection-start-column="67" selection-end-line="204" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.73593074">
+          <caret line="81" column="47" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_9.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="744" column="102" selection-start-line="744" selection-start-column="86" selection-end-line="744" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.5">
+          <caret line="132" column="59" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45887446">
-          <caret line="102" column="34" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.17316018">
+          <caret line="112" column="32" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
           <folding>
-            <marker date="1441530849000" expanded="true" signature="4387:4403" placeholder="..." />
-            <marker date="1441530849000" expanded="true" signature="4412:4605" placeholder="..." />
-            <marker date="1441530849000" expanded="true" signature="4463:4594" placeholder="..." />
+            <marker date="1441537551000" expanded="true" signature="5502:5518" placeholder="..." />
+            <marker date="1441537551000" expanded="true" signature="5527:5720" placeholder="..." />
+            <marker date="1441537551000" expanded="true" signature="5578:5709" placeholder="..." />
           </folding>
         </state>
       </provider>

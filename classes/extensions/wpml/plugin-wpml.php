@@ -30,7 +30,6 @@ class PluginWpml extends WpSolrExtensions {
 
 	}
 
-
 	/**
 	 * Add multi-language fields to a Solarium document
 	 *
@@ -117,6 +116,37 @@ class PluginWpml extends WpSolrExtensions {
 
 
 		return $result;
+	}
+
+
+	/**
+	 * Verify that all languages are related to a unique Solr index.
+	 * Used to warn if 2 languages are indexed in the same Solr index
+	 *
+	 * @return bool
+	 */
+	public static function each_language_has_a_unique_solr_index() {
+
+		$options                   = get_option( 'wdm_solr_extension_wpml_data' );
+		$solr_indexes_by_languages = $options['solr_indexes_by_languages'];
+		if ( ! isset( $solr_indexes_by_languages ) ) {
+			// Languages not yet related to any Solr index.
+			return false;
+		}
+
+		$solr_index_indices_already_found = array();
+		foreach ( $solr_indexes_by_languages as $language_code => $solr_index_indice ) {
+
+			if ( array_key_exists( $solr_index_indice, $solr_index_indices_already_found ) ) {
+				// We found this Solr index indice twice
+				return false;
+			}
+
+			// Add Solr index indice to already found ones
+			$solr_index_indices_already_found[ $solr_index_indice ] = '';
+		}
+
+		return true;
 	}
 
 	/**

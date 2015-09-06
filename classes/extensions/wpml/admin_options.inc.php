@@ -96,11 +96,23 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 				?>
 				<div class="wdm_row">
 					<div class='col_left'>
-						Language: <?php echo $language_code ?>
+						Language '<?php echo $language_code ?>'
 					</div>
 					<div class='col_right'>
 
-						Is managed by Solr index:&nbsp;&nbsp;
+						<?php
+						// Language has a Solr index ?
+						$language_has_solr_index = isset( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] )
+						                           && $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] != '';
+						?>
+
+						<?php
+						// Language has a Solr index ?
+						echo $language_has_solr_index
+							? 'is managed by Solr index:&nbsp;&nbsp;'
+							: 'is not managed by any Solr index yet';
+						?>
+
 						<select
 							name='wdm_solr_extension_wpml_data[solr_indexes_by_languages][<?php echo $language_code ?>]'>
 
@@ -109,11 +121,12 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 							echo sprintf( "<option value='%s' %s>%s</option>",
 								'',
 								'',
-								sprintf( "Select a Solr index to store and query data translated in '%s'", $language_code )
+								''
 							);
 							?>
 
-							<?php foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
+							<?php
+							foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
 
 								echo sprintf( "<option value='%s' %s>%s</option>",
 									$solr_index_indice,
@@ -122,14 +135,31 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 
 							}
 							?>
+
 						</select>
+
+						<?php
+						// Warning message: the language has no Solr index
+						echo $language_has_solr_index
+							? ''
+							: sprintf( "<div class='solr_error'>Warning: language '%s' is not managed by Solr. '%s' data will not appear in the search results.</div>", $language_code, $language_code );
+						?>
 
 					</div>
 					<div class="clear"></div>
 				</div>
-			<?php }
+				<?php
+			} // end of languages loop
 			?>
 
+			<?php
+			// One Solr index by language ?
+			$each_language_has_a_unique_solr_index = PluginWpml::each_language_has_a_unique_solr_index();
+
+			echo $each_language_has_a_unique_solr_index
+				? ''
+				: sprintf( "<div class='solr_error'>Warning: <br/>Each language should have it's own unique Solr index. <br/>Search results will return mixed content from the languages with the same Solr index.</div>" );
+			?>
 
 			<div class='wdm_row'>
 				<div class="submit">
