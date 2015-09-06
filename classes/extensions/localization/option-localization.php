@@ -22,17 +22,12 @@ class OptionLocalization extends WpSolrExtensions {
 	const KEY_SECTION_NAME = 'section_name';
 	const KEY_SECTION_TERMS = 'section_terms';
 
-	private $_localization_options;
-
 	/*
 	 * Constructor
 	 *
 	 * Subscribe to actions
 	 */
 	function __construct() {
-
-		$this->_localization_options = $this->get_option_data( self::OPTION_LOCALIZATION );
-
 	}
 
 

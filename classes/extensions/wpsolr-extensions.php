@@ -31,6 +31,9 @@ class WpSolrExtensions {
 	 */
 
 	// Option: localization
+	const OPTION_INDEXES = 'Indexes';
+
+	// Option: localization
 	const OPTION_LOCALIZATION = 'Localization';
 
 	// Extension: Groups
@@ -46,6 +49,17 @@ class WpSolrExtensions {
 	 * Extensions configuration
 	 */
 	private static $extensions_array = array(
+		self::OPTION_INDEXES      =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionIndexes',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'OptionIndexes',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'indexes/option-indexes.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'indexes/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_conf_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
 		self::OPTION_LOCALIZATION =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionLocalization',
@@ -314,7 +328,7 @@ class WpSolrExtensions {
 	 *
 	 * @return mixed
 	 */
-	protected function get_option_data( $extension ) {
+	public static function get_option_data( $extension ) {
 
 		return get_option( self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ] );
 	}

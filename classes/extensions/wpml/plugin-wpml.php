@@ -15,8 +15,6 @@ class PluginWpml extends WpSolrExtensions {
 
 	function __construct() {
 
-		$this->_extension_groups_options = $this->get_option_data( self::EXTENSION_WPML );
-
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, array(
 			$this,
 			'add_language_fields_to_document_for_update',
@@ -92,6 +90,33 @@ class PluginWpml extends WpSolrExtensions {
 
 		return apply_filters( 'wpml_default_language', null );
 
+	}
+
+	/**
+	 * Get active language codes
+	 *
+	 * @return array Language codes
+	 */
+	static function get_languages() {
+		$result = array();
+
+		// Retrieve WPML active languages
+		$languages = apply_filters( 'wpml_active_languages', null, 'orderby=id&order=desc' );
+
+		// Fill the result
+		if ( ! empty( $languages ) ) {
+			foreach ( $languages as $language ) {
+
+				$result[ $language['language_code'] ] = array(
+					'language_code' => $language['language_code'],
+					'active'        => $language['active'],
+				);
+
+			}
+		}
+
+
+		return $result;
 	}
 
 	/**
