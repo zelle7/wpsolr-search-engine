@@ -56,7 +56,7 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_FILE_PATH               => 'indexes/option-indexes.php',
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'indexes/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
-					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_conf_data',
+					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_solr_indexes',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
@@ -330,7 +330,32 @@ class WpSolrExtensions {
 	 */
 	public static function get_option_data( $extension ) {
 
-		return get_option( self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ] );
+		return get_option( self::get_option_name( $extension ) );
 	}
 
+
+	/**
+	 * Get the option name of an extension
+	 *
+	 * @param $extension
+	 *
+	 * @return mixed
+	 */
+	public static function get_option_name( $extension ) {
+
+		return self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ];
+	}
+
+	/**
+	 * Set the option value of an extension
+	 *
+	 * @param $extension
+	 * @param $option_value
+	 *
+	 * @return mixed
+	 */
+	public static function set_option_data( $extension, $option_value ) {
+
+		return update_option( self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ], $option_value );
+	}
 }

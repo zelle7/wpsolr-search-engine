@@ -22,7 +22,7 @@ global $solr;
  */
 add_action( 'wp_head', 'check_default_options_and_function' );
 add_action( 'admin_menu', 'fun_add_solr_settings' );
-add_action( 'admin_init', 'func_reg_solr_form_setting' );
+add_action( 'admin_init', 'wpsolr_admin_init' );
 
 /*
  * Display Solr errors in admin when a save on a post can't index to Solr
@@ -147,42 +147,16 @@ function fun_dis_search() {
 }
 
 
-/*
-register_activation_hook( __FILE__, 'fun_add_result_page' );
-function fun_add_result_page() {
-	$the_page = get_page_by_path( 'search-results' );
-	if ( ! $the_page ) {
-
-		$_p = array(
-			'post_type'      => 'page',
-			'post_title'     => 'Search Results',
-			'post_content'   => '[solr_search_shortcode]',
-			'post_status'    => 'publish',
-			'post_author'    => 1,
-			'comment_status' => 'closed',
-			'post_name'      => 'Search Results'
-		);
-
-		$the_page_id = wp_insert_post( $_p );
-
-		update_post_meta( $the_page_id, 'bwps_enable_ssl', '1' );
-
-	} else {
-
-		if ( $the_page->post_status != 'publish' ) {
-
-
-			$the_page->post_status = 'publish';
-
-			$the_page_id = wp_update_post( $the_page );
-		} else {
-			$the_page_id = $the_page->ID;
-		}
-	}
-
-
+register_activation_hook( __FILE__, 'my_register_activation_hook' );
+function my_register_activation_hook() {
+	/*
+	 * Migrate old data on plugin update
+	 */
+	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+	$option_object = new OptionIndexes();
+	$option_object->migrate_data_from_v4_9();
 }
-*/
+
 
 add_action( 'admin_notices', 'curl_dependency_check' );
 function curl_dependency_check() {
@@ -263,14 +237,8 @@ function solr_search_form() {
 
 }
 
-/*
- * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
- * Copy your .mo files there
- * Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo
- * You can find our template file in this plugin /languages/wpsolr.pot file
- */
-add_action( 'plugins_loaded', 'wpsolr_load_textdomain' );
-function wpsolr_load_textdomain() {
+add_action( 'plugins_loaded', 'my_plugins_loaded' );
+function my_plugins_loaded() {
 	/*
 	global $g_wpsolr_extensions;
 
@@ -280,6 +248,12 @@ function wpsolr_load_textdomain() {
 	}
 	*/
 
+	/*
+	 * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
+	 * Copy your .mo files there
+	 * Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo
+	 * You can find our template file in this plugin /languages/wpsolr.pot file
+	 */
 	load_plugin_textdomain( 'wpsolr', false, false );
 }
 

@@ -1,6 +1,9 @@
 <?php
-function func_reg_solr_form_setting() {
-	register_setting( 'solr_conf_options', 'wdm_solr_conf_data' );
+function wpsolr_admin_init() {
+
+	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+	register_setting( OptionIndexes::get_option_name( WpSolrExtensions::OPTION_INDEXES ), OptionIndexes::get_option_name( WpSolrExtensions::OPTION_INDEXES ) );
+
 	register_setting( 'solr_form_options', 'wdm_solr_form_data' );
 	register_setting( 'solr_res_options', 'wdm_solr_res_data' );
 	register_setting( 'solr_facet_options', 'wdm_solr_facet_data' );
