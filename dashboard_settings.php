@@ -28,7 +28,6 @@ function fun_add_solr_settings() {
 
 function fun_set_solr_options() {
 
-
 	// Button Index
 	if ( isset( $_POST['solr_index_data'] ) ) {
 
@@ -199,18 +198,21 @@ function fun_set_solr_options() {
 			<?php
 
 			$subtabs = array(
-				'index_opt'            => 'Indexing Options',
 				'result_opt'           => 'Result Options',
+				'index_opt'            => 'Indexing Options',
 				'facet_opt'            => 'Facets Options',
 				'sort_opt'             => 'Sort Options',
 				'localization_options' => 'Localization Options',
 			);
 
-			$subtab = wpsolr_admin_sub_tabs( 'index_opt', $subtabs );
+			$subtab = wpsolr_admin_sub_tabs( $subtabs );
 
 			switch ( $subtab ) {
 				case 'result_opt':
 
+					WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+					$option_indexes = new OptionIndexes();
+					$solr_indexes   = $option_indexes->get_indexes();
 
 					?>
 					<div id="solr-results-options" class="wdm-vertical-tabs-content">
@@ -234,6 +236,40 @@ function fun_set_solr_options() {
 									In this section, you will choose how to display the results returned by a
 									query to your Solr instance.
 
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Solr index for search<br/>
+
+									</div>
+									<div class='col_right'>
+										<select name='wdm_solr_res_data[default_solr_index_for_search]'>
+											<?php
+											// Empty option
+											echo sprintf( "<option value='%s' %s>%s</option>",
+												'',
+												'',
+												'Your search is not managed by Solr. Please select a Solr index.'
+											);
+
+											foreach (
+												$solr_indexes as $solr_index_indice => $solr_index
+											) {
+
+												echo sprintf( "
+											<option value='%s' %s>%s</option>
+											",
+													$solr_index_indice,
+													selected( $solr_index_indice, isset( $solr_res_options['default_solr_index_for_search'] ) ?
+														$solr_res_options['default_solr_index_for_search'] : '' ),
+													isset( $solr_index['index_name'] ) ? $solr_index['index_name'] : 'Unnamed
+											Solr index' );
+
+											}
+											?>
+										</select>
+
+									</div>
+									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>Do not automatically trigger the search, when a user
@@ -315,7 +351,7 @@ function fun_set_solr_options() {
 				case 'index_opt':
 
 
-					$posts                     = get_post_types();
+					$posts          = get_post_types();
 					$args       = array(
 						'public'   => true,
 						'_builtin' => false
@@ -342,7 +378,11 @@ function fun_set_solr_options() {
 
 					$allowed_attachments_types = get_allowed_mime_types();
 
+					WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+					$option_indexes = new OptionIndexes();
+					$solr_indexes   = $option_indexes->get_indexes();
 					?>
+
 					<div id="solr-indexing-options" class="wdm-vertical-tabs-content">
 						<form action="options.php" method="POST" id='settings_form'>
 							<?php
@@ -365,6 +405,43 @@ function fun_set_solr_options() {
 									In this section, you will choose among all the data stored in your Wordpress
 									site, which you want to load in your Solr index.
 
+								</div>
+
+
+								<div class="wdm_row">
+									<div class='col_left'>Solr index for indexing<br/>
+
+									</div>
+									<div class='col_right'>
+										<select name='wdm_solr_form_data[default_solr_index_for_indexing]'>
+											<?php
+
+											// Empty option
+											echo sprintf( "<option value='%s' %s>%s</option>",
+												'',
+												'',
+												'Your data is not indexed by Solr. Please select a Solr index.'
+											);
+
+											foreach (
+												$solr_indexes as $solr_index_indice => $solr_index
+											) {
+
+												echo sprintf( "
+											<option value='%s' %s>%s</option>
+											",
+													$solr_index_indice,
+													selected( $solr_index_indice, isset( $solr_options['default_solr_index_for_indexing'] ) ?
+														$solr_options['default_solr_index_for_indexing'] : '' ),
+													isset( $solr_index['index_name'] ) ? $solr_index['index_name'] : 'Unnamed
+											Solr index' );
+
+											}
+											?>
+										</select>
+
+									</div>
+									<div class="clear"></div>
 								</div>
 
 								<div class="wdm_row">
@@ -746,7 +823,7 @@ function fun_set_solr_options() {
 			'extension_s2member_opt' => 's2Member',
 		);
 
-		$subtab = wpsolr_admin_sub_tabs( 'extension_wpml_opt', $subtabs );
+		$subtab = wpsolr_admin_sub_tabs( $subtabs );
 
 		switch ( $subtab ) {
 			case 'extension_groups_opt':
@@ -901,13 +978,15 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 }
 
 
-function wpsolr_admin_sub_tabs( $default_subtab, $subtabs ) {
+function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	// Tab selected by the user
 	$tab = $_GET['tab'];
 
 	if ( isset ( $_GET['subtab'] ) ) {
+
 		$current_subtab = $_GET['subtab'];
+
 	} else {
 		// No user selection: use the first subtab in the list
 		$current_subtab = key( $subtabs );
@@ -915,6 +994,11 @@ function wpsolr_admin_sub_tabs( $default_subtab, $subtabs ) {
 
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper wdm-vertical-tabs">';
+
+	if ( isset( $before ) ) {
+		echo "$before<div style='clear: both;margin-bottom: 10px;'></div>";
+	}
+
 	foreach ( $subtabs as $subtab => $name ) {
 		$class = ( $subtab == $current_subtab ) ? ' nav-tab-active' : '';
 		echo "<a class='nav-tab$class' href='admin.php?page=solr_settings&tab=$tab&subtab=$subtab'>$name</a>";

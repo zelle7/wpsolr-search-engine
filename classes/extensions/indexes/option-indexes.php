@@ -29,4 +29,31 @@ class OptionIndexes extends WpSolrExtensions {
 		return $result;
 	}
 
+	/**
+	 * Does a Solr index exist ?
+	 *
+	 * @param $solr_index_indice Indice in Solr indexes array
+	 *
+	 * @return bool
+	 */
+	public function has_index( $solr_index_indice ) {
+
+		$solr_indexes = $this->get_indexes();
+
+		return isset( $solr_indexes[ $solr_index_indice ] );
+	}
+
+	/**
+	 * Get a Solr index
+	 *
+	 * @param $solr_index_indice Indice in Solr indexes array
+	 *
+	 * @return bool
+	 */
+	public function get_index( $solr_index_indice ) {
+
+		$solr_indexes = $this->get_indexes();
+
+		return isset( $solr_indexes[ $solr_index_indice ] ) ? $solr_indexes[ $solr_index_indice ] : null;
+	}
 }

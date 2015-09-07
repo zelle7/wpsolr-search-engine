@@ -12,6 +12,8 @@ $settings_fields_name = 'solr_conf_options';
 
 $solr_options = get_option( $options_name );
 
+$option_indexes = new OptionIndexes();
+
 ?>
 <div id="solr-hosting-tab">
 
@@ -54,13 +56,23 @@ $solr_options = get_option( $options_name );
 		$subtabs['new_index'] = 'Configure another index';
 	}
 
-	$subtab = wpsolr_admin_sub_tabs( '0', $subtabs );
+	// Create subtabs on the left side
+	$subtab = wpsolr_admin_sub_tabs( $subtabs );
+
 	if ( 'new_index' === $subtab ) {
 		$subtab                                  = strtoupper( md5( uniqid( rand(), true ) ) );
 		$solr_options['solr_indexes'][ $subtab ] = array();
+	} else {
+		// Verify that current subtab is a Solr index indice.
+		if ( ! $option_indexes->has_index( $subtab ) ) {
+			// Use the first subtab element
+			$subtab = key( $subtabs );
+		}
+
 	}
 
 	?>
+
 	<div id="solr-results-options" class="wdm-vertical-tabs-content">
 		<form action="options.php" method="POST" id='settings_conf_form'>
 
@@ -74,8 +86,9 @@ $solr_options = get_option( $options_name );
 			<?php
 			foreach ( $solr_options['solr_indexes'] as $index_indice => $index ) {
 				?>
-				<div id='hosted_on_other'
-				     class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
+				<div
+					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
+					class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
 					<h4 class='head_div'>Configure a Solr index</h4>
 
 					<div class="wdm_row">
@@ -201,7 +214,7 @@ $solr_options = get_option( $options_name );
 				<div class="submit">
 					<input name="check_solr_status" id='check_index_status' type="button"
 					       class="button-primary wdm-save"
-					       value="Check Solr Status, Then Save"/> <span><img
+					       value="Check Solr Status, then Save this configuration"/> <span><img
 							src='<?php echo plugins_url( '../../../images/gif-load_cir.gif', __FILE__ ) ?>'
 							style='height:18px;width:18px;margin-top: 10px;display: none'
 							class='img-load'>
@@ -215,6 +228,9 @@ $solr_options = get_option( $options_name );
 	                                                style='height:18px;width:18px;margin-top: 10px;display: none'
 	                                                class='img-err'/></span>
 				</div>
+				<input name="delete_index_configuration" id='delete_index_configuration' type="button"
+				       class="button-secondary wdm-delete"
+				       value="Delete this configuration"/>
 			</div>
 			<div class="clear"></div>
 

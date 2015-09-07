@@ -37,6 +37,12 @@ function solr_post_save_admin_notice() {
 		delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
 		echo "<div class=\"updated\"><p>(WPSOLR) $out</p></div>";
 	}
+
+	if ( $out = get_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' ) ) {
+		delete_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' );
+		echo "<div class=\"error\"><p>(WPSOLR) $out</p></div>";
+	}
+
 }
 
 add_action( 'admin_notices', "solr_post_save_admin_notice" );
@@ -265,6 +271,15 @@ function solr_search_form() {
  */
 add_action( 'plugins_loaded', 'wpsolr_load_textdomain' );
 function wpsolr_load_textdomain() {
+	/*
+	global $g_wpsolr_extensions;
+
+	// Load active extensions
+	if ( ! isset( $g_wpsolr_extensions ) ) {
+		$g_wpsolr_extensions = new WpSolrExtensions();
+	}
+	*/
+
 	load_plugin_textdomain( 'wpsolr', false, false );
 }
 

@@ -28,6 +28,20 @@ class PluginWpml extends WpSolrExtensions {
 			'set_search_page_url',
 		), 10, 2 );
 
+		// Display admin notice in admin
+		//self::set_admin_notice();
+	}
+
+
+	/**
+	 * Set admin notice when some languages are not configured with a Solr index
+	 */
+	static function set_admin_notice() {
+
+		if ( ! self::each_language_has_a_unique_solr_index() ) {
+			set_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice', "Each WPML language should have it's own unique Solr index. Search results will return mixed content from the languages with the same Solr index." );
+		}
+
 	}
 
 	/**

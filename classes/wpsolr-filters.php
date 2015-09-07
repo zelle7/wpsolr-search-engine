@@ -30,4 +30,8 @@ class WpSolrFilters {
 
 	// Customize the search page url
 	const WPSOLR_FILTER_SEARCH_PAGE_URL = 'wpsolr_filter_search_page_url';
+
+	// Action before a solr index configuration is deleted
+	const WPSOLR_ACTION_BEFORE_A_SOLR_INDEX_CONFIGURATION_DELETION = 'wpsolr_action_before_a_solr_index_configuration_deletion';
+
 }

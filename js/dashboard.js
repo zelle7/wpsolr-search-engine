@@ -264,6 +264,18 @@ jQuery(document).ready(function () {
             return false;
     })
 
+    /*
+     Remove an index configuration
+     */
+    jQuery('#delete_index_configuration').click(function () {
+
+        // Remove the current configuration to delte from the DOM
+        jQuery('#current_index_configuration_edited_id').remove();
+
+        // Autosubmit
+        jQuery('#settings_conf_form').submit();
+    });
+
     jQuery('#check_index_status').click(function () {
         path = jQuery('#adm_path').val();
 

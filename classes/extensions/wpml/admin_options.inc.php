@@ -104,6 +104,11 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 						// Language has a Solr index ?
 						$language_has_solr_index = isset( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] )
 						                           && $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] != '';
+
+						// Solr index exists ?
+						if ( $language_has_solr_index ) {
+							$language_has_solr_index = $option_indexes->has_index( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] );
+						}
 						?>
 
 						<?php
