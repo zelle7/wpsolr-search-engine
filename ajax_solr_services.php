@@ -381,6 +381,9 @@ add_action( 'wp_ajax_' . 'return_solr_results', 'return_solr_results' );
 function return_solr_index_data() {
 
 	try {
+		// Indice of Solr index to index
+		$solr_index_indice = $_POST['solr_index_indice'];
+
 		// Batch size
 		$batch_size = intval( $_POST['batch_size'] );
 
@@ -390,7 +393,7 @@ function return_solr_index_data() {
 		// Debug infos displayed on screen ?
 		$is_debug_indexing = ( $_POST['is_debug_indexing'] === "true" );
 
-		$solr      = WPSolrIndexSolrClient::create();
+		$solr      = WPSolrIndexSolrClient::create( $solr_index_indice );
 		$res_final = $solr->index_data( $batch_size, null, $is_debug_indexing );
 
 		// Increment nb of document sent until now
@@ -425,7 +428,10 @@ function return_solr_delete_index() {
 
 	try {
 
-		$solr = WPSolrIndexSolrClient::create();
+		// Indice of Solr index to delete
+		$solr_index_indice = $_POST['solr_index_indice'];
+
+		$solr = WPSolrIndexSolrClient::create( $solr_index_indice );
 		$solr->delete_documents();
 
 	} catch ( Exception $e ) {

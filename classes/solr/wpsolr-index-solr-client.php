@@ -5,13 +5,16 @@ require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
 class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
-	// Factory
-	static function create() {
+	static function create( $solr_index_indice ) {
 
-		return new self();
+		return new self( $solr_index_indice );
 	}
 
-	public function __construct() {
+	public function __construct( $solr_index_indice ) {
+
+		if ( ! isset( $solr_index_indice ) ) {
+			throw new ErrorException( "A Solr index indice is expected to start indexing." );
+		}
 
 		// Load active extensions
 		$this->wpsolr_extensions = new WpSolrExtensions();
@@ -23,9 +26,11 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Build Solarium config from the default indexing Solr index
 		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 		$options_indexes = new OptionIndexes();
-		$config          = $options_indexes->build_solarium_config_for_default_indexing_index( self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
+		$config          = $options_indexes->build_solarium_config( $solr_index_indice, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
 
-		$this->client = new Solarium\Client( $config );
+
+		$this->index_indice = $solr_index_indice;
+		$this->client       = new Solarium\Client( $config );
 
 	}
 
@@ -33,13 +38,13 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	public function delete_documents() {
 
 		// Store 0 in # of index documents
-		self::update_hosting_option( 'solr_docs', 0 );
+		self::set_index_indice_option_value( 'solr_docs', 0 );
 
 		// Reset last indexed post date
-		self::update_hosting_option( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+		self::set_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
 
 		// Update nb of documents updated/added
-		self::update_hosting_option( 'solr_docs_added_or_updated_last_operation', - 1 );
+		self::set_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', - 1 );
 
 		// Execute delete query
 		$client      = $this->client;
@@ -49,11 +54,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$client->execute( $deleteQuery );
 
 
-	}
-
-	public function update_hosting_option( $option, $option_value ) {
-
-		update_option( self::get_hosting_postfixed_option( $option ), $option_value );
 	}
 
 	public function get_hosting_postfixed_option( $option ) {
@@ -90,7 +90,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$resultset = $client->execute( $query );
 
 		// Store 0 in # of index documents
-		self::update_hosting_option( 'solr_docs', $resultset->getNumFound() );
+		self::set_index_indice_option_value( 'solr_docs', $resultset->getNumFound() );
 
 		return $resultset->getNumFound();
 
@@ -111,35 +111,55 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	}
 
-	/*Returns array of result
-    * Different blocks are written for self host and other hosted index
-    * Returns array of result
-    * Result[0]= Spellchecker-Did you mean
-    * Result[1]= Array of Facets
-    * Result[2]= No of documents found
-    * Result[3]= Array of documents
-    * Result[4]=Result info
-    * */
 
 	public function get_count_documents_indexed_last_operation( $default_value = - 1 ) {
 
-		return self::get_hosting_option( 'solr_docs_added_or_updated_last_operation', $default_value );
+		return self::get_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', $default_value );
 
 	}
 
-	public function get_hosting_option( $option, $default_value ) {
+	public function get_last_post_date_indexed() {
+
+		return self::get_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+
+	}
+
+	public function set_last_post_date_indexed( $option_value ) {
+
+		return self::set_index_indice_option_value( 'solr_last_post_date_indexed', $option_value );
+
+	}
+
+	public function get_index_indice_option_value( $option_name, $option_value ) {
 
 		// Get option value. Replace by default value if undefined.
-		$result = get_option( self::get_hosting_postfixed_option( $option ), $default_value );
+		$option = get_option( $option_name, null );
+
+		$result = ( isset( $option ) && isset( $option[ $this->index_indice ] ) )
+			? $option[ $this->index_indice ]
+			: $option_value;
 
 		return $result;
 	}
 
-	/*
-	 * Manage options by hosting mode
-	 * Use a dedicated postfix added to the option name.
-	 */
+	public function set_index_indice_option_value( $option_name, $option_value ) {
 
+		$option = get_option( $option_name, null );
+
+		if ( ! isset( $option ) ) {
+			$option                 = array();
+		}
+
+		$option[ $this->index_indice ] = $option_value;
+
+		update_option( $option_name, $option );
+	}
+
+	/**
+	 * Count nb documents remaining to index for a solr index
+	 *
+	 * @return integer Nb documents remaining to index
+	 */
 	public function count_nb_documents_to_be_indexed() {
 
 		return self::index_data( 0, null );
@@ -161,7 +181,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$debug_text = '';
 
 		// Last post date set in previous call. We begin with posts published after.
-		$lastPostDate = self::get_hosting_option( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+		$lastPostDate = $this->get_last_post_date_indexed();
 
 		$tbl   = $wpdb->prefix . 'posts';
 		$where = '';
@@ -368,7 +388,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 			if ( ! isset( $post ) ) {
 				// Store last post date sent to Solr (for batch only)
-				self::update_hosting_option( 'solr_last_post_date_indexed', $lastPostDate );
+				$this->set_last_post_date_indexed( $lastPostDate );
 			}
 
 			// AJAX: one loop by ajax call

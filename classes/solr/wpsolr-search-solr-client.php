@@ -49,7 +49,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 			$options_indexes = new OptionIndexes();
 
-			$solarium_config = $options_indexes->build_solarium_config_for_default_indexing_index( self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
+			$solarium_config = $options_indexes->build_solarium_config( self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
 		}
 
 		$this->client = new Solarium\Client( $solarium_config );

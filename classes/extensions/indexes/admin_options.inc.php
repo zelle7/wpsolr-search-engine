@@ -24,10 +24,8 @@ $option_object = new OptionIndexes();
 	$subtabs = array();
 
 	// Create the tabs from the Solr indexes already configured
-	if ( isset( $option_data['solr_indexes'] ) ) {
-		foreach ( $option_data['solr_indexes'] as $index_indice => $index ) {
-			$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
-		}
+	foreach ( $option_object->get_indexes() as $index_indice => $index ) {
+		$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
 	}
 
 	$subtabs['new_index'] = 'Configure another index';

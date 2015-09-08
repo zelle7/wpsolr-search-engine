@@ -846,8 +846,31 @@ function fun_set_solr_options() {
 
 		case 'solr_operations':
 
+			WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+			$option_indexes_object = new OptionIndexes();
+
+			// Create the tabs from the Solr indexes already configured
+			$subtabs = array();
+			foreach ( $option_indexes_object->get_indexes() as $index_indice => $index ) {
+				$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
+			}
+
+			if ( empty( $subtabs ) ) {
+				echo "Please create a Solr index configuration first.";
+
+				return;
+			}
+
+			// Create subtabs on the left side
+			$current_index_indice = wpsolr_admin_sub_tabs( $subtabs );
+			if ( ! $option_indexes_object->has_index( $current_index_indice ) ) {
+				$current_index_indice = key( $subtabs );
+			}
+			$current_index_name = $subtabs[ $current_index_indice ];
+
+
 			try {
-				$solr                             = WPSolrIndexSolrClient::create();
+				$solr                             = WPSolrIndexSolrClient::create( $current_index_indice );
 				$count_nb_documents_to_be_indexed = $solr->count_nb_documents_to_be_indexed();
 			} catch ( Exception $e ) {
 				echo '<b>An error occured while trying to connect to the Solr server:</b> <br>' . htmlentities( $e->getMessage() );
@@ -857,27 +880,30 @@ function fun_set_solr_options() {
 
 			?>
 
-			<div id="solr-operations-tab">
+			<div id="solr-operations-tab"
+			     class="wdm-vertical-tabs-content">
 				<form action="options.php" method='post' id='solr_actions'>
+					<input type='hidden' id='solr_index_indice' name='wdm_solr_operations_data[solr_index_indice]'
+					       value="<?php echo $current_index_indice; ?>">
 					<?php
 
 					settings_fields( 'solr_operations_options' );
 
 					$solr_operations_options = get_option( 'wdm_solr_operations_data' );
 
-					$batch_size = empty( $solr_operations_options['batch_size'] ) ? '100' : $solr_operations_options['batch_size'];
+					$batch_size = empty( $solr_operations_options['batch_size'][ $current_index_indice ] ) ? '100' : $solr_operations_options['batch_size'][ $current_index_indice ];
 
 					?>
 					<input type='hidden' id='adm_path' value='<?php echo admin_url(); ?>'> <!-- for ajax -->
 					<div class='wrapper'>
-						<h4 class='head_div'>Solr Operations</h4>
+						<h4 class='head_div'>Content of the Solr index "<?php echo $current_index_name ?>"</h4>
 
 						<div class="wdm_note">
 							<div>
 								<?php
 								try {
 									$nb_documents_in_index = $solr->get_count_documents();
-									echo "<b>A total of $nb_documents_in_index documents are currently in your index</b>";
+									echo sprintf( "<b>A total of %s documents are currently in your index \"%s\"</b>", $nb_documents_in_index, $current_index_name );
 								} catch ( Exception $e ) {
 									echo '<b>Please check your Solr Hosting, an exception occured while calling your Solr server:</b> <br><br>' . htmlentities( $e->getMessage() );
 								}
@@ -912,7 +938,8 @@ function fun_set_solr_options() {
 								You can change this number to control indexing's performance.
 							</div>
 							<div class='col_right'>
-								<input type='text' id='batch_size' name='wdm_solr_operations_data[batch_size]'
+								<input type='text' id='batch_size'
+								       name='wdm_solr_operations_data[batch_size][<?php echo $current_index_indice ?>]'
 								       placeholder="Enter a Number"
 								       value="<?php echo $batch_size; ?>">
 								<span class='res_err'></span><br>
@@ -923,9 +950,9 @@ function fun_set_solr_options() {
 
 								<input type='checkbox'
 								       id='is_debug_indexing'
-								       name='wdm_solr_operations_data[is_debug_indexing]'
+								       name='wdm_solr_operations_data[is_debug_indexing][<?php echo $current_index_indice ?>]'
 								       value='is_debug_indexing'
-									<?php checked( 'is_debug_indexing', isset( $solr_operations_options['is_debug_indexing'] ) ? $solr_operations_options['is_debug_indexing'] : '' ); ?>>
+									<?php checked( 'is_debug_indexing', isset( $solr_operations_options['is_debug_indexing'][ $current_index_indice ] ) ? $solr_operations_options['is_debug_indexing'][ $current_index_indice ] : '' ); ?>>
 								<span class='res_err'></span><br>
 							</div>
 							<div class="clear"></div>
@@ -934,7 +961,7 @@ function fun_set_solr_options() {
 							<div class="submit">
 								<input name="solr_start_index_data" type="submit" class="button-primary wdm-save"
 								       id='solr_start_index_data'
-								       value="Synchronize Wordpress with my Solr index"/>
+								       value="Synchronize Wordpress with '<?php echo $current_index_name ?>' "/>
 								<input name="solr_stop_index_data" type="submit" class="button-primary wdm-save"
 								       id='solr_stop_index_data' value="Stop current indexing"
 								       style="visibility: hidden;"/>
@@ -942,7 +969,7 @@ function fun_set_solr_options() {
 
 								<input name="solr_delete_index" type="submit" class="button-primary wdm-save"
 								       id="solr_delete_index"
-								       value="Empty the Solr index"/>
+								       value="Empty '<?php echo $current_index_name ?>' "/>
 
 
 								<span class='status_index_message'></span>

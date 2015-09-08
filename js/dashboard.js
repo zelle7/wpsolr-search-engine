@@ -25,6 +25,7 @@ jQuery(document).ready(function () {
         jQuery('#solr_delete_index').attr('value', 'Deleting ... please wait');
 
         path = jQuery('#adm_path').val();
+        solr_index_indice = jQuery('#solr_index_indice').val();
 
         var request = jQuery.ajax({
             url: path + 'admin-ajax.php',
@@ -32,7 +33,8 @@ jQuery(document).ready(function () {
             dataType: "json",
             timeout: 1000 * 3600 * 24,
             data: {
-                action: 'return_solr_delete_index'
+                action: 'return_solr_delete_index',
+                solr_index_indice: solr_index_indice
             }
         });
 
@@ -77,6 +79,7 @@ jQuery(document).ready(function () {
         jQuery('#solr_start_index_data').hide();
         jQuery('#solr_delete_index').hide();
 
+        solr_index_indice = jQuery('#solr_index_indice').val();
         batch_size = jQuery('#batch_size').val();
         is_debug_indexing = jQuery('#is_debug_indexing').prop('checked');
 
@@ -94,7 +97,7 @@ jQuery(document).ready(function () {
             return false;
         } else {
 
-            call_solr_index_data(batch_size, 0, is_debug_indexing);
+            call_solr_index_data(solr_index_indice, batch_size, 0, is_debug_indexing);
 
             // Block submit
             return false;
@@ -104,7 +107,7 @@ jQuery(document).ready(function () {
 
 
     // Promise to the Ajax call
-    function call_solr_index_data(batch_size, nb_results, is_debug_indexing) {
+    function call_solr_index_data(solr_index_indice, batch_size, nb_results, is_debug_indexing) {
 
         var nb_results_message = nb_results + ' documents indexed so far'
 
@@ -117,6 +120,7 @@ jQuery(document).ready(function () {
             type: "post",
             data: {
                 action: 'return_solr_index_data',
+                solr_index_indice: solr_index_indice,
                 batch_size: batch_size,
                 nb_results: nb_results,
                 is_debug_indexing: is_debug_indexing
@@ -146,7 +150,7 @@ jQuery(document).ready(function () {
             else if (!data.indexing_complete) {
 
                 // If indexing completed, stop. Else, call once more.
-                timeoutHandler = setTimeout(call_solr_index_data(batch_size, data.nb_results, is_debug_indexing), 100);
+                timeoutHandler = setTimeout(call_solr_index_data(solr_index_indice, batch_size, data.nb_results, is_debug_indexing), 100);
 
 
             } else {

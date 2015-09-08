@@ -166,36 +166,41 @@ class OptionIndexes extends WpSolrExtensions {
 	 * @return array Solarium configuration
 	 * @throws Exception
 	 */
-	public function build_solarium_config_for_default_indexing_index( $timeout ) {
+	public function build_solarium_config( $solr_index_indice = null, $timeout ) {
 
-		// Retrieve the default indexing Solr index
-		$solr_options = get_option( 'wdm_solr_form_data' );
-		if ( $solr_options === false ) {
-			throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
-		}
-		$default_solr_index_indice_for_indexing = $solr_options['default_solr_index_for_indexing'];
-		if ( ! isset( $default_solr_index_indice_for_indexing ) ) {
-			throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for indexing.' );
+
+		if ( ! isset( $solr_index_indice ) ) {
+
+			// Retrieve the default indexing Solr index
+
+			$solr_options = get_option( 'wdm_solr_form_data' );
+			if ( $solr_options === false ) {
+				throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
+			}
+			$solr_index_indice = $solr_options['default_solr_index_for_indexing'];
+			if ( ! isset( $solr_index_indice ) ) {
+				throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for indexing.' );
+			}
 		}
 
-		$default_solr_index_for_indexing = $this->get_index( $default_solr_index_indice_for_indexing );
-		if ( ! isset( $default_solr_index_for_indexing ) ) {
+		$solr_index = $this->get_index( $solr_index_indice );
+		if ( ! isset( $solr_index ) ) {
 
 			throw new Exception( sprintf( 'Please complete the setup of your Solr options.
 			The Solr index configured for indexing, with indice %s, is missing.
-			It probably was removed from the Solr index list, but is still setup as the default indexing Solr index.', $default_solr_index_indice_for_indexing ) );
+			It probably was removed from the Solr index list, but is still setup as the default indexing Solr index.', $solr_index_indice ) );
 		}
 
 		// Copy the index parameters in the Solarium endpoint
 		$config = array(
 			'endpoint' => array(
 				'localhost1' => array(
-					'scheme'   => $default_solr_index_for_indexing['index_protocol'],
-					'host'     => $default_solr_index_for_indexing['index_host'],
-					'username' => $default_solr_index_for_indexing['index_key'],
-					'password' => $default_solr_index_for_indexing['index_secret'],
-					'port'     => $default_solr_index_for_indexing['index_port'],
-					'path'     => $default_solr_index_for_indexing['index_path'],
+					'scheme'   => $solr_index['index_protocol'],
+					'host'     => $solr_index['index_host'],
+					'username' => $solr_index['index_key'],
+					'password' => $solr_index['index_secret'],
+					'port'     => $solr_index['index_port'],
+					'path'     => $solr_index['index_path'],
 					'timeout'  => $timeout,
 				)
 			)

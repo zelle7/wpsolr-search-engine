@@ -12,6 +12,10 @@ class WPSolrAbstractSolrClient {
 	public $client;
 	protected $config;
 
+	// Indice of the Solr index configuration in admin options
+	protected $index_indice;
+
+
 	// Array of active extension objects
 	protected $wpsolr_extensions;
 
