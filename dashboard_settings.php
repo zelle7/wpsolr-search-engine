@@ -34,7 +34,7 @@ function fun_set_solr_options() {
 	// Button Index
 	if ( isset( $_POST['solr_index_data'] ) ) {
 
-		$solr = new wp_Solr();
+		$solr = WPSolrIndexSolrClient::create();
 
 		try {
 			$res = $solr->get_solr_status();
@@ -75,7 +75,7 @@ function fun_set_solr_options() {
 
 	// Button delete
 	if ( isset( $_POST['solr_delete_index'] ) ) {
-		$solr = new wp_Solr();
+		$solr = WPSolrIndexSolrClient::create();
 
 		try {
 			$res = $solr->get_solr_status();
@@ -241,7 +241,7 @@ function fun_set_solr_options() {
 
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Solr index for search<br/>
+									<div class='col_left'>Search with this Solr index<br/>
 
 									</div>
 									<div class='col_right'>
@@ -412,7 +412,7 @@ function fun_set_solr_options() {
 
 
 								<div class="wdm_row">
-									<div class='col_left'>Solr index for indexing<br/>
+									<div class='col_left'>Index with this Solr index<br/>
 
 									</div>
 									<div class='col_right'>
@@ -695,7 +695,7 @@ function fun_set_solr_options() {
 					$minus_path = plugins_url( 'images/minus.png', __FILE__ );
 
 					$checked_fls = array();
-					$built_in    = wp_Solr::get_sort_options();
+					$built_in    = WPSolrSearchSolrClient::get_sort_options();
 
 					?>
 					<div id="solr-sort-options" class="wdm-vertical-tabs-content">
@@ -756,7 +756,7 @@ function fun_set_solr_options() {
 											if ( $selected_sort_value != '' ) {
 												foreach ( $selected_array as $sort_code ) {
 													if ( $sort_code != '' ) {
-														$sort     = wp_Solr::get_sort_option_from_code( $sort_code, null );
+														$sort     = WPSolrSearchSolrClient::get_sort_option_from_code( $sort_code, null );
 														$dis_text = is_array( $sort ) ? $sort['label'] : $sort_code;
 
 														echo "<li id='$sort_code' class='ui-state-default facets sort_selected'>$dis_text
@@ -846,8 +846,14 @@ function fun_set_solr_options() {
 
 		case 'solr_operations':
 
-			$solr                             = new wp_Solr();
-			$count_nb_documents_to_be_indexed = $solr->count_nb_documents_to_be_indexed();
+			try {
+				$solr                             = WPSolrIndexSolrClient::create();
+				$count_nb_documents_to_be_indexed = $solr->count_nb_documents_to_be_indexed();
+			} catch ( Exception $e ) {
+				echo '<b>An error occured while trying to connect to the Solr server:</b> <br>' . htmlentities( $e->getMessage() );
+
+				return;
+			}
 
 			?>
 

@@ -48,11 +48,11 @@ class OptionLocalization extends WpSolrExtensions {
 				'search_form_edit_placeholder'             => _x( 'Search ....', 'Search edit placeholder', 'wpsolr' ),
 				'sort_header'                              => _x( 'Sort by', 'Sort list header', 'wpsolr' ),
 				/* Sort */
-				wp_Solr::SORT_CODE_BY_RELEVANCY_DESC       => _x( 'More relevant', 'Sort list element', 'wpsolr' ),
-				wp_Solr::SORT_CODE_BY_DATE_ASC             => _x( 'Newest', 'Sort list element', 'wpsolr' ),
-				wp_Solr::SORT_CODE_BY_DATE_DESC            => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
-				wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => _x( 'The more commented', 'Sort list element', 'wpsolr' ),
-				wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => _x( 'The least commented', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC       => _x( 'More relevant', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_ASC             => _x( 'Newest', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_DESC            => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => _x( 'The more commented', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_DESC => _x( 'The least commented', 'Sort list element', 'wpsolr' ),
 				'facets_header'                            => _x( 'Filters', 'Facets list header', 'wpsolr' ),
 				/* Facets */
 				'facets_title'                             => _x( 'By %s', 'Facets list title', 'wpsolr' ),
@@ -90,11 +90,11 @@ class OptionLocalization extends WpSolrExtensions {
 				array(
 					self::KEY_SECTION_TERMS => array(
 						'sort_header'                              => array( 'Sort list header' ),
-						wp_Solr::SORT_CODE_BY_RELEVANCY_DESC       => array( 'Sort list element' ),
-						wp_Solr::SORT_CODE_BY_DATE_ASC             => array( 'Sort list element' ),
-						wp_Solr::SORT_CODE_BY_DATE_DESC            => array( 'Sort list element' ),
-						wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => array( 'Sort list element' ),
-						wp_Solr::SORT_CODE_BY_NUMBER_COMMENTS_DESC => array( 'Sort list element' ),
+						WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC       => array( 'Sort list element' ),
+						WPSolrSearchSolrClient::SORT_CODE_BY_DATE_ASC             => array( 'Sort list element' ),
+						WPSolrSearchSolrClient::SORT_CODE_BY_DATE_DESC            => array( 'Sort list element' ),
+						WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => array( 'Sort list element' ),
+						WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_DESC => array( 'Sort list element' ),
 					)
 				),
 			'Facets box'                 =>

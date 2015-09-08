@@ -1,6 +1,7 @@
 <?php
 
-include( dirname( __FILE__ ) . '/class-wp-solr.php' );
+include( dirname( __FILE__ ) . '/classes/solr/wpsolr-index-solr-client.php' );
+include( dirname( __FILE__ ) . '/classes/solr/wpsolr-search-solr-client.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
@@ -27,9 +28,12 @@ function fun_search_indexed_data() {
 		$search_que = $_GET['search'];
 	}
 
-	$ad_url        = admin_url();
-	$get_page_info = wp_Solr::get_search_page();
-	$url           = get_permalink( $get_page_info->ID );
+	$ad_url = admin_url();
+
+	$solr          = WPSolrSearchSolrClient::create();
+	$get_page_info = $solr->get_search_page();
+
+	$url = get_permalink( $get_page_info->ID );
 	// Filter the search page url
 	$wpsolr_extensions = new WpSolrExtensions();
 	$url               = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );
@@ -94,7 +98,7 @@ function fun_search_indexed_data() {
 	echo "<div class='cls_results'>";
 	if ( $search_que != '' && $search_que != '*:*' ) {
 
-		$solr = new wp_Solr();
+		$solr = WPSolrSearchSolrClient::create();
 
 		$res     = 0;
 		$options = $fac_opt['facets'];
@@ -130,7 +134,7 @@ function fun_search_indexed_data() {
 						$sort_select = "<label class='wdm_label'>$term</label><select class='select_field'>";
 
 						// Add options
-						$sort_options = wp_Solr::get_sort_options();
+						$sort_options = WPSolrSearchSolrClient::get_sort_options();
 						foreach ( explode( ',', $selected_sort_values ) as $sort_code ) {
 
 							$sort_label = OptionLocalization::get_term( $localization_options, $sort_code );
@@ -254,41 +258,22 @@ function return_solr_instance() {
 	$password = $_POST['spwd'];
 	$protocol = $_POST['sproto'];
 
-	if ( $username == '' ) {
-		$config = array(
-			"endpoint" =>
-				array(
-					"localhost" => array(
-						'scheme' => $protocol,
-						"host"   => $host,
-						"port"   => $port,
-						"path"   => $spath
-					)
-				)
-		);
-
-	} else {
-		$config = array(
-			'endpoint' => array(
-				'localhost1' => array(
-					'scheme'   => $protocol,
-					'host'     => $host,
-					'port'     => $port,
-					'path'     => $spath,
-					'username' => $username,
-					'password' => $password
-				)
+	$client = WPSolrSearchSolrClient::create( array(
+		'endpoint' => array(
+			'localhost1' => array(
+				'scheme'   => $protocol,
+				'host'     => $host,
+				'port'     => $port,
+				'path'     => $spath,
+				'username' => $username,
+				'password' => $password
 			)
-		);
-	}
-
-
-	$client = new Solarium\Client( $config );
-
-	$ping = $client->createPing();
+		)
+	) );
 
 	try {
-		$result = $client->ping( $ping );
+
+		$client->ping();
 
 	} catch ( Exception $e ) {
 
@@ -333,7 +318,7 @@ add_action( 'wp_ajax_' . 'return_solr_instance', 'return_solr_instance' );
 
 function return_solr_status() {
 
-	$solr = new wp_Solr();
+	$solr = WPSolrSearchSolrClient::create();
 	echo $words = $solr->get_solr_status();
 
 }
@@ -350,7 +335,7 @@ function return_solr_results() {
 	$sort  = $_POST['sort_opt'];
 
 
-	$solr          = new wp_Solr();
+	$solr          = WPSolrSearchSolrClient::create();
 	$final_result  = $solr->get_search_results( $query, $opt, $num, $sort );
 	$solr_options  = get_option( 'wdm_solr_conf_data' );
 	$output        = array();
@@ -405,7 +390,7 @@ function return_solr_index_data() {
 		// Debug infos displayed on screen ?
 		$is_debug_indexing = ( $_POST['is_debug_indexing'] === "true" );
 
-		$solr      = new wp_Solr();
+		$solr      = WPSolrIndexSolrClient::create();
 		$res_final = $solr->index_data( $batch_size, null, $is_debug_indexing );
 
 		// Increment nb of document sent until now
@@ -440,7 +425,7 @@ function return_solr_delete_index() {
 
 	try {
 
-		$solr = new wp_Solr();
+		$solr = WPSolrIndexSolrClient::create();
 		$solr->delete_documents();
 
 	} catch ( Exception $e ) {

@@ -10,8 +10,12 @@
 
 require_once 'ajax_solr_services.php';
 require_once 'dashboard_settings.php';
-require_once 'class-wp-solr.php';
 require_once 'autocomplete.php';
+
+/* Include Solr clients */
+require_once 'classes/solr/wpsolr-index-solr-client.php';
+require_once 'classes/solr/wpsolr-search-solr-client.php';
+
 
 global $solr;
 
@@ -67,7 +71,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 		if ( 'publish' == $post->post_status ) {
 			// post published, add/update it from Solr index
 
-			$solr = new wp_Solr();
+			$solr = WPSolrIndexSolrClient::create();
 
 			$solr->index_data( 1, $post );
 
@@ -76,7 +80,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 
 		} else {
 			// post unpublished, remove it from Solr index
-			$solr = new wp_Solr();
+			$solr = WPSolrIndexSolrClient::create();
 
 			$solr->delete_document( $post );
 
@@ -100,7 +104,7 @@ function add_attachment_to_solr_index( $attachment_id ) {
 
 	// Index the new attachment
 
-	$solr = new wp_Solr();
+	$solr = WPSolrIndexSolrClient::create();
 
 	$solr->index_data( 1, get_post( $attachment_id ) );
 
@@ -115,7 +119,7 @@ function delete_attachment_to_solr_index( $attachment_id ) {
 
 	// Remove the attachment from Solr index
 
-	$solr = new wp_Solr();
+	$solr = WPSolrIndexSolrClient::create();
 
 	$solr->delete_document( get_post( $attachment_id ) );
 
@@ -206,7 +210,8 @@ function solr_search_form() {
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
-	$get_page_info = wp_Solr::get_search_page();
+	$solr          = WPSolrSearchSolrClient::create();
+	$get_page_info = $solr->get_search_page();
 	$ajax_nonce    = wp_create_nonce( "nonce_for_autocomplete" );
 
 
