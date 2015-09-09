@@ -9,11 +9,34 @@
 class PluginWpml extends WpSolrExtensions {
 
 	/*
+	 * WPML database constants
+	 */
+	const TABLE_ICL_TRANSLATIONS = "icl_translations";
+
+	// WPML languages
+	private $languages;
+
+	// Factory
+	static function create() {
+
+		return new self();
+	}
+
+	/*
 	 * Constructor
 	 * Subscribe to actions
 	 */
 
 	function __construct() {
+
+		// Retrieve the active languages
+		$this->languages = $this->get_languages();
+
+		/*
+		 * Filters and actions
+		 */
+
+		/*
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, array(
 			$this,
@@ -22,6 +45,14 @@ class PluginWpml extends WpSolrExtensions {
 
 
 		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array( $this, 'set_query_keywords' ), 10, 1 );
+
+		*/
+
+		add_filter( WpSolrFilters::WPSOLR_FILTER_SQL_QUERY_STATEMENT, array(
+			$this,
+			'set_sql_query_statement',
+		), 10, 2 );
+
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, array(
 			$this,
@@ -38,10 +69,38 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	static function set_admin_notice() {
 
-		if ( ! self::each_language_has_a_unique_solr_index() ) {
+		if ( ! self::each_language_has_a_one_solr_index_search() ) {
 			set_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice', "Each WPML language should have it's own unique Solr index. Search results will return mixed content from the languages with the same Solr index." );
 		}
 
+	}
+
+
+	/**
+	 * Customize the sql query statements.
+	 * Add a join with the current indexing language
+	 *
+	 * @param $sql_statements
+	 *
+	 * @return mixed
+	 */
+	function set_sql_query_statement( $sql_statements, $parameters ) {
+		global $wpdb;
+
+		// Get the index indexing language
+		$language = $this->get_solr_index_indexing_language( $parameters['index_indice'] );
+
+		if ( isset( $language ) ) {
+
+			// Join statement
+			$sql_joint_statement = ' JOIN ';
+			$sql_joint_statement .= $wpdb->prefix . self::TABLE_ICL_TRANSLATIONS . ' AS ' . 'icl_translations';
+			$sql_joint_statement .= " ON posts.ID = icl_translations.element_id AND icl_translations.element_type = CONCAT('post_', posts.post_type) AND icl_translations.language_code = '%s' ";
+
+			$sql_statements['JOIN'] = sprintf( $sql_joint_statement, $language );
+		}
+
+		return $sql_statements;
 	}
 
 	/**
@@ -106,11 +165,29 @@ class PluginWpml extends WpSolrExtensions {
 	}
 
 	/**
+	 * Is the language code part of the languages ?
+	 *
+	 * @param $language_code
+	 *
+	 * @return bool
+	 */
+	function is_language_code( $language_code ) {
+
+		return array_key_exists( $language_code, $this->languages );
+	}
+
+	/**
 	 * Get active language codes
 	 *
 	 * @return array Language codes
 	 */
-	static function get_languages() {
+	function get_languages() {
+
+		if ( isset( $this->languages ) ) {
+			// Use value
+			return $this->languages;
+		}
+
 		$result = array();
 
 		// Retrieve WPML active languages
@@ -133,31 +210,53 @@ class PluginWpml extends WpSolrExtensions {
 	}
 
 
+	function get_solr_index_indexing_language( $solr_index_indice ) {
+
+		$options      = get_option( 'wdm_solr_extension_wpml_data' );
+		$solr_indexes = $options['solr_index_indice'];
+
+		if ( ! isset( $solr_indexes ) || ! isset( $solr_indexes[ $solr_index_indice ] ) || ! isset( $solr_indexes[ $solr_index_indice ]['indexing_language_code'] ) || '' === $solr_indexes[ $solr_index_indice ]['indexing_language_code'] ) {
+			return null;
+		}
+
+		return $solr_indexes[ $solr_index_indice ]['indexing_language_code'];
+
+	}
+
 	/**
-	 * Verify that all languages are related to a unique Solr index.
-	 * Used to warn if 2 languages are indexed in the same Solr index
+	 * Verify that all languages are related to a unique Solr index for search.
 	 *
 	 * @return bool
 	 */
-	public static function each_language_has_a_unique_solr_index() {
+	public function each_language_has_a_one_solr_index_search() {
 
-		$options                   = get_option( 'wdm_solr_extension_wpml_data' );
-		$solr_indexes_by_languages = $options['solr_indexes_by_languages'];
-		if ( ! isset( $solr_indexes_by_languages ) ) {
-			// Languages not yet related to any Solr index.
+		$options      = get_option( 'wdm_solr_extension_wpml_data' );
+		$solr_indexes = $options['solr_index_indice'];
+		if ( ! isset( $solr_indexes ) ) {
+			// Languages not yet related to any Solr index search.
 			return false;
 		}
 
-		$solr_index_indices_already_found = array();
-		foreach ( $solr_indexes_by_languages as $language_code => $solr_index_indice ) {
+		$default_search_languages_already_found = array();
+		foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
 
-			if ( array_key_exists( $solr_index_indice, $solr_index_indices_already_found ) ) {
-				// We found this Solr index indice twice
-				return false;
+			if ( isset( $solr_index['is_default_search'] ) && isset( $solr_index['indexing_language_code'] ) ) {
+
+				// Is language a valid one ?
+				if ( ! $this->is_language_code( $solr_index['indexing_language_code'] ) ) {
+					return false;
+				}
+
+				if ( $solr_index['indexing_language_code'] ) {
+					if ( array_key_exists( $solr_index['indexing_language_code'], $default_search_languages_already_found ) ) {
+						// We found this language as default search twice
+						return false;
+					}
+				}
+
+				// Add language to already found ones
+				$default_search_languages_already_found[ $solr_index['indexing_language_code'] ] = '';
 			}
-
-			// Add Solr index indice to already found ones
-			$solr_index_indices_already_found[ $solr_index_indice ] = '';
 		}
 
 		return true;
@@ -228,4 +327,5 @@ class PluginWpml extends WpSolrExtensions {
 
 		return $translated_search_page_url;
 	}
+
 }

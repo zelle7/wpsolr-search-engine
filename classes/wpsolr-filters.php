@@ -34,4 +34,7 @@ class WpSolrFilters {
 	// Action before a solr index configuration is deleted
 	const WPSOLR_ACTION_BEFORE_A_SOLR_INDEX_CONFIGURATION_DELETION = 'wpsolr_action_before_a_solr_index_configuration_deletion';
 
+	// Filter the sql query statement used to retrieve the posts not yet indexed
+	const WPSOLR_FILTER_SQL_QUERY_STATEMENT = 'wpsolr_filter_sql_query_statement';
+
 }

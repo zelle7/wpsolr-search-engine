@@ -92,63 +92,58 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 			<?php
 			$option_indexes = new OptionIndexes();
 			$solr_indexes   = $option_indexes->get_indexes();
-			foreach ( PluginWpml::get_languages() as $language_code => $language ) {
+
+			$pluginWpml = PluginWpml::create();
+			$languages  = $pluginWpml->get_languages();
+
+			foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
 				?>
 				<div class="wdm_row">
 					<div class='col_left'>
-						Language '<?php echo $language_code ?>'
+						Solr index '<?php echo $solr_index['index_name'] ?>'
 					</div>
 					<div class='col_right'>
 
-						<?php
-						// Language has a Solr index ?
-						$language_has_solr_index = isset( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] )
-						                           && $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] != '';
-
-						// Solr index exists ?
-						if ( $language_has_solr_index ) {
-							$language_has_solr_index = $option_indexes->has_index( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] );
-						}
-						?>
-
-						<?php
-						// Language has a Solr index ?
-						echo $language_has_solr_index
-							? 'is managed by Solr index:&nbsp;&nbsp;'
-							: 'is not managed by any Solr index yet';
-						?>
-
+						Is indexing: &nbsp;
 						<select
-							name='wdm_solr_extension_wpml_data[solr_indexes_by_languages][<?php echo $language_code ?>]'>
+							name='wdm_solr_extension_wpml_data[solr_index_indice][<?php echo $solr_index_indice ?>][indexing_language_code]'>
 
 							<?php
 							// Empty option
 							echo sprintf( "<option value='%s' %s>%s</option>",
 								'',
 								'',
-								''
+								'No language'
 							);
 							?>
 
 							<?php
-							foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
+							foreach ( $languages as $language_code => $language ) {
 
 								echo sprintf( "<option value='%s' %s>%s</option>",
-									$solr_index_indice,
-									selected( $solr_index_indice, isset( $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] ) ? $solr_extension_wpml_options['solr_indexes_by_languages'][ $language_code ] : '' ),
-									$solr_index['index_name'] );
+									$language_code,
+									selected( $language_code, isset( $solr_extension_wpml_options['solr_index_indice'][ $solr_index_indice ]['indexing_language_code'] )
+										? $solr_extension_wpml_options['solr_index_indice'][ $solr_index_indice ]['indexing_language_code']
+										: '' ),
+									$language_code );
 
 							}
 							?>
 
 						</select>
 
-						<?php
-						// Warning message: the language has no Solr index
-						echo $language_has_solr_index
-							? ''
-							: sprintf( "<div class='solr_error'>Warning: language '%s' is not managed by Solr. '%s' data will not appear in the search results.</div>", $language_code, $language_code );
-						?>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						Used as search for this language: &nbsp;
+						<input type='checkbox'
+						       name='wdm_solr_extension_wpml_data[solr_index_indice][<?php echo $solr_index_indice ?>][is_default_search]'
+						       value='1'
+							<?php
+							checked( 1, isset( $solr_extension_wpml_options['solr_index_indice'][ $solr_index_indice ]['is_default_search'] )
+								? $solr_extension_wpml_options['solr_index_indice'][ $solr_index_indice ]['is_default_search']
+								: '' );
+							?>
+							>
 
 					</div>
 					<div class="clear"></div>
@@ -158,12 +153,14 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 			?>
 
 			<?php
+
 			// One Solr index by language ?
-			$each_language_has_a_unique_solr_index = PluginWpml::each_language_has_a_unique_solr_index();
+			$each_language_has_a_unique_solr_index = $pluginWpml->each_language_has_a_one_solr_index_search();
 
 			echo $each_language_has_a_unique_solr_index
 				? ''
-				: sprintf( "<div class='solr_error'>Warning: <br/>Each language should have it's own unique Solr index. <br/>Search results will return mixed content from the languages with the same Solr index.</div>" );
+				: sprintf( "<div class='solr_error'>Error: <br/>2 Solr indexes are search of the same language. Or a Solr index with no language is a search.</div>" );
+
 			?>
 
 			<div class='wdm_row'>

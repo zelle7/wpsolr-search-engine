@@ -210,8 +210,7 @@ function solr_search_form() {
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
-	$solr          = WPSolrSearchSolrClient::create();
-	$get_page_info = $solr->get_search_page();
+	$get_page_info = WPSolrSearchSolrClient::get_search_page();
 	$ajax_nonce    = wp_create_nonce( "nonce_for_autocomplete" );
 
 

@@ -5,6 +5,9 @@ require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
 class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
+	// Posts table name
+	const TABLE_POSTS = 'posts';
+
 	static function create( $solr_index_indice ) {
 
 		return new self( $solr_index_indice );
@@ -147,7 +150,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$option = get_option( $option_name, null );
 
 		if ( ! isset( $option ) ) {
-			$option                 = array();
+			$option = array();
 		}
 
 		$option[ $this->index_indice ] = $option_value;
@@ -183,8 +186,12 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Last post date set in previous call. We begin with posts published after.
 		$lastPostDate = $this->get_last_post_date_indexed();
 
-		$tbl   = $wpdb->prefix . 'posts';
-		$where = '';
+		$query_select_stmt   = '';
+		$query_from          = $wpdb->prefix . self::TABLE_POSTS . ' AS ' . self::TABLE_POSTS;
+		$query_join_stmt     = '';
+		$query_where_stmt    = '';
+		$query_order_by_stmt = '';
+		$query_limit_stmt    = '';
 
 		$client      = $this->client;
 		$updateQuery = $client->createUpdate();
@@ -211,41 +218,51 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		if ( isset( $where_p ) ) {
-			$where = "post_status='publish' AND ( $where_p )";
+			$query_where_stmt = "post_status='publish' AND ( $where_p )";
 			if ( isset( $where_a ) ) {
-				$where = "( $where ) OR ( $where_a )";
+				$query_where_stmt = "( $query_where_stmt ) OR ( $where_a )";
 			}
 		} elseif ( isset( $where_a ) ) {
-			$where = $where_a;
+			$query_where_stmt = $where_a;
 		}
-
-
-		// Build the query
-		// We need post_parent and post_type, too, to handle attachments
-		$query = "";
 
 		if ( $batch_size == 0 ) {
 			// count only
-			$query .= " SELECT count(ID) as TOTAL ";
+			$query_select_stmt = "count(ID) as TOTAL";
 		} else {
-			$query .= " SELECT ID, post_modified, post_parent, post_type ";
+			$query_select_stmt = "ID, post_modified, post_parent, post_type";
 		}
 
-		$query .= " FROM $tbl ";
-		$query .= " WHERE ";
 		if ( isset( $post ) ) {
 			// Add condition on the $post
-			$query .= " ID = %d";
+			$query_where_stmt = " ID = %d " . " AND ( $query_where_stmt ) ";
 		} else {
 			// Condition on the date only for the batch, not for individual posts
-			$query .= " post_modified > %s ";
+			$query_where_stmt = " post_modified > %s " . " AND ( $query_where_stmt ) ";
 		}
-		$query .= " AND ( $where ) ";
-		if ( $batch_size > 0 ) {
 
-			$query .= " ORDER BY post_modified ASC ";
-			$query .= " LIMIT $batch_size ";
-		}
+		$query_order_by_stmt = "post_modified ASC";
+
+		// Filter the query
+		$query_statements = apply_filters( WpSolrFilters::WPSOLR_FILTER_SQL_QUERY_STATEMENT,
+			array(
+				'SELECT' => $query_select_stmt,
+				'FROM'   => $query_from,
+				'JOIN'   => $query_join_stmt,
+				'WHERE'  => $query_where_stmt,
+				'ORDER'  => $query_order_by_stmt,
+				'LIMIT'  => $batch_size,
+			),
+			array(
+				'index_indice' => $this->index_indice,
+			)
+		);
+
+
+		// Generate query string from the query statements
+		$query = sprintf( 'SELECT %s FROM %s %s WHERE %s ORDER BY %s LIMIT %s',
+			$query_statements['SELECT'], $query_statements['FROM'], $query_statements['JOIN'], $query_statements['WHERE'], $query_statements['ORDER'], $query_statements['LIMIT'] === 0 ? 1 : $query_statements['LIMIT'] );
+
 
 		$documents     = array();
 		$doc_count     = 0;

@@ -30,8 +30,7 @@ function fun_search_indexed_data() {
 
 	$ad_url = admin_url();
 
-	$solr          = WPSolrSearchSolrClient::create();
-	$get_page_info = $solr->get_search_page();
+	$get_page_info = WPSolrSearchSolrClient::get_search_page();
 
 	$url = get_permalink( $get_page_info->ID );
 	// Filter the search page url
