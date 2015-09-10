@@ -56,11 +56,13 @@ class OptionIndexes extends WpSolrExtensions {
 					'indice'    => self::generate_uuid(),
 					'name'      => 'Solr index local',
 					'host_type' => 'self_hosted',
+					'post_fix'  => '_in_self_index',
 				),
 				'_goto' => array(
 					'indice'    => self::generate_uuid(),
 					'name'      => 'Solr index cloud',
 					'host_type' => 'other_hosted',
+					'post_fix'  => '_in_cloud_index',
 				),
 			) as $old_index_postfix => $old_index
 		) {
@@ -87,6 +89,13 @@ class OptionIndexes extends WpSolrExtensions {
 					$results_options['default_solr_index_for_search'] = $old_index['indice'];
 					update_option( 'wdm_solr_res_data', $results_options );
 
+					// Copy the last post date to this index, to prevent re-indexing all its data
+					$option_last_post_indexed = get_option( 'solr_last_post_date_indexed' . $old_index['post_fix'], null );
+					if ( isset( $option_last_post_indexed ) ) {
+
+						update_option( 'solr_last_post_date_indexed', array( $old_index['indice'] => $option_last_post_indexed ) );
+					}
+
 				}
 
 			}
@@ -95,8 +104,8 @@ class OptionIndexes extends WpSolrExtensions {
 		// Save the new option
 		self::set_option_data( self::OPTION_INDEXES, $new_options );
 
-		// Delete the old options
-		delete_option( $old_options_name );
+		// Do not delete the old options. If the user wants to rollback the version, he can.
+		//delete_option( $old_options_name );
 
 	}
 
@@ -172,14 +181,15 @@ class OptionIndexes extends WpSolrExtensions {
 			if ( ! isset( $solr_index_indice ) ) {
 				// Retrieve the default indexing Solr index
 
-				$solr_options = get_option( 'wdm_solr_form_data' );
-				if ( $solr_options === false ) {
+				$solr_options = get_option( 'wdm_solr_res_data' );
+				if ( $this->_options === false ) {
 					throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
 				}
-				$solr_index_indice = $solr_options['default_solr_index_for_search'];
-				if ( ! isset( $solr_index_indice ) ) {
+
+				if ( ! isset( $solr_options['default_solr_index_for_search'] ) ) {
 					throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for searching.' );
 				}
+				$solr_index_indice = $solr_options['default_solr_index_for_search'];
 
 			}
 		}
@@ -187,9 +197,9 @@ class OptionIndexes extends WpSolrExtensions {
 		$solr_index = $this->get_index( $solr_index_indice );
 		if ( ! isset( $solr_index ) ) {
 
-			throw new Exception( sprintf( 'Please complete the setup of your Solr options.
-			The Solr index configured for indexing, with indice %s, is missing.
-			It probably was removed from the Solr index list, but is still setup as the default indexing Solr index.', $solr_index_indice ) );
+			throw new Exception( sprintf( "Please complete the setup of your Solr options.
+			The Solr index configured for indexing, with indice '%s', is missing.
+			It probably was removed from the Solr index list, but is still setup as the default indexing Solr index.", $solr_index_indice ) );
 		}
 
 		// Copy the index parameters in the Solarium endpoint
