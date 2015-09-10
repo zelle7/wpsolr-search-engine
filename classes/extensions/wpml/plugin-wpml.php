@@ -16,7 +16,16 @@ class PluginWpml extends WpSolrExtensions {
 	// WPML languages
 	private $languages;
 
-	// Factory
+	// WPML options
+	const WPML_OPTIONS_NAME = 'wdm_solr_extension_wpml_data';
+	const WPML_OPTIONS_INDEX_INDICE = 'solr_index_indice';
+	private $options;
+
+	/**
+	 * Factory
+	 *
+	 * @return PluginWpml
+	 */
 	static function create() {
 
 		return new self();
@@ -28,6 +37,9 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 
 	function __construct() {
+
+		// Load the options
+		$this->options = get_option( self::WPML_OPTIONS_NAME );
 
 		// Retrieve the active languages
 		$this->languages = $this->get_languages();
@@ -52,6 +64,11 @@ class PluginWpml extends WpSolrExtensions {
 			$this,
 			'set_sql_query_statement',
 		), 10, 2 );
+
+		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE, array(
+			$this,
+			'get_default_solr_index_indice',
+		), 10, 1 );
 
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, array(
@@ -173,7 +190,9 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	function is_language_code( $language_code ) {
 
-		return array_key_exists( $language_code, $this->languages );
+		$result = array_key_exists( $language_code, $this->get_languages() );
+
+		return $result;
 	}
 
 	/**
@@ -183,10 +202,11 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	function get_languages() {
 
+		/*
 		if ( isset( $this->languages ) ) {
 			// Use value
 			return $this->languages;
-		}
+		}*/
 
 		$result = array();
 
@@ -197,8 +217,8 @@ class PluginWpml extends WpSolrExtensions {
 		if ( ! empty( $languages ) ) {
 			foreach ( $languages as $language ) {
 
-				$result[ $language['language_code'] ] = array(
-					'language_code' => $language['language_code'],
+				$result[ $language['code'] ] = array(
+					'language_code' => $language['code'],
 					'active'        => $language['active'],
 				);
 
@@ -209,11 +229,19 @@ class PluginWpml extends WpSolrExtensions {
 		return $result;
 	}
 
+	/**
+	 * Retrieve index indices
+	 *
+	 * @return mixed
+	 */
+	function get_solr_index_indices() {
+
+		return $this->options[ self::WPML_OPTIONS_INDEX_INDICE ];
+	}
 
 	function get_solr_index_indexing_language( $solr_index_indice ) {
 
-		$options      = get_option( 'wdm_solr_extension_wpml_data' );
-		$solr_indexes = $options['solr_index_indice'];
+		$solr_indexes = $this->get_solr_index_indices();
 
 		if ( ! isset( $solr_indexes ) || ! isset( $solr_indexes[ $solr_index_indice ] ) || ! isset( $solr_indexes[ $solr_index_indice ]['indexing_language_code'] ) || '' === $solr_indexes[ $solr_index_indice ]['indexing_language_code'] ) {
 			return null;
@@ -230,8 +258,7 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	public function each_language_has_a_one_solr_index_search() {
 
-		$options      = get_option( 'wdm_solr_extension_wpml_data' );
-		$solr_indexes = $options['solr_index_indice'];
+		$solr_indexes = $this->get_solr_index_indices();
 		if ( ! isset( $solr_indexes ) ) {
 			// Languages not yet related to any Solr index search.
 			return false;
@@ -328,4 +355,37 @@ class PluginWpml extends WpSolrExtensions {
 		return $translated_search_page_url;
 	}
 
+
+	/**
+	 * Get the Solr index search for the current language
+	 *
+	 * @return string Solr index indice
+	 */
+	function get_default_solr_index_indice() {
+
+		$current_language_code = self::get_current_language_code();
+		$solr_indexes          = $this->get_solr_index_indices();
+		if ( ! isset( $solr_indexes ) ) {
+			// Languages not yet related to any Solr index search.
+			throw new Exception( sprintf( "WPSOLR WPML extension is activated, but not configured to match languages and Solr indexes.", $current_language_code ) );
+		}
+
+		$default_search_languages_already_found = array();
+		foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
+
+			if ( isset( $solr_index['is_default_search'] ) && isset( $solr_index['indexing_language_code'] ) && ( $solr_index['indexing_language_code'] === $current_language_code ) ) {
+
+				// Is language a valid one ?
+				if ( ! $this->is_language_code( $solr_index['indexing_language_code'] ) ) {
+					throw new Exception( sprintf( "WPSOLR WPML extension is activated, but current language '%s' is not an active WPML language.", $current_language_code ) );
+				}
+
+				// The winner: valid index indice which is default search for current language
+				return $solr_index_indice;
+
+			}
+		}
+
+		throw new Exception( sprintf( "WPSOLR WPML extension is activated, but current language '%s' has no search Solr index.", $current_language_code ) );
+	}
 }

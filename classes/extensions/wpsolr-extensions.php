@@ -112,6 +112,20 @@ class WpSolrExtensions {
 	private $extension_objects = array();
 
 	/**
+	 * Factory to load extensions
+	 * @return WpSolrExtensions
+	 */
+	static function load() {
+		global $wpsolr_extensions;
+
+		if ( ! isset( $wpsolr_extensions ) ) {
+			$wpsolr_extensions = new self();
+		}
+
+		return $wpsolr_extensions;
+	}
+
+	/**
 	 * Constructor.
 	 */
 	function __construct() {

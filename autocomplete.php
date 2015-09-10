@@ -1,4 +1,8 @@
 <?php
+
+// Load WPML class
+WpSolrExtensions::load();
+
 function wdm_return_solr_rows() {
 	if ( isset( $_POST['security'] )
 	     && wp_verify_nonce( $_POST['security'], 'nonce_for_autocomplete' )
@@ -10,10 +14,20 @@ function wdm_return_solr_rows() {
 
 			$input = strtolower( $input );
 
-			$client = WPSolrSearchSolrClient::create();
-			$result = $client->get_suggestions( $input );
+			try {
 
-			echo json_encode( $result );
+				$client = WPSolrSearchSolrClient::create_from_default_index_indice();
+				$result = $client->get_suggestions( $input );
+
+				echo json_encode( $result );
+
+			} catch ( Exception $e ) {
+				echo json_encode(
+					array(
+						'message' => htmlentities( $e->getMessage() )
+					)
+				);
+			}
 		}
 
 	}

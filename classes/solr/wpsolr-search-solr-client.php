@@ -28,13 +28,30 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	// Do not change - Sort by most comments
 	const SORT_CODE_BY_NUMBER_COMMENTS_DESC = 'sort_by_number_comments_desc';
 
-	// Factory
-	static function create( $solarium_config = null ) {
+	// Create using a configuration
+	static function create_from_solarium_config( $solarium_config ) {
 
 		return new self( $solarium_config );
 	}
 
-	public function __construct( $solarium_config = null ) {
+	// Create using the default index configuration
+	static function create_from_default_index_indice() {
+
+		return self::create_from_index_indice( null );
+	}
+
+	// Create using an index configuration
+	static function create_from_index_indice( $index_indice ) {
+
+		// Build Solarium config from the default indexing Solr index
+		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+		$options_indexes = new OptionIndexes();
+		$solarium_config = $options_indexes->build_solarium_config( $index_indice, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
+
+		return new self( $solarium_config );
+	}
+
+	public function __construct( $solarium_config ) {
 
 		// Load active extensions
 		$this->wpsolr_extensions = new WpSolrExtensions();
@@ -42,16 +59,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
-
-		if ( is_null( $solarium_config ) ) {
-
-			// Build Solarium config from the default indexing Solr index
-			WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
-			$options_indexes = new OptionIndexes();
-
-			$solarium_config = $options_indexes->build_solarium_config( self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
-		}
-
 		$this->client = new Solarium\Client( $solarium_config );
 
 	}

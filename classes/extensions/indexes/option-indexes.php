@@ -1,5 +1,7 @@
 <?php
 
+//WpSolrExtensions::load();
+
 /**
  * Class OptionIndexes
  *
@@ -168,18 +170,23 @@ class OptionIndexes extends WpSolrExtensions {
 	 */
 	public function build_solarium_config( $solr_index_indice = null, $timeout ) {
 
-
 		if ( ! isset( $solr_index_indice ) ) {
 
-			// Retrieve the default indexing Solr index
+			// Give a chance to set the solr index indice
+			$solr_index_indice = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE, null );
 
-			$solr_options = get_option( 'wdm_solr_form_data' );
-			if ( $solr_options === false ) {
-				throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
-			}
-			$solr_index_indice = $solr_options['default_solr_index_for_indexing'];
 			if ( ! isset( $solr_index_indice ) ) {
-				throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for indexing.' );
+				// Retrieve the default indexing Solr index
+
+				$solr_options = get_option( 'wdm_solr_form_data' );
+				if ( $solr_options === false ) {
+					throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
+				}
+				$solr_index_indice = $solr_options['default_solr_index_for_indexing'];
+				if ( ! isset( $solr_index_indice ) ) {
+					throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for indexing.' );
+				}
+
 			}
 		}
 

@@ -103,12 +103,18 @@ add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
 function add_attachment_to_solr_index( $attachment_id ) {
 
 	// Index the new attachment
+	try {
+		$solr = WPSolrIndexSolrClient::create();
 
-	$solr = WPSolrIndexSolrClient::create();
+		$solr->index_data( 1, get_post( $attachment_id ) );
 
-	$solr->index_data( 1, get_post( $attachment_id ) );
+		set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment added to Solr' );
 
-	set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment added to Solr' );
+	} catch ( Exception $e ) {
+
+		set_transient( get_current_user_id() . 'error_solr_post_save_admin_notice', htmlentities( $e->getMessage() ) );
+	}
+
 }
 
 /*
@@ -118,12 +124,18 @@ add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 function delete_attachment_to_solr_index( $attachment_id ) {
 
 	// Remove the attachment from Solr index
+	try {
+		$solr = WPSolrIndexSolrClient::create();
 
-	$solr = WPSolrIndexSolrClient::create();
+		$solr->delete_document( get_post( $attachment_id ) );
 
-	$solr->delete_document( get_post( $attachment_id ) );
+		set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment deleted from Solr' );
 
-	set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment deleted from Solr' );
+	} catch ( Exception $e ) {
+
+		set_transient( get_current_user_id() . 'error_solr_post_save_admin_notice', htmlentities( $e->getMessage() ) );
+	}
+
 }
 
 

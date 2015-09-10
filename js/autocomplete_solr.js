@@ -26,7 +26,6 @@ jQuery(document).ready(function () {
                     }
                 },
                 preProcess: function (data) {
-                    //alert(data);
                     jQuery('.search-field').removeClass('loading_sugg');
                     return data;
                 }

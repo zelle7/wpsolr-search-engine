@@ -8,12 +8,12 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	// Posts table name
 	const TABLE_POSTS = 'posts';
 
-	static function create( $solr_index_indice ) {
+	static function create( $solr_index_indice = null ) {
 
 		return new self( $solr_index_indice );
 	}
 
-	public function __construct( $solr_index_indice ) {
+	public function __construct( $solr_index_indice = null ) {
 
 		if ( ! isset( $solr_index_indice ) ) {
 			throw new ErrorException( "A Solr index indice is expected to start indexing." );

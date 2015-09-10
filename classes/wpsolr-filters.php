@@ -37,4 +37,7 @@ class WpSolrFilters {
 	// Filter the sql query statement used to retrieve the posts not yet indexed
 	const WPSOLR_FILTER_SQL_QUERY_STATEMENT = 'wpsolr_filter_sql_query_statement';
 
+	// Filter to get the default search index indice
+	const WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE = 'wpsolr_filter_get_default_search_solr°index_indice';
+
 }
