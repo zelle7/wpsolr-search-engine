@@ -116,13 +116,7 @@ class WpSolrExtensions {
 	 * @return WpSolrExtensions
 	 */
 	static function load() {
-		global $wpsolr_extensions;
-
-		if ( ! isset( $wpsolr_extensions ) ) {
-			$wpsolr_extensions = new self();
-		}
-
-		return $wpsolr_extensions;
+		$wpsolr_extensions = new self();
 	}
 
 	/**

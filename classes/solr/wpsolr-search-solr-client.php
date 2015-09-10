@@ -11,7 +11,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	protected $wpsolr_extensions;
 
 	//
-	const _SEARCH_PAGE_PATH = 'wpsolr-search';
+	const _SEARCH_PAGE_PATH = 'search-wpsolr';
 
 	// Do not change - Sort by most relevant
 	const SORT_CODE_BY_RELEVANCY_DESC = 'sort_by_relevancy_desc';

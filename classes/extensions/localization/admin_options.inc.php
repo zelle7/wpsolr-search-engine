@@ -32,8 +32,8 @@ $options = OptionLocalization::get_options( true );
 
 			<div class='wdm_row'>
 				<div class='col_left'>
-					Click here if you do not want to use this page localization texts.<br>
-					For instance, if you use .mo files in your theme, or use WPML plugin.
+					Choose how the front-end texts are localized
+
 				</div>
 				<div class='col_right'>
 
@@ -55,6 +55,17 @@ $options = OptionLocalization::get_options( true );
 						}
 						?>
 					</select>
+
+					<br/><br/>
+					You can find a wpsolr.pot file in WPSOLR's /languages folder.
+					<br/>
+					Use it to create your .po and .mo files (wpsolr-fr_FR.mo and wpsolr-fr_FR.po).
+					<br/>
+					Copy your .mo files in the Wordpress languages plugin directory (WP_LANG_DIR/plugins).
+					<br/>
+					Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo or
+					/htdocs/wp-content/languages/plugins/wpsolr-fr_FR.mo
+					<br/>
 
 				</div>
 			</div>

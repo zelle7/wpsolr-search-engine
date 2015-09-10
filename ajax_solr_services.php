@@ -5,6 +5,8 @@ include( dirname( __FILE__ ) . '/classes/solr/wpsolr-search-solr-client.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
+WpSolrExtensions::load();
+
 
 function solr_format_date( $thedate ) {
 	$datere  = '/(\d{4}-\d{2}-\d{2})\s(\d{2}:\d{2}:\d{2})/';

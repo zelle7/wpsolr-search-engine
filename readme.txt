@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 4.8
+Current Version: 4.9
 
 Author:  WPSOLR.COM
 
@@ -14,13 +14,17 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 4.8
+Stable tag: 4.9
 
 Replace your sluggish and rigid SQL search with the world open source leader Apache Solr wich powers the leading internet websites
 
 == Description ==
 
+For a multi-language live search demo, visit <a href='http://www.gotosolr.com/search-wpsolr/?search=solr'>live search page demo</a>. Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ». Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list. To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
+
 Compatible with Apache Solr up to Solr 5.2
+
+Search in multi-language content, with language specific stemming, stopwords, synonyms,
 
 Boost your search with multi-media content (pdf, .xls, .doc), facet filters, autocompletion, suggestions, and optional hosting.
 
@@ -52,10 +56,10 @@ And now, with this plugin, you can get it for free. So, fasten your seat belt, a
 10. Configuration options allow you to select pages to ignore.
 11. Host Solr remotely using gotosolr.
 12. Solr configuration made easy.
+13. Multi-language search is supported with WPML.
 
 For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
-For a live demo visit <a href='http://www.gotosolr.com/search-results/?search=solr'>live search page demo</a>. Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ». Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list. To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
 
 
 == Installation ==
@@ -85,6 +89,12 @@ For a live demo visit <a href='http://www.gotosolr.com/search-results/?search=so
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 4.9 =
+* Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.6).
+* Use .mo files to translate the search form and search results front-end texts.
+* Manage several Solr indexes.
+* The search page is now /search-wpsolr (to be sure it does not exist yet). Migrate your /search-results page content if you customized it.
 
 = 4.8 =
 * Index the shortcodes content when stripping shortcodes tags.

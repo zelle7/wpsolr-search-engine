@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Replace your sluggish and rigid SQL search with the world open source leader Apache Solr wich powers the leading internet websites
- * Version: 4.8
+ * Version: 4.9
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -16,8 +16,6 @@ require_once 'autocomplete.php';
 require_once 'classes/solr/wpsolr-index-solr-client.php';
 require_once 'classes/solr/wpsolr-search-solr-client.php';
 
-
-global $solr;
 
 /* Register Solr settings from dashboard
  * Add menu page in dashboard - Solr settings
@@ -228,9 +226,8 @@ function solr_search_form() {
 
 
 	$url = get_permalink( $get_page_info->ID );
-	// Filter the search page url
-	$wpsolr_extensions = new WpSolrExtensions();
-	$url               = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );
+	// Filter the search page url. Used for multi-language search forms.
+	$url = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );
 
 	$form = "<div class='cls_search' style='width:100%'><form action='$url' method='get'  class='search-frm2' >";
 	$form .= '<input type="hidden" value="' . $wdm_typehead_request_handler . '" id="path_to_fold">';
@@ -268,8 +265,8 @@ function my_plugins_loaded() {
 	/*
 	 * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
 	 * Copy your .mo files there
-	 * Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo
-	 * You can find our template file in this plugin /languages/wpsolr.pot file
+	 * Example: /htdocs/wp-includes/languages/plugins/wpsolr-fr_FR.mo or /htdocs/wp-content/languages/plugins/wpsolr-fr_FR.mo
+	 * You can find our template file in this plugin's /languages/wpsolr.pot file
 	 */
 	load_plugin_textdomain( 'wpsolr', false, false );
 }
