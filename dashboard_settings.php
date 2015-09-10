@@ -410,43 +410,6 @@ function fun_set_solr_options() {
 
 								</div>
 
-
-								<div class="wdm_row">
-									<div class='col_left'>Index with this Solr index<br/>
-
-									</div>
-									<div class='col_right'>
-										<select name='wdm_solr_form_data[default_solr_index_for_indexing]'>
-											<?php
-
-											// Empty option
-											echo sprintf( "<option value='%s' %s>%s</option>",
-												'',
-												'',
-												'Your data is not indexed by Solr. Please select a Solr index.'
-											);
-
-											foreach (
-												$solr_indexes as $solr_index_indice => $solr_index
-											) {
-
-												echo sprintf( "
-											<option value='%s' %s>%s</option>
-											",
-													$solr_index_indice,
-													selected( $solr_index_indice, isset( $solr_options['default_solr_index_for_indexing'] ) ?
-														$solr_options['default_solr_index_for_indexing'] : '' ),
-													isset( $solr_index['index_name'] ) ? $solr_index['index_name'] : 'Unnamed
-											Solr index' );
-
-											}
-											?>
-										</select>
-
-									</div>
-									<div class="clear"></div>
-								</div>
-
 								<div class="wdm_row">
 									<div class='col_left'>Post types to be indexed</div>
 									<div class='col_right'>

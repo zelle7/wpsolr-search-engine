@@ -165,6 +165,7 @@ function fun_dis_search() {
 
 register_activation_hook( __FILE__, 'my_register_activation_hook' );
 function my_register_activation_hook() {
+
 	/*
 	 * Migrate old data on plugin update
 	 */

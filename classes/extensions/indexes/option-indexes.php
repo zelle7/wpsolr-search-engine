@@ -87,12 +87,6 @@ class OptionIndexes extends WpSolrExtensions {
 					$results_options['default_solr_index_for_search'] = $old_index['indice'];
 					update_option( 'wdm_solr_res_data', $results_options );
 
-					// Default indexing Solr index
-					$indexing_options                                    = get_option( 'wdm_solr_form_data', array() );
-					$indexing_options['default_solr_index_for_indexing'] = $old_index['indice'];
-					update_option( 'wdm_solr_form_data', $indexing_options );
-
-
 				}
 
 			}
@@ -182,9 +176,9 @@ class OptionIndexes extends WpSolrExtensions {
 				if ( $solr_options === false ) {
 					throw new Exception( 'Please complete the setup of your Solr options. We could not find any.' );
 				}
-				$solr_index_indice = $solr_options['default_solr_index_for_indexing'];
+				$solr_index_indice = $solr_options['default_solr_index_for_search'];
 				if ( ! isset( $solr_index_indice ) ) {
-					throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for indexing.' );
+					throw new Exception( 'Please complete the setup of your Solr options. There is no Solr index configured for searching.' );
 				}
 
 			}
