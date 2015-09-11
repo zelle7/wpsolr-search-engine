@@ -20,7 +20,7 @@ Replace your sluggish and rigid SQL search with the world open source leader Apa
 
 == Description ==
 
-For a multi-language live search demo, visit <a href='http://www.gotosolr.com/search-wpsolr/?search=solr'>live search page demo</a>. Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ». Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list. To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
+For a multi-language live search demo, visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>live search page demo</a>. Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ». Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list. To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
 
 Compatible with Apache Solr up to Solr 5.2
 
