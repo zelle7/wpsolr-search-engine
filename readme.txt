@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 4.9
+Current Version: 5.0
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 4.9
+Stable tag: 5.0
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
@@ -99,6 +99,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.0 =
+* Search in custom fields, and display custom fields in snippets.
 
 = 4.9 =
 * Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.6).

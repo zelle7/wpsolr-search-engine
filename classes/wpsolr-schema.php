@@ -28,6 +28,7 @@ class WpSolrSchema {
 	const _FIELD_NAME_CATEGORIES = 'categories';
 	const _FIELD_NAME_TAGS = 'tags';
 	const _FIELD_NAME_LANGUAGE_CODE = 'language_code_s';
+	const _FIELD_NAME_CUSTOM_FIELDS = 'custom_fields_s';
 
 	/*
 	 * Dynamic types
