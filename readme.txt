@@ -16,13 +16,23 @@ Tested up to: 4.3
 
 Stable tag: 4.9
 
-Replace your sluggish and rigid SQL search with the world open source leader Apache Solr wich powers the leading internet websites
+Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
 == Description ==
 
-For a multi-language live search demo, visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>live search page demo</a>. Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ». Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list. To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
+For a multi-language live search demo, visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>live search page demo</a>.
+
+Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ».
+
+Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list.
+
+To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
 
 Compatible with Apache Solr up to Solr 5.2
+
+Tune your search page and results with WPSOLR admin panels.
+
+Tune even more your search with hundreds of parameters, just by tweaking the standard Apache Solr files, solrconfig.xml and schema.xml.
 
 Search in multi-language content, with language specific stemming, stopwords, synonyms,
 
