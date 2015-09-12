@@ -545,10 +545,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 
-		$solr_options = get_option( 'wdm_solr_conf_data' );
-
 		$solarium_document_for_update = $solarium_update_query->createDocument();
-		$numcomments                  = 0;
 
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
@@ -591,6 +588,25 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 		}
 
+		// Add custom fields to the document
+		$this->set_custom_fields( $solarium_document_for_update, $post );
+
+		// Last chance to customize the solarium update document
+		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post, $attachment_body );
+
+		return $solarium_document_for_update;
+
+	}
+
+
+	/**
+	 * Set custom fields to the update document
+	 *
+	 * @param $solarium_document_for_update
+	 * @param $post
+	 */
+	function set_custom_fields( $solarium_document_for_update, $post ) {
+
 		$custom                    = $this->solr_indexing_options['cust_fields'];
 		$custom_fields_values_list = array();
 		$aCustom                   = explode( ',', $custom );
@@ -615,20 +631,21 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$solarium_document_for_update->$nm1 = $field;
 						$solarium_document_for_update->$nm2 = $field;
 
-						// Add current custom field value to custom fields search field
-						array_push( $custom_fields_values_list, $field );
+						// Add current custom field values to custom fields search field
+						// $field being an array, we add each of it's element
+						foreach ( $field as $field_value ) {
+
+							array_push( $custom_fields_values_list, $field_value );
+						}
+
 					}
 				}
 			}
 		}
 
-		//$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $custom_fields_values_list;
-
-		// Last chance to customize the solarium update document
-		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post, $attachment_body );
-
-		return $solarium_document_for_update;
-
+		if ( count( $custom_fields_values_list ) > 0 ) {
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $custom_fields_values_list;
+		}
 	}
 
 	/**
