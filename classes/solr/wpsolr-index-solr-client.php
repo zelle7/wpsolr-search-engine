@@ -17,9 +17,11 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solr_index_indice = null ) {
 
+		/*
 		if ( ! isset( $solr_index_indice ) ) {
 			throw new ErrorException( "A Solr index indice is expected to start indexing." );
 		}
+		*/
 
 		// Load active extensions
 		$this->wpsolr_extensions = new WpSolrExtensions();
@@ -41,7 +43,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$this->client       = new Solarium\Client( $config );
 
 	}
-
 
 	public function delete_documents() {
 

@@ -76,6 +76,12 @@ class PluginWpml extends WpSolrExtensions {
 			'set_search_page_url',
 		), 10, 2 );
 
+		add_filter( WpSolrFilters::WPSOLR_FILTER_INDEXING_GET_SOLR_INDEX_INDICE_FOR_A_POST, array(
+			$this,
+			'get_solr_index_indice_to_index_a_post',
+		), 10, 2 );
+
+
 		// Display admin notice in admin
 		//self::set_admin_notice();
 	}
@@ -388,4 +394,13 @@ class PluginWpml extends WpSolrExtensions {
 
 		throw new Exception( sprintf( "WPSOLR WPML extension is activated, but current language '%s' has no search Solr index.", $current_language_code ) );
 	}
+
+	function get_language_of_a_post() {
+
+	}
+
+	function get_solr_index_indice_to_index_a_post() {
+
+	}
+
 }
