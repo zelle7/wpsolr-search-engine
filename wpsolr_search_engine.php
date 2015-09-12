@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: Replace your sluggish and rigid SQL search with the world open source leader Apache Solr wich powers the leading internet websites
- * Version: 4.9
+ * Description: Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
+ * Version: 5.0
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
