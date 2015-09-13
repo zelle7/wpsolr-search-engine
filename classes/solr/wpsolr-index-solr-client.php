@@ -8,6 +8,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	// Posts table name
 	const TABLE_POSTS = 'posts';
 
+	protected $solr_indexing_options;
+
 	static function create( $solr_index_indice = null ) {
 
 		return new self( $solr_index_indice );
@@ -22,6 +24,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
 
+		// Load options
+		$this->solr_indexing_options = get_option( 'wdm_solr_form_data' );
+
 		// Build Solarium config from the default indexing Solr index
 		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 		$options_indexes = new OptionIndexes();
@@ -32,7 +37,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$this->client       = new Solarium\Client( $config );
 
 	}
-
 
 	public function delete_documents() {
 
@@ -194,10 +198,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Get body of attachment
 		$solarium_extract_query = $client->createExtract();
 
-		$solr_indexing_options = get_option( 'wdm_solr_form_data' );
-
-		$post_types = str_replace( ",", "','", $solr_indexing_options['p_types'] );
-		$exclude_id = $solr_indexing_options['exclude_ids'];
+		$post_types = str_replace( ",", "','", $this->solr_indexing_options['p_types'] );
+		$exclude_id = $this->solr_indexing_options['exclude_ids'];
 		$ex_ids     = array();
 		$ex_ids     = explode( ',', $exclude_id );
 
@@ -207,7 +209,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$where_p = " post_type in ('$post_types') ";
 
 		// Build the attachment types clause
-		$attachment_types = str_replace( ",", "','", $solr_indexing_options['attachment_types'] );
+		$attachment_types = str_replace( ",", "','", $this->solr_indexing_options['attachment_types'] );
 		if ( isset( $attachment_types ) && ( $attachment_types != '' ) ) {
 			$where_a = " ( post_status='publish' OR post_status='inherit' ) AND post_type='attachment' AND post_mime_type in ('$attachment_types') ";
 		}
@@ -341,7 +343,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$doc_count ++;
 
 						// Get the posts data
-						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, $solr_indexing_options, get_post( $postid ) );
+						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ) );
 
 						if ( $is_debug_indexing ) {
 							$this->add_debug_line( $debug_text, null, Array(
@@ -367,7 +369,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$attachment_body = self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, get_post( $postid ) );
 
 						// Get the posts data
-						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, $solr_indexing_options, get_post( $postid ), $attachment_body );
+						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ), $attachment_body );
 
 						if ( $is_debug_indexing ) {
 							$this->add_debug_line( $debug_text, null, Array(
@@ -449,15 +451,15 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	/**
 	 * @param $solarium_update_query
-	 * @param $solr_indexing_options
 	 * @param $post
 	 * @param null $attachment_body
 	 *
 	 * @return mixed
+	 * @internal param $solr_indexing_options
 	 */
 	public
 	function create_solr_document_from_post_or_attachment(
-		$solarium_update_query, $solr_indexing_options, $post, $attachment_body = null
+		$solarium_update_query, $post, $attachment_body = null
 	) {
 
 		$pid    = $post->ID;
@@ -480,7 +482,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$purl             = get_permalink( $pid );
 		$pcomments        = array();
 		$comments_con     = array();
-		$comm             = isset( $solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] ) ? $solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] : '';
+		$comm             = isset( $this->solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] ) ? $this->solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] : '';
 
 		$numcomments = 0;
 		if ( $comm ) {
@@ -501,7 +503,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			Get all custom categories selected for indexing, including 'category'
 		*/
 		$cats   = array();
-		$taxo   = $solr_indexing_options['taxonomies'];
+		$taxo   = $this->solr_indexing_options['taxonomies'];
 		$aTaxo  = explode( ',', $taxo );
 		$newTax = array( 'category' ); // Add categories by default
 		if ( is_array( $aTaxo ) && count( $aTaxo ) ) {
@@ -538,10 +540,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 
-		$solr_options = get_option( 'wdm_solr_conf_data' );
-
 		$solarium_document_for_update = $solarium_update_query->createDocument();
-		$numcomments                  = 0;
 
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
@@ -584,8 +583,28 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 		}
 
-		$custom  = $solr_indexing_options['cust_fields'];
-		$aCustom = explode( ',', $custom );
+		// Add custom fields to the document
+		$this->set_custom_fields( $solarium_document_for_update, $post );
+
+		// Last chance to customize the solarium update document
+		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post, $attachment_body );
+
+		return $solarium_document_for_update;
+
+	}
+
+
+	/**
+	 * Set custom fields to the update document
+	 *
+	 * @param $solarium_document_for_update
+	 * @param $post
+	 */
+	function set_custom_fields( $solarium_document_for_update, $post ) {
+
+		$custom                    = $this->solr_indexing_options['cust_fields'];
+		$custom_fields_values_list = array();
+		$aCustom                   = explode( ',', $custom );
 		if ( count( $aCustom ) > 0 ) {
 			if ( count( $custom_fields = get_post_custom( $post->ID ) ) ) {
 
@@ -607,16 +626,21 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$solarium_document_for_update->$nm1 = $field;
 						$solarium_document_for_update->$nm2 = $field;
 
+						// Add current custom field values to custom fields search field
+						// $field being an array, we add each of it's element
+						foreach ( $field as $field_value ) {
+
+							array_push( $custom_fields_values_list, $field_value );
+						}
+
 					}
 				}
 			}
 		}
 
-		// Last chance to customize the solarium update document
-		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $solr_indexing_options, $post, $attachment_body );
-
-		return $solarium_document_for_update;
-
+		if ( count( $custom_fields_values_list ) > 0 ) {
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $custom_fields_values_list;
+		}
 	}
 
 	/**
