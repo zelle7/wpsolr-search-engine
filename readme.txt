@@ -20,6 +20,12 @@ Search is the secret weapon of the biggest websites. WPSOLR brings you the same 
 
 == Description ==
 
+Review on a 1 million documents search : <a href="https://wordpress.org/support/topic/awesome-plugin-1526" target="_blank">"Have used it to index over 1 million data in a custom WP application and the results have been fantastic"</a>.
+
+Our plugin website: <a href="http://www.wpsolr.com" target="_blank">http://www.wpsolr.com</a>
+
+Our Solr hosting website (if you do not want to host your own Solr server): <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
+
 For a multi-language live search demo, visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>live search page demo</a>.
 
 Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ».
@@ -102,6 +108,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 = 5.1 =
 * Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as facets.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.0 =
 * Fix error while updating the Solr index when post/page are published or trashed. 
