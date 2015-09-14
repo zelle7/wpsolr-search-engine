@@ -27,7 +27,7 @@ class WpSolrSchema {
 	const _FIELD_NAME_NUMBER_OF_COMMENTS = 'numcomments';
 	const _FIELD_NAME_CATEGORIES = 'categories';
 	const _FIELD_NAME_TAGS = 'tags';
-	const _FIELD_NAME_CUSTOM_FIELDS = 'custom_fields';
+	const _FIELD_NAME_CUSTOM_FIELDS = 'categories';
 
 	/*
 	 * Dynamic types

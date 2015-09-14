@@ -611,6 +611,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 				// Apply filters on custom fields
 				$custom_fields = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, $custom_fields, $post->ID );
 
+				$existing_custom_fields = isset( $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] )
+					? $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ]
+					: array();
 				foreach ( (array) $aCustom as $field_name ) {
 					if ( substr( $field_name, ( strlen( $field_name ) - 4 ), strlen( $field_name ) ) == "_str" ) {
 						$field_name = substr( $field_name, 0, ( strlen( $field_name ) - 4 ) );
@@ -630,7 +633,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						// $field being an array, we add each of it's element
 						foreach ( $field as $field_value ) {
 
-							array_push( $custom_fields_values_list, $field_value );
+							array_push( $existing_custom_fields, $field_value );
 						}
 
 					}
@@ -638,8 +641,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 		}
 
-		if ( count( $custom_fields_values_list ) > 0 ) {
-			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $custom_fields_values_list;
+		if ( count( $existing_custom_fields ) > 0 ) {
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $existing_custom_fields;
 		}
 	}
 

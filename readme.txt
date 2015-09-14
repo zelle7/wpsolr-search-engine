@@ -101,7 +101,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 == Changelog ==
 
 = 5.1 =
-* Search in custom fields, and display custom fields in snippets.
+* Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as facets.
 
 = 5.0 =
 * Fix error while updating the Solr index when post/page are published or trashed. 
