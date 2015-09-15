@@ -366,7 +366,14 @@ function return_solr_index_data() {
 		// Debug infos displayed on screen ?
 		$is_debug_indexing = ( $_POST['is_debug_indexing'] === "true" );
 
-		$solr      = WPSolrIndexSolrClient::create( $solr_index_indice );
+		// Re-index all the data ?
+		$is_reindexing_all_posts = ( $_POST['is_reindexing_all_posts'] === "true" );
+
+		$solr = WPSolrIndexSolrClient::create( $solr_index_indice );
+		// Reset documents if requested
+		if ( $is_reindexing_all_posts ) {
+			$solr->reset_documents();
+		}
 		$res_final = $solr->index_data( $batch_size, null, $is_debug_indexing );
 
 		// Increment nb of document sent until now

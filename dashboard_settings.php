@@ -241,6 +241,15 @@ function fun_set_solr_options() {
 
 								</div>
 								<div class="wdm_row">
+									<div class='col_left'>Replace WordPress Default Search</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[default_search]'
+										       value='1'
+											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
 									<div class='col_left'>Search with this Solr index<br/>
 
 									</div>
@@ -308,15 +317,6 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Replace WordPress Default Search</div>
-									<div class='col_right'>
-										<input type='checkbox' name='wdm_solr_res_data[default_search]'
-										       value='1'
-											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="wdm_row">
 									<div class='col_left'>No. of results per page</div>
 									<div class='col_right'>
 										<input type='text' id='number_of_res' name='wdm_solr_res_data[no_res]'
@@ -333,6 +333,17 @@ function fun_set_solr_options() {
 										       placeholder="Enter a Number"
 										       value="<?php echo empty( $solr_res_options['no_fac'] ) ? '20' : $solr_res_options['no_fac']; ?>"><span
 											class='fac_err'></span> <br>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Maximum size of each snippet text in results</div>
+									<div class='col_right'>
+										<input type='text' id='highlighting_fragsize'
+										       name='wdm_solr_res_data[highlighting_fragsize]'
+										       placeholder="Enter a Number"
+										       value="<?php echo empty( $solr_res_options['highlighting_fragsize'] ) ? '100' : $solr_res_options['highlighting_fragsize']; ?>"><span
+											class='highlighting_fragsize_err'></span> <br>
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -410,6 +421,18 @@ function fun_set_solr_options() {
 
 								</div>
 
+								<div class="wdm_row">
+									<div class='col_left'>
+										Expand shortcodes of post content before indexing.<br/>
+										Else, shortcodes will simply be stripped.
+									</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_form_data[is_shortcode_expanded]'
+										       value='1' <?php checked( '1', isset( $solr_options['is_shortcode_expanded'] ) ? $solr_options['is_shortcode_expanded'] : '' ); ?>>
+
+									</div>
+									<div class="clear"></div>
+								</div>
 								<div class="wdm_row">
 									<div class='col_left'>Post types to be indexed</div>
 									<div class='col_right'>
@@ -916,6 +939,20 @@ function fun_set_solr_options() {
 								       name='wdm_solr_operations_data[is_debug_indexing][<?php echo $current_index_indice ?>]'
 								       value='is_debug_indexing'
 									<?php checked( 'is_debug_indexing', isset( $solr_operations_options['is_debug_indexing'][ $current_index_indice ] ) ? $solr_operations_options['is_debug_indexing'][ $current_index_indice ] : '' ); ?>>
+								<span class='res_err'></span><br>
+							</div>
+							<div class="clear"></div>
+							<div class='col_left'>
+								Re-index all the data in place.<br/>
+								If you check this option, it will restart the indexing from start, without deleting the data already in the Solr index.
+							</div>
+							<div class='col_right'>
+
+								<input type='checkbox'
+								       id='is_reindexing_all_posts'
+								       name='is_reindexing_all_posts'
+								       value='is_reindexing_all_posts'
+									<?php checked( true, false ); ?>>
 								<span class='res_err'></span><br>
 							</div>
 							<div class="clear"></div>

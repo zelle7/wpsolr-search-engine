@@ -40,14 +40,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function delete_documents() {
 
-		// Store 0 in # of index documents
-		self::set_index_indice_option_value( 'solr_docs', 0 );
-
-		// Reset last indexed post date
-		self::set_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
-
-		// Update nb of documents updated/added
-		self::set_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', - 1 );
+		// Reset docs first
+		$this->reset_documents();
 
 		// Execute delete query
 		$client      = $this->client;
@@ -56,6 +50,19 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$deleteQuery->addCommit();
 		$client->execute( $deleteQuery );
 
+
+	}
+
+	public function reset_documents() {
+
+		// Store 0 in # of index documents
+		self::set_index_indice_option_value( 'solr_docs', 0 );
+
+		// Reset last indexed post date
+		self::set_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+
+		// Update nb of documents updated/added
+		self::set_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', - 1 );
 
 	}
 
@@ -117,19 +124,25 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function get_count_documents_indexed_last_operation( $default_value = - 1 ) {
 
-		return self::get_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', $default_value );
+		return $this->get_index_indice_option_value( 'solr_docs_added_or_updated_last_operation', $default_value );
 
 	}
 
 	public function get_last_post_date_indexed() {
 
-		return self::get_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+		return $this->get_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
+
+	}
+
+	public function reset_last_post_date_indexed() {
+
+		return $this->set_index_indice_option_value( 'solr_last_post_date_indexed', '1000-01-01 00:00:00' );
 
 	}
 
 	public function set_last_post_date_indexed( $option_value ) {
 
-		return self::set_index_indice_option_value( 'solr_last_post_date_indexed', $option_value );
+		return $this->set_index_indice_option_value( 'solr_last_post_date_indexed', $option_value );
 
 	}
 
@@ -156,6 +169,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$option[ $this->index_indice ] = $option_value;
 
 		update_option( $option_name, $option );
+
+		return $option_value;
 	}
 
 	/**
@@ -165,7 +180,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	public function count_nb_documents_to_be_indexed() {
 
-		return self::index_data( 0, null );
+		return $this->index_data( 0, null );
 
 	}
 
@@ -184,14 +199,12 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$debug_text = '';
 
 		// Last post date set in previous call. We begin with posts published after.
+		// Reset the last post date is reindexing is required.
 		$lastPostDate = $this->get_last_post_date_indexed();
 
-		$query_select_stmt   = '';
-		$query_from          = $wpdb->prefix . self::TABLE_POSTS . ' AS ' . self::TABLE_POSTS;
-		$query_join_stmt     = '';
-		$query_where_stmt    = '';
-		$query_order_by_stmt = '';
-		$query_limit_stmt    = '';
+		$query_from       = $wpdb->prefix . self::TABLE_POSTS . ' AS ' . self::TABLE_POSTS;
+		$query_join_stmt  = '';
+		$query_where_stmt = '';
 
 		$client      = $this->client;
 		$updateQuery = $client->createUpdate();
@@ -451,7 +464,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	/**
 	 * @param $solarium_update_query
-	 * @param $post
+	 * @param $post_to_index
 	 * @param null $attachment_body
 	 *
 	 * @return mixed
@@ -459,26 +472,26 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	public
 	function create_solr_document_from_post_or_attachment(
-		$solarium_update_query, $post, $attachment_body = null
+		$solarium_update_query, $post_to_index, $attachment_body = null
 	) {
 
-		$pid    = $post->ID;
-		$ptitle = $post->post_title;
+		$pid    = $post_to_index->ID;
+		$ptitle = $post_to_index->post_title;
 		if ( isset( $attachment_body ) ) {
 			// Post is an attachment: we get the document body from the function call
 			$pcontent = $attachment_body;
 		} else {
 			// Post is NOT an attachment: we get the document body from the post object
-			$pcontent = $post->post_content;
+			$pcontent = $post_to_index->post_content;
 		}
-		$pauth_info       = get_userdata( $post->post_author );
+		$pauth_info       = get_userdata( $post_to_index->post_author );
 		$pauthor          = isset( $pauth_info ) ? $pauth_info->display_name : '';
 		$pauthor_s        = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
-		$ptype            = $post->post_type;
-		$pdate            = solr_format_date( $post->post_date_gmt );
-		$pmodified        = solr_format_date( $post->post_modified_gmt );
-		$pdisplaydate     = $post->post_date;
-		$pdisplaymodified = $post->post_modified;
+		$ptype            = $post_to_index->post_type;
+		$pdate            = solr_format_date( $post_to_index->post_date_gmt );
+		$pmodified        = solr_format_date( $post_to_index->post_modified_gmt );
+		$pdisplaydate     = $post_to_index->post_date;
+		$pdisplaymodified = $post_to_index->post_modified;
 		$purl             = get_permalink( $pid );
 		$pcomments        = array();
 		$comments_con     = array();
@@ -488,7 +501,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		if ( $comm ) {
 			$comments_con = array();
 
-			$comments = get_comments( "status=approve&post_id={$post->ID}" );
+			$comments = get_comments( "status=approve&post_id={$post_to_index->ID}" );
 			foreach ( $comments as $comment ) {
 				array_push( $comments_con, $comment->comment_content );
 				$numcomments += 1;
@@ -522,7 +535,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		// Get all taxonomy terms ot this post
-		$term_names = wp_get_post_terms( $post->ID, $newTax, array( "fields" => "names" ) );
+		$term_names = wp_get_post_terms( $post_to_index->ID, $newTax, array( "fields" => "names" ) );
 		if ( $term_names && ! is_wp_error( $term_names ) ) {
 			foreach ( $term_names as $term_name ) {
 				array_push( $cats, $term_name );
@@ -531,7 +544,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		// Get all tags of this port
 		$tag_array = array();
-		$tags      = get_the_tags( $post->ID );
+		$tags      = get_the_tags( $post_to_index->ID );
 		if ( ! $tags == null ) {
 			foreach ( $tags as $tag ) {
 				array_push( $tag_array, $tag->name );
@@ -546,13 +559,23 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
 
-		// Remove shortcodes tags, but not their content.
+		$content_with_shortcodes_expanded_or_stripped = $pcontent;
+		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) ) {
+
+			// Expand shortcodes which have a plugin active
+			global $post;
+			$post                                         = $post_to_index;
+			$content_with_shortcodes_expanded_or_stripped = do_shortcode( $pcontent );
+		}
+
+		// Remove shortcodes tags remaining, but not their content.
 		// strip_shortcodes() does nothing, probably because shortcodes from themes are not loaded in admin.
 		// Credit: https://wordpress.org/support/topic/stripping-shortcodes-keeping-the-content.
 		// Modified to enable "/" in attributes
-		$content_with_shortcode_expanded = preg_replace( "~(?:\[/?)[^\]]+/?\]~s", '', $pcontent );  # strip shortcodes, keep shortcode content;
+		$content_with_shortcodes_expanded_or_stripped = preg_replace( "~(?:\[/?)[^\]]+/?\]~s", '', $content_with_shortcodes_expanded_or_stripped );  # strip shortcodes, keep shortcode content;
+
 		// Remove HTML tags
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] = strip_tags( $content_with_shortcode_expanded );
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] = strip_tags( $content_with_shortcodes_expanded_or_stripped );
 
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_AUTHOR ]             = $pauthor;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_AUTHOR_S ]           = $pauthor_s;
@@ -570,7 +593,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
 		foreach ( $taxonomies as $parent ) {
 			if ( in_array( $parent, $newTax ) ) {
-				$terms = get_the_terms( $post->ID, $parent );
+				$terms = get_the_terms( $post_to_index->ID, $parent );
 				if ( (array) $terms === $terms ) {
 					$parent = strtolower( str_replace( ' ', '_', $parent ) );
 					foreach ( $terms as $term ) {
@@ -584,10 +607,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 		// Add custom fields to the document
-		$this->set_custom_fields( $solarium_document_for_update, $post );
+		$this->set_custom_fields( $solarium_document_for_update, $post_to_index );
 
 		// Last chance to customize the solarium update document
-		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post, $attachment_body );
+		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post_to_index, $attachment_body );
 
 		return $solarium_document_for_update;
 
@@ -595,7 +618,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 	/**
-	 * Set custom fields to the update document
+	 * Set custom fields to the update document.
+	 * HTML and php tags are removed.
 	 *
 	 * @param $solarium_document_for_update
 	 * @param $post
@@ -633,17 +657,20 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						// $field being an array, we add each of it's element
 						foreach ( $field as $field_value ) {
 
-							array_push( $existing_custom_fields, $field_value );
+							array_push( $existing_custom_fields, strip_tags( $field_value ) );
 						}
 
 					}
 				}
+
+				if ( count( $existing_custom_fields ) > 0 ) {
+					$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $existing_custom_fields;
+				}
+
 			}
+
 		}
 
-		if ( count( $existing_custom_fields ) > 0 ) {
-			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] = $existing_custom_fields;
-		}
 	}
 
 	/**

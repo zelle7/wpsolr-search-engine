@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
- * Version: 5.1
+ * Version: 5.2
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

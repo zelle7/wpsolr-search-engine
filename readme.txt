@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.1
+Current Version: 5.2
 
 Author:  WPSOLR.COM
 
@@ -14,11 +14,18 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.1
+Stable tag: 5.2
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
 == Description ==
+
+= About us =
+WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
+
+= Need support ? =
+- We deliver free support with the community forum.
+- We deliver professional Zendesk support, and an assistance to setup WPSOLR, with a <a href="http://www.gotosolr.com/en" target="_blank">Gotosolr subscription</a>.
 
 Review on a 1 million documents search : <a href="https://wordpress.org/support/topic/awesome-plugin-1526" target="_blank">"Have used it to index over 1 million data in a custom WP application and the results have been fantastic"</a>.
 
@@ -106,6 +113,15 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Changelog ==
 
+= 5.2 =
+* New admin option to expand shortcodes found in posts content before indexing in Solr, rather than stripping them.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+* Remove HTML and php tags from custom fields before indexing in Solr.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+* New admin option to control the size of the results snippets (highlighting fragment size).
+* New admin option to re-index all the posts, without deleting the index.
+
+
 = 5.1 =
 * Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as facets.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
@@ -114,7 +130,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Fix error while updating the Solr index when post/page are published or trashed. 
 
 = 4.9 =
-* Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.6).
+* Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
 * Use .mo files to translate the search form and search results front-end texts.
 * Manage several Solr indexes.
 * The search page is now /search-wpsolr (to be sure it does not exist yet). Migrate your /search-results page content if you customized it.

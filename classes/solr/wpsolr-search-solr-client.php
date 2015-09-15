@@ -396,22 +396,16 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
-		$hl = $query->getHighlighting();
-		$hl->getField( WpSolrSchema::_FIELD_NAME_TITLE )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
-		$hl->getField( WpSolrSchema::_FIELD_NAME_CONTENT )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+		/*
+		 * Set highlighting parameters
+		 */
+		$this->set_highlighting( $query, $res_opt );
 
-
-		if ( $field_comment == 1 ) {
-			$hl->getField( WpSolrSchema::_FIELD_NAME_COMMENTS )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
-		}
-
-		$resultSet = '';
 		$resultSet = $client->execute( $query );
 
 
 		$results      = array();
 		$highlighting = $resultSet->getHighlighting();
-
 
 		$i       = 1;
 		$cat_arr = array();
@@ -535,6 +529,34 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 
 		return $search_result;
+	}
+
+	/**
+	 * Set highlighting parameters
+	 *
+	 * @param $query Solarium query object
+	 */
+	public function set_highlighting( $query, $searching_options ) {
+
+		$hl = $query->getHighlighting();
+
+		foreach (
+			array(
+				WpSolrSchema::_FIELD_NAME_TITLE,
+				WpSolrSchema::_FIELD_NAME_CONTENT,
+				WpSolrSchema::_FIELD_NAME_COMMENTS
+			) as $highlited_field_name
+		) {
+
+			$hl->getField( $highlited_field_name )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+
+			if ( isset( $searching_options['highlighting_fragsize'] ) && is_numeric( $searching_options['highlighting_fragsize'] ) ) {
+				// Max size of each highlighting fragment for post content
+				$hl->getField( $highlited_field_name )->setFragSize( $searching_options['highlighting_fragsize'] );
+			}
+
+		}
+
 	}
 
 	public function ping() {

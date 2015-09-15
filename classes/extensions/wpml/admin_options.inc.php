@@ -59,7 +59,7 @@ $is_plugin_active        = WpSolrExtensions::is_plugin_active( WpSolrExtensions:
 				<div class='col_left'>Use the <a
 						href="https://wpml.org/"
 						target="_blank">WPML
-						plugin</a>
+						plugin (WPML Multilingual CMS > 3.1.6)</a>
 					to manage multi-language Solr search.
 					<br/><br/>Think of re-indexing all your data if <a
 						href="https://wpml.org/"

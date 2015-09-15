@@ -82,6 +82,7 @@ jQuery(document).ready(function () {
         solr_index_indice = jQuery('#solr_index_indice').val();
         batch_size = jQuery('#batch_size').val();
         is_debug_indexing = jQuery('#is_debug_indexing').prop('checked');
+        is_reindexing_all_posts = jQuery('#is_reindexing_all_posts').prop('checked');
 
         err = 1;
 
@@ -97,7 +98,7 @@ jQuery(document).ready(function () {
             return false;
         } else {
 
-            call_solr_index_data(solr_index_indice, batch_size, 0, is_debug_indexing);
+            call_solr_index_data(solr_index_indice, batch_size, 0, is_debug_indexing, is_reindexing_all_posts);
 
             // Block submit
             return false;
@@ -107,7 +108,7 @@ jQuery(document).ready(function () {
 
 
     // Promise to the Ajax call
-    function call_solr_index_data(solr_index_indice, batch_size, nb_results, is_debug_indexing) {
+    function call_solr_index_data(solr_index_indice, batch_size, nb_results, is_debug_indexing, is_reindexing_all_posts) {
 
         var nb_results_message = nb_results + ' documents indexed so far'
 
@@ -123,7 +124,8 @@ jQuery(document).ready(function () {
                 solr_index_indice: solr_index_indice,
                 batch_size: batch_size,
                 nb_results: nb_results,
-                is_debug_indexing: is_debug_indexing
+                is_debug_indexing: is_debug_indexing,
+                is_reindexing_all_posts: is_reindexing_all_posts
             },
             dataType: "json",
             timeout: 1000 * 3600 * 24
@@ -133,6 +135,7 @@ jQuery(document).ready(function () {
 
             if (data.debug_text) {
                 // Debug
+
                 jQuery('.status_debug_message').append('<br><br>' + data.debug_text);
 
                 if (data.indexing_complete) {
@@ -144,16 +147,20 @@ jQuery(document).ready(function () {
 
             if (data.status != 0 || data.message) {
                 // Errors
+
                 jQuery('.status_index_message').html('<br><br>An error occured: <br><br>' + data.message);
 
             }
             else if (!data.indexing_complete) {
 
                 // If indexing completed, stop. Else, call once more.
-                timeoutHandler = setTimeout(call_solr_index_data(solr_index_indice, batch_size, data.nb_results, is_debug_indexing), 100);
+                // Do not re-index all, again !
+                is_reindexing_all_posts = false;
+                timeoutHandler = setTimeout(call_solr_index_data(solr_index_indice, batch_size, data.nb_results, is_debug_indexing, is_reindexing_all_posts), 100);
 
 
             } else {
+
                 jQuery('#solr_stop_index_data').click();
 
             }
@@ -164,10 +171,11 @@ jQuery(document).ready(function () {
 
             if (error) {
 
+                message = '';
                 if (batch_size > 100) {
                     message = '<br> You could try to decrease your batch size to prevent errors or timeouts.';
                 }
-                jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + error + '<br><br>' + message);
+                jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + error + '<br><br>' + req.responseText + '<br><br>' + message);
             }
 
         });
@@ -234,6 +242,7 @@ jQuery(document).ready(function () {
     jQuery('#save_selected_res_options_form').click(function () {
         num_of_res = jQuery('#number_of_res').val();
         num_of_fac = jQuery('#number_of_fac').val();
+        highlighting_fragsize = jQuery('#highlighting_fragsize').val();
         err = 1;
         if (isNaN(num_of_res)) {
             jQuery('.res_err').text("Please enter valid number of results");
@@ -259,6 +268,20 @@ jQuery(document).ready(function () {
             jQuery('.fac_err').text();
 
         }
+
+        if (isNaN(highlighting_fragsize)) {
+            jQuery('.highlighting_fragsize_err').text("Please enter a valid Highlighting fragment size");
+            err = 0;
+        }
+        else if (highlighting_fragsize < 1) {
+            jQuery('.highlighting_fragsize_err').text("Highlighting fragment size must be > 0");
+            err = 0;
+        }
+        else {
+            jQuery('.highlighting_fragsize_err').text();
+
+        }
+
         if (err == 0)
             return false;
     })
