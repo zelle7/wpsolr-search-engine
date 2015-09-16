@@ -241,7 +241,10 @@ function fun_set_solr_options() {
 
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Replace WordPress Default Search</div>
+									<div class='col_left'>
+										Replace WordPress Default Search<br/>
+										Warning: permalinks must be activated.
+									</div>
 									<div class='col_right'>
 										<input type='checkbox' name='wdm_solr_res_data[default_search]'
 										       value='1'

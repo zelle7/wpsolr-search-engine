@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.2
+Current Version: 5.3
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.2
+Stable tag: 5.3
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
@@ -112,6 +112,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.3 =
+* Update documentation.
 
 = 5.2 =
 * New admin option to expand shortcodes found in posts content before indexing in Solr, rather than stripping them.
@@ -276,7 +279,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Frequently Asked Questions ==
 
-= Which PHP version is required?=
+= Why the search page does not show up ?=
+You have to select the admin option "Replace standard WP search", and verify that your urls permalinks are activated.
+
+= Which PHP version is required ? =
 
 WPSOLR uses a Solr client library, Solarium, which requires namespaces.
 
