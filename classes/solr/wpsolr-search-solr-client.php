@@ -10,8 +10,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	// Array of active extension objects
 	protected $wpsolr_extensions;
 
-	//
-	const _SEARCH_PAGE_PATH = 'search-wpsolr';
+	// Search template
+	const _SEARCH_PAGE_TEMPLATE = 'wpsolr-search-engine/search.php';
+
+	// Search page slug
+	const _SEARCH_PAGE_SLUG = 'search-wpsolr';
 
 	// Do not change - Sort by most relevant
 	const SORT_CODE_BY_RELEVANCY_DESC = 'sort_by_relevancy_desc';
@@ -103,7 +106,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	static function get_search_page() {
 
 		// Search page is found by it's path (hard-coded).
-		$search_page = get_page_by_path( self::_SEARCH_PAGE_PATH );
+		$search_page = get_page_by_path( self::_SEARCH_PAGE_SLUG );
 
 		if ( ! $search_page ) {
 
@@ -114,7 +117,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				'post_status'    => 'publish',
 				'post_author'    => 1,
 				'comment_status' => 'closed',
-				'post_name'      => self::_SEARCH_PAGE_PATH
+				'post_name'      => self::_SEARCH_PAGE_SLUG
 			);
 
 			$search_page_id = wp_insert_post( $_p );
