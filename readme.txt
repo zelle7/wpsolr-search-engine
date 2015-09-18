@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.3
+Current Version: 5.4
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.3
+Stable tag: 5.4
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
@@ -24,25 +24,40 @@ Search is the secret weapon of the biggest websites. WPSOLR brings you the same 
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
 
 = Need support ? =
-- We deliver free support with the community forum.
+- We deliver free bug and suggestions support with the community forum.
 - We deliver professional Zendesk support, and an assistance to setup WPSOLR, with a <a href="http://www.gotosolr.com/en" target="_blank">Gotosolr subscription</a>.
 
+= How fast is WPSOLR ? =
+Searches should be under 500ms, whatever the number of posts you have.
+
+= Is there any size limit ? =
+WPSOLR can manage virtually any number of posts. The only constraint is the time to index all your posts the first time. We have users with hundreds of thousands, even millions, of posts.
+
+= 1 million documents search =
 Review on a 1 million documents search : <a href="https://wordpress.org/support/topic/awesome-plugin-1526" target="_blank">"Have used it to index over 1 million data in a custom WP application and the results have been fantastic"</a>.
 
-Our plugin website: <a href="http://www.wpsolr.com" target="_blank">http://www.wpsolr.com</a>
+= Our plugin website =
+<a href="http://www.wpsolr.com" target="_blank">http://www.wpsolr.com</a>
 
-Our Solr hosting website (if you do not want to host your own Solr server): <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
+= Our Solr hosting website =
+If you do not want to host your own Solr server: <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
 
-For a multi-language live search demo, visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>live search page demo</a>.
+= Multi-language live search demo with WPML =
+Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>English/French WPML search page demo</a>.
 
-Try the live search (autocompletion), on words like « solr », « cassandra », « security », « indexes », « search ».
+= Super fast live suggestions 500ms =
+Try on words like « solr », « cassandra », « security », « indexes », « search ».
 
+= Super fast facets filters 500ms =
 Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list.
 
+= Did you mean =
 To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
 
+= Compatibility =
 Compatible with Apache Solr up to Solr 5.2
 
+= Tuning =
 Tune your search page and results with WPSOLR admin panels.
 
 Tune even more your search with hundreds of parameters, just by tweaking the standard Apache Solr files, solrconfig.xml and schema.xml.
@@ -51,6 +66,7 @@ Search in multi-language content, with language specific stemming, stopwords, sy
 
 Boost your search with multi-media content (pdf, .xls, .doc), facet filters, autocompletion, suggestions, and optional hosting.
 
+= Why Apache Solr ? =
 Standard WP search is performed by SQL queries directly on the database. So do most of search plugins.
 But SQL is awfully greedy in computer resources, especially when it comes to table joins and wild cards (select * where field like ‘%keyword%’), which are both heavily used by search.
 And SQL can’t keep well with natural language: synonyms, language specific plurals, stop-words, …
@@ -114,8 +130,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 == Changelog ==
 
 = 5.4 =
-* Each category can now be diplayed in it's own facet.
-* WARNING: this will require you to go to the facets options, and select each category you want to display as a facet. No need to re-index your data.
+* Improve search speed by 2-3 times.
+* Fix bug in category facet.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.3 =
 * Update documentation.

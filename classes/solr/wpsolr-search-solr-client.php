@@ -375,7 +375,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 					try {
 						$resultset = $client->execute( $query );
 						$found     = $resultset->getNumFound();
-						
+
 					} catch ( Exception $e ) {
 						// Sometimes, the spelling query returns errors
 						// java.lang.StringIndexOutOfBoundsException: String index out of range: 15\n\tat java.lang.AbstractStringBuilder.charAt(AbstractStringBuilder.java:203)\n\tat
