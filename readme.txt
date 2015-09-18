@@ -113,6 +113,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Changelog ==
 
+= 5.4 =
+* Each category can now be diplayed in it's own facet.
+* WARNING: this will require you to go to the facets options, and select each category you want to display as a facet. No need to re-index your data.
+
 = 5.3 =
 * Update documentation.
 
@@ -123,7 +127,6 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 * New admin option to control the size of the results snippets (highlighting fragment size).
 * New admin option to re-index all the posts, without deleting the index.
-
 
 = 5.1 =
 * Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as facets.

@@ -493,7 +493,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$pdisplaydate     = $post_to_index->post_date;
 		$pdisplaymodified = $post_to_index->post_modified;
 		$purl             = get_permalink( $pid );
-		$pcomments        = array();
 		$comments_con     = array();
 		$comm             = isset( $this->solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] ) ? $this->solr_indexing_options[ WpSolrSchema::_FIELD_NAME_COMMENTS ] : '';
 
@@ -588,6 +587,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_COMMENTS ]           = $pcomments;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS ] = $pnumcomments;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES ]         = $cats;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ]     = $cats;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TAGS ]               = $tag_array;
 
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
@@ -648,17 +648,23 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$field_name = strtolower( str_replace( ' ', '_', $field_name ) );
 
 						// Add custom field array of values
-						$nm1                                = $field_name . '_str';
-						$nm2                                = $field_name . '_srch';
-						$solarium_document_for_update->$nm1 = $field;
-						$solarium_document_for_update->$nm2 = $field;
-
-						// Add current custom field values to custom fields search field
-						// $field being an array, we add each of it's element
+						$nm1       = $field_name . '_str';
+						$nm2       = $field_name . '_srch';
+						$array_nm1 = array();
+						$array_nm2 = array();
 						foreach ( $field as $field_value ) {
+							$field_value_stripped = strip_tags( $field_value );
 
-							array_push( $existing_custom_fields, strip_tags( $field_value ) );
+							array_push( $array_nm1, $field_value_stripped );
+							array_push( $array_nm2, $field_value_stripped );
+
+							// Add current custom field values to custom fields search field
+							// $field being an array, we add each of it's element
+							array_push( $existing_custom_fields, $field_value_stripped );
 						}
+
+						$solarium_document_for_update->$nm1 = $array_nm1;
+						$solarium_document_for_update->$nm2 = $array_nm2;
 
 					}
 				}

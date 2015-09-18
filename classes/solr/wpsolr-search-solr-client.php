@@ -323,6 +323,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			foreach ( $facets_array as $facet ) {
 				$fact = strtolower( $facet );
 
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
+					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
+
 				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $fac_count );
 
 			}
@@ -332,6 +336,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			foreach ( $facets_array as $facet ) {
 
 				$fact      = strtolower( $facet );
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
+					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
 				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
 
 				foreach ( $facet_res as $value => $count ) {
@@ -425,8 +432,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			}
 			$date = date( 'm/d/Y', strtotime( $document->displaydate ) );
 
-			if ( property_exists( $document, "categories" ) ) {
-				$cat_arr = $document->categories;
+			if ( property_exists( $document, 'categories_str' ) ) {
+				$cat_arr = $document->categories_str;
 			}
 
 
