@@ -269,45 +269,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$query->setQueryDefaultOperator( 'AND' );
 
 
-		if ( $res_opt['spellchecker'] == 'spellchecker' ) {
-
-			$spellChk = $query->getSpellcheck();
-			$spellChk->setCount( 10 );
-			$spellChk->setCollate( true );
-			$spellChk->setExtendedResults( true );
-			$spellChk->setCollateExtendedResults( true );
-			$resultset = $client->execute( $query );
-
-
-			$spellChkResult = $resultset->getSpellcheck();
-			if ( $spellChkResult && ! $spellChkResult->getCorrectlySpelled() ) {
-				$collations          = $spellChkResult->getCollations();
-				$queryTermsCorrected = $term; // original query
-				foreach ( $collations as $collation ) {
-					foreach ( $collation->getCorrections() as $input => $correction ) {
-						$queryTermsCorrected = str_replace( $input, is_array( $correction ) ? $correction[0] : $correction, $queryTermsCorrected );
-					}
-
-				}
-
-				if ( $queryTermsCorrected != $term ) {
-
-					$err_msg         = sprintf( OptionLocalization::get_term( $localization_options, 'results_header_did_you_mean' ), $queryTermsCorrected ) . '<br/>';
-					$search_result[] = $err_msg;
-
-					$query->setQuery( $queryTermsCorrected );
-
-				} else {
-					$search_result[] = 0;
-				}
-
-			} else {
-				$search_result[] = 0;
-			}
-
-		} else {
-			$search_result[] = 0;
-		}
 		$fac_count = $res_opt['no_fac'];
 		if ( $fac_count == '' ) {
 			$fac_count = 20;
@@ -331,27 +292,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			}
 		}
-		$resultset = $client->execute( $query );
-		if ( $options != '' ) {
-			foreach ( $facets_array as $facet ) {
 
-				$fact      = strtolower( $facet );
-				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
-					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
-				}
-				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
-
-				foreach ( $facet_res as $value => $count ) {
-					$output[ $facet ][] = array( $value, $count );
-				}
-
-
-			}
-			$search_result[] = $output;
-
-		} else {
-			$search_result[] = 0;
-		}
 
 		$bound = '';
 		if ( $facet_options != null || $facet_options != '' ) {
@@ -392,10 +333,90 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
+		/*
+		 * Set highlighting parameters
+		 */
+		$this->set_highlighting( $query, $res_opt );
 
+		// Perform the query
 		$resultset = $client->execute( $query );
 
 		$found = $resultset->getNumFound();
+
+		// No results: try a new query if spellchecking works
+		if ( ( $found === 0 ) && ( $res_opt['spellchecker'] == 'spellchecker' ) ) {
+
+			$spellChk = $query->getSpellcheck();
+			$spellChk->setCount( 10 );
+			$spellChk->setCollate( true );
+			$spellChk->setExtendedResults( true );
+			$spellChk->setCollateExtendedResults( true );
+			$resultset = $client->execute( $query );
+
+
+			$spellChkResult = $resultset->getSpellcheck();
+			if ( $spellChkResult && ! $spellChkResult->getCorrectlySpelled() ) {
+				$collations          = $spellChkResult->getCollations();
+				$queryTermsCorrected = $term; // original query
+				foreach ( $collations as $collation ) {
+					foreach ( $collation->getCorrections() as $input => $correction ) {
+						$queryTermsCorrected = str_replace( $input, is_array( $correction ) ? $correction[0] : $correction, $queryTermsCorrected );
+					}
+
+				}
+
+				if ( $queryTermsCorrected != $term ) {
+
+					$err_msg         = sprintf( OptionLocalization::get_term( $localization_options, 'results_header_did_you_mean' ), $queryTermsCorrected ) . '<br/>';
+					$search_result[] = $err_msg;
+
+					// Execute query with spelled terms
+					$query->setQuery( $queryTermsCorrected );
+					try {
+						$resultset = $client->execute( $query );
+						$found     = $resultset->getNumFound();
+						
+					} catch ( Exception $e ) {
+						// Sometimes, the spelling query returns errors
+						// java.lang.StringIndexOutOfBoundsException: String index out of range: 15\n\tat java.lang.AbstractStringBuilder.charAt(AbstractStringBuilder.java:203)\n\tat
+						// java.lang.StringBuilder.charAt(StringBuilder.java:72)\n\tat org.apache.solr.spelling.SpellCheckCollator.getCollation(SpellCheckCollator.java:164)\n\tat
+
+						$found = 0;
+					}
+
+				} else {
+					$search_result[] = 0;
+				}
+
+			} else {
+				$search_result[] = 0;
+			}
+
+		} else {
+			$search_result[] = 0;
+		}
+
+		// Retrieve facets from resultset
+		if ( $options != '' ) {
+			foreach ( $facets_array as $facet ) {
+
+				$fact = strtolower( $facet );
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
+					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
+				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
+
+				foreach ( $facet_res as $value => $count ) {
+					$output[ $facet ][] = array( $value, $count );
+				}
+
+
+			}
+			$search_result[] = $output;
+
+		} else {
+			$search_result[] = 0;
+		}
 
 		if ( $bound != '' ) {
 			$search_result[] = $bound;
@@ -406,16 +427,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
-		/*
-		 * Set highlighting parameters
-		 */
-		$this->set_highlighting( $query, $res_opt );
-
-		$resultSet = $client->execute( $query );
-
-
 		$results      = array();
-		$highlighting = $resultSet->getHighlighting();
+		$highlighting = $resultset->getHighlighting();
 
 		$i       = 1;
 		$cat_arr = array();
