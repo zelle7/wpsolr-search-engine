@@ -10,12 +10,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	// Array of active extension objects
 	protected $wpsolr_extensions;
 
-	// Search template
-	const _SEARCH_PAGE_TEMPLATE = 'wpsolr-search-engine/search.php';
-
-	// Search page slug
-	const _SEARCH_PAGE_SLUG = 'search-wpsolr';
-
 	// Do not change - Sort by most relevant
 	const SORT_CODE_BY_RELEVANCY_DESC = 'sort_by_relevancy_desc';
 
@@ -30,6 +24,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 	// Do not change - Sort by most comments
 	const SORT_CODE_BY_NUMBER_COMMENTS_DESC = 'sort_by_number_comments_desc';
+
+	// Results of a search
+	protected $solarium_results;
 
 	// Create using a configuration
 	static function create_from_solarium_config( $solarium_config ) {
@@ -64,6 +61,15 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		require_once $path;
 		$this->client = new Solarium\Client( $solarium_config );
 
+
+		$this->solarium_results = null;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function get_solarium_results() {
+		return $this->solarium_results;
 	}
 
 
@@ -99,47 +105,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		return $results;
 	}
-
-	/**
-	 * Retrieve or create the search page
-	 */
-	static function get_search_page() {
-
-		// Search page is found by it's path (hard-coded).
-		$search_page = get_page_by_path( self::_SEARCH_PAGE_SLUG );
-
-		if ( ! $search_page ) {
-
-			$_p = array(
-				'post_type'      => 'page',
-				'post_title'     => 'Search Results',
-				'post_content'   => '[solr_search_shortcode]',
-				'post_status'    => 'publish',
-				'post_author'    => 1,
-				'comment_status' => 'closed',
-				'post_name'      => self::_SEARCH_PAGE_SLUG
-			);
-
-			$search_page_id = wp_insert_post( $_p );
-
-			update_post_meta( $search_page_id, 'bwps_enable_ssl', '1' );
-
-			$search_page = get_post( $search_page_id );
-
-		} else {
-
-			if ( $search_page->post_status != 'publish' ) {
-
-				$search_page->post_status = 'publish';
-
-				wp_update_post( $search_page );
-			}
-		}
-
-
-		return $search_page;
-	}
-
 
 	/**
 	 * Get all sort by options available
@@ -205,10 +170,130 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 
-	/*
-	 * Manage options by hosting mode
-	 * Use a dedicated postfix added to the option name.
-	 */
+	public function do_search( $term, $facet_options, $start, $sort ) {
+
+		// Load options
+		$res_opt              = get_option( 'wdm_solr_res_data' );
+		$fac_opt              = get_option( 'wdm_solr_facet_data' );
+
+		$number_of_res = $res_opt['no_res'];
+		if ( $number_of_res == '' ) {
+			$number_of_res = 20;
+		}
+
+		$options       = $fac_opt['facets'];
+
+
+		$client = $this->client;
+
+		$query = $client->createSelect();
+		$query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . $term );
+
+		// Let extensions change query
+		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
+			array(
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $term,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
+			)
+		);
+
+
+		switch ( $sort ) {
+			case self::SORT_CODE_BY_DATE_DESC:
+				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_DESC );
+				break;
+			case self::SORT_CODE_BY_DATE_ASC:
+				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_ASC );
+				break;
+			case self::SORT_CODE_BY_NUMBER_COMMENTS_DESC:
+				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_DESC );
+				break;
+			case self::SORT_CODE_BY_NUMBER_COMMENTS_ASC:
+				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_ASC );
+				break;
+			case self::SORT_CODE_BY_RELEVANCY_DESC:
+			default:
+				// None is relevancy
+				break;
+		}
+
+		$query->setQueryDefaultOperator( 'AND' );
+
+
+		$fac_count = $res_opt['no_fac'];
+		if ( $fac_count == '' ) {
+			$fac_count = 20;
+		}
+
+		if ( $options != '' ) {
+
+			$facets_array = explode( ',', $fac_opt['facets'] );
+
+			$facetSet = $query->getFacetSet();
+			$facetSet->setMinCount( 1 );
+			// $facetSet->;
+			foreach ( $facets_array as $facet ) {
+				$fact = strtolower( $facet );
+
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
+					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
+
+				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $fac_count );
+
+			}
+		}
+
+
+		$bound = '';
+		if ( $facet_options != null || $facet_options != '' ) {
+			$f_array = explode( ':', $facet_options );
+
+			$fac_field = strtolower( $f_array[0] );
+			$fac_type  = isset( $f_array[1] ) ? $f_array[1] : '';
+
+
+			if ( $fac_field != '' && $fac_type != '' ) {
+				$fac_fd = "$fac_field";
+				$fac_tp = str_replace( ' ', '\ ', $fac_type );
+
+				$query->addFilterQuery( array( 'key' => "$fac_fd", 'query' => "$fac_fd:$fac_tp" ) );
+			}
+
+			if ( isset( $f_array[2] ) && $f_array[2] != '' ) {
+				$bound = $f_array[2];
+			}
+
+		}
+
+
+		if ( $start == 0 || $start == 1 ) {
+			$st = 0;
+
+		} else {
+			$st = ( ( $start - 1 ) * $number_of_res );
+
+		}
+
+		if ( $bound != '' && $bound < $number_of_res ) {
+
+			$query->setStart( $st )->setRows( $bound );
+
+		} else {
+			$query->setStart( $st )->setRows( $number_of_res );
+
+		}
+
+		/*
+		 * Set highlighting parameters
+		 */
+		$this->set_highlighting( $query, $res_opt );
+
+		// Perform the query
+		$this->solarium_results = $client->execute( $query );
+
+	}
 
 	public function get_search_results( $term, $facet_options, $start, $sort ) {
 
@@ -339,9 +424,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$this->set_highlighting( $query, $res_opt );
 
 		// Perform the query
-		$resultset = $client->execute( $query );
+		$this->solarium_results = $client->execute( $query );
 
-		$found = $resultset->getNumFound();
+		$found = $this->solarium_results->getNumFound();
 
 		// No results: try a new query if spellchecking works
 		if ( ( $found === 0 ) && ( $res_opt['spellchecker'] == 'spellchecker' ) ) {
@@ -351,10 +436,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$spellChk->setCollate( true );
 			$spellChk->setExtendedResults( true );
 			$spellChk->setCollateExtendedResults( true );
-			$resultset = $client->execute( $query );
+			$this->solarium_results = $client->execute( $query );
 
 
-			$spellChkResult = $resultset->getSpellcheck();
+			$spellChkResult = $this->solarium_results->getSpellcheck();
 			if ( $spellChkResult && ! $spellChkResult->getCorrectlySpelled() ) {
 				$collations          = $spellChkResult->getCollations();
 				$queryTermsCorrected = $term; // original query
@@ -373,8 +458,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 					// Execute query with spelled terms
 					$query->setQuery( $queryTermsCorrected );
 					try {
-						$resultset = $client->execute( $query );
-						$found     = $resultset->getNumFound();
+						$this->solarium_results = $client->execute( $query );
+						$found                  = $this->solarium_results->getNumFound();
 
 					} catch ( Exception $e ) {
 						// Sometimes, the spelling query returns errors
@@ -404,7 +489,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
 					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
 				}
-				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
+				$facet_res = $this->solarium_results->getFacetSet()->getFacet( "$fact" );
 
 				foreach ( $facet_res as $value => $count ) {
 					$output[ $facet ][] = array( $value, $count );
@@ -428,11 +513,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 		$results      = array();
-		$highlighting = $resultset->getHighlighting();
+		$highlighting = $this->solarium_results->getHighlighting();
 
 		$i       = 1;
 		$cat_arr = array();
-		foreach ( $resultset as $document ) {
+		foreach ( $this->solarium_results as $document ) {
 			$id        = $document->id;
 			$pid       = $document->PID;
 			$name      = $document->title;

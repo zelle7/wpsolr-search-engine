@@ -27,6 +27,13 @@ WPSOLR is backed by professionals. We are committed to develop and support new f
 - We deliver free bug and suggestions support with the community forum.
 - We deliver professional Zendesk support, and an assistance to setup WPSOLR, with a <a href="http://www.gotosolr.com/en" target="_blank">Gotosolr subscription</a>.
 
+= Great websites with nice search design, facets, suggestions, and did you mean features =
+- Search "education" at http://www.nmc.org/
+- Search "energy" at http://www.sunverge.com/
+- Search "android" at https://digitalltag.de/
+- Search "certification" at http://www.certwin.com/
+- Contact us in the forum should your website be seen here!
+
 = How fast is WPSOLR ? =
 Searches should be under 500ms, whatever the number of posts you have.
 
