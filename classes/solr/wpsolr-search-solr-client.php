@@ -27,6 +27,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 	// Results of a search
 	protected $solarium_results;
+	protected $did_you_mean;
 
 	// Create using a configuration
 	static function create_from_solarium_config( $solarium_config ) {
@@ -170,18 +171,16 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 
-	public function do_search( $term, $facet_options, $start, $sort ) {
+	public function query( $term, $facet_options, $number_of_res, $start, $sort ) {
+
+
+		$this->did_you_mean = '';
 
 		// Load options
-		$res_opt              = get_option( 'wdm_solr_res_data' );
-		$fac_opt              = get_option( 'wdm_solr_facet_data' );
+		$res_opt = get_option( 'wdm_solr_res_data' );
+		$fac_opt = get_option( 'wdm_solr_facet_data' );
 
-		$number_of_res = $res_opt['no_res'];
-		if ( $number_of_res == '' ) {
-			$number_of_res = 20;
-		}
-
-		$options       = $fac_opt['facets'];
+		$options = $fac_opt['facets'];
 
 
 		$client = $this->client;
@@ -293,9 +292,68 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		// Perform the query
 		$this->solarium_results = $client->execute( $query );
 
+		$found = $this->solarium_results->getNumFound();
+
+		// No results: try a new query if spellchecking works
+		if ( ( $found === 0 ) && ( $res_opt['spellchecker'] == 'spellchecker' ) ) {
+
+			$spellChk = $query->getSpellcheck();
+			$spellChk->setCount( 10 );
+			$spellChk->setCollate( true );
+			$spellChk->setExtendedResults( true );
+			$spellChk->setCollateExtendedResults( true );
+			$this->solarium_results = $client->execute( $query );
+
+
+			$spellChkResult = $this->solarium_results->getSpellcheck();
+			if ( $spellChkResult && ! $spellChkResult->getCorrectlySpelled() ) {
+				$collations          = $spellChkResult->getCollations();
+				$queryTermsCorrected = $term; // original query
+				foreach ( $collations as $collation ) {
+					foreach ( $collation->getCorrections() as $input => $correction ) {
+						$queryTermsCorrected = str_replace( $input, is_array( $correction ) ? $correction[0] : $correction, $queryTermsCorrected );
+					}
+
+				}
+
+				if ( $queryTermsCorrected != $term ) {
+
+					//$err_msg         = sprintf( OptionLocalization::get_term( $localization_options, 'results_header_did_you_mean' ), $queryTermsCorrected ) . '<br/>';
+					//$search_result[] = $err_msg;
+
+					// Execute query with spelled terms
+					$query->setQuery( $queryTermsCorrected );
+					try {
+						$this->solarium_results = $client->execute( $query );
+
+						if ( $this->solarium_results->getNumFound() > 0 ) {
+							$this->did_you_mean = $queryTermsCorrected;
+						}
+
+					} catch ( Exception $e ) {
+						// Sometimes, the spelling query returns errors
+						// java.lang.StringIndexOutOfBoundsException: String index out of range: 15\n\tat java.lang.AbstractStringBuilder.charAt(AbstractStringBuilder.java:203)\n\tat
+						// java.lang.StringBuilder.charAt(StringBuilder.java:72)\n\tat org.apache.solr.spelling.SpellCheckCollator.getCollation(SpellCheckCollator.java:164)\n\tat
+
+					}
+
+				}
+
+			}
+
+		}
+
 	}
 
-	public function get_search_results( $term, $facet_options, $start, $sort ) {
+	/**
+	 * @return String
+	 */
+	public function get_did_you_mean() {
+		return $this->did_you_mean;
+	}
+
+
+	public function get_search_results( $term, $facet_options, $page, $sort ) {
 
 		$output        = array();
 		$search_result = array();
@@ -401,11 +459,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 
-		if ( $start == 0 || $start == 1 ) {
+		if ( $page == 0 || $page == 1 ) {
 			$st = 0;
 
 		} else {
-			$st = ( ( $start - 1 ) * $number_of_res );
+			$st = ( ( $page - 1 ) * $number_of_res );
 
 		}
 

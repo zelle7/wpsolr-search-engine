@@ -17,10 +17,10 @@ require_once 'classes/solr/wpsolr-index-solr-client.php';
 require_once 'classes/solr/wpsolr-search-solr-client.php';
 
 /* Include the theme api */
-require_once 'classes/themes/wpsolr-theme-api.php';
+require_once 'classes/themes/wpsolr-query.php';
 
 // Define a global WPSOLR theme api object
-$wpsolr_theme_api = new WPSolrThemeApi();
+$wpsolr_query = new WPSOLR_Query();
 
 /* Register Solr settings from dashboard
  * Add menu page in dashboard - Solr settings
@@ -60,6 +60,12 @@ add_action( 'admin_notices', "solr_post_save_admin_notice" );
  * We have to use action 'save_post', as it is used by other plugins to trigger meta boxes save
  */
 function add_remove_document_to_solr_index( $post_id, $post, $update ) {
+	global $wpsolr_query;
+
+	// If this is the WPSOLR search page, stop.
+	if ( $wpsolr_query->is_search_page( $post ) ) {
+		return;
+	}
 
 	// If this is just a revision, don't go on.
 	if ( wp_is_post_revision( $post_id ) ) {
@@ -149,12 +155,11 @@ function delete_attachment_to_solr_index( $attachment_id ) {
 
 
 function check_default_options_and_function() {
-	global $wpsolr_theme_api;
+	global $wpsolr_query;
 
-	if ( ! $wpsolr_theme_api->has_search_form_template() ) {
+	if ( $wpsolr_query->is_replace_search_form_by_plugin() ) {
 
 		add_filter( 'get_search_form', 'solr_search_form' );
-
 	}
 }
 
@@ -191,7 +196,7 @@ function curl_dependency_check() {
 }
 
 function solr_search_form() {
-	global $wpsolr_theme_api;
+	global $wpsolr_query;
 
 	$ad_url = admin_url();
 
@@ -202,7 +207,7 @@ function solr_search_form() {
 
 	$wdm_typehead_request_handler = 'wdm_return_solr_rows';
 
-	$get_page_info = $wpsolr_theme_api->get_search_page();
+	$get_page_info = $wpsolr_query->get_search_page();
 	$ajax_nonce    = wp_create_nonce( "nonce_for_autocomplete" );
 
 

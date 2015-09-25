@@ -24,7 +24,7 @@ function add_scripts() {
 }
 
 function fun_search_indexed_data() {
-	global $wpsolr_theme_api;
+	global $wpsolr_query;
 
 	// Query keywords
 	$search_que = isset( $_GET['search'] ) ? $_GET['search'] : '';
@@ -32,7 +32,7 @@ function fun_search_indexed_data() {
 	$ad_url = admin_url();
 
 	// Retrieve search form page url
-	$get_page_info = $wpsolr_theme_api->get_search_page();
+	$get_page_info = $wpsolr_query->get_search_page();
 	$url           = get_permalink( $get_page_info->ID );
 	// Filter the search page url. Used for multi-language search forms.
 	$url = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, $url, $get_page_info->ID );

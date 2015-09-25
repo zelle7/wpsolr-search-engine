@@ -4,7 +4,7 @@
 WpSolrExtensions::load();
 
 function wdm_return_solr_rows() {
-	global $wpsolr_theme_api;
+	global $wpsolr_query;
 
 	if ( isset( $_POST['security'] )
 	     && wp_verify_nonce( $_POST['security'], 'nonce_for_autocomplete' )
@@ -18,7 +18,7 @@ function wdm_return_solr_rows() {
 
 			try {
 
-				$result = $wpsolr_theme_api->get_suggestions( $input );
+				$result = $wpsolr_query->get_suggestions( $input );
 				echo json_encode( $result );
 
 			} catch ( Exception $e ) {
