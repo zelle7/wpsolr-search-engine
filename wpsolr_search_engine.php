@@ -8,6 +8,9 @@
  * License: GPL2
  */
 
+// Composer autoloader
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+
 require_once 'ajax_solr_services.php';
 require_once 'dashboard_settings.php';
 require_once 'autocomplete.php';
@@ -20,7 +23,14 @@ require_once 'classes/solr/wpsolr-search-solr-client.php';
 require_once 'classes/themes/wpsolr-query.php';
 
 // Define a global WPSOLR theme api object
-$wpsolr_query = new WPSOLR_Query();
+try {
+
+	$wpsolr_query = new WPSOLR_Query();
+
+} catch ( Exception $e ) {
+
+	set_transient( 'wpml_exception_solr_query_admin_notice', $e->getMessage() );
+}
 
 /* Register Solr settings from dashboard
  * Add menu page in dashboard - Solr settings
@@ -36,19 +46,37 @@ add_action( 'admin_init', 'wpsolr_admin_init' );
  * Display Solr errors in admin when a save on a post can't index to Solr
  */
 function solr_post_save_admin_notice() {
+
 	if ( $out = get_transient( get_current_user_id() . 'error_solr_post_save_admin_notice' ) ) {
+
 		delete_transient( get_current_user_id() . 'error_solr_post_save_admin_notice' );
 		echo "<div class=\"error\"><p>(WPSOLR) Error while indexing this post/page in Solr:<br><br>$out</p></div>";
+
+		return;
 	}
 
 	if ( $out = get_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' ) ) {
+
 		delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
 		echo "<div class=\"updated\"><p>(WPSOLR) $out</p></div>";
+
+		return;
 	}
 
 	if ( $out = get_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' ) ) {
+
 		delete_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' );
 		echo "<div class=\"error\"><p>(WPSOLR) $out</p></div>";
+
+		return;
+	}
+
+	if ( $out = get_transient( 'wpml_exception_solr_query_admin_notice' ) ) {
+
+		delete_transient( 'wpml_exception_solr_query_admin_notice' );
+		echo "<div class=\"error\"><p>(WPSOLR) $out</p></div>";
+
+		return;
 	}
 
 }
@@ -157,7 +185,7 @@ function delete_attachment_to_solr_index( $attachment_id ) {
 function check_default_options_and_function() {
 	global $wpsolr_query;
 
-	if ( $wpsolr_query->is_replace_search_form_by_plugin() ) {
+	if ( isset( $wpsolr_query ) && $wpsolr_query->is_replace_search_form_by_plugin() ) {
 
 		add_filter( 'get_search_form', 'solr_search_form' );
 	}

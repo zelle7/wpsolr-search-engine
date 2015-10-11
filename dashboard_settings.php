@@ -117,77 +117,23 @@ function fun_set_solr_options() {
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
 	<div class="page_title"><h1>WPSOLR Settings </h1></div>
 
-	<div class="indexing_option wrapper">
-		<h4 class='head_div'>No taste, no time, or no skills to manage your own Solr server ?</h4>
-
-		<div class='col_left' style='width:90%'>
-			WPSOLR is free, but requires a Solr server properly installed and configured.
-			<a href="http://www.gotosolr.com/en" target="__gotosolr">http://gotosolr.com</a> can provide a
-			production ready Solr for WPSOLR.
-			Here is a <a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress" target="_wpsolr-tutorial">tutorial</a>
-			to setup WPSOLR with the following plans:
-		</div>
-
-		<div class='col_right' style='width:90%'>
-			<input name="gotosolr_plan_yearly_trial"
-			       type="button" class="button-primary"
-			       value="Test one month with our yearly trial"
-			       onclick="window.open('https://secure.avangate.com/order/trial.php?PRODS=4642999&amp;QTY=1&amp;PRICES4642999%5BEUR%5D=0&amp;TPERIOD=30&amp;PHASH=bb55c3bd6407e03a8b5fc91358347a4c', '__blank');"
-				/>
-			<input name="gotosolr_plan_yearly"
-			       type="button" class="button-primary"
-			       value="Build your yearly plan with your own features"
-			       onclick="window.open('https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1', '__blank');"
-				/>
-			<input name="gotosolr_plan_monthly"
-			       type="button" class="button-primary"
-			       value="Build your monthly plan with your own features"
-			       onclick="window.open('https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1', '__blank');"
-				/>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
 		wpsolr_admin_tabs( $_GET['tab'] );
 	} else {
-		wpsolr_admin_tabs( 'solr_config' );
+		wpsolr_admin_tabs( 'solr_server' );
 	}
 
 	if ( isset ( $_GET['tab'] ) ) {
 		$tab = $_GET['tab'];
 	} else {
-		$tab = 'solr_config';
+		$tab = 'solr_server';
 	}
 
 	switch ( $tab ) {
-	case 'solr_config' :
-		?>
-		<div id="solr-configuration-tab">
-			<div class='wrapper'>
-				<h4 class='head_div'>Solr Configuration</h4>
 
-				<div class="wdm_note">
-
-					WPSOLR is compatible with the Solr versions listed at the following page: <a
-						href="http://www.wpsolr.com/releases#1.0" target="__wpsolr">Compatible Solr versions</a>.
-
-					Your first action must be to download the two configuration files (schema.xml,
-					solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
-					Everything is described online.
-
-				</div>
-				<div class="wdm_row">
-					<div class="submit">
-						<a href='admin.php?page=solr_settings&tab=solr_indexes' class="button-primary wdm-save">I
-							uploaded my 2 compatible configuration files to my Solr core >></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<?php
+	case 'solr_server' :
+		WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS );
 		break;
 
 	case 'solr_indexes' :
@@ -818,6 +764,7 @@ function fun_set_solr_options() {
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
 
 		switch ( $subtab ) {
+
 			case 'extension_groups_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_GROUPS );
 				break;
@@ -947,7 +894,8 @@ function fun_set_solr_options() {
 							<div class="clear"></div>
 							<div class='col_left'>
 								Re-index all the data in place.<br/>
-								If you check this option, it will restart the indexing from start, without deleting the data already in the Solr index.
+								If you check this option, it will restart the indexing from start, without deleting the
+								data already in the Solr index.
 							</div>
 							<div class='col_right'>
 
@@ -998,9 +946,9 @@ function fun_set_solr_options() {
 
 }
 
-function wpsolr_admin_tabs( $current = 'solr_config' ) {
+function wpsolr_admin_tabs( $current = 'solr_server' ) {
 	$tabs = array(
-		'solr_config'     => 'Solr Configuration',
+		'solr_server'     => 'Solr Server',
 		'solr_indexes'    => 'Solr Indexes',
 		'solr_option'     => 'Solr Options',
 		'solr_plugins'    => 'Plugins Integration',
@@ -1020,7 +968,11 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	// Tab selected by the user
-	$tab = $_GET['tab'];
+	if ( isset ( $_GET['tab'] ) ) {
+		$tab = $_GET['tab'];
+	} else {
+		$tab = 'solr_server';
+	}
 
 	if ( isset ( $_GET['subtab'] ) ) {
 

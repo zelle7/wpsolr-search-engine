@@ -5,7 +5,587 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/themes/wpsolr-query.php" afterPath="$PROJECT_DIR$/classes/themes/wpsolr-query.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/autoload.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/.coveralls.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/bin/create_pear_package.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/composer.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/authentication-custom.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/authentication.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/goals.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/hooks.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/proxy.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/usage-advanced.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/usage.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/why-requests.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/basic-auth.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/get.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/multiple.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/post.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/proxy.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Auth.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Auth/Basic.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Cookie.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Cookie/Jar.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/400.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/401.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/402.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/403.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/404.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/405.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/406.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/407.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/408.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/409.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/410.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/411.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/412.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/413.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/414.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/415.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/416.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/417.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/418.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/428.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/429.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/431.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/500.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/501.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/502.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/503.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/504.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/505.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/511.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/Unknown.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Hooker.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Hooks.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IDNAEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IPv6.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IRI.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Proxy.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Proxy/HTTP.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Response.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Response/Headers.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/SSL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/cURL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/cacert.pem" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/fsockopen.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Utility/CaseInsensitiveDictionary.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Utility/FilteredIterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/package.xml.tpl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Auth/Basic.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/ChunkedEncoding.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Cookies.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Encoding.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/IDNAEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/IRI.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Requests.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Response/Headers.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/SSL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/Base.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/cURL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/fsockopen.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/bootstrap.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/phpunit.xml.dist" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/.coveralls.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/CONTRIBUTING.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/COPYING" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/build.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/composer.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/1.1-check-solarium-and-ping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/1.2-basic-select.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/1.3-basic-update.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.1-query-params.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.2-custom-result-document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.3-filterquery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.1-facet-field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.2-facet-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.3-facet-multiquery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.4-facet-range.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.5-facet-pivot.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.1.6-facet-interval.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.10-stats.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.11-debug.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.2-morelikethis.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.3-highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.3.1-per-field-highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.4-dismax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.5-edismax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.6-grouping-by-field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.7-grouping-by-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.8-distributed-search.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.5.9-spellcheck.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.6-helper-functions.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.1.7-query-reuse.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.2.1-add-docs.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.2.2-delete-by-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.2.3-delete-by-id.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.2.4-optimize.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.2.5-rollback.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.3.1-mlt-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.3.2-mlt-stream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.4.1-analysis-document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.4.2-analysis-field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.5-terms-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.6-suggester-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.7-extract-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/2.8-realtime-get-query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/4.1-api-usage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/4.2-configuration-usage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/4.3-extending-usage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/5.1-partial-usage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/5.2-extending.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/5.3.1-plugin-event-hooks.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/5.3.2-plugin-solarium-presets.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.1.1-zend-http-adapter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.1.2-pecl-http-adapter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.1.3-curl-adapter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.1.4-http-adapter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.2-escaping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.3-placeholder-syntax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/6.4-dereferenced-params.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.1-plugin-loadbalancer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.2-plugin-postbigrequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.3-plugin-customizerequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.4-plugin-parallelexecution.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.5-plugin-bufferedadd.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.6-plugin-prefetchiterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.7-plugin-minimumscorefilter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/7.7.1-plugin-minimumscorefilter-grouping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/config.dist.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/examples/init.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Autoloader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Client.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/AdapterInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Http.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/PeclHttp.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Zend2Http.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/ZendHttp.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Endpoint.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Request.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Response.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Configurable.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/ConfigurableInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/Events.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PostCreateQuery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PostCreateRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PostCreateResult.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PostExecute.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PostExecuteRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PreCreateQuery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PreCreateRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PreCreateResult.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PreExecute.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Event/PreExecuteRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Plugin/Plugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Plugin/PluginInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/Helper.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/QueryInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/RequestBuilderInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/ResponseParserInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/Result/QueryType.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/Result/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Query/Result/ResultInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/ExceptionInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/HttpException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/InvalidArgumentException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/OutOfBoundsException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/RuntimeException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Exception/UnexpectedValueException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/BufferedAdd.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/AddDocument.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/Events.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/PostCommit.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/PostFlush.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/PreCommit.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/BufferedAdd/Event/PreFlush.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/CustomizeRequest/Customization.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/CustomizeRequest/CustomizeRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/Loadbalancer/Event/EndpointFailure.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/Loadbalancer/Event/Events.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/Loadbalancer/Loadbalancer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/Loadbalancer/WeightedRandomChoice.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/Filter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/MinimumScoreFilter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/QueryGroupResult.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/MinimumScoreFilter/ValueGroupResult.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/ParallelExecution/Event/Events.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/ParallelExecution/Event/ExecuteEnd.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/ParallelExecution/Event/ExecuteStart.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/ParallelExecution/ParallelExecution.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/PostBigRequest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Plugin/PrefetchIterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Query/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Query/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Query/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/RequestBuilder/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/RequestBuilder/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/RequestBuilder/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/ResponseParser/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/ResponseParser/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Result/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Result/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Result/Item.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Result/ResultList.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Analysis/Result/Types.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Extract/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Extract/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Extract/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/MoreLikeThis/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/MoreLikeThis/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/MoreLikeThis/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/MoreLikeThis/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Ping/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Ping/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Ping/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/RealtimeGet/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/RealtimeGet/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/RealtimeGet/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Component.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Debug.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/DisMax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/DistributedSearch.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/EdisMax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Facet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Interval.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/MultiQuery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Pivot.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Facet/Range.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/FacetSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Grouping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Highlighting/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Highlighting/Highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/MoreLikeThis.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Spellcheck.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Stats/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Stats/Stats.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/FilterQuery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/ComponentRequestBuilderInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/Debug.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/DisMax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/DistributedSearch.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/EdisMax.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/FacetSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/Grouping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/Highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/MoreLikeThis.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/Spellcheck.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/Component/Stats.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/RequestBuilder/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/ComponentParserInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Debug.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/FacetSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Grouping.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/MoreLikeThis.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Spellcheck.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Stats.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/AbstractDocument.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/Detail.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/DocumentSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/Timing.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Debug/TimingPhase.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/DocumentInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Field.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Interval.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/MultiQuery.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Pivot/Pivot.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Pivot/PivotItem.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Facet/Range.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/FacetSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Grouping/FieldGroup.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Grouping/QueryGroup.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Grouping/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Grouping/ValueGroup.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Highlighting/Highlighting.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Highlighting/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/MoreLikeThis/MoreLikeThis.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/MoreLikeThis/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Spellcheck/Collation.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Spellcheck/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Spellcheck/Suggestion.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Stats/FacetValue.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Stats/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Result/Stats/Stats.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Suggester/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Suggester/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Suggester/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Suggester/Result/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Suggester/Result/Term.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Terms/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Terms/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Terms/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Terms/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Add.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Command.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Commit.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Delete.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Optimize.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Command/Rollback.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Document/Document.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Document/DocumentInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Query/Query.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/RequestBuilder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/ResponseParser.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Update/Result.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Support/DataFixtures/Executor.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Support/DataFixtures/FixtureInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Support/DataFixtures/FixtureLoader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Support/DataFixtures/Loader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Support/DataFixtures/Purger.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/phar/README" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/phar/buildphar.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/phar/stub.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/phpunit.xml.dist" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/phpunit.xml.travis" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/ClientTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/Adapter/CurlTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/Adapter/HttpTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/Adapter/PeclHttpTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/Adapter/ZendHttpTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/ClientTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/EndpointTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/HttpExceptionTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/RequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Client/ResponseTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/ConfigurableTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PostCreateQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PostCreateRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PostCreateResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PostExecuteRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PostExecuteTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PreCreateQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PreCreateRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PreCreateResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PreExecuteRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Event/PreExecuteTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Plugin/PluginTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/HelperTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/Result/QueryTypeTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Core/Query/Result/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/BufferedAddTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/Event/AddDocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/Event/PostCommitTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/Event/PostFlushTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/Event/PreCommitTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/BufferedAdd/Event/PreFlushTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/CustomizeRequest/CustomizationTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/CustomizeRequest/CustomizeRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/Loadbalancer/Event/EndpointFailureTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/Loadbalancer/LoadbalancerTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/Loadbalancer/WeightedRandomChoiceTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/MinimumScoreFilter/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/MinimumScoreFilter/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/MinimumScoreFilter/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/ParallelExecution/ParallelExecutionTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/PostBigRequestTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Plugin/PrefetchIteratorTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Query/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Query/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Query/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/RequestBuilder/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/RequestBuilder/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/RequestBuilder/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/ResponseParser/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/ResponseParser/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Result/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Result/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Result/ItemTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Result/ResultListTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Analysis/Result/TypesTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Extract/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Extract/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Extract/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/MoreLikeThis/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/MoreLikeThis/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/MoreLikeThis/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/MoreLikeThis/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Ping/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Ping/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Ping/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/RealtimeGet/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/RealtimeGet/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/RealtimeGet/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/AbstractQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/ComponentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/DebugTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/DisMaxTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/DistributedSearchTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/EDisMaxTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/FacetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/MultiQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/PivotTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Facet/RangeTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/FacetSetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/GroupingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Highlighting/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Highlighting/HighlightingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/MoreLikeThisTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/SpellcheckTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Stats/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/Component/Stats/StatsTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/FilterQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Query/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/DebugTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/DisMaxTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/DistributedSearchTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/EDisMaxTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/FacetSetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/GroupingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/HighlightingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/MoreLikeThisTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/SpellcheckTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/Component/StatsTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/RequestBuilder/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/DebugTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/FacetSetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/GroupingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/HighlightingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/MoreLikeThisTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/SpellcheckTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/Component/StatsTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/ResponseParser/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/AbstractDocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/AbstractResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/DebugTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/DetailTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/DocumentSetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/TimingPhaseTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Debug/TimingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/FieldTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/MultiQueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/Pivot/PivotItemTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/Pivot/PivotTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Facet/RangeTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/FacetSetTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Grouping/FieldGroupTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Grouping/GroupingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Grouping/QueryGroupTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Grouping/ValueGroupTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Highlighting/HighlightingTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Highlighting/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/MoreLikeThis/MoreLikeThisTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/MoreLikeThis/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Spellcheck/CollationTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Spellcheck/SpellcheckTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Spellcheck/SuggestionTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Stats/FacetValueTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Stats/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Select/Result/Stats/StatsTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Suggester/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Suggester/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Suggester/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Suggester/Result/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Suggester/Result/TermTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Terms/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Terms/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Terms/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Terms/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/AbstractResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Command/AddTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Command/CommitTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Command/DeleteTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Command/OptimizeTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Command/RollbackTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/Document/DocumentTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/Query/QueryTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/RequestBuilderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/ResponseParserTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/QueryType/Update/ResultTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/ExecutorTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/FixtureLoaderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/Fixtures/MockFixture1.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/Fixtures/MockFixture2.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/LoaderTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/Solarium/Tests/Support/DataFixtures/PurgerTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/solarium/solarium/tests/bootstrap.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/ContainerAwareEventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcherInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Debug/WrappedListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/DependencyInjection/RegisterListenersPass.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Event.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcherInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventSubscriberInterface.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/GenericEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/ImmutableEventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/AbstractEventDispatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/ContainerAwareEventDispatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/Debug/TraceableEventDispatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/DependencyInjection/RegisterListenersPassTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/EventDispatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/EventTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/GenericEventTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/ImmutableEventDispatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/composer.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/phpunit.xml.dist" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/dashboard_css.css" afterPath="$PROJECT_DIR$/css/dashboard_css.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php" afterPath="$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" afterPath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signin-form.php" afterPath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signin-form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" afterPath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" afterPath="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wpsolr-search-engine.iml" afterPath="$PROJECT_DIR$/.idea/wpsolr-search-engine.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
     <ignored path="wpsolr-search-engine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,35 +667,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+      <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="13" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="13" />
+            <state vertical-scroll-proportion="-0.20766774">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <element signature="e#6#272#0#PHP" expanded="true" />
-                <marker date="1443698620000" expanded="true" signature="6477:6487" placeholder="..." />
-                <marker date="1443698620000" expanded="true" signature="6937:7476" placeholder="..." />
-                <marker date="1443698620000" expanded="true" signature="7393:7421" placeholder="..." />
-                <marker date="1443698620000" expanded="true" signature="7444:7454" placeholder="..." />
+                <marker date="1444386552000" expanded="true" signature="1660:1670" placeholder="..." />
+                <marker date="1444386552000" expanded="true" signature="2417:3062" placeholder="..." />
+                <marker date="1444386552000" expanded="false" signature="2872:2900" placeholder="..." />
+                <marker date="1444386552000" expanded="false" signature="3030:3040" placeholder="..." />
+                <marker date="1444386552000" expanded="true" signature="3902:3945" placeholder="..." />
+                <marker date="1444386552000" expanded="true" signature="5154:5395" placeholder="..." />
+                <marker date="1444386552000" expanded="true" signature="7706:7717" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding>
-                <marker date="1443017399000" expanded="true" signature="1660:1670" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="2417:3062" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="2872:2900" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="3030:3040" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="3902:3945" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="5154:5395" placeholder="..." />
-                <marker date="1443017399000" expanded="true" signature="7706:7717" placeholder="..." />
+                <element signature="e#6#272#0#PHP" expanded="true" />
+                <marker date="1444659748000" expanded="true" signature="6960:6970" placeholder="..." />
+                <marker date="1444659748000" expanded="true" signature="7420:7959" placeholder="..." />
+                <marker date="1444659748000" expanded="false" signature="7876:7904" placeholder="..." />
+                <marker date="1444659748000" expanded="false" signature="7927:7937" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -125,30 +705,82 @@
         <entry file="file://$PROJECT_DIR$/classes/themes/wpsolr-query.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wpsolr-url.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/classes/themes/wpsolr-url.php">
+      <file leaf-file-name="wp-settings.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../wp-settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49626467">
-              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="option-indexes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="111" column="7" selection-start-line="111" selection-start-column="7" selection-end-line="111" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr-index-solr-client.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="48" column="41" selection-start-line="48" selection-start-column="41" selection-end-line="48" selection-end-column="41" />
+              <folding>
+                <marker date="1444919802000" expanded="true" signature="7174:7224" placeholder="SELECT %s FR..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/readme.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
           <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr-filters.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+              <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr-search-solr-client.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="option-managed-solr-servers.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -169,34 +801,23 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/classes/extensions/WpSolrExtension.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/wpsolr-extension.php" />
-        <option value="dbtable:/c5fb8003/768cc5b7-5b10-4a20-9b4c-0270030bc27c/dev-wpsolr-search-engine..wp_options" />
-        <option value="$PROJECT_DIR$/classes/extensions/groups/wpsolr-groups.php" />
-        <option value="$PROJECT_DIR$/solr_services.php" />
-        <option value="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/ResponseParser/Component/Spellcheck.php" />
-        <option value="dbtable:/c5fb8003/768cc5b7-5b10-4a20-9b4c-0270030bc27c/dev-wpsolr-search-engine..wp_posts" />
-        <option value="db-console:/c5fb8003/768cc5b7-5b10-4a20-9b4c-0270030bc27c/" />
         <option value="$PROJECT_DIR$/classes/extensions/WpSolrFilters.php" />
-        <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php" />
         <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/classes/extensions/s2member/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/s2member/wpsolr-s2member.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/wpsolr-localization.php" />
         <option value="$PROJECT_DIR$/wpml-config.xml" />
+        <option value="$PROJECT_DIR$/js/bootstrap-typeahead.js" />
         <option value="$PROJECT_DIR$/classes/WpSolrSchema.php" />
         <option value="$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php" />
-        <option value="$PROJECT_DIR$/css/dashboard_css.css" />
         <option value="$PROJECT_DIR$/classes/extensions/groups/plugin-groups.php" />
         <option value="$PROJECT_DIR$/classes/extensions/s2member/plugin-s2member.php" />
         <option value="$PROJECT_DIR$/class-wp-solr.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/option-localization.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/768cc5b7-5b10-4a20-9b4c-0270030bc27c/console.sql" />
+        <option value="$PROJECT_DIR$/autocomplete.php" />
         <option value="$PROJECT_DIR$/js/autocomplete_solr.js" />
-        <option value="$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
         <option value="$PROJECT_DIR$/classes/extensions/localization/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/wpsolr-filters.php" />
         <option value="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
@@ -206,20 +827,31 @@
         <option value="$PROJECT_DIR$/../../themes/enfold/wpsolr-search-engine/search.php" />
         <option value="$PROJECT_DIR$/../../themes/enfold/wpsolr-search-engine/searchform.php" />
         <option value="$PROJECT_DIR$/classes/wpsolr-schema.php" />
-        <option value="$PROJECT_DIR$/dashboard_settings.php" />
-        <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
-        <option value="$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php" />
-        <option value="$PROJECT_DIR$/autocomplete.php" />
-        <option value="$PROJECT_DIR$/js/bootstrap-typeahead.js" />
-        <option value="$PROJECT_DIR$/../../themes/enfold-child-wpolr-search-engine/wpsolr-search-engine/searchform.php" />
-        <option value="$PROJECT_DIR$/themes/wpsolr-search-engine/searchform.php" />
-        <option value="$PROJECT_DIR$/themes/wpsolr-search-engine/search.php" />
         <option value="$PROJECT_DIR$/ajax_solr_services.php" />
+        <option value="$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/gotosolr/option-gotosolr.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/gotosolr/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/includes/signin.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/includes/template-signin-form.php" />
+        <option value="$PROJECT_DIR$/dashboard_settings.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-unmanaged-form.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signedin-form.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-my-account-indexes.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-my-accounts.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signup-form.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/css/dashboard_css.css" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signin-form.php" />
+        <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-temporary-account-form.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
         <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/classes/themes/wpsolr-theme-api.php" />
-        <option value="$PROJECT_DIR$/classes/themes/wpsolr_url.php" />
-        <option value="$PROJECT_DIR$/classes/themes/wpsolr-query.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" />
       </list>
     </option>
   </component>
@@ -243,8 +875,9 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="Remote PHP 5.5">
     <include_path>
       <path value="$PROJECT_DIR$/../../.." />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/solarium/solarium" />
+      <path value="$PROJECT_DIR$/vendor/rmccue/requests" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/composer" />
     </include_path>
   </component>
@@ -292,6 +925,41 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -327,99 +995,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="themes">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="themes">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="enfold-child-wpolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="themes">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="enfold-child-wpolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="themes">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="enfold-child-wpolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+            <PATH_ELEMENT USER_OBJECT="wp-includes">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -441,6 +1017,20 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="plugins">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -464,58 +1054,6 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="plugins">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="htdocs">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-content">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="plugins">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="images">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -611,44 +1149,195 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wp-admin">
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="solr">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="extensions">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="extensions">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="managed-solr-servers">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="extensions">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="managed-solr-servers">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="templates">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="extensions">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="indexes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="htdocs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wp-content">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="plugins">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wpsolr-search-engine">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="classes">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="extensions">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="groups">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -667,24 +1356,24 @@
     <property name="LayoutCode.rearrangeEntriesPHP" value="true" />
     <property name="LayoutCode.rearrangeEntries" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="261" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="194" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="262" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="196" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="266" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="199" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1059" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="993" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="261" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="194" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="262" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="196" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="266" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="199" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1059" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="993" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="SearchEverywhereHistoryKey" value="'attachment'&#9;null&#9;null&#10;curl&#9;FILE&#9;file:///Users/patrice/Projets/wordpress/Varying-Vagrant-Vagrants/www/dev-wpsolr-search-engine/htdocs/wp-content/plugins/wpsolr-search-engine/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php&#10;WPSOLR_FILTER_POST_CUSTOM_FIELDS&#9;null&#9;null" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="SearchEverywhereHistoryKey" value="*:*&#9;null&#9;null&#10;template-temporary-account-form.php&#9;FILE&#9;file:///Users/patrice/Projets/wordpress/Varying-Vagrant-Vagrants/www/dev-wpsolr-search-engine/htdocs/wp-content/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/templates/template-temporary-account-form.php&#10;'attachment'&#9;null&#9;null&#10;curl&#9;FILE&#9;file:///Users/patrice/Projets/wordpress/Varying-Vagrant-Vagrants/www/dev-wpsolr-search-engine/htdocs/wp-content/plugins/wpsolr-search-engine/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php&#10;WPSOLR_FILTER_POST_CUSTOM_FIELDS&#9;null&#9;null" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="full.screen.before.presentation.mode" value="true" />
@@ -692,18 +1381,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/themes/wpsolr-search-engine/images" />
-      <recent name="$PROJECT_DIR$/themes/wpsolr-search-engine" />
+      <recent name="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates" />
+      <recent name="$PROJECT_DIR$/classes/extensions/gotosolr" />
       <recent name="$PROJECT_DIR$/../../themes/enfold-child-wpolr-search-engine" />
       <recent name="$PROJECT_DIR$/../../themes/enfold/wpsolr-search-engine" />
       <recent name="$PROJECT_DIR$/../../themes/twentyfifteen" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/js" />
-      <recent name="$PROJECT_DIR$/css" />
-      <recent name="$PROJECT_DIR$/themes/wpsolr-search-engine" />
       <recent name="$PROJECT_DIR$/classes/solr" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/classes" />
+      <recent name="$PROJECT_DIR$/classes/extensions" />
     </key>
   </component>
   <component name="RunManager">
@@ -763,14 +1452,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1107" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917964" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32760364" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21458998" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24866879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2593184" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3969697" sideWeight="0.51916933" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56472987" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -778,9 +1467,9 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4065373" sideWeight="0.48296058" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40628165" sideWeight="0.48296058" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29765546" sideWeight="0.48083067" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.295846" sideWeight="0.48083067" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39958376" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -827,13 +1516,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint type="php">
-          <url>file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php</url>
-          <line>107</line>
-          <option name="timeStamp" value="1066" />
-        </line-breakpoint>
-        <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/ajax_solr_services.php</url>
-          <line>330</line>
+          <line>329</line>
           <option name="timeStamp" value="1093" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -842,17 +1526,17 @@
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/ajax_solr_services.php</url>
-          <line>234</line>
+          <line>233</line>
           <option name="timeStamp" value="1146" />
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/ajax_solr_services.php</url>
-          <line>311</line>
+          <line>310</line>
           <option name="timeStamp" value="1147" />
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/ajax_solr_services.php</url>
-          <line>294</line>
+          <line>293</line>
           <option name="timeStamp" value="1148" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -877,33 +1561,13 @@
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php</url>
-          <line>298</line>
+          <line>335</line>
           <option name="timeStamp" value="1188" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php</url>
-          <line>95</line>
-          <option name="timeStamp" value="1201" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/../../../wp-includes/shortcodes.php</url>
           <line>360</line>
           <option name="timeStamp" value="1306" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php</url>
-          <line>671</line>
-          <option name="timeStamp" value="1361" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/classes/themes/wpsolr-query.php</url>
-          <line>111</line>
-          <option name="timeStamp" value="1386" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/ajax_solr_services.php</url>
-          <line>29</line>
-          <option name="timeStamp" value="1387" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -914,11 +1578,11 @@
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1388" />
+      <option name="time" value="1504" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="admin.php">
-        <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
+        <watch expression="$option_object-&gt;get_indexes() " />
       </configuration>
       <configuration name="post.php">
         <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
@@ -929,8 +1593,11 @@
       <configuration name="plugins.php">
         <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
       </configuration>
+      <configuration name="options.php">
+        <watch expression="$option_object-&gt;get_indexes() " />
+      </configuration>
       <configuration name="admin-ajax.php">
-        <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
+        <watch expression="$option_object-&gt;get_indexes() " />
       </configuration>
       <configuration name="update.php">
         <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
@@ -941,250 +1608,10 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/readme.txt">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="171" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/admin_options.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="57" selection-start-line="61" selection-start-column="57" selection-end-line="61" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/general-template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.30650684">
-          <caret line="195" column="9" selection-start-line="195" selection-start-column="9" selection-end-line="195" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.416667">
-          <caret line="375" column="0" selection-start-line="375" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../woocommerce/readme.txt">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="54" column="75" selection-start-line="54" selection-start-column="75" selection-end-line="54" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/link-template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3412271">
-          <caret line="2707" column="9" selection-start-line="2707" selection-start-column="9" selection-end-line="2707" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-admin/link-manager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6280788">
-          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-admin/includes/file.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35916543">
-          <caret line="52" column="38" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../themes/twentyfourteen/content.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.625">
-          <caret line="46" column="15" selection-start-line="46" selection-start-column="15" selection-end-line="46" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../relevanssi/relevanssi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29192546">
-          <caret line="55" column="25" selection-start-line="55" selection-start-column="25" selection-end-line="55" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-blog-header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.625">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../s2member/includes/classes/querys.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77843136">
-          <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../woocommerce/includes/class-wc-query.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3933747">
-          <caret line="203" column="30" selection-start-line="203" selection-start-column="17" selection-end-line="203" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../relevanssi/lib/search.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.30874786">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/template-loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58712715">
-          <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/class-wp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3327869">
-          <caret line="475" column="0" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33281004">
-          <caret line="885" column="0" selection-start-line="885" selection-start-column="0" selection-end-line="885" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../themes/enfold/search.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/Core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34536892">
-          <caret line="399" column="9" selection-start-line="399" selection-start-column="9" selection-end-line="399" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55737704">
-          <caret line="920" column="9" selection-start-line="920" selection-start-column="9" selection-end-line="920" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/meta.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3852459">
-          <caret line="458" column="9" selection-start-line="458" selection-start-column="9" selection-end-line="458" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/post.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35635793">
-          <caret line="1968" column="17" selection-start-line="1968" selection-start-column="17" selection-end-line="1968" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_8.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43956044">
-          <caret line="1013" column="9" selection-start-line="1013" selection-start-column="9" selection-end-line="1013" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Query.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40983605">
-          <caret line="968" column="48" selection-start-line="968" selection-start-column="48" selection-end-line="968" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Select/Query/Component/Spellcheck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.557377">
-          <caret line="339" column="20" selection-start-line="339" selection-start-column="20" selection-end-line="339" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/wpsolr-schema.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="46" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/autocomplete.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.882353">
-          <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.375">
-          <caret line="388" column="12" selection-start-line="388" selection-start-column="12" selection-end-line="388" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.875">
-          <caret line="477" column="8" selection-start-line="477" selection-start-column="8" selection-end-line="477" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1201,7 +1628,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.59183675">
           <caret line="515" column="0" selection-start-line="515" selection-start-column="0" selection-end-line="515" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1213,24 +1639,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/dashboard_css.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5900151">
           <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1286,43 +1698,216 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/readme.txt">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-unmanaged-form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.046728972">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="29" />
+        </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/wp-db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36097562">
+          <caret line="659" column="0" selection-start-line="659" selection-start-column="0" selection-end-line="659" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36097562">
+          <caret line="1776" column="9" selection-start-line="1776" selection-start-column="9" selection-end-line="1776" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/formatting.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34579438">
+          <caret line="2370" column="9" selection-start-line="2370" selection-start-column="9" selection-end-line="2370" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-admin/css/colors/_admin.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3613707">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-my-account-indexes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-my-accounts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33259913">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-signin-form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.75">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/localization/option-localization.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="28" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_real.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.0392158">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_namespaces.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_classmap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_psr4.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/composer/ClassLoader.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="31.17647">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.125">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/dashboard_css.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/general-template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34472048">
+          <caret line="3225" column="9" selection-start-line="3225" selection-start-column="9" selection-end-line="3225" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/rmccue/requests/library/Requests.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="444" column="28" selection-start-line="444" selection-start-column="12" selection-end-line="444" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-32.5">
+          <caret line="96" column="17" selection-start-line="91" selection-start-column="164" selection-end-line="96" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-temporary-account-form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.916667">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/option.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43344155">
+          <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3919129">
+          <caret line="403" column="21" selection-start-line="403" selection-start-column="21" selection-end-line="403" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="11.333333">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/js/media-models.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3328336">
+          <caret line="238" column="4" selection-start-line="238" selection-start-column="4" selection-end-line="238" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="13" />
-          <folding>
-            <element signature="e#6#272#0#PHP" expanded="true" />
-            <marker date="1443698620000" expanded="true" signature="6477:6487" placeholder="..." />
-            <marker date="1443698620000" expanded="true" signature="6937:7476" placeholder="..." />
-            <marker date="1443698620000" expanded="true" signature="7393:7421" placeholder="..." />
-            <marker date="1443698620000" expanded="true" signature="7444:7454" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
-            <marker date="1443017399000" expanded="true" signature="1660:1670" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="2417:3062" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="2872:2900" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="3030:3040" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="3902:3945" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="5154:5395" placeholder="..." />
-            <marker date="1443017399000" expanded="true" signature="7706:7717" placeholder="..." />
+            <element signature="e#6#272#0#PHP" expanded="true" />
+            <marker date="1444659748000" expanded="true" signature="6960:6970" placeholder="..." />
+            <marker date="1444659748000" expanded="true" signature="7420:7959" placeholder="..." />
+            <marker date="1444659748000" expanded="false" signature="7876:7904" placeholder="..." />
+            <marker date="1444659748000" expanded="false" signature="7927:7937" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1330,16 +1915,85 @@
     <entry file="file://$PROJECT_DIR$/classes/themes/wpsolr-query.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/themes/wpsolr-url.php">
+    <entry file="file://$PROJECT_DIR$/../../../wp-settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49626467">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/option-indexes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="7" selection-start-line="111" selection-start-column="7" selection-end-line="111" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="41" selection-start-line="48" selection-start-column="41" selection-end-line="48" selection-end-column="41" />
+          <folding>
+            <marker date="1444919802000" expanded="true" signature="7174:7224" placeholder="SELECT %s FR..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.20766774">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1444386552000" expanded="true" signature="1660:1670" placeholder="..." />
+            <marker date="1444386552000" expanded="true" signature="2417:3062" placeholder="..." />
+            <marker date="1444386552000" expanded="false" signature="2872:2900" placeholder="..." />
+            <marker date="1444386552000" expanded="false" signature="3030:3040" placeholder="..." />
+            <marker date="1444386552000" expanded="true" signature="3902:3945" placeholder="..." />
+            <marker date="1444386552000" expanded="true" signature="5154:5395" placeholder="..." />
+            <marker date="1444386552000" expanded="true" signature="7706:7717" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -10,16 +10,45 @@ WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXE
 // Options name
 $option_name = OptionIndexes::get_option_name( WpSolrExtensions::OPTION_INDEXES );
 
-// Options data
-$option_data = OptionIndexes::get_option_data( WpSolrExtensions::OPTION_INDEXES );
-
 // Options object
 $option_object = new OptionIndexes();
 
 ?>
+
+<?php
+WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, true );
+$is_submit_form_temporary_account = isset( $_POST['submit_form_temporary_account'] );
+$form_data                        = WpSolrExtensions::extract_form_data( $is_submit_form_temporary_account, array(
+		'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
+	)
+);
+if ( isset( $_POST['submit_form_temporary_account'] ) ) {
+
+	$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
+	$response_object     = $managed_solr_server->call_rest_create_solr_index();
+
+	if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+
+		$option_object->create_index(
+			'free index',
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlScheme' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlDomain' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlPort' ),
+			'/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlPath' ) . '/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'key' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'secret' )
+		);
+	}
+}
+
+?>
+
 <div id="solr-hosting-tab">
 
 	<?php
+
+	// Options data. Loaded after the POST, to be sure it contains the posted data.
+	$option_data = OptionIndexes::get_option_data( WpSolrExtensions::OPTION_INDEXES );
 
 	$subtabs = array();
 
@@ -33,21 +62,34 @@ $option_object = new OptionIndexes();
 	// Create subtabs on the left side
 	$subtab = wpsolr_admin_sub_tabs( $subtabs );
 
-	if ( 'new_index' === $subtab ) {
-		$subtab                                 = $option_object->generate_uuid();
-		$option_data['solr_indexes'][ $subtab ] = array();
-	} else {
-		// Verify that current subtab is a Solr index indice.
-		if ( ! $option_object->has_index( $subtab ) ) {
-			// Use the first subtab element
-			$subtab = key( $subtabs );
-		}
-
-	}
-
 	?>
 
 	<div id="solr-results-options" class="wdm-vertical-tabs-content">
+
+		<?php
+		$is_new_index = false;
+		if ( 'new_index' === $subtab ) {
+			$is_new_index                           = true;
+			$subtab                                 = $option_object->generate_uuid();
+			$option_data['solr_indexes'][ $subtab ] = array();
+
+			WpSolrExtensions::require_with( WpSolrExtensions::get_option_template_file( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, 'template-temporary-account-form.php' ),
+				array(
+					'managed_solr_service_id' => $form_data['managed_solr_service_id']['value'],
+					'response_error'          => ( isset( $response_object ) && ! OptionManagedSolrServer::is_response_ok( $response_object ) ) ? OptionManagedSolrServer::get_response_error_message( $response_object ) : '',
+				) );
+
+		} else {
+			// Verify that current subtab is a Solr index indice.
+			if ( ! $option_object->has_index( $subtab ) ) {
+				// Use the first subtab element
+				$subtab = key( $subtabs );
+			}
+
+		}
+
+		?>
+
 		<form action="options.php" method="POST" id='settings_conf_form'>
 
 			<?php
@@ -63,7 +105,7 @@ $option_object = new OptionIndexes();
 				<div
 					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
 					class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
-					<h4 class='head_div'>Configure a Solr index</h4>
+					<h4 class='head_div'>Manually configure my existing Solr index</h4>
 
 					<div class="wdm_row">
 						<div class='solr_error'></div>
@@ -181,8 +223,7 @@ $option_object = new OptionIndexes();
 					</div>
 
 				</div>
-			<?php } // foreach
-			?>
+			<?php } // end foreach ?>
 
 			<div class="wdm_row">
 				<div class="submit">
@@ -202,9 +243,13 @@ $option_object = new OptionIndexes();
 	                                                style='height:18px;width:18px;margin-top: 10px;display: none'
 	                                                class='img-err'/></span>
 				</div>
-				<input name="delete_index_configuration" id='delete_index_configuration' type="button"
-				       class="button-secondary wdm-delete"
-				       value="Delete this configuration"/>
+
+				<?php if ( ! $is_new_index ) { ?>
+					<input name="delete_index_configuration" id='delete_index_configuration' type="button"
+					       class="button-secondary wdm-delete"
+					       value="Delete this configuration"/>
+				<?php } // end if ?>
+
 			</div>
 			<div class="clear"></div>
 

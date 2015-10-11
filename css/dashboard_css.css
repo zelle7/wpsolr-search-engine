@@ -1,3 +1,18 @@
+.numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+
+    background: #fff;
+    border: 2px solid #C15F03;
+    text-align: center;
+    color: #C15F03;
+
+    font: 32px Arial, sans-serif;
+}
 .wdm-wrap {
     margin: 10px 20px 0 2px;
 }
