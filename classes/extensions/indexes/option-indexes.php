@@ -17,7 +17,7 @@ class OptionIndexes extends WpSolrExtensions {
 	 * Subscribe to actions
 	 */
 	function __construct() {
-		$this->_options = self::get_option_data( self::OPTION_INDEXES );
+		$this->_options = self::get_option_data( self::OPTION_INDEXES, array() );
 	}
 
 
@@ -143,14 +143,36 @@ class OptionIndexes extends WpSolrExtensions {
 	 *
 	 * @return bool
 	 */
-	public
-	function get_index(
-		$solr_index_indice
-	) {
+	public function get_index( $solr_index_indice ) {
 
 		$solr_indexes = $this->get_indexes();
 
 		return isset( $solr_indexes[ $solr_index_indice ] ) ? $solr_indexes[ $solr_index_indice ] : null;
+	}
+
+	public function create_index( $index_name, $index_protocol, $index_host, $index_port, $index_path, $index_key, $index_secret ) {
+
+		$solr_indexes = $this->get_indexes();
+
+		// New indice for the solr index
+		$solr_index_indice = $this->generate_uuid();
+
+		// Fill the solr index
+		$solr_indexes[ $solr_index_indice ] = array();
+
+		$solr_indexes[ $solr_index_indice ]['index_name']     = $index_name;
+		$solr_indexes[ $solr_index_indice ]['index_protocol'] = $index_protocol;
+		$solr_indexes[ $solr_index_indice ]['index_host']     = $index_host;
+		$solr_indexes[ $solr_index_indice ]['index_port']     = $index_port;
+		$solr_indexes[ $solr_index_indice ]['index_path']     = $index_path;
+		$solr_indexes[ $solr_index_indice ]['index_key']      = $index_key;
+		$solr_indexes[ $solr_index_indice ]['index_secret']   = $index_secret;
+
+		$this->_options['solr_indexes'] = $solr_indexes;
+
+		// Save the options contaning the new index
+		$this->set_option_data( self::OPTION_INDEXES, $this->_options );
+
 	}
 
 	/**
@@ -158,8 +180,7 @@ class OptionIndexes extends WpSolrExtensions {
 	 *
 	 * @return string
 	 */
-	public
-	function generate_uuid() {
+	public function generate_uuid() {
 
 		return strtoupper( md5( uniqid( rand(), true ) ) );
 	}
@@ -197,9 +218,8 @@ class OptionIndexes extends WpSolrExtensions {
 		$solr_index = $this->get_index( $solr_index_indice );
 		if ( ! isset( $solr_index ) ) {
 
-			throw new Exception( sprintf( "Please complete the setup of your Solr options.
-			The Solr index configured for indexing, with indice '%s', is missing.
-			It probably was removed from the Solr index list, but is still setup as the default indexing Solr index.", $solr_index_indice ) );
+			throw new Exception( "The search index is missing.
+			Configure one in the <a href='?page=solr_settings&tab=solr_indexes'>Solr indexes</a>, and select it in the <a href='?page=solr_settings&tab=solr_option'>default search Solr index list</a>." );
 		}
 
 		// Copy the index parameters in the Solarium endpoint

@@ -8,6 +8,9 @@
  * License: GPL2
  */
 
+// Composer autoloader
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+
 require_once 'ajax_solr_services.php';
 require_once 'dashboard_settings.php';
 require_once 'autocomplete.php';

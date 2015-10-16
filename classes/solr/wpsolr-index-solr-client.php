@@ -46,7 +46,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Execute delete query
 		$client      = $this->client;
 		$deleteQuery = $client->createUpdate();
-		$deleteQuery->addDeleteQuery( '*:*' );
+		$deleteQuery->addDeleteQuery( 'id:*' );
 		$deleteQuery->addCommit();
 		$client->execute( $deleteQuery );
 
