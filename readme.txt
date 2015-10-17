@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.4
+Current Version: 5.5
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.4
+Stable tag: 5.5
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
@@ -128,6 +128,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.5 =
+* One-click generation and setup of a fully working online Solr index. More than enough to fully test WPSOLR in a few minutes.
+* Fix bug in Solr when emptying Solr indexes.
 
 = 5.4 =
 * Improve search speed by 2-3 times.
