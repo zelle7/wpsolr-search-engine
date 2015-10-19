@@ -292,16 +292,33 @@ jQuery(document).ready(function () {
     })
 
     /*
+     Create a temporary managed index
+     */
+    jQuery("input[name='submit_button_form_temporary_index']").click(function () {
+
+        // Display the loading icon
+        jQuery(this).hide();
+        jQuery('.solr_error').hide();
+        jQuery('.wdm_note').hide();
+        jQuery(this).after("<h2>Please wait a few seconds. We are configuring your test Solr index ...</h2>");
+        jQuery(this).after("<div class='loading'>");
+
+        // Let the submit execute by doing nothing
+        return true;
+    });
+
+    /*
      Remove an index configuration
      */
     jQuery('#delete_index_configuration').click(function () {
 
-        // Remove the current configuration to delte from the DOM
+        // Remove the current configuration to delete from the DOM
         jQuery('#current_index_configuration_edited_id').remove();
 
         // Autosubmit
         jQuery('#settings_conf_form').submit();
     });
+
 
     jQuery('#check_index_status').click(function () {
         path = jQuery('#adm_path').val();

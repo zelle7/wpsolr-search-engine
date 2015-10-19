@@ -11,6 +11,9 @@ class OptionIndexes extends WpSolrExtensions {
 
 	private $_options;
 
+	const STORED_INDEX_TYPE_UNMANAGED = 'index_type_unmanaged';
+	const STORED_INDEX_TYPE_MANAGED_TEMPORARY = 'index_type_managed_temporary';
+
 	/*
 	 * Constructor
 	 *
@@ -150,30 +153,104 @@ class OptionIndexes extends WpSolrExtensions {
 		return isset( $solr_indexes[ $solr_index_indice ] ) ? $solr_indexes[ $solr_index_indice ] : null;
 	}
 
-	public function create_index( $index_name, $index_protocol, $index_host, $index_port, $index_path, $index_key, $index_secret ) {
+	public function get_index_property( $solr_index, $property_name, $default_property_value = '' ) {
+
+		return isset( $solr_index[ $property_name ] ) ? $solr_index[ $property_name ] : $default_property_value;
+	}
+
+	public function get_index_name( $solr_index ) {
+
+		return $this->get_index_property( $solr_index, 'index_name', null );
+	}
+
+	public function get_index_managed_solr_service_id( $solr_index ) {
+
+		return $this->get_index_property( $solr_index, 'managed_solr_service_id', '' );
+	}
+
+	public function get_index_type( $solr_index ) {
+
+		return $this->get_index_property( $solr_index, 'index_type', '' );
+	}
+
+	public function is_index_type_temporary( $solr_index ) {
+
+		$index_managed_solr_service_id = $this->get_index_managed_solr_service_id( $solr_index );
+
+		return ( ! empty( $index_managed_solr_service_id ) && ( self::STORED_INDEX_TYPE_MANAGED_TEMPORARY === $this->get_index_type( $solr_index ) ) );
+	}
+
+	public function create_index( $managed_solr_service_id, $index_type, $index_uuid, $index_name, $index_protocol, $index_host, $index_port, $index_path, $index_key, $index_secret ) {
 
 		$solr_indexes = $this->get_indexes();
 
-		// New indice for the solr index
-		$solr_index_indice = $this->generate_uuid();
+		// Indice for the solr index
+		$solr_index_indice = isset( $index_uuid ) ? $index_uuid : $this->generate_uuid();
 
 		// Fill the solr index
 		$solr_indexes[ $solr_index_indice ] = array();
 
-		$solr_indexes[ $solr_index_indice ]['index_name']     = $index_name;
-		$solr_indexes[ $solr_index_indice ]['index_protocol'] = $index_protocol;
-		$solr_indexes[ $solr_index_indice ]['index_host']     = $index_host;
-		$solr_indexes[ $solr_index_indice ]['index_port']     = $index_port;
-		$solr_indexes[ $solr_index_indice ]['index_path']     = $index_path;
-		$solr_indexes[ $solr_index_indice ]['index_key']      = $index_key;
-		$solr_indexes[ $solr_index_indice ]['index_secret']   = $index_secret;
+		$solr_indexes[ $solr_index_indice ]['managed_solr_service_id'] = $managed_solr_service_id;
+		$solr_indexes[ $solr_index_indice ]['index_type']              = $index_type;
+		$solr_indexes[ $solr_index_indice ]['index_name']              = $index_name;
+		$solr_indexes[ $solr_index_indice ]['index_protocol']          = $index_protocol;
+		$solr_indexes[ $solr_index_indice ]['index_host']              = $index_host;
+		$solr_indexes[ $solr_index_indice ]['index_port']              = $index_port;
+		$solr_indexes[ $solr_index_indice ]['index_path']              = $index_path;
+		$solr_indexes[ $solr_index_indice ]['index_key']               = $index_key;
+		$solr_indexes[ $solr_index_indice ]['index_secret']            = $index_secret;
 
 		$this->_options['solr_indexes'] = $solr_indexes;
 
 		// Save the options contaning the new index
 		$this->set_option_data( self::OPTION_INDEXES, $this->_options );
 
+		// Update the default search Solr index with the newly created.
+		$this->update_default_search_solr_index_indice( $solr_index_indice );
 	}
+
+	/**
+	 * Update the default solr index indice used by search page.
+	 *
+	 * @param $solr_index_indice
+	 */
+	public function update_default_search_solr_index_indice( $solr_index_indice ) {
+
+		// Load results options
+		$results_options = get_option( 'wdm_solr_res_data', array() );
+
+		// Retrieve default search solr index
+		$default_search_solr_index = $this->get_default_search_solr_index();
+
+		// If not already set, or set with a non existing solr index (probably removed), update
+		if ( ! isset( $default_search_solr_index ) ) {
+
+			// Change the default search Solr index indice
+			$results_options['default_solr_index_for_search'] = $solr_index_indice;
+
+
+			// Save results options
+			update_option( 'wdm_solr_res_data', $results_options );
+		}
+
+	}
+
+	/**
+	 * Get the default search Solr index. Must exist in the solr indexes list (not removed for instance).
+	 */
+	public function get_default_search_solr_index() {
+
+		// Load results options
+		$results_options = get_option( 'wdm_solr_res_data', array() );
+
+		if ( isset( $results_options['default_solr_index_for_search'] ) ) {
+
+			return $this->get_index( $results_options['default_solr_index_for_search'] );
+		}
+
+		return null;
+	}
+
 
 	/**
 	 * Generate a long random id

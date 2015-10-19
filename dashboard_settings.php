@@ -1,4 +1,66 @@
 <?php
+/*
+ *  Route to controllers
+ */
+WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, true );
+WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+
+switch ( isset( $_POST['wpsolr_action'] ) ? $_POST['wpsolr_action'] : '' ) {
+	case 'wpsolr_admin_action_form_temporary_index':
+		unset( $response_object );
+		wpsolr_admin_action_form_temporary_index();
+		break;
+
+}
+
+function wpsolr_admin_action_form_temporary_index() {
+	global $response_object;
+
+	$is_submit_button_form_temporary_index = isset( $_POST['submit_button_form_temporary_index'] );
+
+	// Do your stuff here
+	if ( isset( $_POST['submit_button_form_temporary_index'] ) ) {
+
+		$form_data = WpSolrExtensions::extract_form_data( $is_submit_button_form_temporary_index, array(
+				'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
+			)
+		);
+
+		$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
+		$response_object     = $managed_solr_server->call_rest_create_solr_index();
+
+		if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+
+			$option_indexes_object = new OptionIndexes();
+
+			$option_indexes_object->create_index(
+				$managed_solr_server->get_id(),
+				OptionIndexes::STORED_INDEX_TYPE_MANAGED_TEMPORARY,
+				OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
+				'Test index from ' . $managed_solr_server->get_label(),
+				OptionManagedSolrServer::get_response_result( $response_object, 'urlScheme' ),
+				OptionManagedSolrServer::get_response_result( $response_object, 'urlDomain' ),
+				OptionManagedSolrServer::get_response_result( $response_object, 'urlPort' ),
+				'/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlPath' ) . '/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
+				OptionManagedSolrServer::get_response_result( $response_object, 'key' ),
+				OptionManagedSolrServer::get_response_result( $response_object, 'secret' )
+			);
+
+			// Redirect automatically to Solr options if it is the first solr index created
+			if ( count( $option_indexes_object->get_indexes() ) === 1 ) {
+				$redirect_location = '?page=solr_settings&tab=solr_option';
+				header( "Location: $redirect_location", true, 302 ); // wp_redirect() is not found
+				exit;
+			}
+		}
+	}
+
+}
+
+?>
+
+
+<?php
 function wpsolr_admin_init() {
 
 	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
@@ -947,7 +1009,8 @@ function fun_set_solr_options() {
 							<div class="clear"></div>
 							<div class='col_left'>
 								Re-index all the data in place.<br/>
-								If you check this option, it will restart the indexing from start, without deleting the data already in the Solr index.
+								If you check this option, it will restart the indexing from start, without deleting the
+								data already in the Solr index.
 							</div>
 							<div class='col_right'>
 
@@ -999,10 +1062,20 @@ function fun_set_solr_options() {
 }
 
 function wpsolr_admin_tabs( $current = 'solr_config' ) {
+
+	// Get default search solr index indice
+	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
+	$option_indexes            = new OptionIndexes();
+	$default_search_solr_index = $option_indexes->get_default_search_solr_index();
+
+
 	$tabs = array(
 		'solr_config'     => 'Solr Configuration',
 		'solr_indexes'    => 'Solr Indexes',
-		'solr_option'     => 'Solr Options',
+		'solr_option'     => sprintf( 'Solr Options %s', ! isset( $default_search_solr_index )
+			? count( $option_indexes->get_indexes() ) > 0 ? "<span class='text_error'>No index selected</span>" : ''
+			: $option_indexes->get_index_name( $default_search_solr_index )
+		),
 		'solr_plugins'    => 'Plugins Integration',
 		'solr_operations' => 'Solr Indexing Batch'
 	);

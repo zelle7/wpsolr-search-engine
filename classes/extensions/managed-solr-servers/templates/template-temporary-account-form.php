@@ -5,12 +5,13 @@
 ?>
 
 <?php
-
 ?>
 
 <div class="wrapper">
 
-	<form method="POST">
+	<form method="POST" id="form_temporary_index">
+		<input type="hidden" name="wpsolr_action" value="wpsolr_admin_action_form_temporary_index"/>
+
 		<h4 class='head_div'>Get your free Solr index to test WPSOLR</h4>
 
 		<div class="wdm_row">
@@ -21,7 +22,7 @@
 						printf( "<option value='%s' %s>%s</option>",
 							$list_managed_solr_service_id,
 							selected( $list_managed_solr_service_id, $managed_solr_service_id, false ),
-							$managed_solr_service['menu_label']
+							$managed_solr_service[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_LABEL ]
 						);
 					}
 					?>
@@ -30,12 +31,12 @@
 
 			<div class="col_right">
 
-				<input name="submit_form_temporary_account" type="submit"
+				<input name="submit_button_form_temporary_index" type="submit"
 				       class="button-primary wdm-save"
 				       value="Create my instant free Solr index"/>
 
 				<div class="wdm_row">
-					<h4>
+					<h4 class="solr_error">
 						<?php
 						if ( ! empty( $response_error ) ) {
 							echo $response_error;

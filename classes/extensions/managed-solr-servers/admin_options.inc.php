@@ -24,7 +24,7 @@ $subtabs = array(
 
 // Add menu items for all the managed Solr services
 foreach ( OptionManagedSolrServer::get_managed_solr_services() as $managed_solr_service_id => $managed_solr_service ) {
-	$subtabs[ $managed_solr_service_id ] = $managed_solr_service['menu_label'];
+	$subtabs[ $managed_solr_service_id ] = $managed_solr_service[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_LABEL ];
 }
 
 // Display menu

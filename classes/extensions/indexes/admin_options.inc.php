@@ -16,30 +16,12 @@ $option_object = new OptionIndexes();
 ?>
 
 <?php
-WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, true );
-$is_submit_form_temporary_account = isset( $_POST['submit_form_temporary_account'] );
-$form_data                        = WpSolrExtensions::extract_form_data( $is_submit_form_temporary_account, array(
+global $response_object;
+$is_submit_button_form_temporary_index = isset( $_POST['submit_button_form_temporary_index'] );
+$form_data                             = WpSolrExtensions::extract_form_data( $is_submit_button_form_temporary_index, array(
 		'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
 	)
 );
-if ( isset( $_POST['submit_form_temporary_account'] ) ) {
-
-	$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
-	$response_object     = $managed_solr_server->call_rest_create_solr_index();
-
-	if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
-
-		$option_object->create_index(
-			'free index',
-			OptionManagedSolrServer::get_response_result( $response_object, 'urlScheme' ),
-			OptionManagedSolrServer::get_response_result( $response_object, 'urlDomain' ),
-			OptionManagedSolrServer::get_response_result( $response_object, 'urlPort' ),
-			'/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlPath' ) . '/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
-			OptionManagedSolrServer::get_response_result( $response_object, 'key' ),
-			OptionManagedSolrServer::get_response_result( $response_object, 'secret' )
-		);
-	}
-}
 
 ?>
 
@@ -101,11 +83,31 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 
 			<?php
 			foreach ( ( isset( $option_data['solr_indexes'] ) ? $option_data['solr_indexes'] : array() ) as $index_indice => $index ) {
+
+				$is_index_type_temporary = $option_object->is_index_type_temporary( $option_data['solr_indexes'][ $index_indice ] );
+				$is_index_readonly       = $is_index_type_temporary;
+
 				?>
+
 				<div
 					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
 					class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
-					<h4 class='head_div'>Manually configure my existing Solr index</h4>
+
+					<input type='hidden'
+					       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][managed_solr_service_id]"
+						<?php echo $subtab === $index_indice ? "id='managed_solr_service_id'" : "" ?>
+						   value="<?php echo empty( $option_data['solr_indexes'][ $index_indice ]['managed_solr_service_id'] ) ? '' : $option_data['solr_indexes'][ $index_indice ]['managed_solr_service_id']; ?>">
+					<input type='hidden'
+					       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_type]"
+						<?php echo $subtab === $index_indice ? "id='index_type'" : "" ?>
+						   value="<?php echo empty( $option_data['solr_indexes'][ $index_indice ]['index_type'] ) ? '' : $option_data['solr_indexes'][ $index_indice ]['index_type']; ?>">
+
+					<h4 class='head_div'>
+						<?php echo $is_index_type_temporary
+							? 'This is your Test Index configuration'
+							: 'Manually configure your existing Solr index';
+						?>
+					</h4>
 
 					<div class="wdm_row">
 						<div class='solr_error'></div>
@@ -114,7 +116,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 					<div class="wdm_row">
 						<div class='col_left'>Index name</div>
 
-						<div class='col_right'><input type='text'
+						<div class='col_right'><input type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 						                              placeholder="Give a name to your index"
 						                              name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_name]"
 								<?php echo $subtab === $index_indice ? "id='index_name'" : "" ?>
@@ -130,8 +132,8 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 						<div class='col_left'>Solr Protocol</div>
 
 						<div class='col_right'>
-							<select
-								name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
+							<select disabled=<?php echo $is_index_readonly ? 'true' : 'false'; ?>
+							        name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
 								<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
 								>
 								<option value='http'
@@ -154,7 +156,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 						<div class='col_left'>Solr Host</div>
 
 						<div class='col_right'>
-							<input type='text'
+							<input type='text' type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 							       placeholder="localhost or ip adress or hostname. No 'http', no '/', no ':'"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_host]"
 								<?php echo $subtab === $index_indice ? "id='index_host'" : "" ?>
@@ -168,7 +170,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 					<div class="wdm_row">
 						<div class='col_left'>Solr Port</div>
 						<div class='col_right'>
-							<input type="text"
+							<input type="text" type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 							       placeholder="8983 or 443 or any other port"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_port]"
 								<?php echo $subtab === $index_indice ? "id='index_port'" : "" ?>
@@ -182,7 +184,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 					<div class="wdm_row">
 						<div class='col_left'>Solr Path</div>
 						<div class='col_right'>
-							<input type='text'
+							<input type='text' type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 							       placeholder="For instance /solr/index_name. Begins with '/', no '/' at the end"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_path]"
 								<?php echo $subtab === $index_indice ? "id='index_path'" : "" ?>
@@ -196,7 +198,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 					<div class="wdm_row">
 						<div class='col_left'>Key</div>
 						<div class='col_right'>
-							<input type='text'
+							<input type='text' type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 							       placeholder="Optional security user if the index is protected with Http Basic Authentication"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_key]"
 								<?php echo $subtab === $index_indice ? "id='index_key'" : "" ?>
@@ -210,7 +212,7 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 					<div class="wdm_row">
 						<div class='col_left'>Secret</div>
 						<div class='col_right'>
-							<input type='text'
+							<input type='text' type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
 							       placeholder="Optional security password if the index is protected with Http Basic Authentication"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_secret]"
 								<?php echo $subtab === $index_indice ? "id='index_secret'" : "" ?>
@@ -221,6 +223,42 @@ if ( isset( $_POST['submit_form_temporary_account'] ) ) {
 						</div>
 						<div class="clear"></div>
 					</div>
+
+					<?php
+					// Display managed offers links
+					if ( $is_index_type_temporary ) {
+						?>
+
+						<div class='col_right' style='width:90%'>
+
+							<?php
+							$managed_solr_service_id = $option_object->get_index_managed_solr_service_id( $option_data['solr_indexes'][ $index_indice ] );
+
+							$OptionManagedSolrServer = new OptionManagedSolrServer( $managed_solr_service_id );
+							foreach ( $OptionManagedSolrServer->generate_convert_orders_urls( $index_indice ) as $managed_solr_service_orders_url ) {
+								?>
+
+								<input name="gotosolr_plan_yearly_trial"
+								       type="button" class="button-primary"
+								       value="<?php echo $managed_solr_service_orders_url[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL ]; ?>"
+								       onclick="window.open('<?php echo $managed_solr_service_orders_url[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_ORDER_URL_LINK ]; ?>', '__blank');"
+									/>
+
+								<?php
+
+
+								//echo $managed_solr_service_orders_url[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT ];
+
+							}
+							?>
+
+						</div>
+						<div class="clear"></div>
+
+						<?php
+					}
+					?>
+
 
 				</div>
 			<?php } // end foreach ?>
