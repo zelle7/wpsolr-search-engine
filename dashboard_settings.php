@@ -8,50 +8,74 @@ WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXE
 switch ( isset( $_POST['wpsolr_action'] ) ? $_POST['wpsolr_action'] : '' ) {
 	case 'wpsolr_admin_action_form_temporary_index':
 		unset( $response_object );
-		wpsolr_admin_action_form_temporary_index();
+
+		if ( isset( $_POST['submit_button_form_temporary_index'] ) ) {
+			wpsolr_admin_action_form_temporary_index( $response_object );
+		}
+
+		if ( isset( $_POST['submit_button_form_temporary_index_select_managed_solr_service_id'] ) ) {
+
+			$form_data = WpSolrExtensions::extract_form_data( true, array(
+					'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
+				)
+			);
+
+			$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
+			$response_object     = $managed_solr_server->call_rest_create_google_recaptcha_token();
+
+			if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+				$google_recaptcha_site_key = OptionManagedSolrServer::get_response_result( $response_object, 'siteKey' );
+				$google_recaptcha_token   = OptionManagedSolrServer::get_response_result( $response_object, 'token' );
+			}
+
+		}
+
 		break;
 
 }
 
-function wpsolr_admin_action_form_temporary_index() {
-	global $response_object;
+function wpsolr_admin_action_form_temporary_index( &$response_object ) {
 
-	$is_submit_button_form_temporary_index = isset( $_POST['submit_button_form_temporary_index'] );
 
-	// Do your stuff here
-	if ( isset( $_POST['submit_button_form_temporary_index'] ) ) {
+	// recaptcha response
+	$g_recaptcha_response = isset( $_POST['g-recaptcha-response'] ) ? $_POST['g-recaptcha-response'] : '';
 
-		$form_data = WpSolrExtensions::extract_form_data( $is_submit_button_form_temporary_index, array(
-				'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
-			)
+	// A recaptcha response must be set
+	if ( empty( $g_recaptcha_response ) ) {
+
+		return;
+	}
+
+	$form_data = WpSolrExtensions::extract_form_data( true, array(
+			'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
+		)
+	);
+
+	$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
+	$response_object     = $managed_solr_server->call_rest_create_solr_index( $g_recaptcha_response );
+
+	if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+
+		$option_indexes_object = new OptionIndexes();
+
+		$option_indexes_object->create_index(
+			$managed_solr_server->get_id(),
+			OptionIndexes::STORED_INDEX_TYPE_MANAGED_TEMPORARY,
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
+			'Test index from ' . $managed_solr_server->get_label(),
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlScheme' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlDomain' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'urlPort' ),
+			'/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlPath' ) . '/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'key' ),
+			OptionManagedSolrServer::get_response_result( $response_object, 'secret' )
 		);
 
-		$managed_solr_server = new OptionManagedSolrServer( $form_data['managed_solr_service_id']['value'] );
-		$response_object     = $managed_solr_server->call_rest_create_solr_index();
-
-		if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
-
-			$option_indexes_object = new OptionIndexes();
-
-			$option_indexes_object->create_index(
-				$managed_solr_server->get_id(),
-				OptionIndexes::STORED_INDEX_TYPE_MANAGED_TEMPORARY,
-				OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
-				'Test index from ' . $managed_solr_server->get_label(),
-				OptionManagedSolrServer::get_response_result( $response_object, 'urlScheme' ),
-				OptionManagedSolrServer::get_response_result( $response_object, 'urlDomain' ),
-				OptionManagedSolrServer::get_response_result( $response_object, 'urlPort' ),
-				'/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlPath' ) . '/' . OptionManagedSolrServer::get_response_result( $response_object, 'urlCore' ),
-				OptionManagedSolrServer::get_response_result( $response_object, 'key' ),
-				OptionManagedSolrServer::get_response_result( $response_object, 'secret' )
-			);
-
-			// Redirect automatically to Solr options if it is the first solr index created
-			if ( count( $option_indexes_object->get_indexes() ) === 1 ) {
-				$redirect_location = '?page=solr_settings&tab=solr_option';
-				header( "Location: $redirect_location", true, 302 ); // wp_redirect() is not found
-				exit;
-			}
+		// Redirect automatically to Solr options if it is the first solr index created
+		if ( count( $option_indexes_object->get_indexes() ) === 1 ) {
+			$redirect_location = '?page=solr_settings&tab=solr_option';
+			header( "Location: $redirect_location", true, 302 ); // wp_redirect() is not found
+			exit;
 		}
 	}
 
@@ -89,6 +113,10 @@ function fun_add_solr_settings() {
 
 	$plugin_vals = array( 'plugin_url' => plugins_url( 'images/', __FILE__ ) );
 	wp_localize_script( 'dashboard_js1', 'plugin_data', $plugin_vals );
+
+	// Google api recaptcha - Used for temporary indexes creation
+	wp_enqueue_script( 'google-api-recaptcha', '//www.google.com/recaptcha/api.js', array() );
+
 }
 
 function fun_set_solr_options() {
@@ -179,79 +207,20 @@ function fun_set_solr_options() {
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
 	<div class="page_title"><h1>WPSOLR Settings </h1></div>
 
-	<div class="indexing_option wrapper">
-		<h4 class='head_div'>No taste, no time, or no skills to manage your own Solr server ?</h4>
-
-		<div class='col_left' style='width:90%'>
-			WPSOLR is free, but requires a Solr server properly installed and configured.
-			<a href="http://www.gotosolr.com/en" target="__gotosolr">http://gotosolr.com</a> can provide a
-			production ready Solr for WPSOLR.
-			Here is a <a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress" target="_wpsolr-tutorial">tutorial</a>
-			to setup WPSOLR with the following plans:
-		</div>
-
-		<div class='col_right' style='width:90%'>
-			<input name="gotosolr_plan_yearly_trial"
-			       type="button" class="button-primary"
-			       value="Test one month with our yearly trial"
-			       onclick="window.open('https://secure.avangate.com/order/trial.php?PRODS=4642999&amp;QTY=1&amp;PRICES4642999%5BEUR%5D=0&amp;TPERIOD=30&amp;PHASH=bb55c3bd6407e03a8b5fc91358347a4c', '__blank');"
-				/>
-			<input name="gotosolr_plan_yearly"
-			       type="button" class="button-primary"
-			       value="Build your yearly plan with your own features"
-			       onclick="window.open('https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1', '__blank');"
-				/>
-			<input name="gotosolr_plan_monthly"
-			       type="button" class="button-primary"
-			       value="Build your monthly plan with your own features"
-			       onclick="window.open('https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1', '__blank');"
-				/>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
 		wpsolr_admin_tabs( $_GET['tab'] );
 	} else {
-		wpsolr_admin_tabs( 'solr_config' );
+		wpsolr_admin_tabs( 'solr_indexes' );
 	}
 
 	if ( isset ( $_GET['tab'] ) ) {
 		$tab = $_GET['tab'];
 	} else {
-		$tab = 'solr_config';
+		$tab = 'solr_indexes';
 	}
 
 	switch ( $tab ) {
-	case 'solr_config' :
-		?>
-		<div id="solr-configuration-tab">
-			<div class='wrapper'>
-				<h4 class='head_div'>Solr Configuration</h4>
-
-				<div class="wdm_note">
-
-					WPSOLR is compatible with the Solr versions listed at the following page: <a
-						href="http://www.wpsolr.com/releases#1.0" target="__wpsolr">Compatible Solr versions</a>.
-
-					Your first action must be to download the two configuration files (schema.xml,
-					solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
-					Everything is described online.
-
-				</div>
-				<div class="wdm_row">
-					<div class="submit">
-						<a href='admin.php?page=solr_settings&tab=solr_indexes' class="button-primary wdm-save">I
-							uploaded my 2 compatible configuration files to my Solr core >></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<?php
-		break;
-
 	case 'solr_indexes' :
 		WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_INDEXES );
 		break;
@@ -1061,7 +1030,7 @@ function fun_set_solr_options() {
 
 }
 
-function wpsolr_admin_tabs( $current = 'solr_config' ) {
+function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 
 	// Get default search solr index indice
 	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
@@ -1070,7 +1039,6 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 
 
 	$tabs = array(
-		'solr_config'     => 'Solr Configuration',
 		'solr_indexes'    => 'Solr Indexes',
 		'solr_option'     => sprintf( 'Solr Options %s', ! isset( $default_search_solr_index )
 			? count( $option_indexes->get_indexes() ) > 0 ? "<span class='text_error'>No index selected</span>" : ''
@@ -1093,7 +1061,7 @@ function wpsolr_admin_tabs( $current = 'solr_config' ) {
 function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	// Tab selected by the user
-	$tab = $_GET['tab'];
+	$tab = isset($_GET['tab']) ? $_GET['tab'] : 'solr_indexes';
 
 	if ( isset ( $_GET['subtab'] ) ) {
 

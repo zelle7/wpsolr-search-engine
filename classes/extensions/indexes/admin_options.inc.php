@@ -16,7 +16,7 @@ $option_object = new OptionIndexes();
 ?>
 
 <?php
-global $response_object;
+global $response_object, $google_recaptcha_site_key, $google_recaptcha_token;
 $is_submit_button_form_temporary_index = isset( $_POST['submit_button_form_temporary_index'] );
 $form_data                             = WpSolrExtensions::extract_form_data( $is_submit_button_form_temporary_index, array(
 		'managed_solr_service_id' => array( 'default_value' => '', 'can_be_empty' => false )
@@ -55,11 +55,16 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 			$subtab                                 = $option_object->generate_uuid();
 			$option_data['solr_indexes'][ $subtab ] = array();
 
-			WpSolrExtensions::require_with( WpSolrExtensions::get_option_template_file( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, 'template-temporary-account-form.php' ),
-				array(
-					'managed_solr_service_id' => $form_data['managed_solr_service_id']['value'],
-					'response_error'          => ( isset( $response_object ) && ! OptionManagedSolrServer::is_response_ok( $response_object ) ) ? OptionManagedSolrServer::get_response_error_message( $response_object ) : '',
-				) );
+			if ( ! $option_object->has_index_type_temporary() ) {
+				// No temporary index yet: display the form to create one.
+				WpSolrExtensions::require_with( WpSolrExtensions::get_option_template_file( WpSolrExtensions::OPTION_MANAGED_SOLR_SERVERS, 'template-temporary-account-form.php' ),
+					array(
+						'managed_solr_service_id'   => $form_data['managed_solr_service_id']['value'],
+						'response_error'            => ( isset( $response_object ) && ! OptionManagedSolrServer::is_response_ok( $response_object ) ) ? OptionManagedSolrServer::get_response_error_message( $response_object ) : '',
+						'google_recaptcha_site_key' => isset( $google_recaptcha_site_key ) ? $google_recaptcha_site_key : '',
+						'google_recaptcha_token'    => isset( $google_recaptcha_token ) ? $google_recaptcha_token : ''
+					) );
+			}
 
 		} else {
 			// Verify that current subtab is a Solr index indice.
@@ -72,13 +77,13 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 		?>
 
+
 		<form action="options.php" method="POST" id='settings_conf_form'>
 
 			<?php
 			settings_fields( $option_name );
 			?>
 
-			<!--  <div class="wdm_heading wrapper"><h3>Configure Solr</h3></div>-->
 			<input type='hidden' id='adm_path' value='<?php echo admin_url(); ?>'>
 
 			<?php
@@ -109,6 +114,23 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 						?>
 					</h4>
 
+					<?php
+					if ( $is_new_index ) {
+						?>
+						<div class="wdm_note">
+
+							WPSOLR is compatible with the Solr versions listed at the following page: <a
+								href="http://www.wpsolr.com/releases#1.0" target="__wpsolr">Compatible Solr versions</a>.
+
+							Your first action must be to download the two configuration files (schema.xml,
+							solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
+							Everything is described online.
+
+						</div>
+						<?php
+					}
+					?>
+
 					<div class="wdm_row">
 						<div class='solr_error'></div>
 					</div>
@@ -132,20 +154,26 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 						<div class='col_left'>Solr Protocol</div>
 
 						<div class='col_right'>
-							<select disabled=<?php echo $is_index_readonly ? 'true' : 'false'; ?>
-							        name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
-								<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
-								>
-								<option value='http'
-									<?php selected( 'http', empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>
-									>http
-								</option>
-								<option value='https'
-									<?php selected( 'https', empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>
-									>https
-								</option>
-
-							</select>
+							<?php if ( ! $is_index_readonly ) { ?>
+								<select
+									name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
+									<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
+									>
+									<option
+										value='http' <?php selected( 'http', empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>>
+										http
+									</option>
+									<option
+										value='https' <?php selected( 'https', empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>>
+										https
+									</option>
+								</select>
+							<?php } else { ?>
+								<input type='text' type='text' readonly
+								       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
+									<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
+									   value="<?php echo empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? '' : $option_data['solr_indexes'][ $index_indice ]['index_protocol']; ?>">
+							<?php } ?>
 
 							<div class="clear"></div>
 							<span class='protocol_err'></span>

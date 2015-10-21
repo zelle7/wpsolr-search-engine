@@ -559,9 +559,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
 
 		$content_with_shortcodes_expanded_or_stripped = $pcontent;
-		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) ) {
+		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) && ( strpos( $pcontent, '[solr_search_shortcode]' ) === false ) ) {
 
-			// Expand shortcodes which have a plugin active
+			// Expand shortcodes which have a plugin active, and are not the search form shortcode (else pb).
 			global $post;
 			$post                                         = $post_to_index;
 			$content_with_shortcodes_expanded_or_stripped = do_shortcode( $pcontent );

@@ -180,6 +180,29 @@ class OptionIndexes extends WpSolrExtensions {
 		return ( ! empty( $index_managed_solr_service_id ) && ( self::STORED_INDEX_TYPE_MANAGED_TEMPORARY === $this->get_index_type( $solr_index ) ) );
 	}
 
+	/**
+	 * Is there at least one solr index of type temporary ?
+	 *
+	 * @return bool
+	 */
+	public function has_index_type_temporary() {
+
+		$solr_indexes = $this->get_indexes();
+
+		foreach ( $solr_indexes as $solr_index ) {
+
+			if ( $this->is_index_type_temporary( $solr_index ) ) {
+
+				// Found one.
+				return true;
+			}
+
+		}
+
+		// Found none.
+		return false;
+	}
+
 	public function create_index( $managed_solr_service_id, $index_type, $index_uuid, $index_name, $index_protocol, $index_host, $index_port, $index_path, $index_key, $index_secret ) {
 
 		$solr_indexes = $this->get_indexes();

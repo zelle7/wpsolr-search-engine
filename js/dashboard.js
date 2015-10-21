@@ -175,13 +175,30 @@ jQuery(document).ready(function () {
                 if (batch_size > 100) {
                     message = '<br> You could try to decrease your batch size to prevent errors or timeouts.';
                 }
-                jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + error + '<br><br>' + req.responseText + '<br><br>' + message);
+                jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + escapeHtml(error) + '<br><br>' + escapeHtml(req.responseText) + '<br><br>' + message);
             }
 
         });
 
     }
 
+    /*
+     Escape html for javascript error messages to be displayed correctly.
+     */
+    var entityMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;',
+        "/": '&#x2F;'
+    };
+
+    function escapeHtml(string) {
+        return String(string).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
+        });
+    }
 
     jQuery('#save_selected_index_options_form').click(function () {
         ps_types = '';
