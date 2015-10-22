@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.6
+Current Version: 5.7
 
 Author:  WPSOLR.COM
 
@@ -14,11 +14,14 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.6
+Stable tag: 5.7
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
 == Description ==
+
+= I don't have an Apache Solr server, how can I test WPSOLR search ? =
+We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted.
 
 = About us =
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
@@ -128,6 +131,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.7 =
+* Add an indexing option: post excerpt can be indexed with post content, and appear in autocomplete and highlighted results.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.6 =
 * Fix bug "Headers already sent" when activating the plugin.
@@ -306,7 +313,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Frequently Asked Questions ==
 
-= Why the search page does not show up ?=
+= Why the search page does not show up ? =
 You have to select the admin option "Replace standard WP search", and verify that your urls permalinks are activated.
 
 = Which PHP version is required ? =

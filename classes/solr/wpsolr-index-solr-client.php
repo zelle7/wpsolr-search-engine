@@ -484,6 +484,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			// Post is NOT an attachment: we get the document body from the post object
 			$pcontent = $post_to_index->post_content;
 		}
+
+		$pexcerpt         = $post_to_index->post_excerpt;
 		$pauth_info       = get_userdata( $post_to_index->post_author );
 		$pauthor          = isset( $pauth_info ) ? $pauth_info->display_name : '';
 		$pauthor_s        = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
@@ -557,6 +559,13 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
+
+		if ( isset( $this->solr_indexing_options['p_excerpt'] ) && ( ! empty( $pexcerpt ) ) ) {
+
+			// Index post excerpt, by adding it to the post content.
+			// Excerpt can therefore be: searched, autocompleted, highlighted.
+			$pcontent .= ' ' . $pexcerpt;
+		}
 
 		$content_with_shortcodes_expanded_or_stripped = $pcontent;
 		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) && ( strpos( $pcontent, '[solr_search_shortcode]' ) === false ) ) {

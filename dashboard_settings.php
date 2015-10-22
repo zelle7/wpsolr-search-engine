@@ -453,6 +453,19 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
+										Index post excerpt.<br/>
+										Excerpt will be added to the post content, and be searchable, highlighted, and
+										autocompleted.
+									</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_form_data[p_excerpt]'
+										       value='1' <?php checked( '1', isset( $solr_options['p_excerpt'] ) ? $solr_options['p_excerpt'] : '' ); ?>>
+
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>
 										Expand shortcodes of post content before indexing.<br/>
 										Else, shortcodes will simply be stripped.
 									</div>
