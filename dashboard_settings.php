@@ -25,7 +25,7 @@ switch ( isset( $_POST['wpsolr_action'] ) ? $_POST['wpsolr_action'] : '' ) {
 
 			if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
 				$google_recaptcha_site_key = OptionManagedSolrServer::get_response_result( $response_object, 'siteKey' );
-				$google_recaptcha_token   = OptionManagedSolrServer::get_response_result( $response_object, 'token' );
+				$google_recaptcha_token    = OptionManagedSolrServer::get_response_result( $response_object, 'token' );
 			}
 
 		}
@@ -81,10 +81,6 @@ function wpsolr_admin_action_form_temporary_index( &$response_object ) {
 
 }
 
-?>
-
-
-<?php
 function wpsolr_admin_init() {
 
 	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
@@ -1061,7 +1057,7 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	// Tab selected by the user
-	$tab = isset($_GET['tab']) ? $_GET['tab'] : 'solr_indexes';
+	$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'solr_indexes';
 
 	if ( isset ( $_GET['subtab'] ) ) {
 
@@ -1089,4 +1085,3 @@ function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	return $current_subtab;
 }
-
