@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.7
+Current Version: 5.8
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.7
+Stable tag: 5.8
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
@@ -131,6 +131,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.8 =
+* Front-end search page Ajax: replace deprecated JQuery .live() by .on()
 
 = 5.7 =
 * Add an indexing option: post excerpt can be indexed with post content, and appear in autocomplete and highlighted results.
