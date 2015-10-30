@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.8
+Current Version: 5.9
 
 Author:  WPSOLR.COM
 
@@ -14,14 +14,14 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.8
+Stable tag: 5.9
 
 Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
 
 == Description ==
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
-We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted.
+We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
 
 = About us =
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
@@ -131,6 +131,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 5.9 =
+* Fix a bug when configuring several Solr indexes.
+* The temporary Solr index created for testing, can now be extended to a yearly or monthly paid plan.
 
 = 5.8 =
 * Front-end search page Ajax: replace deprecated JQuery .live() by .on()
