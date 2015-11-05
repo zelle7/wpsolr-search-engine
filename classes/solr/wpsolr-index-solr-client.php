@@ -10,12 +10,28 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	protected $solr_indexing_options;
 
-	static function create( $solr_index_indice = null ) {
 
-		return new self( $solr_index_indice );
+	/**
+	 * Retrieve the Solr index for a post (usefull for multi languages extensions).
+	 *
+	 * @param $post
+	 *
+	 * @return WPSolrIndexSolrClient
+	 */
+	static function create_from_post( $post ) {
+
+		// Get the current post language
+		$post_language = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_LANGUAGE, null, $post );
+
+		return new self( null, $post_language );
 	}
 
-	public function __construct( $solr_index_indice = null ) {
+	static function create( $solr_index_indice = null ) {
+
+		return new self( $solr_index_indice, null );
+	}
+
+	public function __construct( $solr_index_indice = null, $language_code = null ) {
 
 		// Load active extensions
 		$this->wpsolr_extensions = new WpSolrExtensions();
@@ -30,7 +46,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Build Solarium config from the default indexing Solr index
 		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 		$options_indexes = new OptionIndexes();
-		$config          = $options_indexes->build_solarium_config( $solr_index_indice, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
+		$config          = $options_indexes->build_solarium_config( $solr_index_indice, $language_code, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
 
 
 		$this->index_indice = $solr_index_indice;

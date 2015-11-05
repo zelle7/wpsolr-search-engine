@@ -94,6 +94,8 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_extension_groups_options', 'wdm_solr_extension_groups_data' );
 	register_setting( 'solr_extension_s2member_options', 'wdm_solr_extension_s2member_data' );
 	register_setting( 'solr_extension_wpml_options', 'wdm_solr_extension_wpml_data' );
+	register_setting( 'solr_extension_polylang_options', 'wdm_solr_extension_polylang_data' );
+	register_setting( 'solr_extension_qtranslatex_options', 'wdm_solr_extension_qtranslatex_data' );
 	register_setting( 'solr_operations_options', 'wdm_solr_operations_data' );
 }
 
@@ -454,7 +456,8 @@ function fun_set_solr_options() {
 								<div class="wdm_row">
 									<div class='col_left'>
 										Index post excerpt.<br/>
-										Excerpt will be added to the post content, and be searchable, highlighted, and
+										Excerpt will be added to the post content, and be searchable, highlighted,
+										and
 										autocompleted.
 									</div>
 									<div class='col_right'>
@@ -530,7 +533,7 @@ function fun_set_solr_options() {
 													<input type='checkbox' name='taxon'
 													       value='<?php echo $type . "_str" ?>'
 														<?php if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) { ?> checked <?php } ?>
-														> <?php echo $type ?> <br>
+													> <?php echo $type ?> <br>
 													<?php
 												}
 
@@ -851,6 +854,9 @@ function fun_set_solr_options() {
 
 		$subtabs = array(
 			'extension_wpml_opt'     => 'WPML',
+			'extension_polylang_opt' => 'Polylang',
+			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
+			/* 'extension_qtranslatex_opt' => 'qTranslate X', */
 			'extension_groups_opt'   => 'Groups',
 			'extension_s2member_opt' => 's2Member',
 		);
@@ -869,6 +875,16 @@ function fun_set_solr_options() {
 			case 'extension_wpml_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_WPML );
 				break;
+
+			case 'extension_polylang_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_POLYLANG );
+				break;
+
+
+			case 'extension_qtranslatex_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_QTRANSLATEX );
+				break;
+
 		}
 
 		break;

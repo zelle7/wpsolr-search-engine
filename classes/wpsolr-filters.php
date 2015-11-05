@@ -42,4 +42,13 @@ class WpSolrFilters {
 
 	// Filter to get the indexing index indice for a post
 	const WPSOLR_FILTER_INDEXING_GET_SOLR_INDEX_INDICE_FOR_A_POST = 'wpsolr_filter_get_default_indexing_solr_index_indice_for_a_post';
+
+	// Filter to change search page parameters before creation
+	const WPSOLR_FILTER_BEFORE_CREATE_SEARCH_PAGE = 'wpsolr_filter_before_create_search_page';
+
+	// Filter to change search page slug parameters before creation
+	const WPSOLR_FILTER_SEARCH_PAGE_SLUG = 'wpsolr_filter_search_page_slug';
+
+	// Filter to retrieve a post language from multi-language extensions
+	const WPSOLR_FILTER_POST_LANGUAGE = 'wpsolr_filter_post_language';
 }

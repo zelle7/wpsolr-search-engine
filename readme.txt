@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 5.9
+Current Version: 6.0
 
 Author:  WPSOLR.COM
 
@@ -14,11 +14,18 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 5.9
+Stable tag: 6.0
 
-Search is the secret weapon of the biggest websites. WPSOLR brings you the same technology, but for free.
+Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
 
 == Description ==
+
+= Some great websites using WPSOLR, with filters, suggestions, and did you mean features =
+- Search "education" at http://www.nmc.org/
+- Search "energy" at http://www.sunverge.com/
+- Search "android" at https://digitalltag.de/
+- Search "certification" at http://www.certwin.com/
+- Contact us in the forum should your website be seen here!
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
 We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
@@ -131,6 +138,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 6.0 =
+* Fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
 
 = 5.9 =
 * Fix a bug when configuring several Solr indexes.
