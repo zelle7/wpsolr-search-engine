@@ -16,6 +16,7 @@ class WpSolrExtensions {
 	const _CONFIG_EXTENSION_CLASS_NAME = 'config_extension_class_name';
 	const _CONFIG_PLUGIN_CLASS_NAME = 'config_plugin_class_name';
 	const _CONFIG_PLUGIN_FUNCTION_NAME = 'config_plugin_function_name';
+	const _CONFIG_PLUGIN_CONSTANT_NAME = 'config_plugin_constant_name';
 	const _CONFIG_EXTENSION_FILE_PATH = 'config_extension_file_path';
 	const _CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH = 'config_extension_admin_options_file_path';
 	const _CONFIG_OPTIONS = 'config_extension_options';
@@ -43,8 +44,14 @@ class WpSolrExtensions {
 	// Extension: s2member
 	const EXTENSION_S2MEMBER = 'S2Member';
 
-	// Extension: Groups
+	// Extension: WPML
 	const EXTENSION_WPML = 'WPML';
+
+	// Extension: POLYLANG
+	const EXTENSION_POLYLANG = 'Polylang';
+
+	// Extension: qTranslate X
+	const EXTENSION_QTRANSLATEX = 'qTranslate X';
 
 	// Extension: Gotosolr hosting
 	const OPTION_MANAGED_SOLR_SERVERS = 'Managed Solr Servers';
@@ -104,12 +111,36 @@ class WpSolrExtensions {
 		self::EXTENSION_WPML              =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginWpml',
-				self::_CONFIG_PLUGIN_FUNCTION_NAME              => 'icl_object_id',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'SitePress',
 				self::_CONFIG_EXTENSION_DIRECTORY               => 'wpml/',
 				self::_CONFIG_EXTENSION_FILE_PATH               => 'wpml/plugin-wpml.php',
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'wpml/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_wpml_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_POLYLANG          =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginPolylang',
+				self::_CONFIG_PLUGIN_FUNCTION_NAME              => 'pll_get_post',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'polylang/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'polylang/plugin-polylang.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'polylang/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_polylang_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_QTRANSLATEX       =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginQTranslateX',
+				self::_CONFIG_PLUGIN_CONSTANT_NAME              => 'QTRANSLATE_FILE',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'qtranslate-x/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'qtranslate-x/plugin-qtranslatex.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'qtranslate-x/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_qtranslatex_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
@@ -233,9 +264,16 @@ class WpSolrExtensions {
 
 		// Is extension's plugin installed and activated ?
 		if ( isset( $extension_config_array[ self::_CONFIG_PLUGIN_CLASS_NAME ] ) ) {
+
 			return class_exists( $extension_config_array[ self::_CONFIG_PLUGIN_CLASS_NAME ] );
+
 		} else if ( isset( $extension_config_array[ self::_CONFIG_PLUGIN_FUNCTION_NAME ] ) ) {
+
 			return function_exists( $extension_config_array[ self::_CONFIG_PLUGIN_FUNCTION_NAME ] );
+
+		} else if ( isset( $extension_config_array[ self::_CONFIG_PLUGIN_CONSTANT_NAME ] ) ) {
+
+			return defined( $extension_config_array[ self::_CONFIG_PLUGIN_CONSTANT_NAME ] );
 		}
 
 		return false;
@@ -419,6 +457,20 @@ class WpSolrExtensions {
 		return plugin_dir_path( __FILE__ ) . self::$extensions_array[ $extension ][ self::_CONFIG_EXTENSION_DIRECTORY ] . 'templates/' . $template_file_name;
 	}
 
+	/**
+	 * Get the extension file
+	 *
+	 * @param $extension
+	 *
+	 * @param $file_name
+	 *
+	 * @return string File path
+	 *
+	 */
+	public static function get_option_file( $extension, $file_name ) {
+
+		return plugin_dir_path( __FILE__ ) . self::$extensions_array[ $extension ][ self::_CONFIG_EXTENSION_DIRECTORY ] . $file_name;
+	}
 
 	/*
 	 * Templates methods

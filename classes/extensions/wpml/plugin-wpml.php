@@ -8,6 +8,8 @@
  */
 class PluginWpml extends WpSolrExtensions {
 
+	const _PLUGIN_NAME_IN_MESSAGES = 'WPML';
+
 	/*
 	 * WPML database constants
 	 */
@@ -17,8 +19,8 @@ class PluginWpml extends WpSolrExtensions {
 	private $languages;
 
 	// WPML options
-	const WPML_OPTIONS_NAME = 'wdm_solr_extension_wpml_data';
-	const WPML_OPTIONS_INDEX_INDICE = 'solr_index_indice';
+	const _OPTIONS_NAME = 'wdm_solr_extension_wpml_data';
+	const _OPTIONS_INDEX_INDICE = 'solr_index_indice';
 	private $options;
 
 	/**
@@ -39,7 +41,7 @@ class PluginWpml extends WpSolrExtensions {
 	function __construct() {
 
 		// Load the options
-		$this->options = get_option( self::WPML_OPTIONS_NAME );
+		$this->options = get_option( static::_OPTIONS_NAME );
 
 		// Retrieve the active languages
 		$this->languages = $this->get_languages();
@@ -47,18 +49,6 @@ class PluginWpml extends WpSolrExtensions {
 		/*
 		 * Filters and actions
 		 */
-
-		/*
-
-		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, array(
-			$this,
-			'add_language_fields_to_document_for_update',
-		), 10, 4 );
-
-
-		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array( $this, 'set_query_keywords' ), 10, 1 );
-
-		*/
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SQL_QUERY_STATEMENT, array(
 			$this,
@@ -68,7 +58,7 @@ class PluginWpml extends WpSolrExtensions {
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE, array(
 			$this,
 			'get_default_solr_index_indice',
-		), 10, 1 );
+		), 10, 2 );
 
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_URL, array(
@@ -76,8 +66,12 @@ class PluginWpml extends WpSolrExtensions {
 			'set_search_page_url',
 		), 10, 2 );
 
-		// Display admin notice in admin
-		//self::set_admin_notice();
+
+		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_LANGUAGE, array(
+			$this,
+			'filter_get_post_language',
+		), 10, 2 );
+
 	}
 
 
@@ -87,7 +81,10 @@ class PluginWpml extends WpSolrExtensions {
 	static function set_admin_notice() {
 
 		if ( ! self::each_language_has_a_one_solr_index_search() ) {
-			set_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice', "Each WPML language should have it's own unique Solr index. Search results will return mixed content from the languages with the same Solr index." );
+			set_transient( get_current_user_id() . 'wpsolr_some_languages_have_no_solr_index_admin_notice',
+				sprintf( "Each %s language should have it's own unique Solr index. Search results will return mixed content from the languages with the same Solr index.",
+					static::_PLUGIN_NAME_IN_MESSAGES )
+			);
 		}
 
 	}
@@ -132,7 +129,7 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	function add_language_fields_to_document_for_update( $solarium_document_for_update, $solr_indexing_options, $post, $attachment_body ) {
 
-		// Retrieve current document language code from WPML
+		// Retrieve current document language code
 		$args               = array(
 			'element_id'   => $solarium_document_for_update->id,
 			'element_type' => $solarium_document_for_update->type,
@@ -236,7 +233,7 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	function get_solr_index_indices() {
 
-		return $this->options[ self::WPML_OPTIONS_INDEX_INDICE ];
+		return isset( $this->options[ self::_OPTIONS_INDEX_INDICE ] ) ? $this->options[ self::_OPTIONS_INDEX_INDICE ] : null;;
 	}
 
 	function get_solr_index_indexing_language( $solr_index_indice ) {
@@ -357,27 +354,41 @@ class PluginWpml extends WpSolrExtensions {
 
 
 	/**
-	 * Get the Solr index search for the current language
+	 * Get the language of a post
+	 *
+	 * @return string Post language code
+	 */
+	function filter_get_post_language( $language_code, $post ) {
+
+		$post_language_details = isset( $post ) ? apply_filters( 'wpml_post_language_details', null, $post->ID ) : null;
+
+		return ( isset( $post_language_details ) && isset( $post_language_details['language_code'] ) ) ? $post_language_details['language_code'] : null;
+	}
+
+	/**
+	 * Get the Solr index search for the language / current language
+	 *
+	 * @param $language_code
 	 *
 	 * @return string Solr index indice
+	 * @throws Exception
 	 */
-	function get_default_solr_index_indice() {
+	function get_default_solr_index_indice( $solr_index_indice, $language_code ) {
 
-		$current_language_code = self::get_current_language_code();
+		$current_language_code = isset( $language_code ) ? $language_code : $this->get_current_language_code();
 		$solr_indexes          = $this->get_solr_index_indices();
 		if ( ! isset( $solr_indexes ) ) {
 			// Languages not yet related to any Solr index search.
-			throw new Exception( sprintf( "WPSOLR WPML extension is activated, but not configured to match languages and Solr indexes.", $current_language_code ) );
+			throw new Exception( sprintf( 'WPSOLR %s extension is activated, but not configured to match languages and Solr indexes.', static::_PLUGIN_NAME_IN_MESSAGES ) );
 		}
 
-		$default_search_languages_already_found = array();
 		foreach ( $solr_indexes as $solr_index_indice => $solr_index ) {
 
 			if ( isset( $solr_index['is_default_search'] ) && isset( $solr_index['indexing_language_code'] ) && ( $solr_index['indexing_language_code'] === $current_language_code ) ) {
 
 				// Is language a valid one ?
 				if ( ! $this->is_language_code( $solr_index['indexing_language_code'] ) ) {
-					throw new Exception( sprintf( "WPSOLR WPML extension is activated, but current language '%s' is not an active WPML language.", $current_language_code ) );
+					throw new Exception( sprintf( "WPSOLR %s extension is activated, but current language '%s' is not an active language.", static::_PLUGIN_NAME_IN_MESSAGES, $current_language_code ) );
 				}
 
 				// The winner: valid index indice which is default search for current language
@@ -386,6 +397,6 @@ class PluginWpml extends WpSolrExtensions {
 			}
 		}
 
-		throw new Exception( sprintf( "WPSOLR WPML extension is activated, but current language '%s' has no search Solr index.", $current_language_code ) );
+		throw new Exception( sprintf( "WPSOLR %s extension is activated, but current language '%s' has no search Solr index.", static::_PLUGIN_NAME_IN_MESSAGES, $current_language_code ) );
 	}
 }

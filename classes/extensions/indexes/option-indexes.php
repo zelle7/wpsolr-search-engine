@@ -316,17 +316,19 @@ class OptionIndexes extends WpSolrExtensions {
 
 
 	/**
+	 * @param null $solr_index_indice
+	 * @param $language_code
 	 * @param $timeout
 	 *
 	 * @return array Solarium configuration
 	 * @throws Exception
 	 */
-	public function build_solarium_config( $solr_index_indice = null, $timeout ) {
+	public function build_solarium_config( &$solr_index_indice = null, $language_code = null, $timeout ) {
 
 		if ( ! isset( $solr_index_indice ) ) {
 
 			// Give a chance to set the solr index indice
-			$solr_index_indice = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE, null );
+			$solr_index_indice = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_GET_DEFAULT_SOLR_INDEX_INDICE, null, $language_code );
 
 			if ( ! isset( $solr_index_indice ) ) {
 				// Retrieve the default indexing Solr index

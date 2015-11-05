@@ -49,7 +49,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		// Build Solarium config from the default indexing Solr index
 		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 		$options_indexes = new OptionIndexes();
-		$solarium_config = $options_indexes->build_solarium_config( $index_indice, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
+		$solarium_config = $options_indexes->build_solarium_config( $index_indice, null, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
 
 		return new self( $solarium_config );
 	}
@@ -105,26 +105,15 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	static function get_search_page() {
 
+		// Let other plugins (POLYLANG, ...) modify the search page slug
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+
 		// Search page is found by it's path (hard-coded).
-		$search_page = get_page_by_path( self::_SEARCH_PAGE_SLUG );
+		$search_page = get_page_by_path( $search_page_slug );
 
 		if ( ! $search_page ) {
 
-			$_p = array(
-				'post_type'      => 'page',
-				'post_title'     => 'Search Results',
-				'post_content'   => '[solr_search_shortcode]',
-				'post_status'    => 'publish',
-				'post_author'    => 1,
-				'comment_status' => 'closed',
-				'post_name'      => self::_SEARCH_PAGE_SLUG
-			);
-
-			$search_page_id = wp_insert_post( $_p );
-
-			update_post_meta( $search_page_id, 'bwps_enable_ssl', '1' );
-
-			$search_page = get_post( $search_page_id );
+			$search_page = self::create_default_search_page();
 
 		} else {
 
@@ -140,6 +129,36 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		return $search_page;
 	}
 
+
+	/**
+	 * Create a default search page
+	 *
+	 * @return WP_Post The search page
+	 */
+	static function create_default_search_page() {
+
+		// Let other plugins (POLYLANG, ...) modify the search page slug
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+
+		$_search_page = array(
+			'post_type'      => 'page',
+			'post_title'     => 'Search Results',
+			'post_content'   => '[solr_search_shortcode]',
+			'post_status'    => 'publish',
+			'post_author'    => 1,
+			'comment_status' => 'closed',
+			'post_name'      => $search_page_slug
+		);
+
+		// Let other plugins (POLYLANG, ...) modify the search page
+		$_search_page = apply_filters( WpSolrFilters::WPSOLR_FILTER_BEFORE_CREATE_SEARCH_PAGE, $_search_page );
+
+		$search_page_id = wp_insert_post( $_search_page );
+
+		update_post_meta( $search_page_id, 'bwps_enable_ssl', '1' );
+
+		return get_post( $search_page_id );
+	}
 
 	/**
 	 * Get all sort by options available

@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: Search with the power of Apache Solr. Included: a free online Solr index for quickly testing the plugin.
- * Version: 5.9
+ * Description: Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
+ * Version: 6.0
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -43,8 +43,8 @@ function solr_post_save_admin_notice() {
 		echo "<div class=\"updated\"><p>(WPSOLR) $out</p></div>";
 	}
 
-	if ( $out = get_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' ) ) {
-		delete_transient( get_current_user_id() . 'wpml_some_languages_have_no_solr_index_admin_notice' );
+	if ( $out = get_transient( get_current_user_id() . 'wpsolr_some_languages_have_no_solr_index_admin_notice' ) ) {
+		delete_transient( get_current_user_id() . 'wpsolr_some_languages_have_no_solr_index_admin_notice' );
 		echo "<div class=\"error\"><p>(WPSOLR) $out</p></div>";
 	}
 
@@ -72,7 +72,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 		if ( 'publish' == $post->post_status ) {
 			// post published, add/update it from Solr index
 
-			$solr = WPSolrIndexSolrClient::create();
+			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
 			$solr->index_data( 1, $post );
 
@@ -81,7 +81,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 
 		} else {
 			// post unpublished, remove it from Solr index
-			$solr = WPSolrIndexSolrClient::create();
+			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
 			$solr->delete_document( $post );
 
