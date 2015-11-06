@@ -268,7 +268,16 @@ function return_solr_instance() {
 
 			default:
 
-				$str_err .= "<span>$solrMessage ($solrCode)</span><br /><br />\n";
+				// Try to interpret some special errors with code "0"
+				if (( strpos( $e->getStatusMessage(), 'Failed to connect' ) > 0 ) && ( strpos( $e->getStatusMessage(), 'Connection refused' ) > 0 )) {
+
+					$str_err .= "<br /><span>We could not connect to your Solr server. It's probably because the port is blocked. Please try another port, for instance 443, or contact your hosting provider/network administrator to unblock your port.</span><br />";
+
+				} else {
+
+					$str_err .= "<span>$solrMessage ($solrCode)</span><br /><br />\n";
+				}
+
 				break;
 
 		}

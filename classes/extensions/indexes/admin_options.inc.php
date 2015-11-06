@@ -142,16 +142,6 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 				?>
 
-				<div class="wdm_row">
-					<h4 class="solr_error">
-						<?php
-						if ( ! empty( $response_error ) ) {
-							echo $response_error;
-						}
-						?>
-					</h4>
-				</div>
-
 				<div
 					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
 					class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
@@ -192,7 +182,13 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 					?>
 
 					<div class="wdm_row">
-						<div class='solr_error'></div>
+						<h4 class="solr_error" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
+							<?php
+							if ( ! empty( $response_error ) ) {
+								echo $response_error;
+							}
+							?>
+						</h4>
 					</div>
 
 					<div class="wdm_row">
@@ -218,7 +214,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 								<select
 									name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_protocol]"
 									<?php echo $subtab === $index_indice ? "id='index_protocol'" : "" ?>
-									>
+								>
 									<option
 										value='http' <?php selected( 'http', empty( $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ? 'http' : $option_data['solr_indexes'][ $index_indice ]['index_protocol'] ) ?>>
 										http
@@ -258,7 +254,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 					<div class="wdm_row">
 						<div class='col_left'>Solr Port</div>
 						<div class='col_right'>
-							<input type="text" type='text' <?php echo $is_index_readonly ? 'readonly' : ''; ?>
+							<input type="text" type='text'
 							       placeholder="8983 or 443 or any other port"
 							       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][index_port]"
 								<?php echo $subtab === $index_indice ? "id='index_port'" : "" ?>
@@ -330,7 +326,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 								       type="button" class="button-primary"
 								       value="<?php echo $managed_solr_service_orders_url[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL ]; ?>"
 								       onclick="window.open('<?php echo $managed_solr_service_orders_url[ OptionManagedSolrServer::MANAGED_SOLR_SERVICE_ORDER_URL_LINK ]; ?>', '__blank');"
-									/>
+								/>
 
 								<?php
 
