@@ -409,11 +409,9 @@ function fun_set_solr_options() {
 					global $wpdb;
 					$limit      = (int) apply_filters( 'postmeta_form_limit', 30 );
 					$keys       = $wpdb->get_col( "
-                                                                    SELECT meta_key
+                                                                    SELECT distinct meta_key
                                                                     FROM $wpdb->postmeta
                                                                     WHERE meta_key!='bwps_enable_ssl' 
-                                                                    GROUP BY meta_key
-                                                                    HAVING meta_key NOT LIKE '\_%'
                                                                     ORDER BY meta_key" );
 					$post_types = array();
 					foreach ( $posts as $ps ) {

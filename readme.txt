@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.0
+Current Version: 6.1
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.0
+Stable tag: 6.1
 
 Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
 
@@ -138,6 +138,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 
 == Changelog ==
+
+= 6.1 =
+* Custom fields beginning with "_" can be indexed/searched/autocompleted.
 
 = 6.0 =
 * Fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
