@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
- * Version: 6.2
+ * Version: 6.3
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

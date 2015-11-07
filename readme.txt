@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.2
+Current Version: 6.3
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.2
+Stable tag: 6.3
 
 Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
 
@@ -52,7 +52,7 @@ Review on a 1 million documents search : <a href="https://wordpress.org/support/
 = Our Solr hosting website =
 If you do not want to host your own Solr server: <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
 
-= Multi-language live search demo with WPML =
+= Multi-language live search demo with WPML (POLYLANG supported too) =
 Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>English/French WPML search page demo</a>.
 
 = Super fast live suggestions 500ms =
@@ -105,7 +105,7 @@ And now, with this plugin, you can get it for free. So, fasten your seat belt, a
 10. Configuration options allow you to select pages to ignore.
 11. Host Solr remotely using gotosolr.
 12. Solr configuration made easy.
-13. Multi-language search is supported with WPML.
+13. Multi-language search is supported with WPML and POLYLANG.
 
 For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
@@ -136,8 +136,13 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 14. Admin: Select attachment types to index
 15. Admin: The "Sort by" items list is configurable
 16. Admin: Change all front-end texts in admin
+17. Admin: WPML setup
+18. Admin: POLYLANG setup
 
 == Changelog ==
+
+= 6.3 =
+* Reduce network traffic With the Solr server by not retrieving the content. Can be dramatic with heavy attachment files.
 
 = 6.2 =
 * Let users change the temporary index port to 443, if a firewall blocks the default Solr port 8983.

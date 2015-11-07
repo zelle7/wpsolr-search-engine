@@ -357,6 +357,21 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		 */
 		$this->set_highlighting( $query, $res_opt );
 
+		/*
+		 * Set fields returned by the query.
+		 * We do not ask for 'content', because it can be huge for attachments, and is anyway replaced by highlighting.
+		 */
+		$query->setFields( array(
+				WpSolrSchema::_FIELD_NAME_ID,
+				WpSolrSchema::_FIELD_NAME_TITLE,
+				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
+				WpSolrSchema::_FIELD_NAME_COMMENTS,
+				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+				WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
+				WpSolrSchema::_FIELD_NAME_AUTHOR
+			)
+		);
+
 		// Perform the query
 		$resultset = $client->execute( $query );
 
@@ -452,10 +467,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$i       = 1;
 		$cat_arr = array();
 		foreach ( $resultset as $document ) {
-			$id        = $document->id;
-			$pid       = $document->PID;
-			$name      = $document->title;
-			$content   = $document->content;
+
+			$id      = $document->id;
+			$title   = $document->title;
+			$content = '';
+
 			$image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $id ) );
 
 			$no_comments = $document->numcomments;
@@ -472,8 +488,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$cat  = implode( ',', $cat_arr );
 			$auth = $document->author;
 
-			$cont = substr( $content, 0, 200 );
-
 			$url = get_permalink( $id );
 
 			$highlightedDoc = $highlighting->getResult( $document->id );
@@ -482,24 +496,28 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			if ( $highlightedDoc ) {
 
 				foreach ( $highlightedDoc as $field => $highlight ) {
-					$msg = '';
+
 					if ( $field == WpSolrSchema::_FIELD_NAME_TITLE ) {
-						$name = implode( ' (...) ', $highlight );
+
+						$title = implode( ' (...) ', $highlight );
 
 					} else if ( $field == WpSolrSchema::_FIELD_NAME_CONTENT ) {
-						$cont    = implode( ' (...) ', $highlight );
-						$cont_no = 1;
+
+						$content = implode( ' (...) ', $highlight );
+
 					} else if ( $field == WpSolrSchema::_FIELD_NAME_COMMENTS ) {
+
 						$comments = implode( ' (...) ', $highlight );
 						$comm_no  = 1;
+
 					}
 
 				}
 
-
 			}
+
 			$msg = '';
-			$msg .= "<div id='res$i'><div class='p_title'><a href='$url'>$name</a></div>";
+			$msg .= "<div id='res$i'><div class='p_title'><a href='$url'>$title</a></div>";
 
 			$image_fragment = '';
 			// Display first image
@@ -508,16 +526,16 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 			// Format content text a little bit
-			$cont = str_replace( '&nbsp;', '', $cont );
-			$cont = str_replace( '  ', ' ', $cont );
-			$cont = ucfirst( trim( $cont ) );
-			$cont .= '...';
+			$content = str_replace( '&nbsp;', '', $content );
+			$content = str_replace( '  ', ' ', $content );
+			$content = ucfirst( trim( $content ) );
+			$content .= '...';
 
 			//if ( $cont_no == 1 ) {
 			if ( false ) {
-				$msg .= "<div class='p_content'>$image_fragment $cont - <a href='$url'>Content match</a></div>";
+				$msg .= "<div class='p_content'>$image_fragment $content - <a href='$url'>Content match</a></div>";
 			} else {
-				$msg .= "<div class='p_content'>$image_fragment $cont</div>";
+				$msg .= "<div class='p_content'>$image_fragment $content</div>";
 			}
 			if ( $comm_no == 1 ) {
 				$msg .= "<div class='p_comment'>" . $comments . "-<a href='$url'>Comment match</a></div>";
