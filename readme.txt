@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.3
+Current Version: 6.4
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.3
+Stable tag: 6.4
 
 Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
 
@@ -26,6 +26,10 @@ Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortc
 - Search "android" at https://digitalltag.de/
 - Search "certification" at http://www.certwin.com/
 - Contact us in the forum should your website be seen here!
+
+= Translations =
+French (fr_FR) by WPSOLR.
+Deutch (nl_NL) by matthijs.
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
 We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
@@ -140,6 +144,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 18. Admin: POLYLANG setup
 
 == Changelog ==
+
+= 6.4 =
+* Add French and Deutch translations (check in /languages).
 
 = 6.3 =
 * Reduce network traffic With the Solr server by not retrieving the content. Can be dramatic with heavy attachment files.

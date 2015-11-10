@@ -265,9 +265,11 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 	 */
 	public static function get_managed_solr_services() {
 
-		return array(
-			/*
-			'local dev' => array(
+		$result = array();
+
+		// Debug environment
+		if ( ! isset( $_SERVER['HTTP_HOST'] ) ? false : $_SERVER['HTTP_HOST'] === 'dev-wpsolr-search-engine.dev' ) {
+			$result['local dev'] = array(
 				self::MANAGED_SOLR_SERVICE_LABEL                              => 'local dev',
 				self::MANAGED_SOLR_SERVICE_HOME_PAGE                          => 'http://www.reseller1.com/en',
 				self::MANAGED_SOLR_SERVICE_API_PATH                           => 'http://10.0.2.2:8082/v1/partners/2c93bcdc-e6cd-4251-b4f7-8130e398dc36',
@@ -285,28 +287,30 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 						self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1'
 					)
 				)
-			),*/
-			'gotosolr' => array(
-				self::MANAGED_SOLR_SERVICE_LABEL                              => 'gotosolr.com',
-				self::MANAGED_SOLR_SERVICE_HOME_PAGE                          => 'http://www.gotosolr.com/en',
-				self::MANAGED_SOLR_SERVICE_API_PATH                           => 'https://api.gotosolr.com/v1/partners/24b7729e-02dc-47d1-9c15-f1310098f93f',
-				self::MANAGED_SOLR_SERVICE_CHANNEL_ORDER_URL                  => 'https://api.gotosolr.com/v1/providers/8c25d2d6-54ae-4ff6-a478-e2c03f1e08a4/accounts/24b7729e-02dc-47d1-9c15-f1310098f93f/addons/f8622320-5a3b-48cf-a331-f52459c46573/order-solr-index/8037888b-501a-4200-9fb0-b4266434b161',
-				self::MANAGED_SOLR_SERVICE_CHANNEL_GOOGLE_RECAPTCHA_TOKEN_URL => 'https://api.gotosolr.com/v1/providers/8c25d2d6-54ae-4ff6-a478-e2c03f1e08a4/accounts/24b7729e-02dc-47d1-9c15-f1310098f93f/addons/f8622320-5a3b-48cf-a331-f52459c46573/google-recaptcha-token',
-				self::MANAGED_SOLR_SERVICE_ORDERS_URLS                        => array(
-					array(
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Yearly Plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Yearly plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1'
-					),
-					array(
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Monthly Plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Monthly plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1'
-					)
+			);
+		}
+
+		$result['gotosolr'] = array(
+			self::MANAGED_SOLR_SERVICE_LABEL                              => 'gotosolr.com',
+			self::MANAGED_SOLR_SERVICE_HOME_PAGE                          => 'http://www.gotosolr.com/en',
+			self::MANAGED_SOLR_SERVICE_API_PATH                           => 'https://api.gotosolr.com/v1/partners/24b7729e-02dc-47d1-9c15-f1310098f93f',
+			self::MANAGED_SOLR_SERVICE_CHANNEL_ORDER_URL                  => 'https://api.gotosolr.com/v1/providers/8c25d2d6-54ae-4ff6-a478-e2c03f1e08a4/accounts/24b7729e-02dc-47d1-9c15-f1310098f93f/addons/f8622320-5a3b-48cf-a331-f52459c46573/order-solr-index/8037888b-501a-4200-9fb0-b4266434b161',
+			self::MANAGED_SOLR_SERVICE_CHANNEL_GOOGLE_RECAPTCHA_TOKEN_URL => 'https://api.gotosolr.com/v1/providers/8c25d2d6-54ae-4ff6-a478-e2c03f1e08a4/accounts/24b7729e-02dc-47d1-9c15-f1310098f93f/addons/f8622320-5a3b-48cf-a331-f52459c46573/google-recaptcha-token',
+			self::MANAGED_SOLR_SERVICE_ORDERS_URLS                        => array(
+				array(
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Yearly Plan',
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Yearly plan',
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1'
+				),
+				array(
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Monthly Plan',
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Monthly plan',
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1'
 				)
 			)
 		);
 
+		return $result;
 	}
 
 
