@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.4
+Current Version: 6.5
 
 Author:  WPSOLR.COM
 
@@ -14,13 +14,14 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.4
+Stable tag: 6.5
 
-Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
+Infinite Scroll search in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
 
 == Description ==
 
 = Some great websites using WPSOLR, with filters, suggestions, and did you mean features =
+- Search "constructor" at http://boplex.com/ (> 100 000 posts searchable on this site)
 - Search "education" at http://www.nmc.org/
 - Search "energy" at http://www.sunverge.com/
 - Search "android" at https://digitalltag.de/
@@ -144,6 +145,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 18. Admin: POLYLANG setup
 
 == Changelog ==
+
+= 6.5 =
+* Add Infinite Scroll pagination: this optional feature loads the next page of results automatically when visitors approach the bottom of search page.
 
 = 6.4 =
 * Add French and Deutch translations (check in /languages).

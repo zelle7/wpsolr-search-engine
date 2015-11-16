@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Ajax "live search" in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
- * Version: 6.4
+ * Version: 6.5
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -19,6 +19,8 @@ require_once 'autocomplete.php';
 require_once 'classes/solr/wpsolr-index-solr-client.php';
 require_once 'classes/solr/wpsolr-search-solr-client.php';
 
+/* Global options */
+$solr_options = get_option( 'wdm_solr_res_data' );
 
 /* Register Solr settings from dashboard
  * Add menu page in dashboard - Solr settings
@@ -146,7 +148,8 @@ function delete_attachment_to_solr_index( $attachment_id ) {
 
 
 function check_default_options_and_function() {
-	$solr_options = get_option( 'wdm_solr_res_data' );
+	global $solr_options;
+
 	if ( isset( $solr_options['default_search'] ) ) {
 
 		add_filter( 'get_search_form', 'solr_search_form' );
@@ -294,4 +297,29 @@ function my_plugins_loaded() {
 	 * You can find our template file in this plugin's /languages/wpsolr.pot file
 	 */
 	load_plugin_textdomain( 'wpsolr', false, false );
+}
+
+/*
+ * Infinite scroll: load javascript if option is set.
+ */
+if ( isset( $solr_options['infinitescroll'] ) ) {
+	function my_enqueue() {
+		// Get localization options
+		$localization_options = OptionLocalization::get_options();
+
+		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+
+		wp_enqueue_script( 'infinitescroll' );
+
+		// loadingtext for translation
+		// loadimage custom loading image url
+		wp_localize_script( 'infinitescroll', 'info_object',
+			array(
+				'ajax_url'    => admin_url( 'admin-ajax.php' ),
+				'loadimage'   => plugins_url( '/images/infinitescroll.gif', __FILE__ ),
+				'loadingtext' => OptionLocalization::get_term( $localization_options, 'infinitescroll_loading' )
+			) );
+	}
+
+	add_action( 'wp_enqueue_scripts', 'my_enqueue' );
 }

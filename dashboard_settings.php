@@ -316,6 +316,19 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
+									<div class='col_left'>Activate the "Infinite scroll" pagination.<br/>
+										This feature loads the next page of results automatically when visitors approach
+										the bottom of search page.
+									</div>
+									<div class='col_right'>
+										<input type='checkbox'
+										       name='wdm_solr_res_data[<?php echo 'infinitescroll' ?>]'
+										       value='infinitescroll'
+											<?php checked( 'infinitescroll', isset( $solr_res_options['infinitescroll'] ) ? $solr_res_options['infinitescroll'] : '?' ); ?>>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
 									<div class='col_left'>Do not automatically trigger the search, when a user
 										clicks on the
 										autocomplete list
