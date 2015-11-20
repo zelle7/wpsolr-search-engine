@@ -323,9 +323,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			if ( $fac_field != '' && $fac_type != '' ) {
 				$fac_fd = "$fac_field";
-				$fac_tp = str_replace( ' ', '\ ', $fac_type );
 
-				$query->addFilterQuery( array( 'key' => "$fac_fd", 'query' => "$fac_fd:$fac_tp" ) );
+				// In case the facet contains white space, we enclose it with "".
+				$fac_type_escaped = "\"$fac_type\"";
+
+				$query->addFilterQuery( array( 'key' => "$fac_fd", 'query' => "$fac_fd:$fac_type_escaped" ) );
 			}
 
 			if ( isset( $f_array[2] ) && $f_array[2] != '' ) {

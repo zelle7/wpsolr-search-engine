@@ -2,21 +2,21 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.5
+Current Version: 6.6
 
 Author:  WPSOLR.COM
 
 Author URI: http://wpsolr.com/ 
 
-Tags: Solr in WordPress, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, faceting, relevant search, custom search, facets, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: Solr in WordPress, WooCommerce search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, faceting, relevant search, custom search, facets, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.5
+Stable tag: 6.6
 
-Infinite Scroll search in files (pdf, xls, doc, ...), posts, pages, comments, shortcode contents, excerpts, taxonomies, custom fields with Solr.
+Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
 
 == Description ==
 
@@ -145,6 +145,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 18. Admin: POLYLANG setup
 
 == Changelog ==
+
+= 6.6 =
+* Fix a bug on facet categories containing a white space.
 
 = 6.5 =
 * Add Infinite Scroll pagination: this optional feature loads the next page of results automatically when visitors approach the bottom of search page.
