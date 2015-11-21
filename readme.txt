@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.6
+Current Version: 6.7
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.6
+Stable tag: 6.7
 
 Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
 
@@ -143,8 +143,17 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 16. Admin: Change all front-end texts in admin
 17. Admin: WPML setup
 18. Admin: POLYLANG setup
+19. Admin: WooCommerce integration activation.
+20. Admin: WooCommerce Product attribute selected for indexing
+21. Admin: WooCommerce Product attribute selected for faceting
 
 == Changelog ==
+
+= 6.7 =
+* WooCommerce integration: product attributes are now in search, facets, autocomplete and suggestions (did you mean).
+Just activate the WooCommerce integration (screenshot 19), and select your products attributes in the indexed custom fields and facets options.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+
 
 = 6.6 =
 * Fix a bug on facet categories containing a white space.

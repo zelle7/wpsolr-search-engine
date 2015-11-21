@@ -12,8 +12,11 @@ PluginGroups::update_custom_field_capabilities( PluginGroups::CUSTOM_FIELD_NAME_
 $array_extension_options             = get_option( 'wdm_solr_extension_groups_data' );
 $is_plugin_active                    = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_GROUPS );
 $is_plugin_custom_field_for_indexing = PluginGroups::get_custom_field_capabilities( PluginGroups::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES );
-$custom_field_for_indexing_name = PluginGroups::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES
+$custom_field_for_indexing_name      = PluginGroups::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES;
+
+$plugin_name = "Groups";
 ?>
+
 <div id="extension_groups-options" class="wdm-vertical-tabs-content">
 	<form action="options.php" method="POST" id='extension_groups_settings_form'>
 		<?php
@@ -142,11 +145,11 @@ $custom_field_for_indexing_name = PluginGroups::CUSTOM_FIELD_NAME_STORING_POST_C
 			</div>
 			<div class='wdm_row'>
 				<div class="submit">
-					<input name="save_selected_options_res_form"
-					       id="save_selected_extension_groups_form" type="submit"
-					       class="button-primary wdm-save" value="Save Options"/>
-
-
+					<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
+						name="save_selected_options_res_form"
+						id="save_selected_extension_groups_form" type="submit"
+						class="button-primary wdm-save"
+						value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
 				</div>
 			</div>
 		</div>

@@ -53,6 +53,9 @@ class WpSolrExtensions {
 	// Extension: qTranslate X
 	const EXTENSION_QTRANSLATEX = 'qTranslate X';
 
+	// Extension: WooCommerce
+	const EXTENSION_WOOCOMMERCE = 'WooCommerce';
+
 	// Extension: Gotosolr hosting
 	const OPTION_MANAGED_SOLR_SERVERS = 'Managed Solr Servers';
 
@@ -153,6 +156,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'managed-solr-servers/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_managed_solr_servers_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_WOOCOMMERCE       =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginWooCommerce',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'WooCommerce',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'woocommerce/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'woocommerce/plugin-woocommerce.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'woocommerce/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_woocommerce_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

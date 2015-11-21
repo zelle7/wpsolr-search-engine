@@ -16,7 +16,9 @@ $settings_fields_name   = 'solr_extension_s2member_options';
 $array_extension_options             = get_option( $extension_options_name );
 $is_plugin_active                    = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_S2MEMBER );
 $is_plugin_custom_field_for_indexing = PluginS2Member::get_custom_field_capabilities( PluginS2Member::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES );
-$custom_field_for_indexing_name = PluginS2Member::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES
+$custom_field_for_indexing_name      = PluginS2Member::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES;
+
+$plugin_name = "s2member";
 ?>
 
 <div id="extension_s2member-options" class="wdm-vertical-tabs-content">
@@ -136,11 +138,11 @@ $custom_field_for_indexing_name = PluginS2Member::CUSTOM_FIELD_NAME_STORING_POST
 			</div>
 			<div class='wdm_row'>
 				<div class="submit">
-					<input name="save_selected_options_res_form"
-					       id="save_selected_extension_s2member_form" type="submit"
-					       class="button-primary wdm-save" value="Save Options"/>
-
-
+					<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
+						name="save_selected_options_res_form"
+						id="save_selected_extension_s2member_form" type="submit"
+						class="button-primary wdm-save"
+						value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
 				</div>
 			</div>
 		</div>
