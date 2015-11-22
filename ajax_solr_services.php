@@ -140,13 +140,17 @@ function fun_search_indexed_data() {
 						$facet_element = OptionLocalization::get_term( $localization_options, 'facets_element' );
 						$facet_title   = OptionLocalization::get_term( $localization_options, 'facets_title' );
 						foreach ( $facets_array as $arr ) {
-							$field = ucfirst( $arr );
 							if ( isset( $final_result[1][ $arr ] ) && count( $final_result[1][ $arr ] ) > 0 ) {
-								$arr_val = $field;
+								$arr_val = $arr;
 								if ( substr( $arr_val, ( strlen( $arr_val ) - 4 ), strlen( $arr_val ) ) == "_str" ) {
 									$arr_val = substr( $arr_val, 0, ( strlen( $arr_val ) - 4 ) );
 								}
+
+								// Give plugins a chance to change the facet name (ACF).
+								$arr_val = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME, $arr_val );
+
 								$arr_val = str_replace( '_', ' ', $arr_val );
+								$arr_val = ucfirst( $arr_val );
 
 								$groups .= "<lh >" . sprintf( $facet_title, $arr_val ) . "</lh><br>";
 
@@ -154,7 +158,7 @@ function fun_search_indexed_data() {
 									$name  = $val[0];
 									$count = $val[1];
 
-									$groups .= "<li class='select_opt' id='$field:$name:$count'>"
+									$groups .= "<li class='select_opt' id='$arr:$name:$count'>"
 									           . sprintf( $facet_element, $name, $count )
 									           . "</li>";
 								}

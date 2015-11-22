@@ -51,4 +51,7 @@ class WpSolrFilters {
 
 	// Filter to retrieve a post language from multi-language extensions
 	const WPSOLR_FILTER_POST_LANGUAGE = 'wpsolr_filter_post_language';
+
+	// Filter to change a facet name on search page
+	const WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME = 'wpsolr_filter_search_page_facet_name';
 }

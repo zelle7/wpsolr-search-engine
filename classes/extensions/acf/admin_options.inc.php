@@ -4,29 +4,29 @@
  * Included file to display admin options
  */
 
-WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_WOOCOMMERCE, true );
+WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_ACF, true );
 
-$extension_options_name = 'wdm_solr_extension_woocommerce_data';
-$settings_fields_name   = 'solr_extension_woocommerce_options';
+$extension_options_name = 'wdm_solr_extension_acf_data';
+$settings_fields_name   = 'solr_extension_acf_options';
 
 $options          = get_option( $extension_options_name, array(
 	'is_extension_active' => '0',
 ) );
-$is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_WOOCOMMERCE );
+$is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_ACF );
 
-$plugin_name    = "WooCommerce";
-$plugin_link    = "https://wordpress.org/plugins/woocommerce/";
+$plugin_name    = "Advanced Custom Fields";
+$plugin_link    = "https://wordpress.org/plugins/advanced-custom-fields/";
 $plugin_version = "";
 
 if ( $is_plugin_active ) {
-	$ml_plugin = PluginWooCommerce::create();
+	$ml_plugin = PluginAcf::create();
 }
 ?>
 
 <div id="extension_groups-options" class="wdm-vertical-tabs-content">
 	<form action="options.php" method="POST" id='extension_groups_settings_form'>
 		<?php
-		settings_fields( 'solr_extension_woocommerce_options' );
+		settings_fields( 'solr_extension_acf_options' );
 		$extension_options = get_option( $extension_options_name, array(
 				'is_extension_active' => '0'
 			)
@@ -79,6 +79,19 @@ if ( $is_plugin_active ) {
 				</div>
 				<div class="clear"></div>
 			</div>
+
+			<div class="wdm_row">
+				<div class='col_left'>Replace custom field name by ACF custom field label on facets.
+				</div>
+				<div class='col_right'>
+					<input type='checkbox'
+					       name='<?php echo $extension_options_name; ?>[display_acf_label_on_facet]'
+					       value='display_acf_label_on_facet'
+						<?php checked( 'display_acf_label_on_facet', isset( $extension_options['display_acf_label_on_facet'] ) ? $extension_options['display_acf_label_on_facet'] : '' ); ?>>
+				</div>
+				<div class="clear"></div>
+			</div>
+
 
 			<div class='wdm_row'>
 				<div class="submit">

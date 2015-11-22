@@ -98,6 +98,7 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_extension_qtranslatex_options', 'wdm_solr_extension_qtranslatex_data' );
 	register_setting( 'solr_operations_options', 'wdm_solr_operations_data' );
 	register_setting( 'solr_extension_woocommerce_options', 'wdm_solr_extension_woocommerce_data' );
+	register_setting( 'solr_extension_acf_options', 'wdm_solr_extension_acf_data' );
 }
 
 function fun_add_solr_settings() {
@@ -430,6 +431,7 @@ function fun_set_solr_options() {
 
 					// WooCommerce attributes are added to custom fields
 					if ( function_exists( 'wc_get_attribute_taxonomies' ) ) {
+						WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_WOOCOMMERCE, true );
 						$woo_attribute_names = PluginWooCommerce::get_attribute_taxonomy_names();
 						foreach ( $woo_attribute_names as $woo_attribute_name ) {
 							// Add woo attribute slug to custom fields
@@ -876,6 +878,7 @@ function fun_set_solr_options() {
 
 		$subtabs = array(
 			'extension_woocommerce_opt' => 'WooCommerce',
+			'extension_acf_opt'         => 'Advanced Custom Fields (ACF)',
 			'extension_wpml_opt'        => 'WPML',
 			'extension_polylang_opt'    => 'Polylang',
 			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
@@ -911,6 +914,9 @@ function fun_set_solr_options() {
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_WOOCOMMERCE );
 				break;
 
+			case 'extension_acf_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_ACF );
+				break;
 		}
 
 		break;

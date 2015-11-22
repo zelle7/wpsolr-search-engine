@@ -56,6 +56,9 @@ class WpSolrExtensions {
 	// Extension: WooCommerce
 	const EXTENSION_WOOCOMMERCE = 'WooCommerce';
 
+	// Extension: Advanced Custom Fields
+	const EXTENSION_ACF = 'ACF';
+
 	// Extension: Gotosolr hosting
 	const OPTION_MANAGED_SOLR_SERVERS = 'Managed Solr Servers';
 
@@ -168,6 +171,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'woocommerce/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_woocommerce_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_ACF               =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginAcf',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'acf',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'acf/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'acf/plugin-acf.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'acf/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_acf_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

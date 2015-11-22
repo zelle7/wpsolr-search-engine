@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.7
+Current Version: 6.8
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.7
+Stable tag: 6.8
 
 Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
 
@@ -125,29 +125,35 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Screenshots ==
 
-1. Admin: Download the Solr files solrconfig.xml and schema.xml
-2. Admin: Configure your local Solr instance
-3. Admin: Configure your cloud Solr instance
-4. Admin: Indexing option (part 1)
-5. Admin: Indexing option (part 2)
-6. Admin: Options to display results
-7. Admin: Add facets and control their order
-8. Admin: Integration with the plugin 'groups'
-9. Admin: Integration with the plugin 's2member'
-10. Admin: Solr indexation
-11. Front end: Auto suggestions while typing in search bar
-12. Front end: Facets are displayed
-13. Front end: Did you mean ?
-14. Admin: Select attachment types to index
-15. Admin: The "Sort by" items list is configurable
-16. Admin: Change all front-end texts in admin
-17. Admin: WPML setup
-18. Admin: POLYLANG setup
-19. Admin: WooCommerce integration activation.
-20. Admin: WooCommerce Product attribute selected for indexing
-21. Admin: WooCommerce Product attribute selected for faceting
+1. 1) Admin: Download the Solr files solrconfig.xml and schema.xml
+2. 2) Admin: Configure your local Solr instance
+3. 3) Admin: Configure your cloud Solr instance
+4. 4) Admin: Indexing option (part 1)
+5. 5) Admin: Indexing option (part 2)
+6. 6) Admin: Options to display results
+7. 7) Admin: Add facets and control their order
+8. 8) Admin: Integration with the plugin 'groups'
+9. 9) Admin: Integration with the plugin 's2member'
+10. 10) Admin: Solr indexation
+11. 11) Front end: Auto suggestions while typing in search bar
+12. 12) Front end: Facets are displayed
+13. 13) Front end: Did you mean ?
+14. 14) Admin: Select attachment types to index
+15. 15) Admin: The "Sort by" items list is configurable
+16. 16) Admin: Change all front-end texts in admin
+17. 17) Admin: WPML setup
+18. 18) Admin: POLYLANG setup
+19. 19) Admin: WooCommerce integration activation.
+20. 20) Admin: WooCommerce Product attribute selected for indexing
+21. 21) Admin: WooCommerce Product attribute selected for faceting
+22. 22) Admin: Advanced Custom Fields (ACF) integration activation.
 
 == Changelog ==
+
+= 6.8 =
+* Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in facets.
+Just activate the Advanced Custom Fields (ACF) integration (screenshot 22), and select your options.
+* Fix an error when WooCommerce plugin is activated but not configured in WPSOLR integration.
 
 = 6.7 =
 * WooCommerce integration: product attributes are now in search, facets, autocomplete and suggestions (did you mean).
