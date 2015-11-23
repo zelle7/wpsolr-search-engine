@@ -59,6 +59,9 @@ class WpSolrExtensions {
 	// Extension: Advanced Custom Fields
 	const EXTENSION_ACF = 'ACF';
 
+	// Extension: Types
+	const EXTENSION_TYPES = 'Types';
+
 	// Extension: Gotosolr hosting
 	const OPTION_MANAGED_SOLR_SERVERS = 'Managed Solr Servers';
 
@@ -183,6 +186,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'acf/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_acf_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_TYPES             =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginTypes',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'WPCF_Field',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'types/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'types/plugin-types.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'types/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_types_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

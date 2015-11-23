@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.8
+Current Version: 6.9
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.8
+Stable tag: 6.9
 
 Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
 
@@ -147,8 +147,13 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 20. 20) Admin: WooCommerce Product attribute selected for indexing
 21. 21) Admin: WooCommerce Product attribute selected for faceting
 22. 22) Admin: Advanced Custom Fields (ACF) integration activation.
+23. 23) Admin: Types plugin integration activation.
 
 == Changelog ==
+
+= 6.9 =
+* Types plugin integration: display custom fields label, rather than name, in facets.
+Just activate the Types integration (screenshot 23), and select your options.
 
 = 6.8 =
 * Easier way to get a test Solr index.
