@@ -17,7 +17,7 @@ $is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENS
 
 $plugin_name    = "Polylang";
 $plugin_link    = "https://polylang.wordpress.com/documentation/";
-$plugin_version = "";
+$plugin_version = "(>= 1.7.11)";
 
 if ( $is_plugin_active ) {
 	$ml_plugin = PluginPolylang::create();

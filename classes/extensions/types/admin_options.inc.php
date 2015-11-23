@@ -16,7 +16,7 @@ $is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENS
 
 $plugin_name    = "Types";
 $plugin_link    = "https://wordpress.org/plugins/types/";
-$plugin_version = "";
+$plugin_version = "(>=  1.8.10)";
 
 if ( $is_plugin_active ) {
 	$ml_plugin = PluginTypes::create();
@@ -64,7 +64,7 @@ if ( $is_plugin_active ) {
 			</div>
 			<div class="wdm_row">
 				<div class='col_left'>Use the <a
-						href="<?php echo $plugin_link; ?>" target="_blank"><?php echo $plugin_name; ?>
+						href="<?php echo $plugin_link; ?>" target="_blank"><?php echo $plugin_name; ?> <?php echo $plugin_version; ?>
 						plugin</a>
 					to filter search results.
 					<br/>Think of re-indexing all your data if <a

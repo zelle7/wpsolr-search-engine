@@ -77,7 +77,7 @@ $plugin_name = "Groups";
 			</div>
 			<div class="wdm_row">
 				<div class='col_left'>Use the <a
-						href="https://wordpress.org/plugins/groups/" target="_blank">Groups
+						href="https://wordpress.org/plugins/groups/" target="_blank">Groups (>= 1.4.13)
 						plugin</a>
 					to filter search results.
 					<br/>Think of re-indexing all your data if <a

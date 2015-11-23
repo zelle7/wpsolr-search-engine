@@ -154,6 +154,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 = 6.9 =
 * Types plugin integration: display custom fields label, rather than name, in facets.
 Just activate the Types integration (screenshot 23), and select your options.
+* Plugins integrations minimum compatible version is indicated.
 
 = 6.8 =
 * Easier way to get a test Solr index.
