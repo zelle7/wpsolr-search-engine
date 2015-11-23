@@ -232,6 +232,13 @@ class OptionIndexes extends WpSolrExtensions {
 		return false;
 	}
 
+	public function get_nb_indexes() {
+
+		$solr_indexes = $this->get_indexes();
+
+		return isset( $solr_indexes ) ? count( $solr_indexes ) : 0;
+	}
+
 	public function create_index( $managed_solr_service_id, $index_type, $index_uuid, $index_name, $index_protocol, $index_host, $index_port, $index_path, $index_key, $index_secret ) {
 
 		$solr_indexes = $this->get_indexes();

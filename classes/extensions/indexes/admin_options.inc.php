@@ -62,7 +62,8 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 						'managed_solr_service_id'   => $form_data['managed_solr_service_id']['value'],
 						'response_error'            => ( isset( $response_object ) && ! OptionManagedSolrServer::is_response_ok( $response_object ) ) ? OptionManagedSolrServer::get_response_error_message( $response_object ) : '',
 						'google_recaptcha_site_key' => isset( $google_recaptcha_site_key ) ? $google_recaptcha_site_key : '',
-						'google_recaptcha_token'    => isset( $google_recaptcha_token ) ? $google_recaptcha_token : ''
+						'google_recaptcha_token'    => isset( $google_recaptcha_token ) ? $google_recaptcha_token : '',
+						'total_nb_indexes'          => $option_object->get_nb_indexes()
 					) );
 			}
 
@@ -144,7 +145,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 				<div
 					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
-					class="wrapper" <?php echo $subtab != $index_indice ? "style='display:none'" : "" ?> >
+					class="wrapper" <?php echo ( ( $subtab != $index_indice ) || ( $option_object->get_nb_indexes() == 0 ) ) ? "style='display:none'" : "" ?> >
 
 					<input type='hidden'
 					       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][managed_solr_service_id]"
@@ -347,7 +348,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 				</div>
 			<?php } // end foreach ?>
 
-			<div class="wdm_row">
+			<div class="wdm_row" <?php echo ( $option_object->get_nb_indexes() == 0 ) ? "style='display:none'" : "" ?>>
 				<div class="submit">
 					<input name="check_solr_status" id='check_index_status' type="button"
 					       class="button-primary wdm-save"

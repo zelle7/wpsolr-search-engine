@@ -55,7 +55,7 @@
 							data-sitekey="<?php echo $google_recaptcha_site_key; ?>"
 							data-stoken="<?php echo $google_recaptcha_token; ?>"
 							data-callback="recaptchaVerifyCallback"
-							>
+						>
 						</div>
 					</form>
 
@@ -92,6 +92,7 @@
 	</form>
 </div>
 
-<div class="numberCircle">or</div>
-<div style="clear: both; margin-bottom: 15px;"></div>
-
+<?php if ( $total_nb_indexes > 0 ) { ?>
+	<div class="numberCircle">or</div>
+	<div style="clear: both; margin-bottom: 15px;"></div>
+<?php } ?>

@@ -151,6 +151,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 == Changelog ==
 
 = 6.8 =
+* Easier way to get a test Solr index.
 * Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in facets.
 Just activate the Advanced Custom Fields (ACF) integration (screenshot 22), and select your options.
 * Fix an error when WooCommerce plugin is activated but not configured in WPSOLR integration.
