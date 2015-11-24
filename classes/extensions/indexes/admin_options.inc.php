@@ -145,7 +145,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 				<div
 					id="<?php echo $subtab != $index_indice ? $index_indice : "current_index_configuration_edited_id" ?>"
-					class="wrapper" <?php echo ( ( $subtab != $index_indice ) || ( $option_object->get_nb_indexes() == 0 ) ) ? "style='display:none'" : "" ?> >
+					class="wrapper" <?php echo ( $subtab != $index_indice ) ? "style='display:none'" : "" ?> >
 
 					<input type='hidden'
 					       name="<?php echo $option_name ?>[solr_indexes][<?php echo $index_indice ?>][managed_solr_service_id]"
@@ -348,7 +348,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 				</div>
 			<?php } // end foreach ?>
 
-			<div class="wdm_row" <?php echo ( $option_object->get_nb_indexes() == 0 ) ? "style='display:none'" : "" ?>>
+			<div class="wdm_row">
 				<div class="submit">
 					<input name="check_solr_status" id='check_index_status' type="button"
 					       class="button-primary wdm-save"

@@ -92,7 +92,5 @@
 	</form>
 </div>
 
-<?php if ( $total_nb_indexes > 0 ) { ?>
-	<div class="numberCircle">or</div>
-	<div style="clear: both; margin-bottom: 15px;"></div>
-<?php } ?>
+<div class="numberCircle">or</div>
+<div style="clear: both; margin-bottom: 15px;"></div>
