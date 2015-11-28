@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 6.9
+Current Version: 7.0
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 6.9
+Stable tag: 7.0
 
 Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
 
@@ -150,6 +150,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 23. 23) Admin: Types plugin integration activation.
 
 == Changelog ==
+
+= 7.0 =
+* Fix a javascript error with infinite scroll.
 
 = 6.9 =
 * Types plugin integration: display custom fields label, rather than name, in facets.

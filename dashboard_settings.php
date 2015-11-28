@@ -274,7 +274,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										Replace WordPress Default Search<br/>
+										Activate WPSOLR: replace WordPress default search form.<br/>
 										Warning: permalinks must be activated.
 									</div>
 									<div class='col_right'>

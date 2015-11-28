@@ -11,7 +11,7 @@ jQuery("#pagination-flickr").hide();
 
 jQuery.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return results[1] || 0;
+    return results ? results[1] || 0 : 0;
 }
 
 // ajax data
@@ -28,7 +28,7 @@ jQuery('.select_opt').click(function () {
     datajax.opts = jQuery(this).attr("id");
     info.numberofelements = 1;
     info.curentpage = 1;
-    console.log('curent data opts ' + datajax.opts);
+    //console.log('curent data opts ' + datajax.opts);
 
 
     setTimeout(function () {
@@ -40,7 +40,7 @@ jQuery('.select_opt').click(function () {
 
 function showloading() {
     jQuery('#loadingtext').remove();
-    console.log('showloading');
+    //console.log('showloading');
     jQuery("body").prepend('<div id="loadingtext" style="position: fixed; top: 100px; text-align: center; font-size: 15px; z-index: 999; margin: 0px auto; background: #CCC; padding: 30px; left: 40%;">' + info.loadingtext + '<br /><img src="' + info.loadimage + '" alt="loading" /></div>');
 
     setTimeout(function () {
@@ -80,11 +80,11 @@ jQuery(document).scroll(function () {
                 }, 1800); // execute function after 2 sec
 
                 datajax.sort_opt = jQuery(".select_field").val();
-                console.log('curent select_field is ' + datajax.sort_opt);
+                //console.log('curent select_field is ' + datajax.sort_opt);
 
                 datajax.page_no = info.curentpage;
-                console.log('curent data page no ' + datajax.page_no);
-                console.log(info.curentpage + 'pagenumber');
+                //console.log('curent data page no ' + datajax.page_no);
+                //console.log(info.curentpage + 'pagenumber');
 
 
                 // since wp 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
