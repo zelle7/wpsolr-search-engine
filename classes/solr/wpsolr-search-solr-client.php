@@ -527,6 +527,39 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				$image_fragment .= "<img class='wdm_result_list_thumb' src='$image_url[0]' />";
 			}
 
+			if ( empty( $content ) ) {
+				// Set a default value for content if no highlighting returned.
+				$post_to_show = get_post( $id );
+				if ( isset( $post_to_show ) ) {
+					// Excerpt first, or content.
+					$content = ( ! empty( $post_to_show->post_excerpt ) ) ? $post_to_show->post_excerpt : $post_to_show->post_content;
+
+					if ( isset( $ind_opt['is_shortcode_expanded'] ) && ( strpos( $content, '[solr_search_shortcode]' ) === false ) ) {
+
+						// Expand shortcodes which have a plugin active, and are not the search form shortcode (else pb).
+						global $post;
+						$post    = $post_to_show;
+						$content = do_shortcode( $content );
+					}
+
+					// Remove shortcodes tags remaining, but not their content.
+					// strip_shortcodes() does nothing, probably because shortcodes from themes are not loaded in admin.
+					// Credit: https://wordpress.org/support/topic/stripping-shortcodes-keeping-the-content.
+					// Modified to enable "/" in attributes
+					$content = preg_replace( "~(?:\[/?)[^\]]+/?\]~s", '', $content );  # strip shortcodes, keep shortcode content;
+
+
+					// Strip HTML and PHP tags
+					$content = strip_tags( $content );
+
+					if ( isset( $res_opt['highlighting_fragsize'] ) && is_numeric( $res_opt['highlighting_fragsize'] ) ) {
+						// Cut content at the max length defined in options.
+						$content = substr( $content, 0, $res_opt['highlighting_fragsize'] );
+					}
+				}
+			}
+
+
 			// Format content text a little bit
 			$content = str_replace( '&nbsp;', '', $content );
 			$content = str_replace( '  ', ' ', $content );

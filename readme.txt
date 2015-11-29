@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 7.0
+Current Version: 7.1
 
 Author:  WPSOLR.COM
 
@@ -14,17 +14,75 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 7.0
+Stable tag: 7.1
 
-Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
+Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
 
 == Description ==
 
-= Some great websites using WPSOLR, with filters, suggestions, and did you mean features =
+= Features =
+- Solr Indexes options
+  - Get a free instant cloud Solr index ready for testing
+  - Create one or several Solr indexes
+  - Create local or cloud Solr indexes
+  - Get status of Solr indexes
+  - Support https secure protocol
+  - Support Basic Http authentication
+  - Solr config files delivered (schema.xml, config.xml)
+  - Solr 4.x and 5.x supported
+  - Multi-language supported in the most flexible way: one index by language
+  - Tune hundreds of Solr parameters by updating our config files and reloading your index
+- Display search results options
+  - Search form and search page results generated from the options selected (no coding needed)
+  - Use css and js to customize display of search form and search page (see website examples below)
+  - Replace WordPress default search form automatically (no change required in your code)
+  - Choose Infinite scroll pagination or standard pagination
+  - Do not automatically trigger the search, when a user clicks on the autocomplete list
+  - Display suggestions (Did you mean?) when no results are found
+  - Choose number of results displayed by page
+  - Choose number of items displayed by facets
+  - Choose maximum size of each snippet text in results
+- Indexing options
+  - Choose to index post excerpt or not
+  - Choose to expand shortcodes of post content before indexing
+  - Choose post types, including custom post types, to be indexed
+  - Choose attachement types to be indexed
+  - Choose taxonomies to be indexed
+  - Choose custom fields to be indexed
+  - Choose to index comments or not
+  - List of item ids excluded from indexing
+- Facets (filters) options
+  - Choose which indexed items are going to be used as facets (filters)
+  - Drag and drop facets as you like them to be displayed
+- Sort options
+  - Choose which items are going to be used as sort
+  - Drag and drop sort items as you like them to be displayed
+- Localization options
+  - You can change every bit of text displayed in the search page/form
+  - You can use our/your translation files (.po, .mo) in a multi-language website
+- Integration with other plugins
+  - Integration with WooCommerce
+  - Integration with Advanced Custom Fields
+  - Integration with Types
+  - Integration with WPML
+  - Integration with Polylang
+  - Integration with Groups
+  - Integration with s2Member
+  - Contact us in the forum if you need another plugin integration
+- Indexing Batch options
+  - Can index one or several Solr indexes
+  - Batch indexing by lot to boost performance. Lot size can be changed.
+  - Real-time indexing as soon as a post/attachement is updated
+  - Option to empty a Solr index
+  - Option to synchronize a Solr index (index remaining data)
+  - Option to fully synchronize a Solr index (index all data from start)
+  - Option to debug SQL queries
+
+= Some websites using WPSOLR, with filters, suggestions, and did you mean features =
 - Search "constructor" at http://boplex.com/ (> 100 000 posts searchable on this site)
 - Search "education" at http://www.nmc.org/
-- Search "energy" at http://www.sunverge.com/
-- Search "android" at https://digitalltag.de/
+- Search "renewable" at http://www.sunverge.com/
+- Search "restaurant" at https://digitalltag.de/
 - Search "certification" at http://www.certwin.com/
 - Contact us in the forum should your website be seen here!
 
@@ -150,6 +208,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 23. 23) Admin: Types plugin integration activation.
 
 == Changelog ==
+
+= 7.1 =
+* When no highlighting is returned by Solr, display the excerpt or the content instead, with expanded shortcodes if required, and html/tags stripped.
 
 = 7.0 =
 * Fix a javascript error with infinite scroll.

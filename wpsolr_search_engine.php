@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: Search in Wordpress/WooCommerce with Solr: multi-language, Infinite Scroll, autocomplete, suggestions, dynamic filters.
- * Version: 7.0
+ * Description: Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
+ * Version: 7.1
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
