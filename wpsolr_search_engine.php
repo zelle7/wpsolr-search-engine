@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
- * Version: 7.1
+ * Version: 7.2
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -30,6 +30,8 @@ $solr_options = get_option( 'wdm_solr_res_data' );
 add_action( 'wp_head', 'check_default_options_and_function' );
 add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
+add_action( 'wp_enqueue_scripts', 'my_enqueue' );
+
 
 /*
  * Display Solr errors in admin when a save on a post can't index to Solr
@@ -217,8 +219,10 @@ function solr_search_form() {
 
 		$ad_url = admin_url();
 
-		if ( isset( $_GET['search'] ) ) {
-			$search_que = $_GET['search'];
+		if ( isset( $_GET[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] ) ) {
+			$search_que = $_GET[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ];
+		} else if ( isset( $_GET[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH ] ) ) {
+			$search_que = $_GET[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH ];
 		} else {
 			$search_que = '';
 		}
@@ -262,11 +266,10 @@ function solr_search_form() {
 
 		$form .= '<input type="hidden" value="' . $ad_url . '" id="path_to_admin">';
 		$form .= '<input type="hidden" value="' . $search_que . '" id="search_opt">';
-
 		$form .= '
        <div class="ui-widget search-box">
  	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl1" autocomplete="off"/>
+        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="' . WPSolrSearchSolrClient::SEARCH_PARAMETER_Q . '" id="search_que" class="search-field sfl1" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
         <div style="clear:both"></div>
         </div>
@@ -299,11 +302,34 @@ function my_plugins_loaded() {
 	load_plugin_textdomain( 'wpsolr', false, false );
 }
 
-/*
- * Infinite scroll: load javascript if option is set.
- */
-if ( isset( $solr_options['infinitescroll'] ) ) {
-	function my_enqueue() {
+function my_enqueue() {
+	global $solr_options;
+
+	wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
+	wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
+	wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), false, true );
+	// Url utilities to manipulate the url parameters
+	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), false, true );
+	wp_enqueue_script( 'autocomplete', plugins_url( 'js/autocomplete_solr.js', __FILE__ ), array(
+		'solr_auto_js1',
+		'urljs'
+	), false, true );
+	wp_localize_script( 'autocomplete', 'wp_localize_script_autocomplete',
+		array(
+			'ajax_url'                    => admin_url( 'admin-ajax.php' ),
+			'show_url_parameters'         => isset( $solr_options['search_method'] ) && ( 'ajax_with_parameters' === $solr_options['search_method'] ),
+			'SEARCH_PARAMETER_SEARCH'     => WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH,
+			'SEARCH_PARAMETER_Q'          => WPSolrSearchSolrClient::SEARCH_PARAMETER_Q,
+			'SEARCH_PARAMETER_FQ'         => WPSolrSearchSolrClient::SEARCH_PARAMETER_FQ,
+			'SEARCH_PARAMETER_SORT'       => WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT,
+			'SEARCH_PARAMETER_PAGE'       => WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE,
+			'SORT_CODE_BY_RELEVANCY_DESC' => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
+		) );
+
+	/*
+	 * Infinite scroll: load javascript if option is set.
+	 */
+	if ( isset( $solr_options['infinitescroll'] ) ) {
 		// Get localization options
 		$localization_options = OptionLocalization::get_options();
 
@@ -313,13 +339,13 @@ if ( isset( $solr_options['infinitescroll'] ) ) {
 
 		// loadingtext for translation
 		// loadimage custom loading image url
-		wp_localize_script( 'infinitescroll', 'info_object',
+		wp_localize_script( 'infinitescroll', 'wp_localize_script_infinitescroll',
 			array(
-				'ajax_url'    => admin_url( 'admin-ajax.php' ),
-				'loadimage'   => plugins_url( '/images/infinitescroll.gif', __FILE__ ),
-				'loadingtext' => OptionLocalization::get_term( $localization_options, 'infinitescroll_loading' )
+				'ajax_url'           => admin_url( 'admin-ajax.php' ),
+				'loadimage'          => plugins_url( '/images/infinitescroll.gif', __FILE__ ),
+				'loadingtext'        => OptionLocalization::get_term( $localization_options, 'infinitescroll_loading' ),
+				'SEARCH_PARAMETER_Q' => WPSolrSearchSolrClient::SEARCH_PARAMETER_Q,
 			) );
 	}
-
-	add_action( 'wp_enqueue_scripts', 'my_enqueue' );
 }
+

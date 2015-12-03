@@ -273,18 +273,6 @@ function fun_set_solr_options() {
 
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>
-										Activate WPSOLR: replace WordPress default search form.<br/>
-										Warning: permalinks must be activated.
-									</div>
-									<div class='col_right'>
-										<input type='checkbox' name='wdm_solr_res_data[default_search]'
-										       value='1'
-											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="wdm_row">
 									<div class='col_left'>Search with this Solr index<br/>
 
 									</div>
@@ -315,6 +303,41 @@ function fun_set_solr_options() {
 											?>
 										</select>
 
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>
+										Activate WPSOLR: replace WordPress default search form.<br/>
+										Warning: permalinks must be activated.
+									</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[default_search]'
+										       value='1'
+											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>
+										Search mode
+									</div>
+									<div class='col_right'>
+										<select name="wdm_solr_res_data[search_method]">
+											<?php
+											$options = array(
+												array( 'code' => 'ajax', 'label' => 'Ajax' ),
+												array( 'code'  => 'ajax_with_parameters',
+												       'label' => 'Ajax with url parameters'
+												)
+											);
+											foreach ( $options as $option ) {
+												$selected = $solr_res_options['search_method'] == $option['code'] ? 'selected' : '';
+												?>
+												<option
+													value="<?php echo $option['code'] ?>" <?php echo $selected ?> ><?php echo $option['label'] ?></option>
+											<?php } ?>
+										</select>
 									</div>
 									<div class="clear"></div>
 								</div>

@@ -31,6 +31,18 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	// Do not change - Sort by most comments
 	const SORT_CODE_BY_NUMBER_COMMENTS_DESC = 'sort_by_number_comments_desc';
 
+
+	/**
+	 * Search parameters used in url or ajax
+	 */
+	const SEARCH_PARAMETER_AJAX_URL_PARAMETERS = 'url_parameters';
+	const SEARCH_PARAMETER_SEARCH = 'search'; // Old query name, here for compatibility
+	const SEARCH_PARAMETER_Q = 'wpsolr_q'; // New query name
+	const SEARCH_PARAMETER_FQ = 'wpsolr_fq';
+	const SEARCH_PARAMETER_PAGE = 'wpsolr_page';
+	const SEARCH_PARAMETER_SORT = 'wpsolr_sort';
+
+
 	// Create using a configuration
 	static function create_from_solarium_config( $solarium_config ) {
 
@@ -234,6 +246,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$output        = array();
 		$search_result = array();
 
+		// Fields query should be an array
+		if ( ! is_array( $facet_options ) ) {
+			$facet_options = array( $facet_options );
+		}
+
 		// Load options
 		$ind_opt              = get_option( 'wdm_solr_form_data' );
 		$res_opt              = get_option( 'wdm_solr_res_data' );
@@ -312,28 +329,29 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			}
 		}
 
-
 		$bound = '';
-		if ( $facet_options != null || $facet_options != '' ) {
-			$f_array = explode( ':', $facet_options );
+		foreach ( is_array( $facet_options ) ? $facet_options : array() as $facet_option ) {
+			if ( $facet_option != null || $facet_option != '' ) {
+				$f_array = explode( ':', $facet_option );
 
-			$fac_field = strtolower( $f_array[0] );
-			$fac_type  = isset( $f_array[1] ) ? $f_array[1] : '';
+				$fac_field = strtolower( $f_array[0] );
+				$fac_type  = isset( $f_array[1] ) ? $f_array[1] : '';
 
 
-			if ( $fac_field != '' && $fac_type != '' ) {
-				$fac_fd = "$fac_field";
+				if ( $fac_field != '' && $fac_type != '' ) {
+					$fac_fd = "$fac_field";
 
-				// In case the facet contains white space, we enclose it with "".
-				$fac_type_escaped = "\"$fac_type\"";
+					// In case the facet contains white space, we enclose it with "".
+					$fac_type_escaped = "\"$fac_type\"";
 
-				$query->addFilterQuery( array( 'key' => "$fac_fd", 'query' => "$fac_fd:$fac_type_escaped" ) );
+					$query->addFilterQuery( array( 'key' => "$fac_fd", 'query' => "$fac_fd:$fac_type_escaped" ) );
+				}
+
+				if ( isset( $f_array[2] ) && $f_array[2] != '' ) {
+					$bound = $f_array[2];
+				}
+
 			}
-
-			if ( isset( $f_array[2] ) && $f_array[2] != '' ) {
-				$bound = $f_array[2];
-			}
-
 		}
 
 

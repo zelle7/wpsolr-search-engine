@@ -1,13 +1,14 @@
 var info = {
     curentpage: "1",
     numberofelements: jQuery('#pagination-flickr li').size(),
-    ajaxurl: info_object.ajax_url,
-    loadimage: info_object.loadimage,
-    loadingtext: info_object.loadingtext,
+    ajaxurl: wp_localize_script_infinitescroll.ajax_url,
+    loadimage: wp_localize_script_infinitescroll.loadimage,
+    loadingtext: wp_localize_script_infinitescroll.loadingtext,
     inprogress: 'no'
 };
 
 jQuery("#pagination-flickr").hide();
+jQuery(".res_info").hide();
 
 jQuery.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -16,11 +17,11 @@ jQuery.urlParam = function (name) {
 
 // ajax data
 var datajax = {
-    'query': jQuery.urlParam('search'),
+    'query': jQuery.urlParam(wp_localize_script_autocomplete.SEARCH_PARAMETER_Q),
     'action': 'return_solr_results',
     'page_no': 1,
     'opts': '',
-    'sort_opt': 'sort_by_relevancy_des'
+    'sort_opt': wp_localize_script_autocomplete.SORT_CODE_BY_RELEVANCY_DESC
 };
 
 //select_opt
@@ -87,8 +88,22 @@ jQuery(document).scroll(function () {
                 //console.log(info.curentpage + 'pagenumber');
 
 
+                // Ajax call on the current selection
+                // Merge default parameters with active parameters
+                var parameters = get_ui_selection();
+                var selection_parameters = {};
+                selection_parameters[wp_localize_script_autocomplete.SEARCH_PARAMETER_PAGE] = datajax.page_no;
+                jQuery.extend(parameters, selection_parameters);
+
+                // Generate url parameters
+                var url_parameters = generateUrlParameters(window.location.href, parameters, true);
+                //alert(url_parameters);
+
+                // Generate Ajax data object
+                var data = {action: 'return_solr_results', url_parameters: url_parameters};
+
                 // since wp 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-                jQuery.post(info.ajaxurl, datajax, function (response) {
+                jQuery.post(info.ajaxurl, data, function (response) {
 
                     var obj = jQuery.parseJSON(response)
                     //console.log(obj);

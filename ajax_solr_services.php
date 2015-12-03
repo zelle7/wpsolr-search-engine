@@ -15,18 +15,36 @@ function solr_format_date( $thedate ) {
 	return preg_replace( $datere, $replstr, $thedate );
 }
 
-add_action( 'wp_head', 'add_scripts' );
-function add_scripts() {
-	wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
-	wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
-	wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), false, true );
-	wp_enqueue_script( 'solr_autocomplete', plugins_url( 'js/autocomplete_solr.js', __FILE__ ), array( 'solr_auto_js1' ), false, true );
-}
-
 function fun_search_indexed_data() {
 
-	// Query keywords
-	$search_que = isset( $_GET['search'] ) ? $_GET['search'] : '';
+	// Array of parameters
+	$url_parameters = array();
+
+	// Extract all url parameters in an array
+	if ( isset( $_SERVER['QUERY_STRING'] ) ) {
+		parse_str( $_SERVER['QUERY_STRING'], $url_parameters );
+	}
+
+	// Compatibility
+	if ( isset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH ] ) ) {
+		// Copy old parameter value to new parameter
+		$url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] = $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH ];
+		unset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SEARCH ] );
+	}
+
+	// Default sort
+	$sort_opt     = get_option( 'wdm_solr_sortby_data' );
+	$sort_default = isset( $sort_opt['sort_default'] ) ? $sort_opt['sort_default'] : WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC;
+
+	// Set default values for all parameters, if not present
+	$url_parameters = array_merge( array(
+		WPSolrSearchSolrClient::SEARCH_PARAMETER_Q    => '',
+		WPSolrSearchSolrClient::SEARCH_PARAMETER_FQ   => '',
+		WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT => $sort_default,
+		WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE => '0'
+	),
+		$url_parameters );
+
 
 	$ad_url = admin_url();
 
@@ -44,7 +62,7 @@ function fun_search_indexed_data() {
 	echo "<div class='cls_search' style='width:100%'> <form action='$url' method='get'  class='search-frm' >";
 	echo '<input type="hidden" value="' . $wdm_typehead_request_handler . '" id="path_to_fold">';
 	echo '<input type="hidden" value="' . $ad_url . '" id="path_to_admin">';
-	echo '<input type="hidden" value="' . $search_que . '" id="search_opt">';
+	echo '<input type="hidden" value="' . $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] . '" id="search_opt">';
 
 	$ajax_nonce = wp_create_nonce( "nonce_for_autocomplete" );
 
@@ -59,16 +77,17 @@ function fun_search_indexed_data() {
 	echo $form = '
         <div class="ui-widget">
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
+        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
 	<input type="hidden" value="' . $is_after_autocomplete_block_submit . '" id="is_after_autocomplete_block_submit">
+	<input type="hidden" value="' . $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE ] . '" id="paginate">
 <div style="clear:both"></div>
         </div>
         </form>';
 
 	echo '</div>';
 	echo "<div class='cls_results'>";
-	if ( $search_que != '' && $search_que != '*:*' ) {
+	if ( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] != '' && $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] != '*:*' ) {
 
 		try {
 
@@ -76,13 +95,15 @@ function fun_search_indexed_data() {
 
 			$options = $fac_opt['facets'];
 
-			// Use default sort
-			$sort_opt     = get_option( 'wdm_solr_sortby_data' );
-			$sort_default = $sort_opt['sort_default'];
-
 			try {
 
-				$final_result = $solr->get_search_results( $search_que, '', '', $sort_default );
+				$final_result = $solr->get_search_results(
+					$url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ],
+					$url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_FQ ],
+					$url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE ],
+					$url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT ]
+				);
+
 			} catch ( Exception $e ) {
 
 				$message = $e->getMessage();
@@ -91,7 +112,7 @@ function fun_search_indexed_data() {
 			}
 
 			if ( $final_result[2] == 0 ) {
-				echo "<span class='infor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_header_no_results_found' ), $search_que ) . "</span>";
+				echo "<span class='infor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_header_no_results_found' ), $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] ) . "</span>";
 			} else {
 				echo '<div class="wdm_resultContainer">
                     <div class="wdm_list">';
@@ -111,7 +132,7 @@ function fun_search_indexed_data() {
 
 							$sort_label = OptionLocalization::get_term( $localization_options, $sort_code );
 
-							$selected = ( $sort_default == $sort_code ) ? 'selected' : '';
+							$selected = ( $sort_code === $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT ] ) ? 'selected' : '';
 							$sort_select .= "<option value='$sort_code' $selected>$sort_label</option>";
 						}
 
@@ -132,7 +153,7 @@ function fun_search_indexed_data() {
 
 						$groups = sprintf( "<div><label class='wdm_label'>%s</label>
                                     <input type='hidden' name='sel_fac_field' id='sel_fac_field' value='all' >
-                                    <ul class='wdm_ul'><li class='select_opt' id='all'>%s</li>",
+                                    <ul class='wdm_ul' id='wpsolr_section_facets'><li class='select_opt' id='all'>%s</li>",
 							OptionLocalization::get_term( $localization_options, 'facets_header' ),
 							OptionLocalization::get_term( $localization_options, 'facets_element_all_results' )
 						);
@@ -200,7 +221,7 @@ function fun_search_indexed_data() {
 						$pages = ceil( $total / $number_of_res );
 						echo '<ul id="pagination-flickr" class="wdm_ul">';
 						for ( $k = 1; $k <= $pages; $k ++ ) {
-							echo "<li ><a class='paginate' href='#' id='$k'>$k</a></li>";
+							echo "<li ><a class='paginate' href='javascript:void(0)' id='$k'>$k</a></li>";
 						}
 					}
 					echo '</ul></div>';
@@ -315,28 +336,36 @@ add_action( 'wp_ajax_' . 'return_solr_status', 'return_solr_status' );
 
 function return_solr_results() {
 
-	$query = $_POST['query'];
-	$opt   = $_POST['opts'];
-	$num   = $_POST['page_no'];
-	$sort  = $_POST['sort_opt'];
+	// Default parameters values
+	$query = '';
+	$fq    = array();
+	$paged = '0';
+	$sort  = WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC;
 
+	if ( isset( $_POST[ WPSolrSearchSolrClient::SEARCH_PARAMETER_AJAX_URL_PARAMETERS ] ) ) {
 
-	$solr          = WPSolrSearchSolrClient::create_from_default_index_indice();
-	$final_result  = $solr->get_search_results( $query, $opt, $num, $sort );
-	$solr_options  = get_option( 'wdm_solr_conf_data' );
-	$output        = array();
-	$search_result = array();
+		// Parameters are in the url
+		$url_parameters = ltrim( $_POST[ WPSolrSearchSolrClient::SEARCH_PARAMETER_AJAX_URL_PARAMETERS ], '?' );
+
+		// Extract url parameters
+		parse_str( $url_parameters, $url_parameters );
+
+		$query = isset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] ) ? $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_Q ] : $query;
+		$fq    = isset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_FQ ] ) ? $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_FQ ] : $fq;
+		$paged = isset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE ] ) ? $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_PAGE ] : $paged;
+		$sort  = isset( $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT ] ) ? $url_parameters[ WPSolrSearchSolrClient::SEARCH_PARAMETER_SORT ] : $sort;
+
+	}
+
+	$solr         = WPSolrSearchSolrClient::create_from_default_index_indice();
+	$final_result = $solr->get_search_results( $query, $fq, $paged, $sort );
 
 	$res_opt = get_option( 'wdm_solr_res_data' );
 
-	$res1  = array();
-	$f_res = '';
-	foreach ( $final_result[3] as $fr ) {
-		$f_res .= $fr;
-	}
+	// Add result rows as html
 	$res1[] = $final_result[3];
 
-
+	// Add pagination html
 	$total         = $final_result[2];
 	$number_of_res = $res_opt['no_res'];
 	$paginat_var   = '';
@@ -344,14 +373,19 @@ function return_solr_results() {
 		$pages = ceil( $total / $number_of_res );
 		$paginat_var .= '<ul id="pagination-flickr"class="wdm_ul">';
 		for ( $k = 1; $k <= $pages; $k ++ ) {
-			$paginat_var .= "<li ><a class='paginate' href='#' id='$k'>$k</a></li>";
+			$paginat_var .= "<li ><a class='paginate' href='javascript:void(0)' id='$k'>$k</a></li>";
 		}
 		$paginat_var .= '</ul>';
 	}
-
-
 	$res1[] = $paginat_var;
+
+	// Add results infos html ('showing x to y results out of n')
 	$res1[] = $final_result[4];
+
+	// Add facets data
+	//$res1[] = $final_result[1];
+
+	// Output Json response to Ajax call
 	echo json_encode( $res1 );
 
 

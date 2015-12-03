@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 7.1
+Current Version: 7.2
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 7.1
+Stable tag: 7.2
 
 Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
 
@@ -35,6 +35,8 @@ Replace search with Solr. Choose local or cloud Solr servers. Free Solr index in
 - Display search results options
   - Search form and search page results generated from the options selected (no coding needed)
   - Use css and js to customize display of search form and search page (see website examples below)
+  - Ajax search, to display results fast.
+  - Option to display Ajax search parameters in url. Back/Forward browser buttons are compatible with Ajax search
   - Replace WordPress default search form automatically (no change required in your code)
   - Choose Infinite scroll pagination or standard pagination
   - Do not automatically trigger the search, when a user clicks on the autocomplete list
@@ -79,11 +81,12 @@ Replace search with Solr. Choose local or cloud Solr servers. Free Solr index in
   - Option to debug SQL queries
 
 = Some websites using WPSOLR, with filters, suggestions, and did you mean features =
+- Search "båtar" at http://batunionen.se/ (results found in attached pdf files)
+- Search "educación" at http://www.gaceta.unam.mx/
 - Search "constructor" at http://boplex.com/ (> 100 000 posts searchable on this site)
 - Search "education" at http://www.nmc.org/
 - Search "renewable" at http://www.sunverge.com/
 - Search "restaurant" at https://digitalltag.de/
-- Search "certification" at http://www.certwin.com/
 - Contact us in the forum should your website be seen here!
 
 = Translations =
@@ -208,6 +211,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 23. 23) Admin: Types plugin integration activation.
 
 == Changelog ==
+
+= 7.2 =
+* Option to display Ajax search parameters in url. Back/Forward buttons is now compatible with Ajax search.
 
 = 7.1 =
 * When no highlighting is returned by Solr, display the excerpt or the content instead, with expanded shortcodes if required, and html/tags stripped.

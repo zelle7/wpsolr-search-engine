@@ -49,8 +49,8 @@ class OptionLocalization extends WpSolrExtensions {
 				'sort_header'                                             => _x( 'Sort by', 'Sort list header', 'wpsolr' ),
 				/* Sort */
 				WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC       => _x( 'More relevant', 'Sort list element', 'wpsolr' ),
-				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_ASC             => _x( 'Newest', 'Sort list element', 'wpsolr' ),
-				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_DESC            => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_ASC             => _x( 'Oldest', 'Sort list element', 'wpsolr' ),
+				WPSolrSearchSolrClient::SORT_CODE_BY_DATE_DESC            => _x( 'Newest', 'Sort list element', 'wpsolr' ),
 				WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => _x( 'The more commented', 'Sort list element', 'wpsolr' ),
 				WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_DESC => _x( 'The least commented', 'Sort list element', 'wpsolr' ),
 				'facets_header'                                           => _x( 'Filters', 'Facets list header', 'wpsolr' ),
