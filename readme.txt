@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 7.2
+Current Version: 7.3
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 7.2
+Stable tag: 7.3
 
 Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
 
@@ -22,15 +22,15 @@ Replace search with Solr. Choose local or cloud Solr servers. Free Solr index in
 
 = Features =
 - Solr Indexes options
-  - Get a free instant cloud Solr index ready for testing
-  - Create one or several Solr indexes
-  - Create local or cloud Solr indexes
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-25.png?r= "Free Solr index"): Get a free instant cloud Solr index ready for testing
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-26.png?r= "Configure several Solr index"): Create one or several Solr indexes
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-27.png?r= "Create local and cloud Solr indexes"): Create local or cloud Solr indexes
   - Get status of Solr indexes
   - Support https secure protocol
   - Support Basic Http authentication
   - Solr config files delivered (schema.xml, config.xml)
   - Solr 4.x and 5.x supported
-  - Multi-language supported in the most flexible way: one index by language
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"), [Screenshot POLYLANG](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "WPML integration"): Multi-language supported in the most flexible way: one index by language
   - Tune hundreds of Solr parameters by updating our config files and reloading your index
 - Display search results options
   - Search form and search page results generated from the options selected (no coding needed)
@@ -54,20 +54,21 @@ Replace search with Solr. Choose local or cloud Solr servers. Free Solr index in
   - Choose to index comments or not
   - List of item ids excluded from indexing
 - Facets (filters) options
-  - Choose which indexed items are going to be used as facets (filters)
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-7.png "Solr facets"): Choose which indexed items are going to be used as facets (filters)
   - Drag and drop facets as you like them to be displayed
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Solr facets multi-selection"): Multi-selection of facets
 - Sort options
-  - Choose which items are going to be used as sort
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-15.png "Solr sort"): Choose which items are going to be used as sort
   - Drag and drop sort items as you like them to be displayed
 - Localization options
-  - You can change every bit of text displayed in the search page/form
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-16.png "Solr localization"): You can change every bit of text displayed in the search page/form
   - You can use our/your translation files (.po, .mo) in a multi-language website
 - Integration with other plugins
   - Integration with WooCommerce
   - Integration with Advanced Custom Fields
   - Integration with Types
-  - Integration with WPML
-  - Integration with Polylang
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Integration with WPML
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): Integration with Polylang
   - Integration with Groups
   - Integration with s2Member
   - Contact us in the forum if you need another plugin integration
@@ -119,7 +120,7 @@ Review on a 1 million documents search : <a href="https://wordpress.org/support/
 If you do not want to host your own Solr server: <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
 
 = Multi-language live search demo with WPML (POLYLANG supported too) =
-Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?search=solr'>English/French WPML search page demo</a>.
+Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?wpsolr_q=solr'>English/French WPML search page demo</a>.
 
 = Super fast live suggestions 500ms =
 Try on words like « solr », « cassandra », « security », « indexes », « search ».
@@ -209,8 +210,15 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 21. 21) Admin: WooCommerce Product attribute selected for faceting
 22. 22) Admin: Advanced Custom Fields (ACF) integration activation.
 23. 23) Admin: Types plugin integration activation.
+24. 24) Front end: multi-selection on facets.
+25. 25) Admin: get a free instant cloud Solr index ready for testing.
+26. 26) Admin: create one or several Solr indexes.
+27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 7.3 =
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Facets multi-selection"): Add multi-selection to facets.
 
 = 7.2 =
 * Option to display Ajax search parameters in url. Back/Forward buttons is now compatible with Ajax search.
@@ -222,19 +230,19 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Fix a javascript error with infinite scroll.
 
 = 6.9 =
-* Types plugin integration: display custom fields label, rather than name, in facets.
-Just activate the Types integration (screenshot 23), and select your options.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-23.png "Types plugin integration"): Types plugin integration: display custom fields label, rather than name, in facets.
+Just activate the Types integration, and select your options.
 * Plugins integrations minimum compatible version is indicated.
 
 = 6.8 =
 * Easier way to get a test Solr index.
-* Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in facets.
-Just activate the Advanced Custom Fields (ACF) integration (screenshot 22), and select your options.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-22.png "Add Advanced Custom Fields (ACF) plugin integration"): Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in facets.
+Just activate the Advanced Custom Fields (ACF) integration, and select your options.
 * Fix an error when WooCommerce plugin is activated but not configured in WPSOLR integration.
 
 = 6.7 =
-* WooCommerce integration: product attributes are now in search, facets, autocomplete and suggestions (did you mean).
-Just activate the WooCommerce integration (screenshot 19), and select your products attributes in the indexed custom fields and facets options.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-19.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-20.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-21.png "WooCommerce integration"): WooCommerce integration, product attributes are now in search, facets, autocomplete and suggestions (did you mean).
+Just activate the WooCommerce integration, and select your products attributes in the indexed custom fields and facets options.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 
@@ -257,7 +265,7 @@ Just activate the WooCommerce integration (screenshot 19), and select your produ
 * Custom fields beginning with "_" can be indexed/searched/autocompleted.
 
 = 6.0 =
-* Fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
 
 = 5.9 =
 * Fix a bug when configuring several Solr indexes.
@@ -301,7 +309,7 @@ Just activate the WooCommerce integration (screenshot 19), and select your produ
 * Fix error while updating the Solr index when post/page are published or trashed. 
 
 = 4.9 =
-* Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
 * Use .mo files to translate the search form and search results front-end texts.
 * Manage several Solr indexes.
 * The search page is now /search-wpsolr (to be sure it does not exist yet). Migrate your /search-results page content if you customized it.
@@ -318,7 +326,7 @@ Just activate the WooCommerce integration (screenshot 19), and select your produ
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 4.5 =
-* All front-end texts can be changed, with the dedicated admin screen (screenshot 16), or:
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-16.png "Texts localization"): All front-end texts can be changed, with the dedicated admin screen (screenshot 16), or:
 - With gettext() standard .po/.mo files
 - With WPML string translation module
 * Translation files are not delivered, but /lang/wpsolr.pot can be used to generate the .po and .mo files, or WPSOLR sources can be parsed to generate a .pot file (with poedit free tool for instance).
@@ -328,11 +336,11 @@ Just activate the WooCommerce integration (screenshot 19), and select your produ
 * Fix several admin and front-end php notices
 
 = 4.3 =
-* Screenshot 15. The "Sort by" items list is configurable. You can choose not to diplay it at all, which elements it contains and in which order, which element is applied by default.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-15.png "Sort by"): The "Sort by" items list is configurable. You can choose not to diplay it at all, which elements it contains and in which order, which element is applied by default.
 * WARNING: Your front-end sort list will not be displayed, until you configure it.
 
 = 4.2 =
-* You can now select which attachment type(s) you want to index (see screenshot 14).
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-14.png "Attachement types"): You can now select which attachment type(s) you want to index (see screenshot 14).
 * WARNING: If you already indexed attachments, you MUST now select which types you want, or the next time you start the indexing process, no attachments will be indexed.
 
 = 4.1 =

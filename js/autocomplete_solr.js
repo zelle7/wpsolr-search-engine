@@ -1,4 +1,16 @@
 /**
+ * Remove an element from an array
+ */
+Array.prototype.remove = function (value) {
+    if (this.indexOf(value) !== -1) {
+        this.splice(this.indexOf(value), 1);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * Change the value of a url parameter, without reloading the page.
  */
 function generateUrlParameters(url, current_parameters, is_remove_unused_parameters) {
@@ -59,6 +71,24 @@ window.addEventListener("popstate", function (e) {
 });
 
 /**
+ * Get the facets state (checked)
+ * @returns {Array}
+ */
+function get_ui_facets_state() {
+
+    // Add all selected facets to the state
+    state = [];
+    jQuery('.select_opt.checked').each(function () {
+        // Retrieve current selection
+        opts = jQuery(this).attr('id');
+
+        state.push(opts);
+    });
+
+    return state;
+}
+
+/**
  * Return current stored values
  * @returns {{query: *, fq: *, sort: *, start: *}}
  */
@@ -67,7 +97,7 @@ function get_ui_selection() {
     var result = {};
 
     result[wp_localize_script_autocomplete.SEARCH_PARAMETER_Q] = jQuery('#search_que').val() || '';
-    result[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ] = jQuery('#sel_fac_field').val() || '';
+    result[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ] = get_ui_facets_state();
     result[wp_localize_script_autocomplete.SEARCH_PARAMETER_SORT] = jQuery('.select_field').val() || '';
     result[wp_localize_script_autocomplete.SEARCH_PARAMETER_PAGE] = jQuery('#paginate').val() || '';
 
@@ -134,6 +164,9 @@ function call_ajax_search(selection_parameters, is_change_url) {
             // Display number of results
             jQuery('.res_info').html(data[2]);
 
+            // Display number of results
+            jQuery('#res_facets').html(data[3]);
+
         },
         error: function () {
 
@@ -183,25 +216,44 @@ jQuery(document).ready(function () {
         });
     })
 
+
     /**
-     * A facet is selected
+     * A facet is selected/unselected
      */
     jQuery(document).on('click', '.select_opt', function () {
 
         // Reset pagination
         jQuery('#paginate').val('');
 
-        // Retrieve current selection
-        opts = jQuery(this).attr('id');
-        // Remove the last part. type:post:39 => type:post
-        opts = opts.substring(0, opts.lastIndexOf(':'));
+        var state = [];
 
-        // Store the current selection
-        jQuery('#sel_fac_field').val(opts);
+        if (jQuery(this).attr('id') === 'wpsolr_remove_facets') {
+
+            // Unselect all facets
+            jQuery('.select_opt').removeClass('checked');
+            jQuery(this).addClass('checked');
+
+        } else {
+
+            // Select/Unselect the element
+            is_already_selected = jQuery(this).hasClass('checked');
+            if (is_already_selected) {
+                // Unselect current selection
+                jQuery(this).removeClass('checked');
+            } else {
+                // Select current selection
+                jQuery(this).addClass('checked');
+            }
+
+            // Get facets state
+            state = get_ui_facets_state();
+        }
+
+        //alert(JSON.stringify(state));
 
         // Ajax call on the current selection
         var parameter = {};
-        parameter[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ] = (opts === "") ? [] : [opts];
+        parameter[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ] = state;
         call_ajax_search(parameter, true);
 
     });
@@ -243,4 +295,5 @@ jQuery(document).ready(function () {
     });
 
 
-});
+})
+;

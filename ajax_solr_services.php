@@ -2,6 +2,7 @@
 
 include( dirname( __FILE__ ) . '/classes/solr/wpsolr-index-solr-client.php' );
 include( dirname( __FILE__ ) . '/classes/solr/wpsolr-search-solr-client.php' );
+include( dirname( __FILE__ ) . '/classes/ui/wpsolr-ui-facets.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
@@ -93,7 +94,7 @@ function fun_search_indexed_data() {
 
 			$solr = WPSolrSearchSolrClient::create_from_default_index_indice();
 
-			$options = $fac_opt['facets'];
+			$facets_options = $fac_opt['facets'];
 
 			try {
 
@@ -142,59 +143,9 @@ function fun_search_indexed_data() {
 					}
 				}
 
-				$res_array = $final_result[3];
-				if ( $final_result[1] != '0' ) {
+				// Display facets UI
+				echo '<div id="res_facets">' . WpSolrUiFacets::Build( $url_parameters, $facets_options, $final_result[1], $localization_options ). '</div>';
 
-
-					if ( $options != '' && $res_array != 0 ) {
-
-						$facets_array = explode( ',', $fac_opt['facets'] );
-
-
-						$groups = sprintf( "<div><label class='wdm_label'>%s</label>
-                                    <input type='hidden' name='sel_fac_field' id='sel_fac_field' value='all' >
-                                    <ul class='wdm_ul' id='wpsolr_section_facets'><li class='select_opt' id='all'>%s</li>",
-							OptionLocalization::get_term( $localization_options, 'facets_header' ),
-							OptionLocalization::get_term( $localization_options, 'facets_element_all_results' )
-						);
-
-						$facet_element = OptionLocalization::get_term( $localization_options, 'facets_element' );
-						$facet_title   = OptionLocalization::get_term( $localization_options, 'facets_title' );
-						foreach ( $facets_array as $arr ) {
-							if ( isset( $final_result[1][ $arr ] ) && count( $final_result[1][ $arr ] ) > 0 ) {
-								$arr_val = $arr;
-								if ( substr( $arr_val, ( strlen( $arr_val ) - 4 ), strlen( $arr_val ) ) == "_str" ) {
-									$arr_val = substr( $arr_val, 0, ( strlen( $arr_val ) - 4 ) );
-								}
-
-								// Give plugins a chance to change the facet name (ACF).
-								$arr_val = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME, $arr_val );
-
-								$arr_val = str_replace( '_', ' ', $arr_val );
-								$arr_val = ucfirst( $arr_val );
-
-								$groups .= "<lh >" . sprintf( $facet_title, $arr_val ) . "</lh><br>";
-
-								foreach ( $final_result[1][ $arr ] as $val ) {
-									$name  = $val[0];
-									$count = $val[1];
-
-									$groups .= "<li class='select_opt' id='$arr:$name:$count'>"
-									           . sprintf( $facet_element, $name, $count )
-									           . "</li>";
-								}
-							}
-
-						}
-
-						$groups .= '</ul></div>';
-
-
-					}
-
-					echo $groups;
-
-				}
 
 				echo '</div>
                     <div class="wdm_results">';
@@ -202,15 +153,16 @@ function fun_search_indexed_data() {
 					echo $final_result[0];
 				}
 
-				if ( $solr_form_options['res_info'] == 'res_info' && $res_array != 0 ) {
+				$ui_result_rows = $final_result[3];
+				if ( $solr_form_options['res_info'] == 'res_info' && $ui_result_rows != 0 ) {
 					echo '<div class="res_info">' . $final_result[4] . '</div>';
 				}
 
-				if ( $res_array != 0 ) {
+				if ( $ui_result_rows != 0 ) {
 					$img = plugins_url( 'images/gif-load.gif', __FILE__ );
 					echo '<div class="loading_res"><img src="' . $img . '"></div>';
 					echo "<div class='results-by-facets'>";
-					foreach ( $res_array as $resarr ) {
+					foreach ( $ui_result_rows as $resarr ) {
 						echo $resarr;
 					}
 					echo "</div>";
@@ -360,7 +312,10 @@ function return_solr_results() {
 	$solr         = WPSolrSearchSolrClient::create_from_default_index_indice();
 	$final_result = $solr->get_search_results( $query, $fq, $paged, $sort );
 
-	$res_opt = get_option( 'wdm_solr_res_data' );
+	$res_opt              = get_option( 'wdm_solr_res_data' );
+	$fac_opt              = get_option( 'wdm_solr_facet_data', array() );
+	$facets_options       = isset( $fac_opt['facets'] ) ? $fac_opt['facets'] : array();
+	$localization_options = OptionLocalization::get_options();
 
 	// Add result rows as html
 	$res1[] = $final_result[3];
@@ -383,7 +338,7 @@ function return_solr_results() {
 	$res1[] = $final_result[4];
 
 	// Add facets data
-	//$res1[] = $final_result[1];
+	$res1[] = WpSolrUiFacets::Build( $url_parameters, $facets_options, $final_result[1], $localization_options );
 
 	// Output Json response to Ajax call
 	echo json_encode( $res1 );
