@@ -24,13 +24,13 @@ var datajax = {
     'sort_opt': wp_localize_script_autocomplete.SORT_CODE_BY_RELEVANCY_DESC
 };
 
-//select_opt
-jQuery('.select_opt').click(function () {
+// Facets
+jQuery(document).on('click', '.select_opt', function () {
+
     datajax.opts = jQuery(this).attr("id");
     info.numberofelements = 1;
     info.curentpage = 1;
     //console.log('curent data opts ' + datajax.opts);
-
 
     setTimeout(function () {
         info.numberofelements = jQuery('#pagination-flickr li').size();
@@ -97,7 +97,7 @@ jQuery(document).scroll(function () {
 
                 // Generate url parameters
                 var url_parameters = generateUrlParameters(window.location.href, parameters, true);
-                //alert(url_parameters);
+                //console.log('parameters' + url_parameters);
 
                 // Generate Ajax data object
                 var data = {action: 'return_solr_results', url_parameters: url_parameters};
@@ -106,34 +106,29 @@ jQuery(document).scroll(function () {
                 jQuery.post(info.ajaxurl, data, function (response) {
 
                     var obj = jQuery.parseJSON(response)
-                    //console.log(obj);
-                    var ojectlenght = obj.length;
-                    var i = 1;
 
+                    if (jQuery.isArray(obj) && obj.length > 0) {
 
-                    ojectlenght = ojectlenght - 2; // no need pagination again
-                    jQuery.each(obj, function (index, value) {
-                        // without  last 2 items
-                        //results-by-facets
-                        if (i <= ojectlenght && value.length > 0) {
+                        // Loop on result rows
+                        jQuery.each(obj[0], function (index, value) {
+                            //console.log(value);
+
                             jQuery(".results-by-facets").append(value);
-                        }
-                        i++;
-                    });
-
+                        });
+                    }
 
                 });
 
 
             } else {
-                /*
-                 console.log('fade out postion' + position);
-                 console.log('fade out scrollpositionnew' + scrollpositionnew);
-                 console.log('numberelements ' + info.numberofelements);
-                 console.log('info.curentpage ' + info.curentpage);
-                 console.log('info.inprogress ' + info.inprogress);
-                 console.log(' ----- ');
-                 */
+
+                //console.log('fade out postion: ' + position);
+                //console.log('fade out scrollpositionnew: ' + scrollpositionnew);
+                //console.log('numberelements: ' + info.numberofelements);
+                //console.log('info.curentpage: ' + info.curentpage);
+                //console.log('info.inprogress: ' + info.inprogress);
+                //console.log(' ----- ');
+
 
                 // do noting
             }

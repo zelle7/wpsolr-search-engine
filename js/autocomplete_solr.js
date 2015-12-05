@@ -82,7 +82,11 @@ function get_ui_facets_state() {
         // Retrieve current selection
         opts = jQuery(this).attr('id');
 
-        state.push(opts);
+        if (opts !== 'wpsolr_remove_facets') {
+            // Do not add the remove facets facet to url parameters
+            state.push(opts);
+        }
+
     });
 
     return state;
