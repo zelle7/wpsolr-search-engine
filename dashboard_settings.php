@@ -206,7 +206,7 @@ function fun_set_solr_options() {
 
 	?>
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
-	<div class="page_title"><h1>WPSOLR Settings </h1></div>
+	<div class="page_title"><h1>Power your search with Solr, the world's leading search engine</h1></div>
 
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
@@ -233,11 +233,11 @@ function fun_set_solr_options() {
 			<?php
 
 			$subtabs = array(
-				'result_opt'           => 'Result Options',
-				'index_opt'            => 'Indexing Options',
-				'facet_opt'            => 'Facets Options',
-				'sort_opt'             => 'Sort Options',
-				'localization_options' => 'Localization Options',
+				'result_opt'           => '2.1 Result Options',
+				'index_opt'            => '2.2 Indexing Options',
+				'facet_opt'            => '2.3 Facets Options',
+				'sort_opt'             => '2.4 Sort Options',
+				'localization_options' => '2.5 Localization Options',
 			);
 
 			$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -327,8 +327,9 @@ function fun_set_solr_options() {
 											<?php
 											$options = array(
 												array( 'code' => 'ajax', 'label' => 'Ajax' ),
-												array( 'code'  => 'ajax_with_parameters',
-												       'label' => 'Ajax with url parameters'
+												array(
+													'code'  => 'ajax_with_parameters',
+													'label' => 'Ajax with url parameters'
 												)
 											);
 											foreach ( $options as $option ) {
@@ -1124,16 +1125,20 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 	$option_indexes            = new OptionIndexes();
 	$default_search_solr_index = $option_indexes->get_default_search_solr_index();
 
+	$nb_indexes        = count( $option_indexes->get_indexes() );
+	$are_there_indexes = ( $nb_indexes > 0 );
 
-	$tabs = array(
-		'solr_indexes'    => 'Solr Indexes',
-		'solr_option'     => sprintf( 'Solr Options %s', ! isset( $default_search_solr_index )
-			? count( $option_indexes->get_indexes() ) > 0 ? "<span class='text_error'>No index selected</span>" : ''
-			: $option_indexes->get_index_name( $default_search_solr_index )
-		),
-		'solr_plugins'    => 'Plugins Integration',
-		'solr_operations' => 'Solr Indexing Batch'
-	);
+	$tabs                 = array();
+	$tabs['solr_indexes'] = $are_there_indexes ? '1. Define your Solr Indexes' : '1. Define your Solr Index';
+	if ( $are_there_indexes ) {
+		$tabs['solr_option']     = sprintf( "2. Define your search with '%s'",
+			! isset( $default_search_solr_index )
+				? $are_there_indexes ? "<span class='text_error'>No index selected</span>" : ''
+				: $option_indexes->get_index_name( $default_search_solr_index ) );
+		$tabs['solr_plugins']    = '3. Define which plugins to work with';
+		$tabs['solr_operations'] = '4. Send your data';
+	}
+
 	echo '<div id="icon-themes" class="icon32"><br></div>';
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab => $name ) {

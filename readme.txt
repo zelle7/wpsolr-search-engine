@@ -20,6 +20,11 @@ Replace search with Solr. Choose local or cloud Solr servers. Free Solr index in
 
 == Description ==
 
+= Pricing =
+The plugin is 100% FREE, and there is no so-called "premium" version.
+You may also use your own FREE Solr server, or buy a ready-to-use Solr hosting cloud subscription at 40€/year (a test subscription is included within the plugin).
+If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
+
 = Features =
 - Solr Indexes options
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-25.png?r= "Free Solr index"): Get a free instant cloud Solr index ready for testing
