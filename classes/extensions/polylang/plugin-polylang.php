@@ -71,6 +71,11 @@ class PluginPolylang extends PluginWpml {
 			throw new ErrorException( sprintf( "The language '%s' is undefined in %s (not in the taxonomy terms).", $language, static::_PLUGIN_NAME_IN_MESSAGES ) );
 		}
 		$language_term_id = $languages[ $language ]['term_id'];
+		$term             = get_term( $language_term_id, 'language' );
+		if ( ! isset( $term ) ) {
+			throw new ErrorException( sprintf( "The language '%s' term_id '%s' is undefined in %s (not in the taxonomy terms).", $language, $language_term_id, static::_PLUGIN_NAME_IN_MESSAGES ) );
+		}
+		$term_taxonomy_id = $term->term_taxonomy_id;
 
 		if ( isset( $language ) ) {
 
@@ -79,7 +84,7 @@ class PluginPolylang extends PluginWpml {
 			$sql_joint_statement .= $wpdb->prefix . self::TABLE_TERM_RELATION_SHIPS . ' AS ' . 'wp_term_relationships';
 			$sql_joint_statement .= " ON posts.ID = wp_term_relationships.object_id AND wp_term_relationships.term_taxonomy_id = '%s' ";
 
-			$sql_statements['JOIN'] = sprintf( $sql_joint_statement, $language_term_id );
+			$sql_statements['JOIN'] = sprintf( $sql_joint_statement, $term_taxonomy_id );
 		}
 
 		return $sql_statements;

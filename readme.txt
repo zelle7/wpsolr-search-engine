@@ -2,7 +2,7 @@
 
 Contributors: WPSOLR.COM
 
-Current Version: 7.3
+Current Version: 7.4
 
 Author:  WPSOLR.COM
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.3
 
-Stable tag: 7.3
+Stable tag: 7.4
 
 Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
 
@@ -87,9 +87,11 @@ If you have specific needs, we also provide development services. Contact us at 
   - Option to debug SQL queries
 
 = Some websites using WPSOLR, with filters, suggestions, and did you mean features =
+- Search "thinktank" at http://www.avenir-suisse.ch
 - Search "båtar" at http://batunionen.se/ (results found in attached pdf files)
 - Search "educación" at http://www.gaceta.unam.mx/
 - Search "constructor" at http://boplex.com/ (> 100 000 posts searchable on this site)
+- Search "app" at http://healthitlink.com/ (> 80 000 apps searchable on this site)
 - Search "education" at http://www.nmc.org/
 - Search "renewable" at http://www.sunverge.com/
 - Search "restaurant" at https://digitalltag.de/
@@ -221,6 +223,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 7.4 =
+* Fix POLYLANG sql returning no documents to index.
+* Update of nl_NL translation files.
 
 = 7.3 =
 * [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Facets multi-selection"): Add multi-selection to facets.

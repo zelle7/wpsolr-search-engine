@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
- * Version: 7.3
+ * Version: 7.4
  * Author: WPSOLR.COM
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
