@@ -343,6 +343,18 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
+									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use your own theme css.
+									</div>
+									<div class='col_right'>
+										<?php $is_prevent_loading_front_end_css = isset( $solr_res_options['is_prevent_loading_front_end_css'] ) ? '1' : '0'; ?>
+										<input type='checkbox'
+										       name='wdm_solr_res_data[is_prevent_loading_front_end_css]'
+										       value='1'
+											<?php checked( '1', $is_prevent_loading_front_end_css ); ?>>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
 									<div class='col_left'>Activate the "Infinite scroll" pagination.<br/>
 										This feature loads the next page of results automatically when visitors approach
 										the bottom of search page.

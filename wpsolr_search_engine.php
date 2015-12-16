@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
- * Version: 7.4
- * Author: WPSOLR.COM
+ * Description: WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
+ * Version: 7.5
+ * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
  */
@@ -305,8 +305,11 @@ function my_plugins_loaded() {
 function my_enqueue() {
 	global $solr_options;
 
-	wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
-	wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
+	if ( ! isset( $solr_options['is_prevent_loading_front_end_css'] ) ) {
+		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
+		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
+	}
+
 	wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), false, true );
 	// Url utilities to manipulate the url parameters
 	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), false, true );
