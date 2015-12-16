@@ -1,12 +1,12 @@
 === WPSOLR Search Engine ===
 
-Contributors: WPSOLR.COM
+Contributors: wpsolr
 
 Current Version: 7.4
 
-Author:  WPSOLR.COM
+Author: wpsolr
 
-Author URI: http://wpsolr.com/ 
+Author URI: http://www.wpsolr.com/
 
 Tags: Solr in WordPress, WooCommerce search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, faceting, relevant search, custom search, facets, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
@@ -16,14 +16,45 @@ Tested up to: 4.3
 
 Stable tag: 7.4
 
-Replace search with Solr. Choose local or cloud Solr servers. Free Solr index included for a quick start.
+WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
 
 == Description ==
 
 = Pricing =
 The plugin is 100% FREE, and there is no so-called "premium" version.
-You may also use your own FREE Solr server, or buy a ready-to-use Solr hosting cloud subscription at 40€/year (a test subscription is included within the plugin).
+
+= Solr server =
+- Install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
+- Test the plugin with a free Solr index ready-to-use included.
+- If you lack the skills, buy an optional ready-to-use Solr hosting cloud subscription at [35.88 €/year](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
+
+= Consulting =
 If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
+
+= Videos =
+e-commerce, multi-filters facets, website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=5ibXwouAPHM&hd=1]
+
+Multi-language, multi-filters facets, website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=Cby0rJTSLt4&hd=1]
+
+US website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=xOXQoKsWGMg&hd=1]
+
+Spanish website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=nlwFGKhEZWg&hd=1]
+
+Swiss website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=50h5M4T5CR4&hd=1]
+
+German website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=6Ij3sf0yyzw&hd=1]
+
+Turkish website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=S0JvK6oyX0w&hd=1]
+
+Back-end presentation:
+[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
 
 = Features =
 - Solr Indexes options
@@ -97,9 +128,9 @@ If you have specific needs, we also provide development services. Contact us at 
 - Search "restaurant" at https://digitalltag.de/
 - Contact us in the forum should your website be seen here!
 
-= Translations =
-French (fr_FR) by WPSOLR.
-Deutch (nl_NL) by matthijs.
+= Front-end translations =
+- French (fr_FR) by WPSOLR.
+- Deutch (nl_NL) by matthijs.
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
 We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
@@ -317,7 +348,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.0 =
-* Fix error while updating the Solr index when post/page are published or trashed. 
+* Fix error while updating the Solr index when post/page are published or trashed.
 
 = 4.9 =
 * [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
@@ -448,7 +479,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 = 1.4 =
 * Fixed warning on search page for self hosted Solr
-* Requires to reload yor index with the new config files (solrconfig.xml, schema.xml). Fixed error on autocomplete, and search page with "did you mean" activated, for self hosted Solr 
+* Requires to reload yor index with the new config files (solrconfig.xml, schema.xml). Fixed error on autocomplete, and search page with "did you mean" activated, for self hosted Solr
 
 = 1.3 =
 * Speed up search results display.
@@ -499,7 +530,7 @@ As of now, the WPSOLR Search Engine Plugin works with WordPress version 3.8 or a
 
 Yes. The WPSOLR Search Engine plugin provides an option in dashboard, to select custom post types, custom taxonomies and custom fields, which have to be indexed.
 
- 
+
 = Can custom post type, custom taxonomies and custom fields be added faceted search? =
 
 Yes. The WPSOLR Search Engine plugin provides option in dashboard, to select custom post types, custom taxonomies and custom fields, to be added in faceted search.
