@@ -2,7 +2,11 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
+<<<<<<< HEAD
  * Version: 7.5
+=======
+ * Version: 7.4
+>>>>>>> widgets
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -32,6 +36,10 @@ add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
 add_action( 'wp_enqueue_scripts', 'my_enqueue' );
 
+
+// Register WpSolr widgets
+require_once 'classes/ui/widget/WpSolr_Widget.php';
+WPSOLR_Widget::Autoload();
 
 /*
  * Display Solr errors in admin when a save on a post can't index to Solr
