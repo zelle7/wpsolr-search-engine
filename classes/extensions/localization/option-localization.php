@@ -133,11 +133,6 @@ class OptionLocalization extends WpSolrExtensions {
 		);
 	}
 
-	static function is_internal_localized( $options ) {
-
-		return ( isset( $options['localization_method'] ) && ( 'localization_by_admin_options' === $options['localization_method'] ) );
-	}
-
 	/**
 	 * Get the whole array of options.
 	 * Merge between default options and customized options.
@@ -150,9 +145,7 @@ class OptionLocalization extends WpSolrExtensions {
 
 		$default_options = self::get_default_options();
 
-		$database_options = get_option( 'wdm_solr_localization_data', null );
-
-		$is_internal_localized = is_bool( $is_internal_localized ) ? $is_internal_localized : self::is_internal_localized( $database_options );
+		$is_internal_localized = is_bool( $is_internal_localized ) ? $is_internal_localized : WPSOLR_Global::getOption()->get_localization_is_internal();
 
 		if ( ! $is_internal_localized ) {
 			// No need to use the database translated options.
@@ -160,6 +153,7 @@ class OptionLocalization extends WpSolrExtensions {
 			return $default_options;
 		}
 
+		$database_options = WPSOLR_Global::getOption()->get_option_localization();
 		if ( $database_options != null ) {
 			// Replace default values with by database (customized) values with same key.
 			// Why do that ? Because we can have added new terms in the default terms,

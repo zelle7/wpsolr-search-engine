@@ -20,7 +20,9 @@ function generateUrlParameters(url, current_parameters, is_remove_unused_paramet
     // jsurl library to manipulate parameters (https://github.com/Mikhus/jsurl)
     var url1 = new Url(url);
 
-    // Extract parameter query
+    /**
+     * Extract parameter query
+     */
     var query = current_parameters[wp_localize_script_autocomplete.SEARCH_PARAMETER_Q] || '';
     if (query !== '') {
         url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_Q] = query;
@@ -29,15 +31,28 @@ function generateUrlParameters(url, current_parameters, is_remove_unused_paramet
     }
 
 
-    // Extract parameter fq (query field)
+    /**
+     *    Extract parameter fq (query field)
+     *    We follow Wordpress convention for url parameters with multiple occurence: xxx[0..n]=
+     *    (php is xxx[]=)
+     */
+    // First, remove all fq parameters
+    for (var index = 0; ; index++) {
+        if (undefined === url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ + '[' + index + ']']) {
+            break;
+        } else {
+            delete url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ + '[' + index + ']'];
+        }
+    }
+    // 2nd, add parameters
     var query_fields = current_parameters[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ] || [];
-    if (query_fields.length > 0) {
-        url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ + '[]'] = query_fields;
-    } else if (is_remove_unused_parameters) {
-        delete url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ + '[]'];
+    for (var index in query_fields) {
+        url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_FQ + '[' + index + ']'] = query_fields[index];
     }
 
-    // Extract parameter sort
+    /**
+     * Extract parameter sort
+     */
     var sort = current_parameters[wp_localize_script_autocomplete.SEARCH_PARAMETER_SORT] || '';
     if (sort !== '') {
         url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_SORT] = sort;
@@ -45,7 +60,9 @@ function generateUrlParameters(url, current_parameters, is_remove_unused_paramet
         delete url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_SORT];
     }
 
-    // Extract parameter page number
+    /**
+     * Extract parameter page number
+     */
     var paged = current_parameters[wp_localize_script_autocomplete.SEARCH_PARAMETER_PAGE] || '';
     if (paged !== '') {
         url1.query[wp_localize_script_autocomplete.SEARCH_PARAMETER_PAGE] = paged;
@@ -128,8 +145,22 @@ function call_ajax_search(selection_parameters, is_change_url) {
         url_parameters = generateUrlParameters(window.location.href, parameters, true);
     }
 
+    // Not an ajax, redirect to url
+    if (wp_localize_script_autocomplete.is_url_redirect) {
+
+        // Remove the pagination from the url, to start from page 1
+        // xxx/2/ => xxx/
+        var url_base = window.location.href.split("?")[0];
+        var url = url_base.replace(/\/page\/\d+/, '');
+
+        // Redirect to url
+        window.location.href = url + url_parameters;
+        return;
+    }
+
+
     // Update url with the current selection, if required, and authorized by admin option
-    if (is_change_url && wp_localize_script_autocomplete.show_url_parameters) {
+    if (is_change_url && wp_localize_script_autocomplete.is_show_url_parameters) {
         // Option to show parameters in url no selected: do nothing
 
         // Create state from url parameters

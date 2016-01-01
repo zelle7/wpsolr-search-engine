@@ -89,7 +89,7 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_form_options', 'wdm_solr_form_data' );
 	register_setting( 'solr_res_options', 'wdm_solr_res_data' );
 	register_setting( 'solr_facet_options', 'wdm_solr_facet_data' );
-	register_setting( 'solr_sort_options', 'wdm_solr_sortby_data' );
+	register_setting( 'solr_sort_options', WPSOLR_Option::OPTION_SORTBY );
 	register_setting( 'solr_localization_options', 'wdm_solr_localization_data' );
 	register_setting( 'solr_extension_groups_options', 'wdm_solr_extension_groups_data' );
 	register_setting( 'solr_extension_s2member_options', 'wdm_solr_extension_s2member_data' );
@@ -308,28 +308,36 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										Activate WPSOLR: replace WordPress default search form.<br/>
-										Warning: permalinks must be activated.
+										Replace WordPress default search by WPSOLR's.<br/><br/>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox' name='wdm_solr_res_data[default_search]'
 										       value='1'
 											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
+										If your website is already in production, check this option after tabs
+										1-4 are completed. <br/><br/>
+										Warning: permalinks must be activated.
 									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										Search mode
+										Search theme
 									</div>
 									<div class='col_right'>
 										<select name="wdm_solr_res_data[search_method]">
 											<?php
 											$options = array(
-												array( 'code' => 'ajax', 'label' => 'Ajax' ),
+												array(
+													'code'  => 'use_current_theme_search_template',
+													'label' => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no facets, no sort)'
+												),
+												array( 'code'  => 'ajax',
+												       'label' => 'Use WPSOLR custom search templates with Ajax (full WPSOLR features)'
+												),
 												array(
 													'code'  => 'ajax_with_parameters',
-													'label' => 'Ajax with url parameters'
+													'label' => 'Use WPSOLR custom search templates with Ajax and show parameters in url (full WPSOLR features)'
 												)
 											);
 											foreach ( $options as $option ) {
@@ -338,12 +346,22 @@ function fun_set_solr_options() {
 												<option
 													value="<?php echo $option['code'] ?>" <?php echo $selected ?> ><?php echo $option['label'] ?></option>
 											<?php } ?>
+
 										</select>
+
+										<br/><br/>
+										To display your search results, you can choose among:<br/>
+										<b>- Full integration to your theme, but less Solr features:</b> <br/>
+										Use your own theme's search templates customized with Widget 'WPSOLR
+										Facets'.<br/>
+										<b>- Full Solr features, but less integration to your theme:</b><br/>
+										Use WPSOLR's custom search templates with your own css.<br/>
 									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use your own theme css.
+									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use your
+										own theme css.
 									</div>
 									<div class='col_right'>
 										<?php $is_prevent_loading_front_end_css = isset( $solr_res_options['is_prevent_loading_front_end_css'] ) ? '1' : '0'; ?>
@@ -355,15 +373,15 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Activate the "Infinite scroll" pagination.<br/>
-										This feature loads the next page of results automatically when visitors approach
-										the bottom of search page.
+									<div class='col_left'>Activate the "Infinite scroll" pagination.
 									</div>
 									<div class='col_right'>
 										<input type='checkbox'
 										       name='wdm_solr_res_data[<?php echo 'infinitescroll' ?>]'
 										       value='infinitescroll'
 											<?php checked( 'infinitescroll', isset( $solr_res_options['infinitescroll'] ) ? $solr_res_options['infinitescroll'] : '?' ); ?>>
+										This feature loads the next page of results automatically when visitors approach
+										the bottom of search page.
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -784,24 +802,18 @@ function fun_set_solr_options() {
 					break;
 
 				case 'sort_opt':
-					$img_path    = plugins_url( 'images/plus.png', __FILE__ );
+					$img_path = plugins_url( 'images/plus.png', __FILE__ );
 					$minus_path = plugins_url( 'images/minus.png', __FILE__ );
 
-					$checked_fls = array();
-					$built_in    = WPSolrSearchSolrClient::get_sort_options();
+					$built_in = WPSolrSearchSolrClient::get_sort_options();
 
 					?>
 					<div id="solr-sort-options" class="wdm-vertical-tabs-content">
 						<form action="options.php" method="POST" id='sort_settings_form'>
 							<?php
 							settings_fields( 'solr_sort_options' );
-							$solr_sort_options   = get_option( 'wdm_solr_sortby_data' );
-							$selected_sort_value = $solr_sort_options['sort'];
-							if ( $selected_sort_value != '' ) {
-								$selected_array = explode( ',', $selected_sort_value );
-							} else {
-								$selected_array = array();
-							}
+							$selected_sort_value = WPSOLR_Global::getOption()->get_sortby_items();
+							$selected_array      = WPSOLR_Global::getOption()->get_sortby_items_as_array();
 							?>
 							<div class='wrapper'>
 								<h4 class='head_div'>Sort Options</h4>
@@ -828,7 +840,7 @@ function fun_set_solr_options() {
 									<div class='col_right'>
 										<select name="wdm_solr_sortby_data[sort_default]">
 											<?php foreach ( $built_in as $sort ) {
-												$selected = $solr_sort_options['sort_default'] == $sort['code'] ? 'selected' : '';
+												$selected = WPSOLR_Global::getOption()->get_sortby_default() == $sort['code'] ? 'selected' : '';
 												?>
 												<option
 													value="<?php echo $sort['code'] ?>" <?php echo $selected ?> ><?php echo $sort['label'] ?></option>

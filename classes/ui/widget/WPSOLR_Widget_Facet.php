@@ -11,8 +11,8 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 	function __construct() {
 		parent::__construct(
 			'wpsolr_widget_facets', // Base ID
-			__( 'WPSOLR Search Results', 'wpsolr_admin' ), // Name
-			array( 'description' => __( 'Display search results', 'wpsolr_admin' ), ) // Args
+			__( 'WPSOLR Facets', 'wpsolr_admin' ), // Name
+			array( 'description' => __( 'Display Solr Facets', 'wpsolr_admin' ), ) // Args
 		);
 	}
 
@@ -25,12 +25,23 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		echo $args['before_widget'];
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+
+		if ( WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search() && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() && WPSOLR_Query_Parameters::is_wp_search() ) {
+
+			echo $args['before_widget'];
+
+			$results = WPSOLR_Global::getSolrClient()->display_results( WPSOLR_Global::getQuery() );
+
+			echo '<div id="res_facets">' . WPSOLR_UI_Facets::Build(
+					WPSOLR_Data_Facets::get_data(
+						WPSOLR_Global::getQuery()->get_filter_query_fields_group_by_name(),
+						WPSOLR_Global::getOption()->get_facets_to_display(),
+						$results[1] ),
+					OptionLocalization::get_options() ) . '</div>';
+
+			echo $args['after_widget'];
 		}
-		echo __( 'Hello, World!', 'wpsolr_admin' );
-		echo $args['after_widget'];
+
 	}
 
 	/**
@@ -40,6 +51,7 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 	 *
 	 * @param array $instance Previously saved values from database.
 	 */
+	/*
 	public function form( $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'wpsolr_admin' );
 		?>
@@ -49,6 +61,21 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 			       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
 			       value="<?php echo esc_attr( $title ); ?>">
 		</p>
+		<?php
+	}*/
+	public function form( $instance ) {
+		?>
+		<p>
+			Position this widget where you want your facets to appear.
+		</p>
+		<p>
+			Facets are dynamic filters users can click on to filter search results, like categories, or tags. Facets
+			must have been defined in WPSOLR admin pages.
+		</p>
+		<p>
+			In next releases of WPSOLR, you will be able to configure your widget layout, to match your theme layout.
+		</p>
+
 		<?php
 	}
 
@@ -62,11 +89,12 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 	 *
 	 * @return array Updated safe values to be saved.
 	 */
+	/*
 	public function update( $new_instance, $old_instance ) {
 		$instance          = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 
 		return $instance;
-	}
+	}*/
 
 }

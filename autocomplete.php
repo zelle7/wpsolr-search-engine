@@ -16,8 +16,7 @@ function wdm_return_solr_rows() {
 
 			try {
 
-				$client = WPSolrSearchSolrClient::create_from_default_index_indice();
-				$result = $client->get_suggestions( $input );
+				$result = WPSOLR_Global::getSolrClient()->get_suggestions( $input );
 
 				echo json_encode( $result );
 

@@ -9,8 +9,8 @@ class WPSolrAbstractSolrClient {
 	// Timeout in seconds when calling Solr
 	const DEFAULT_SOLR_TIMEOUT_IN_SECOND = 30;
 
-	public $client;
-	protected $config;
+	public $solarium_client;
+	protected $solarium_config;
 
 	// Indice of the Solr index configuration in admin options
 	protected $index_indice;

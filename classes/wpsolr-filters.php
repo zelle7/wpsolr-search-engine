@@ -54,4 +54,10 @@ class WpSolrFilters {
 
 	// Filter to change a facet name on search page
 	const WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME = 'wpsolr_filter_search_page_facet_name';
+
+	// Filter before retrieving an option value
+	const WPSOLR_FILTER_BEFORE_GET_OPTION_VALUE = 'wpsolr_filter_before_get_option_value';
+
+	// Filter after retrieving an option value
+	const WPSOLR_FILTER_AFTER_GET_OPTION_VALUE = 'wpsolr_filter_after_get_option_value';
 }

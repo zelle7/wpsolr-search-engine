@@ -1,11 +1,17 @@
 <?php
 
+use Solarium\Core\Query\Result\ResultInterface;
+use Solarium\QueryType\Select\Query\Query;
+
 require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
 
 class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
-	public $select_query;
-	protected $config;
+	protected $solarium_results;
+
+	protected $solarium_query;
+
+	protected $solarium_config;
 
 	// Array of active extension objects
 	protected $wpsolr_extensions;
@@ -31,16 +37,29 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	// Do not change - Sort by most comments
 	const SORT_CODE_BY_NUMBER_COMMENTS_DESC = 'sort_by_number_comments_desc';
 
+	// Default maximum number of items returned by facet
+	const DEFAULT_MAX_NB_ITEMS_BY_FACET = 10;
 
-	/**
-	 * Search parameters used in url or ajax
-	 */
-	const SEARCH_PARAMETER_AJAX_URL_PARAMETERS = 'url_parameters';
-	const SEARCH_PARAMETER_SEARCH = 'search'; // Old query name, here for compatibility
-	const SEARCH_PARAMETER_Q = 'wpsolr_q'; // New query name
-	const SEARCH_PARAMETER_FQ = 'wpsolr_fq';
-	const SEARCH_PARAMETER_PAGE = 'wpsolr_page';
-	const SEARCH_PARAMETER_SORT = 'wpsolr_sort';
+	// Defaut minimum count for a facet to be returned
+	const DEFAULT_MIN_COUNT_BY_FACET = 1;
+
+	// Default maximum size of highliting fragments
+	const DEFAULT_HIGHLIGHTING_FRAGMENT_SIZE = 100;
+
+	// Default highlighting prefix
+	const DEFAULT_HIGHLIGHTING_PREFIX = '<b>';
+
+	// Default highlighting postfix
+	const DEFAULT_HIGHLIGHTING_POSFIX = '</b>';
+
+	const PARAMETER_HIGHLIGHTING_FIELD_NAMES = 'field_names';
+	const PARAMETER_HIGHLIGHTING_FRAGMENT_SIZE = 'fragment_size';
+	const PARAMETER_HIGHLIGHTING_PREFIX = 'prefix';
+	const PARAMETER_HIGHLIGHTING_POSTFIX = 'postfix';
+
+	const PARAMETER_FACET_FIELD_NAMES = 'field_names';
+	const PARAMETER_FACET_LIMIT = 'limit';
+	const PARAMETER_FACET_MIN_COUNT = 'min_count';
 
 
 	// Create using a configuration
@@ -49,8 +68,14 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		return new self( $solarium_config );
 	}
 
-	// Create using the default index configuration
-	static function create_from_default_index_indice() {
+
+	/**
+	 * Constructor used by factory WPSOLR_Global
+	 * Create using the default index configuration
+	 *
+	 * @return WPSolrSearchSolrClient
+	 */
+	static function global_object() {
 
 		return self::create_from_index_indice( null );
 	}
@@ -74,27 +99,29 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
-		$this->client = new Solarium\Client( $solarium_config );
+		$this->solarium_client = new Solarium\Client( $solarium_config );
 
 	}
 
 
-	/*
-	 * Manage options by hosting mode
-	 * Use a dedicated postfix added to the option name.
+	/**
+	 * Get suggestions from Solr suggester.
+	 *
+	 * @param string $query Keywords to suggest from
+	 *
+	 * @return array
 	 */
-
-	public function get_suggestions( $input ) {
+	public function get_suggestions( $query ) {
 
 		$results = array();
 
-		$client = $this->client;
+		$client = $this->solarium_client;
 
 
 		$suggestqry = $client->createSuggester();
 		$suggestqry->setHandler( 'suggest' );
 		$suggestqry->setDictionary( 'suggest' );
-		$suggestqry->setQuery( $input );
+		$suggestqry->setQuery( $query );
 		$suggestqry->setCount( 5 );
 		$suggestqry->setCollate( true );
 		$suggestqry->setOnlyMorePopular( true );
@@ -235,183 +262,155 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		return null;
 	}
 
-
-	/*
-	 * Manage options by hosting mode
-	 * Use a dedicated postfix added to the option name.
+	/**
+	 * Convert a $wpsolr_query in a Solarium select query
+	 *
+	 * @param WPSOLR_Query $wpsolr_query
+	 *
+	 * @return Query
 	 */
+	public function set_solarium_query( WPSOLR_Query $wpsolr_query ) {
 
-	public function get_search_results( $term, $facet_options, $start, $sort ) {
+		// Create the solarium query
+		$solarium_query = $this->solarium_client->createSelect();
 
-		$output        = array();
-		$search_result = array();
+		// Set the query keywords.
+		$this->set_keywords( $solarium_query, $wpsolr_query->get_wpsolr_query() );
 
-		// Fields query should be an array
-		if ( ! is_array( $facet_options ) ) {
-			$facet_options = array( $facet_options );
-		}
+		// Set default operator
+		$solarium_query->setQueryDefaultOperator( 'AND' );
 
-		// Load options
-		$ind_opt              = get_option( 'wdm_solr_form_data' );
-		$res_opt              = get_option( 'wdm_solr_res_data' );
-		$fac_opt              = get_option( 'wdm_solr_facet_data' );
-		$localization_options = OptionLocalization::get_options();
+		// Limit nb of results
+		$solarium_query->setStart( $wpsolr_query->get_start() )->setRows( WPSOLR_Global::getOption()->get_search_max_nb_results_by_page() );
 
-		$number_of_res = $res_opt['no_res'];
-		if ( $number_of_res == '' ) {
-			$number_of_res = 20;
-		}
+		/*
+		* Add sort field(s)
+		*/
+		$this->add_sort_field( $solarium_query, $wpsolr_query->get_wpsolr_sort() );
 
-		$field_comment = isset( $ind_opt['comments'] ) ? $ind_opt['comments'] : '';
-		$options       = $fac_opt['facets'];
+		/*
+		* Add facet fields
+		*/
+		$this->add_filter_query_fields( $solarium_query, $wpsolr_query->get_filter_query_fields() );
+
+		/*
+		* Add highlighting fields
+		*/
+		$this->add_highlighting_fields( $solarium_query,
+			array(
+				self::PARAMETER_HIGHLIGHTING_FIELD_NAMES   => array(
+					WpSolrSchema::_FIELD_NAME_TITLE,
+					WpSolrSchema::_FIELD_NAME_CONTENT,
+					WpSolrSchema::_FIELD_NAME_COMMENTS
+				),
+				self::PARAMETER_HIGHLIGHTING_FRAGMENT_SIZE => WPSOLR_Global::getOption()->get_search_max_length_highlighting(),
+				self::PARAMETER_HIGHLIGHTING_PREFIX        => self::DEFAULT_HIGHLIGHTING_PREFIX,
+				self::PARAMETER_HIGHLIGHTING_POSTFIX       => self::DEFAULT_HIGHLIGHTING_POSFIX
+			)
+		);
+
+		/*
+		 * Add facet fields
+		 */
+		$this->add_facet_fields( $solarium_query,
+			array(
+				self::PARAMETER_FACET_FIELD_NAMES => WPSOLR_Global::getOption()->get_facets_to_display(),
+				self::PARAMETER_FACET_LIMIT       => WPSOLR_Global::getOption()->get_search_max_nb_items_by_facet(),
+				self::PARAMETER_FACET_MIN_COUNT   => self::DEFAULT_MIN_COUNT_BY_FACET
+			)
+		);
+
+		/*
+		 * Add fields
+		 */
+		$this->add_fields( $solarium_query );
 
 
-		$msg    = '';
-		$client = $this->client;
-		//$term   = str_replace( ' ', '\ ', $term );
-
-		$query = $client->createSelect();
-		$query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . $term );
-
-		// Let extensions change query
+		// Filter to change the solarium query
 		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
 			array(
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $query,
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $term,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $solarium_query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $wpsolr_query->get_wpsolr_query(),
 				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
 			)
 		);
 
+		// Done
+		return $this->solarium_query = $solarium_query;
+	}
 
-		switch ( $sort ) {
-			case self::SORT_CODE_BY_DATE_DESC:
-				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_DESC );
-				break;
-			case self::SORT_CODE_BY_DATE_ASC:
-				$query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $query::SORT_ASC );
-				break;
-			case self::SORT_CODE_BY_NUMBER_COMMENTS_DESC:
-				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_DESC );
-				break;
-			case self::SORT_CODE_BY_NUMBER_COMMENTS_ASC:
-				$query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $query::SORT_ASC );
-				break;
-			case self::SORT_CODE_BY_RELEVANCY_DESC:
-			default:
-				// None is relevancy
-				break;
+	/**
+	 * Execute a WPSOLR query.
+	 *
+	 * @param WPSOLR_Query $wpsolr_query
+	 *
+	 * @return ResultInterface
+	 */
+	public function execute_wpsolr_query( WPSOLR_Query $wpsolr_query ) {
+
+		if ( isset( $this->solarium_results ) ) {
+			// Return results already in cache
+			return $this->solarium_results;
 		}
 
-		$query->setQueryDefaultOperator( 'AND' );
+		// Create the solarium query from the wpsolr query
+		$this->set_solarium_query( $wpsolr_query );
 
+		// Perform the query, return the Solarium result set
+		return $this->execute_solarium_query();
 
-		$fac_count = $res_opt['no_fac'];
-		if ( $fac_count == '' ) {
-			$fac_count = 20;
-		}
+	}
 
-		if ( $options != '' ) {
+	/**
+	 * Execute a Solarium query.
+	 * Used internally, or when fine tuned solarium select query is better than using a WPSOLR query.
+	 *
+	 * @param Query $solarium_query
+	 *
+	 * @return ResultInterface
+	 */
+	public function execute_solarium_query( Query $solarium_query = null ) {
 
-			$facets_array = explode( ',', $fac_opt['facets'] );
+		// Perform the query, return the Solarium result set
+		return $this->solarium_results = $this->solarium_client->execute( isset( $solarium_query ) ? $solarium_query : $this->solarium_query );
+	}
 
-			$facetSet = $query->getFacetSet();
-			$facetSet->setMinCount( 1 );
-			// $facetSet->;
-			foreach ( $facets_array as $facet ) {
-				$fact = strtolower( $facet );
+	/**
+	 *
+	 * @param WPSOLR_Query $wpsolr_query
+	 *
+	 * @return array Array of html
+	 */
+	public function display_results( WPSOLR_Query $wpsolr_query ) {
 
-				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
-					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
-				}
+		$output        = array();
+		$search_result = array();
 
-				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $fac_count );
+		// Load options
+		$localization_options = OptionLocalization::get_options();
 
-			}
-		}
-
-		$bound = '';
-		foreach ( is_array( $facet_options ) ? $facet_options : array() as $facet_option ) {
-			if ( $facet_option != null || $facet_option != '' ) {
-				$f_array = explode( ':', $facet_option );
-
-				$fac_field = strtolower( $f_array[0] );
-				$fac_type  = isset( $f_array[1] ) ? $f_array[1] : '';
-
-
-				if ( $fac_field != '' && $fac_type != '' ) {
-					$fac_fd = "$fac_field";
-
-					// In case the facet contains white space, we enclose it with "".
-					$fac_type_escaped = "\"$fac_type\"";
-
-					$query->addFilterQuery( array( 'key' => "$fac_fd:$fac_type_escaped", 'query' => "$fac_fd:$fac_type_escaped" ) );
-				}
-
-				if ( isset( $f_array[2] ) && $f_array[2] != '' ) {
-					$bound = $f_array[2];
-				}
-
-			}
-		}
-
-
-		if ( $start == 0 || $start == 1 ) {
-			$st = 0;
-
-		} else {
-			$st = ( ( $start - 1 ) * $number_of_res );
-
-		}
-
-		if ( $bound != '' && $bound < $number_of_res ) {
-
-			$query->setStart( $st )->setRows( $bound );
-
-		} else {
-			$query->setStart( $st )->setRows( $number_of_res );
-
-		}
-
-		/*
-		 * Set highlighting parameters
-		 */
-		$this->set_highlighting( $query, $res_opt );
-
-		/*
-		 * Set fields returned by the query.
-		 * We do not ask for 'content', because it can be huge for attachments, and is anyway replaced by highlighting.
-		 */
-		$query->setFields( array(
-				WpSolrSchema::_FIELD_NAME_ID,
-				WpSolrSchema::_FIELD_NAME_TITLE,
-				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
-				WpSolrSchema::_FIELD_NAME_COMMENTS,
-				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
-				WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
-				WpSolrSchema::_FIELD_NAME_AUTHOR
-			)
-		);
-
-		// Perform the query
-		$resultset = $client->execute( $query );
+		$resultset = $this->execute_wpsolr_query( $wpsolr_query );
 
 		$found = $resultset->getNumFound();
 
-		// No results: try a new query if spellchecking works
-		if ( ( $found === 0 ) && ( $res_opt['spellchecker'] == 'spellchecker' ) ) {
+		// No results: try a new query if did you mean is activated
+		if ( ( $found === 0 ) && ( WPSOLR_Global::getOption()->get_search_is_did_you_mean() ) ) {
 
-			$spellChk = $query->getSpellcheck();
-			$spellChk->setCount( 10 );
-			$spellChk->setCollate( true );
-			$spellChk->setExtendedResults( true );
-			$spellChk->setCollateExtendedResults( true );
-			$resultset = $client->execute( $query );
+			// Add spellcheck to current solarium query
+			$spell_check = $this->solarium_query->getSpellcheck();
+			$spell_check->setCount( 10 );
+			$spell_check->setCollate( true );
+			$spell_check->setExtendedResults( true );
+			$spell_check->setCollateExtendedResults( true );
 
+			// Excecute the query modified
+			$resultset = $this->execute_solarium_query();
 
-			$spellChkResult = $resultset->getSpellcheck();
-			if ( $spellChkResult && ! $spellChkResult->getCorrectlySpelled() ) {
-				$collations          = $spellChkResult->getCollations();
-				$queryTermsCorrected = $term; // original query
+			// Parse spell check results
+			$spell_check_results = $resultset->getSpellcheck();
+			if ( $spell_check_results && ! $spell_check_results->getCorrectlySpelled() ) {
+				$collations          = $spell_check_results->getCollations();
+				$queryTermsCorrected = $wpsolr_query->get_wpsolr_query(); // original query
 				foreach ( $collations as $collation ) {
 					foreach ( $collation->getCorrections() as $input => $correction ) {
 						$queryTermsCorrected = str_replace( $input, is_array( $correction ) ? $correction[0] : $correction, $queryTermsCorrected );
@@ -419,15 +418,15 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 				}
 
-				if ( $queryTermsCorrected != $term ) {
+				if ( $queryTermsCorrected != $wpsolr_query->get_wpsolr_query() ) {
 
 					$err_msg         = sprintf( OptionLocalization::get_term( $localization_options, 'results_header_did_you_mean' ), $queryTermsCorrected ) . '<br/>';
 					$search_result[] = $err_msg;
 
 					// Execute query with spelled terms
-					$query->setQuery( $queryTermsCorrected );
+					$this->solarium_query->setQuery( $queryTermsCorrected );
 					try {
-						$resultset = $client->execute( $query );
+						$resultset = $this->execute_solarium_query();
 						$found     = $resultset->getNumFound();
 
 					} catch ( Exception $e ) {
@@ -451,8 +450,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 		// Retrieve facets from resultset
-		if ( $options != '' ) {
-			foreach ( $facets_array as $facet ) {
+		$facets_to_display = WPSOLR_Global::getOption()->get_facets_to_display();
+		if ( count( $facets_to_display ) ) {
+			foreach ( $facets_to_display as $facet ) {
 
 				$fact = strtolower( $facet );
 				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
@@ -472,20 +472,14 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$search_result[] = 0;
 		}
 
-		if ( $bound != '' ) {
-			$search_result[] = $bound;
-
-
-		} else {
-			$search_result[] = $found;
-
-		}
+		$search_result[] = $found;
 
 		$results      = array();
 		$highlighting = $resultset->getHighlighting();
 
-		$i       = 1;
-		$cat_arr = array();
+		$i                    = 1;
+		$cat_arr              = array();
+		$are_comments_indexed = WPSOLR_Global::getOption()->get_index_are_comments_indexed();
 		foreach ( $resultset as $document ) {
 
 			$id      = $document->id;
@@ -495,7 +489,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $id ) );
 
 			$no_comments = $document->numcomments;
-			if ( $field_comment == 1 ) {
+			if ( $are_comments_indexed ) {
 				$comments = $document->comments;
 			}
 			$date = date( 'm/d/Y', strtotime( $document->displaydate ) );
@@ -629,13 +623,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$search_result[] = $results;
 		}
 
-		$fir = $st + 1;
+		$fir = $wpsolr_query->get_start() + 1;
 
-		$last = $st + $number_of_res;
+		$last = $wpsolr_query->get_start() + $wpsolr_query->get_nb_results_by_page();
 		if ( $last > $found ) {
 			$last = $found;
-		} else {
-			$last = $st + $number_of_res;
 		}
 
 		$search_result[] = "<span class='infor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_header_pagination_numbers' ), $fir, $last, $found ) . "</span>";
@@ -644,38 +636,226 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		return $search_result;
 	}
 
+
 	/**
-	 * Set highlighting parameters
+	 * Add facet fields to the solarium query
 	 *
-	 * @param $query Solarium query object
+	 * @param Query $solarium_query
+	 * @param array $field_names
+	 * @param int $max_nb_items_by_facet Maximum items by facet
+	 * @param int $min_count_by_facet Do not return facet elements with less than this minimum count
 	 */
-	public function set_highlighting( $query, $searching_options ) {
+	public function add_facet_fields(
+		Query $solarium_query,
+		$facets_parameters
+	) {
 
-		$hl = $query->getHighlighting();
+		// Field names
+		$field_names = isset( $facets_parameters[ self::PARAMETER_FACET_FIELD_NAMES ] )
+			? $facets_parameters[ self::PARAMETER_FACET_FIELD_NAMES ]
+			: array();
 
-		foreach (
-			array(
+		// Limit
+		$limit = isset( $facets_parameters[ self::PARAMETER_FACET_LIMIT ] )
+			? $facets_parameters[ self::PARAMETER_FACET_LIMIT ]
+			: self::DEFAULT_MAX_NB_ITEMS_BY_FACET;
+
+		// Min count
+		$min_count = isset( $facets_parameters[ self::PARAMETER_FACET_MIN_COUNT ] )
+			? $facets_parameters[ self::PARAMETER_FACET_MIN_COUNT ]
+			: self::DEFAULT_MIN_COUNT_BY_FACET;
+
+
+		if ( count( $field_names ) ) {
+
+			$facetSet = $solarium_query->getFacetSet();
+
+			// Only display facets that contain data
+			$facetSet->setMinCount( $min_count );
+
+			foreach ( $field_names as $facet ) {
+				$fact = strtolower( $facet );
+
+				// Field 'categories' are now treated as other fields (dynamic string type)
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
+					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
+
+				// Add the facet
+				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $limit );
+
+			}
+		}
+
+	}
+
+	/**
+	 * Add highlighting fields to the solarium query
+	 *
+	 * @param Query $solarium_query
+	 * @param array $highlighting_parameters
+	 */
+	public
+	function add_highlighting_fields(
+		Query $solarium_query,
+		$highlighting_parameters
+	) {
+
+		// Field names
+		$field_names = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ] )
+			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ]
+			: array(
 				WpSolrSchema::_FIELD_NAME_TITLE,
 				WpSolrSchema::_FIELD_NAME_CONTENT,
 				WpSolrSchema::_FIELD_NAME_COMMENTS
-			) as $highlited_field_name
-		) {
+			);
 
-			$hl->getField( $highlited_field_name )->setSimplePrefix( '<b>' )->setSimplePostfix( '</b>' );
+		// Fragment size
+		$fragment_size = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FRAGMENT_SIZE ] )
+			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FRAGMENT_SIZE ]
+			: self::DEFAULT_HIGHLIGHTING_FRAGMENT_SIZE;
 
-			if ( isset( $searching_options['highlighting_fragsize'] ) && is_numeric( $searching_options['highlighting_fragsize'] ) ) {
-				// Max size of each highlighting fragment for post content
-				$hl->getField( $highlited_field_name )->setFragSize( $searching_options['highlighting_fragsize'] );
+		// Prefix
+		$prefix = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_PREFIX ] )
+			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_PREFIX ]
+			: self::DEFAULT_HIGHLIGHTING_PREFIX;
+
+		// Postfix
+		$postfix = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_POSTFIX ] )
+			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_POSTFIX ]
+			: self::DEFAULT_HIGHLIGHTING_POSFIX;
+
+		$highlighting = $solarium_query->getHighlighting();
+
+		foreach ( $field_names as $field_name ) {
+
+			$highlighting->getField( $field_name )->setSimplePrefix( $prefix )->setSimplePostfix( $postfix );
+
+			// Max size of each highlighting fragment for post content
+			$highlighting->getField( $field_name )->setFragSize( $fragment_size );
+		}
+
+	}
+
+	/**
+	 * Ping the Solr index
+	 */
+	public
+	function ping() {
+
+		$this->solarium_client->ping( $this->solarium_client->createPing() );
+	}
+
+	/**
+	 * Add filter query fields to the solarium query
+	 *
+	 * @param Query $solarium_query
+	 * @param array $filter_query_fields
+	 */
+	private
+	function add_filter_query_fields(
+		Query $solarium_query, $filter_query_fields = array()
+	) {
+
+		foreach ( $filter_query_fields as $filter_query_field ) {
+
+			if ( ! empty( $filter_query_field ) ) {
+
+				$filter_query_field_array = explode( ':', $filter_query_field );
+
+				$filter_query_field_name  = strtolower( $filter_query_field_array[0] );
+				$filter_query_field_value = isset( $filter_query_field_array[1] ) ? $filter_query_field_array[1] : '';
+
+
+				if ( ! empty( $filter_query_field_name ) && ! empty( $filter_query_field_value ) ) {
+					$fac_fd = "$filter_query_field_name";
+
+					// In case the facet contains white space, we enclose it with "".
+					$filter_query_field_value_escaped = "\"$filter_query_field_value\"";
+
+					$solarium_query->addFilterQuery( array(
+						'key'   => "$fac_fd:$filter_query_field_value_escaped",
+						'query' => "$fac_fd:$filter_query_field_value_escaped"
+					) );
+
+				}
 			}
+		}
+	}
+
+	/**
+	 * Add sort field to the solarium query
+	 *
+	 * @param Query $solarium_query
+	 * @param string $sort_field_name
+	 */
+	private
+	function add_sort_field(
+		Query $solarium_query, $sort_field_name = self::SORT_CODE_BY_RELEVANCY_DESC
+	) {
+
+		switch ( $sort_field_name ) {
+
+			case self::SORT_CODE_BY_DATE_DESC:
+				$solarium_query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $solarium_query::SORT_DESC );
+				break;
+
+			case self::SORT_CODE_BY_DATE_ASC:
+				$solarium_query->addSort( WpSolrSchema::_FIELD_NAME_DATE, $solarium_query::SORT_ASC );
+				break;
+
+			case self::SORT_CODE_BY_NUMBER_COMMENTS_DESC:
+				$solarium_query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $solarium_query::SORT_DESC );
+				break;
+
+			case self::SORT_CODE_BY_NUMBER_COMMENTS_ASC:
+				$solarium_query->addSort( WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS, $solarium_query::SORT_ASC );
+				break;
+
+			case self::SORT_CODE_BY_RELEVANCY_DESC:
+			default:
+				// None is relevancy by default
+				break;
 
 		}
 
 	}
 
-	public function ping() {
-
-		$this->client->ping( $this->client->createPing() );
+	/**
+	 * Set fields returned by the query.
+	 * We do not ask for 'content', because it can be huge for attachments, and is anyway replaced by highlighting.
+	 *
+	 * @param Query $solarium_query
+	 * @param array $field_names
+	 */
+	private
+	function add_fields(
+		Query $solarium_query,
+		$field_names = array(
+			WpSolrSchema::_FIELD_NAME_ID,
+			WpSolrSchema::_FIELD_NAME_TITLE,
+			WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
+			WpSolrSchema::_FIELD_NAME_COMMENTS,
+			WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+			WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
+			WpSolrSchema::_FIELD_NAME_AUTHOR
+		)
+	) {
+		$solarium_query->setFields( $field_names );
 	}
 
+	/**
+	 * Set the query keywords.
+	 *
+	 * @param Query $solarium_query
+	 * @param string $keywords
+	 */
+	private
+	function set_keywords(
+		Query $solarium_query, $keywords
+	) {
+
+		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . $keywords );
+	}
 
 }

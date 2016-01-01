@@ -23,7 +23,7 @@ class WPSOLR_Widget extends WP_Widget {
 				$widget_class_name = basename( $file, '.php' );
 
 				// Include widget file
-				include $widget_class_name . '.php';
+				include_once $widget_class_name . '.php';
 
 				// Register widget
 				register_widget( $widget_class_name );

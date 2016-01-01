@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 7.5
+Current Version: 7.6
 
 Author: wpsolr
 
@@ -12,9 +12,9 @@ Tags: Solr in WordPress, WooCommerce search, relevance, Solr search, fast search
 
 Requires at least: 3.7.1
 
-Tested up to: 4.3
+Tested up to: 4.4
 
-Stable tag: 7.5
+Stable tag: 7.6
 
 WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
 
@@ -254,6 +254,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 7.6 =
+* Extra option (default) to use your current theme search templates to display Solr results. Advantage: search results are fully controlled by your theme's standard loop. Drawback: advanced Solr features are not available: keyword autocompletion, did you mean, sort, facets.
+* New Widget 'WPSOLR Facets' to display facets wherever your theme can support it.
 
 = 7.5 =
 * Extra option to prevent WPSOLR loading it's own css files. It will then be easier to apply your own theme styles.

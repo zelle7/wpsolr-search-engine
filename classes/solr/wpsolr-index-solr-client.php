@@ -49,8 +49,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$config          = $options_indexes->build_solarium_config( $solr_index_indice, $language_code, self::DEFAULT_SOLR_TIMEOUT_IN_SECOND );
 
 
-		$this->index_indice = $solr_index_indice;
-		$this->client       = new Solarium\Client( $config );
+		$this->index_indice    = $solr_index_indice;
+		$this->solarium_client = new Solarium\Client( $config );
 
 	}
 
@@ -60,7 +60,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$this->reset_documents();
 
 		// Execute delete query
-		$client      = $this->client;
+		$client      = $this->solarium_client;
 		$deleteQuery = $client->createUpdate();
 		$deleteQuery->addDeleteQuery( 'id:*' );
 		$deleteQuery->addCommit();
@@ -108,7 +108,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	public function get_count_documents() {
 		$solr_options = get_option( 'wdm_solr_conf_data' );
 
-		$client = $this->client;
+		$client = $this->solarium_client;
 
 		$query = $client->createSelect();
 		$query->setQuery( '*:*' );
@@ -124,7 +124,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function delete_document( $post ) {
 
-		$client = $this->client;
+		$client = $this->solarium_client;
 
 		$deleteQuery = $client->createUpdate();
 		$deleteQuery->addDeleteQuery( 'id:' . $post->ID );
@@ -222,7 +222,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$query_join_stmt  = '';
 		$query_where_stmt = '';
 
-		$client      = $this->client;
+		$client      = $this->solarium_client;
 		$updateQuery = $client->createUpdate();
 		// Get body of attachment
 		$solarium_extract_query = $client->createExtract();
@@ -724,7 +724,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			// We don't want to add the document to the solr index now
 			$solarium_extract_query->addParam( 'extractOnly', 'true' );
 			// Try to extract the document body
-			$client                              = $this->client;
+			$client                              = $this->solarium_client;
 			$result                              = $client->execute( $solarium_extract_query );
 			$response                            = $result->getResponse()->getBody();
 			$attachment_text_extracted_from_tika = preg_replace( '/^.*?\<body\>(.*?)\<\/body\>.*$/i', '\1', $response );
@@ -750,7 +750,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_update_query, $documents
 	) {
 
-		$client = $this->client;
+		$client = $this->solarium_client;
 		$solarium_update_query->addDocuments( $documents );
 		$solarium_update_query->addCommit();
 		$result = $client->execute( $solarium_update_query );
