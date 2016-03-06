@@ -39,7 +39,7 @@ class WPSOLR_Data_Facets {
 
 					$facet          = array();
 					$facet['items'] = array();
-					$facet['id']    = $facet_to_display_id_without_str;
+					$facet['id']    = $facet_to_display_id;
 					$facet['name']  = $facet_to_display_name;
 
 					foreach ( $facets_in_results[ $facet_to_display_id ] as $facet_in_results ) {

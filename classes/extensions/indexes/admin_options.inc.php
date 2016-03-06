@@ -158,7 +158,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 					<h4 class='head_div'>
 						<?php echo $is_index_type_temporary
-							? 'This is your temporary (2 hours) Solr Index configuration for testing'
+							? 'This is your temporary (3 days) Solr Index configuration for testing'
 							: ( $is_index_type_managed
 								? sprintf( 'This is your Index configuration managed by %s', $option_object->get_index_managed_solr_service_id( $option_data['solr_indexes'][ $index_indice ] ) )
 								: 'Manually configure your existing Solr index' );

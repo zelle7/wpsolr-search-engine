@@ -53,7 +53,7 @@ class WPSOLR_Query extends WP_Query {
 	/**
 	 * @return string
 	 */
-	public function get_wpsolr_query( $default = '*' ) {
+	public function get_wpsolr_query( $default = '' ) {
 
 		// Prevent Solr error by replacing empty query by default value
 		return empty( $this->wpsolr_query ) ? $default : $this->wpsolr_query;

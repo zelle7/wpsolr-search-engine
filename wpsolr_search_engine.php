@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
- * Version: 7.6
+ * Description: Boost your search and make your visitors happy, with our blazing fast search built on Apache Solr. Included: free test Solr index pre-configured.
+ * Version: 7.7
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

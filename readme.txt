@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 7.6
+Current Version: 7.7
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 7.6
+Stable tag: 7.7
 
-WPSOLR is the growing, blazing-fast, open source enterprise search plugin built on Apache Solr.
+Boost your search and make your visitors happy, with our blazing fast search built on Apache Solr. Included: free test Solr index pre-configured.
 
 == Description ==
 
@@ -133,7 +133,7 @@ Back-end presentation:
 - Deutch (nl_NL) by matthijs.
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
-We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
+We provide a free anonymous Apache Solr index for 3 days, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
 
 = About us =
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
@@ -254,6 +254,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 7.7 =
+* Fix bug with custom taxonomies facets
+* Remove the '*' when search box is empty
 
 = 7.6 =
 * Extra option (default) to use your current theme search templates to display Solr results. Advantage: search results are fully controlled by your theme's standard loop. Drawback: advanced Solr features are not available: keyword autocompletion, did you mean, sort, facets.

@@ -855,7 +855,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		Query $solarium_query, $keywords
 	) {
 
-		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . $keywords );
+		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
 	}
 
 }
