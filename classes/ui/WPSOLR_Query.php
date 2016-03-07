@@ -161,12 +161,14 @@ class WPSOLR_Query extends WP_Query {
 
 			array_push( $posts_ids, $document->id );
 		}
-		$posts_in_results = get_posts( array(
+		$posts_in_results = count( $posts_ids ) > 0
+			? get_posts( array(
 				'numberposts' => count( $posts_ids ),
 				'post_type'   => 'any',
+				'post_status' => 'any',
 				'post__in'    => $posts_ids
-			)
-		);
+			) )
+			: array();
 
 		foreach ( $posts_in_results as $post ) {
 			$this->set_the_title( $post );
