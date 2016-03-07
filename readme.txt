@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 7.7
+Current Version: 7.8
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 7.7
+Stable tag: 7.8
 
 Boost your search and make your visitors happy, with our blazing fast search built on Apache Solr. Included: free test Solr index pre-configured.
 
@@ -254,6 +254,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 7.8 =
+* Separate custom taxonomies facets content from categories facets content
 
 = 7.7 =
 * Fix bug with custom taxonomies facets

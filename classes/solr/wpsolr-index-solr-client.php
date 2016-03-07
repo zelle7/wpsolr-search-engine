@@ -535,7 +535,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$cats   = array();
 		$taxo   = $this->solr_indexing_options['taxonomies'];
 		$aTaxo  = explode( ',', $taxo );
-		$newTax = array( 'category' ); // Add categories by default
+		$newTax = array(); // Add categories by default
 		if ( is_array( $aTaxo ) && count( $aTaxo ) ) {
 		}
 		foreach ( $aTaxo as $a ) {
@@ -551,8 +551,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 
-		// Get all taxonomy terms ot this post
-		$term_names = wp_get_post_terms( $post_to_index->ID, $newTax, array( "fields" => "names" ) );
+		// Get all categories ot this post
+		$term_names = wp_get_post_terms( $post_to_index->ID, array( 'category' ), array( "fields" => "names" ) );
 		if ( $term_names && ! is_wp_error( $term_names ) ) {
 			foreach ( $term_names as $term_name ) {
 				array_push( $cats, $term_name );
@@ -620,12 +620,16 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			if ( in_array( $parent, $newTax ) ) {
 				$terms = get_the_terms( $post_to_index->ID, $parent );
 				if ( (array) $terms === $terms ) {
-					$parent = strtolower( str_replace( ' ', '_', $parent ) );
+					$parent    = strtolower( str_replace( ' ', '_', $parent ) );
+					$nm1       = $parent . '_str';
+					$nm2       = $parent . '_srch';
+					$nm1_array = array();
 					foreach ( $terms as $term ) {
-						$nm1                                = $parent . '_str';
-						$nm2                                = $parent . '_srch';
-						$solarium_document_for_update->$nm1 = $term->name;
-						$solarium_document_for_update->$nm2 = $term->name;
+						array_push( $nm1_array, $term->name );
+					}
+					if ( count( $nm1_array ) > 0 ) {
+						$solarium_document_for_update->$nm1 = $nm1_array;
+						$solarium_document_for_update->$nm2 = $nm1_array;
 					}
 				}
 			}
