@@ -82,9 +82,10 @@ function generateUrlParameters(url, current_parameters, is_remove_unused_paramet
  */
 window.addEventListener("popstate", function (e) {
 
-    //alert('popstate');
-
-    call_ajax_search(window.location.search, false);
+    // Test to fix Safari trigger ob page load
+    if (e.state) {
+        call_ajax_search(window.location.search, false);
+    }
 });
 
 /**
