@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Apache Solr search by WPSOLR
- * Description: Boost your search and make your visitors happy, with our blazing fast search built on Apache Solr. Included: free test Solr index pre-configured.
- * Version: 8.0
+ * Description: Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
+ * Version: 8.1
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

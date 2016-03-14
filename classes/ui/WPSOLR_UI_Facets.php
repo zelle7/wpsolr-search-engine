@@ -32,7 +32,7 @@ class WPSOLR_UI_Facets {
 
 				$html .= "<lh >" . sprintf( $facet_title, $facet['name'] ) . "</lh><br>";
 
-				$facet_id = $facet['id'];
+				$facet_id = strtolower( str_replace( ' ', '_', $facet['id'] ) );
 				foreach ( $facet['items'] as $item ) {
 
 					$item_name     = $item['name'];
@@ -67,5 +67,5 @@ class WPSOLR_UI_Facets {
 
 		return $html;
 	}
-		
+
 }

@@ -161,7 +161,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 							? 'This is your temporary (3 days) Solr Index configuration for testing'
 							: ( $is_index_type_managed
 								? sprintf( 'This is your Index configuration managed by %s', $option_object->get_index_managed_solr_service_id( $option_data['solr_indexes'][ $index_indice ] ) )
-								: 'Manually configure your existing Solr index' );
+								: sprintf('Manually configure your existing Solr index. %s', '<a href="http://www.gotosolr.com/en" target="_wpsolr">Sorry, no free support by chat to setup your own local index</a>') );
 						?>
 					</h4>
 
@@ -336,7 +336,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 							}
 							?>
-
+							<a href="http://www.gotosolr.com/en" target="_wpsolr">Free support by chat to setup your Gotosolr index</a>
 						</div>
 						<div class="clear"></div>
 

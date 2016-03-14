@@ -28,6 +28,8 @@ class WPSOLR_Data_Facets {
 
 				if ( isset( $facets_in_results[ $facet_to_display_id ] ) && count( $facets_in_results[ $facet_to_display_id ] ) > 0 ) {
 
+					$facet_with_no_blank_id = strtolower( str_replace( ' ', '_', $facet_to_display_id ) );
+
 					// Remove the ending "_str"
 					$facet_to_display_id_without_str = preg_replace( '/_str$/', '', $facet_to_display_id );
 
@@ -46,7 +48,7 @@ class WPSOLR_Data_Facets {
 						array_push( $facet['items'], array(
 							'name'     => $facet_in_results[0],
 							'count'    => $facet_in_results[1],
-							'selected' => isset( $facets_selected[ $facet_to_display_id ] ) && ( in_array( $facet_in_results[0], $facets_selected[ $facet_to_display_id ] ) )
+							'selected' => isset( $facets_selected[ $facet_with_no_blank_id ] ) && ( in_array( $facet_in_results[0], $facets_selected[ $facet_with_no_blank_id ] ) )
 						) );
 					}
 

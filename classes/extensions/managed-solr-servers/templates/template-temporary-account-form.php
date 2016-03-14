@@ -41,6 +41,8 @@
 				       class="button-primary "
 				       value="Create my instant free Solr index"/>
 
+					<a href="http://www.gotosolr.com/en" target="_wpsolr">Free support by chat to setup your Gotosolr index</a>
+
 				<?php } else {
 				?>
 					<!-- Google Recaptcha -->

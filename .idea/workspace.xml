@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/autocomplete_solr.js" afterPath="$PROJECT_DIR$/js/autocomplete_solr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
@@ -50,82 +50,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="wpsolr-search-solr-client.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.64">
-              <caret line="731" column="109" selection-start-line="731" selection-start-column="109" selection-end-line="731" selection-end-column="109" />
-              <folding>
-                <element signature="e#7#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="WPSOLR_UI_Facets.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.30769232">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state vertical-scroll-proportion="-13.76">
+              <caret line="34" column="80" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="80" />
               <folding>
-                <marker date="1457360858000" expanded="true" signature="1394:1703" placeholder="..." />
+                <marker date="1457943062000" expanded="true" signature="1433:1742" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wpsolr-index-solr-client.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
+      <file leaf-file-name="ajax_solr_services.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7884614">
-              <caret line="724" column="0" selection-start-line="724" selection-start-column="0" selection-end-line="724" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.0">
+              <caret line="58" column="65" selection-start-line="58" selection-start-column="65" selection-end-line="58" selection-end-column="65" />
               <folding>
-                <marker date="1457360858000" expanded="true" signature="7634:7684" placeholder="SELECT %s FR... " />
+                <marker date="1457360858000" expanded="true" signature="1138:1148" placeholder="..." />
+                <marker date="1457360858000" expanded="true" signature="1594:2409" placeholder="..." />
+                <marker date="1457360858000" expanded="false" signature="2083:2111" placeholder="..." />
+                <marker date="1457360858000" expanded="false" signature="2377:2387" placeholder="..." />
+                <marker date="1457360858000" expanded="true" signature="2999:3042" placeholder="..." />
+                <marker date="1457360858000" expanded="true" signature="5396:5407" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WPSOLR_Query.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Query.php">
+      <file leaf-file-name="WPSOLR_Data_facets.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.6">
-              <caret line="148" column="23" selection-start-line="148" selection-start-column="23" selection-end-line="148" selection-end-column="23" />
+            <state vertical-scroll-proportion="-8.64">
+              <caret line="30" column="58" selection-start-line="30" selection-start-column="58" selection-end-line="30" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="autocomplete_solr.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/autocomplete_solr.js">
+      <file leaf-file-name="taxonomy.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../wp-includes/taxonomy.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WPSOLR_Query_Parameters.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Query_Parameters.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.576923">
-              <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.56">
-              <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+            <state vertical-scroll-proportion="-8.32">
+              <caret line="2440" column="0" selection-start-line="2440" selection-start-column="0" selection-end-line="2440" selection-end-column="0" />
               <folding>
-                <marker date="1457420394000" expanded="true" signature="7751:7761" placeholder="..." />
-                <marker date="1457420394000" expanded="true" signature="8215:8799" placeholder="..." />
-                <marker date="1457420394000" expanded="true" signature="8716:8744" placeholder="..." />
-                <marker date="1457420394000" expanded="true" signature="8767:8777" placeholder="..." />
+                <marker date="1457277943000" expanded="true" signature="26962:27189" placeholder="SELECT tr.ob... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="34201:34343" placeholder="SELECT t.*, wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="55046:55129" placeholder="SELECT ${$di... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="63704:63747" placeholder="SELECT term_... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="63767:63898" placeholder="SELECT tt.te... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="64826:64995" placeholder="SELECT tt.te... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="65092:65266" placeholder="SELECT tt.te... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="65358:65418" placeholder="SELECT term_... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="65505:65570" placeholder="SELECT term_... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="76808:76884" placeholder="SELECT term_... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="77966:78041" placeholder="SELECT objec... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="78824:78878" placeholder="SELECT meta_... wp_termmeta" />
+                <marker date="1457277943000" expanded="true" signature="79505:79565" placeholder="SELECT COUNT... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="86476:86710" placeholder="SELECT ${$se... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="87918:88143" placeholder="SELECT tr.te... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="94205:94233" placeholder="SELECT MAX(t... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="96698:96853" placeholder="SELECT tt.te... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="97546:97775" placeholder="SELECT t.ter... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="101906:102007" placeholder="SELECT term_... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="102993:103112" placeholder="SELECT tt.te... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="103763:103934" placeholder="INSERT INTO wp_term_relationships... " />
+                <marker date="1457277943000" expanded="true" signature="106685:106780" placeholder="DELETE FROM " />
+                <marker date="1457277943000" expanded="true" signature="109715:109778" placeholder="SELECT slug wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="109844:109889" placeholder="SELECT slug wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="110061:110106" placeholder="SELECT slug wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="113799:113827" placeholder="SELECT MAX(t... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="115115:115270" placeholder="SELECT tt.te... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="116914:116989" placeholder="SELECT objec... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="123523:123609" placeholder="SELECT term_... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="131664:131931" placeholder="SELECT objec... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="134069:134403" placeholder="SELECT COUNT... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="134268:134330" placeholder="SELECT post_... wp_posts" />
+                <marker date="1457277943000" expanded="true" signature="134493:134728" placeholder="SELECT COUNT... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="135577:135651" placeholder="SELECT COUNT... wp_term_relationships" />
+                <marker date="1457277943000" expanded="true" signature="137980:138076" placeholder="SELECT COUNT... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="138436:138504" placeholder="SELECT term_... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="138769:138820" placeholder="SELECT t.* F... wp_terms" />
+                <marker date="1457277943000" expanded="true" signature="139527:139589" placeholder="SELECT * FRO... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="139672:139757" placeholder="SELECT term_... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="140391:140451" placeholder="SELECT taxon... wp_term_taxonomy" />
+                <marker date="1457277943000" expanded="true" signature="141164:141361" placeholder="SELECT tt.te... $" />
+                <marker date="1457277943000" expanded="true" signature="143065:143263" placeholder="SELECT tt.te... $" />
+                <marker date="1457277943000" expanded="true" signature="143992:144068" placeholder="SELECT * FRO... $" />
+                <marker date="1457277943000" expanded="true" signature="147111:147513" placeholder="SELECT m1.po... $" />
+                <marker date="1457277943000" expanded="true" signature="150197:150257" placeholder="SELECT COUNT... wp_term_taxonomy" />
               </folding>
             </state>
           </provider>
@@ -134,8 +148,68 @@
       <file leaf-file-name="readme.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/readme.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.7363343">
-              <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+            <state vertical-scroll-proportion="6.6048">
+              <caret line="258" column="37" selection-start-line="258" selection-start-column="37" selection-end-line="258" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr-index-solr-client.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.5949367">
+              <caret line="607" column="89" selection-start-line="607" selection-start-column="89" selection-end-line="607" selection-end-column="89" />
+              <folding>
+                <marker date="1457360858000" expanded="true" signature="7634:7684" placeholder="SELECT %s FR... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr-search-solr-client.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.44">
+              <caret line="474" column="0" selection-start-line="474" selection-start-column="0" selection-end-line="474" selection-end-column="0" />
+              <folding>
+                <element signature="e#7#54#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.12">
+              <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+              <folding>
+                <element signature="e#6#311#0#PHP" expanded="true" />
+                <marker date="1457943319000" expanded="true" signature="7754:7764" placeholder="..." />
+                <marker date="1457943319000" expanded="true" signature="8218:8802" placeholder="..." />
+                <marker date="1457943319000" expanded="false" signature="8719:8747" placeholder="..." />
+                <marker date="1457943319000" expanded="false" signature="8770:8780" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="option-managed-solr-servers.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -163,9 +237,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/classes/wpsolr/ui/WPSOLR_Data_Sort.php" />
-        <option value="$PROJECT_DIR$/classes/wpsolr/extensions/facets/templates/facet.inc.php" />
-        <option value="$PROJECT_DIR$/classes/wpsolr/extensions/sorts/templates/sort.inc.php" />
         <option value="$PROJECT_DIR$/classes/wpsolr/extensions/sorts/templates/group.inc.php" />
         <option value="$PROJECT_DIR$/classes/wpsolr/extensions/groups.inc.php" />
         <option value="$PROJECT_DIR$/classes/wpsolr/ui/WPSOLR_UI_Filter.php" />
@@ -203,17 +274,20 @@
         <option value="$PROJECT_DIR$/classes/wpsolr/solr/WPSOLR_SearchSolrClient.php" />
         <option value="$PROJECT_DIR$/../../../wp-config.php" />
         <option value="$PROJECT_DIR$/../../../.htaccess" />
-        <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
-        <option value="$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php" />
-        <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Query_Parameters.php" />
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Query.php" />
-        <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-temporary-account-form.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php" />
         <option value="$PROJECT_DIR$/js/autocomplete_solr.js" />
+        <option value="$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php" />
+        <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" />
+        <option value="$PROJECT_DIR$/readme.txt" />
+        <option value="$PROJECT_DIR$/readme.txt" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
       </list>
     </option>
   </component>
@@ -228,6 +302,11 @@
       <server host="dev-wpsolr-search-engine.dev" id="4901cc8c-54ff-49bb-a84a-f7d3ba9dee4d" name="dev-wpsolr-search-engine.dev" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$/../../.." remote-root="/srv/www/dev-wpsolr-search-engine/htdocs" />
+        </path_mappings>
+      </server>
+      <server host="wpsolr-pro.dev" id="cd3042a1-c8ab-4735-b70b-9ae13e509616" name="wpsolr-pro.dev" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/../../../wp-admin" remote-root="/srv/www/wpsolr-pro/htdocs/wp-admin" />
         </path_mappings>
       </server>
     </servers>
@@ -483,105 +562,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="htdocs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wp-content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utilities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="htdocs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wp-content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="htdocs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wp-content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -612,36 +593,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="solr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="htdocs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wp-content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wpsolr-search-engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1152,7 +1103,7 @@
     <frame x="112" y="28" width="1786" height="1103" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26318806" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2792431" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32862905" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35837564" sideWeight="0.41972476" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21458998" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1162,7 +1113,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18577981" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2994924" sideWeight="0.48828542" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31979695" sideWeight="0.46751863" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31675127" sideWeight="0.46751863" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1283,7 +1234,7 @@
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="4773" />
+      <option name="time" value="4817" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="wp-login.php">
@@ -1301,18 +1252,19 @@
         <watch expression="$posts_ids" language="PHP" />
       </configuration>
       <configuration name="post.php">
-        <watch expression="$resultset-&gt;getFacetSet()" language="PHP" />
-        <watch expression="$results" />
-        <watch expression="$solarium_document_for_update-&gt;$nm1" language="PHP" />
-        <watch expression="$term-&gt;name" language="PHP" />
+        <watch expression="$item_name" />
+        <watch expression="$html" />
+        <watch expression="json_encode( $res1 )" language="PHP" />
+        <watch expression="json_encode( $item_name )" language="PHP" />
       </configuration>
       <configuration name="widgets.php">
         <watch expression="$groups" />
       </configuration>
       <configuration name="index.php">
-        <watch expression="$this-&gt;resultSet" language="PHP" />
-        <watch expression="$posts_in_results" language="PHP" />
-        <watch expression="$posts_ids" language="PHP" />
+        <watch expression="$item_name" />
+        <watch expression="$html" />
+        <watch expression="json_encode( $res1 )" language="PHP" />
+        <watch expression="json_encode( $item_name )" language="PHP" />
       </configuration>
       <configuration name="plugins.php">
         <watch expression="$wpsolr_data_to_import[ $option_name ]" language="PHP" />
@@ -1323,9 +1275,8 @@
         <watch expression="$_REQUEST" />
       </configuration>
       <configuration name="admin-ajax.php">
-        <watch expression="$this-&gt;resultSet" language="PHP" />
-        <watch expression="$posts_in_results" language="PHP" />
-        <watch expression="$posts_ids" language="PHP" />
+        <watch expression="$item_name" />
+        <watch expression="$html" />
       </configuration>
       <configuration name="options-general.php">
         <watch expression="$level_name" language="PHP" />
@@ -1347,6 +1298,44 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="80" selection-start-line="34" selection-start-column="80" selection-end-line="34" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/acf/plugin-acf.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1457360858000" expanded="true" signature="1088:1322" placeholder="SELECT disti... wp_postmeta" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="258" column="31" selection-start-line="258" selection-start-column="2" selection-end-line="258" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1361,7 +1350,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1370,7 +1358,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding>
-            <marker date="1457360858000" expanded="true" signature="1394:1703" placeholder="..." />
+            <marker date="1457943062000" expanded="true" signature="1433:1742" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1389,7 +1377,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="63" selection-start-line="97" selection-start-column="63" selection-end-line="97" selection-end-column="63" />
-          <folding />
+          <folding>
+            <marker date="1457360858000" expanded="true" signature="1138:1148" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="1594:2409" placeholder="..." />
+            <marker date="1457360858000" expanded="false" signature="2083:2111" placeholder="..." />
+            <marker date="1457360858000" expanded="false" signature="2377:2387" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="2999:3042" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="5396:5407" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1397,7 +1392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1405,7 +1399,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="160" column="55" selection-start-line="160" selection-start-column="55" selection-end-line="160" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1413,7 +1406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="258" column="74" selection-start-line="258" selection-start-column="74" selection-end-line="258" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1421,12 +1413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1457420394000" expanded="true" signature="7751:7761" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8215:8799" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8716:8744" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8767:8777" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1434,7 +1420,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="50" selection-start-line="55" selection-start-column="50" selection-end-line="55" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1442,7 +1427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3600629">
           <caret line="974" column="9" selection-start-line="974" selection-start-column="9" selection-end-line="974" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1472,7 +1456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36052203">
           <caret line="784" column="9" selection-start-line="784" selection-start-column="9" selection-end-line="784" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1480,7 +1463,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.076923">
           <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1492,43 +1474,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="97" column="63" selection-start-line="97" selection-start-column="63" selection-end-line="97" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/ui/widget/WPSOLR_Widget_Facet.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="8.5652685">
           <caret line="604" column="66" selection-start-line="604" selection-start-column="66" selection-end-line="604" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="55" selection-start-line="160" selection-start-column="55" selection-end-line="160" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1536,7 +1485,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="680" column="0" selection-start-line="680" selection-start-column="0" selection-end-line="680" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1548,133 +1496,277 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Query_Parameters.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.576923">
-          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../wp-includes/query.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36491227">
           <caret line="2547" column="20" selection-start-line="2547" selection-start-column="8" selection-end-line="2547" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/acf/plugin-acf.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
-            <marker date="1457277943000" expanded="true" signature="95032:95123" placeholder="SELECT ${$di... wp_comments" />
-            <marker date="1457277943000" expanded="true" signature="103326:103422" placeholder="SELECT ${$fo... wp_posts" />
-            <marker date="1457277943000" expanded="true" signature="105274:105378" placeholder="SELECT ${$fo... wp_posts" />
-            <marker date="1457277943000" expanded="true" signature="107781:107862" placeholder="SELECT wp_co... wp_comments" />
-            <marker date="1457277943000" expanded="true" signature="143909:144046" placeholder="SELECT post_... wp_postmeta" />
+            <marker date="1457360858000" expanded="true" signature="1088:1322" placeholder="SELECT disti... wp_postmeta" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.72597134">
+          <caret line="3320" column="9" selection-start-line="3320" selection-start-column="9" selection-end-line="3320" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Query_Parameters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../wp-includes/post.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
-          <caret line="335" column="30" selection-start-line="335" selection-start-column="25" selection-end-line="335" selection-end-column="30" />
+          <caret line="2763" column="28" selection-start-line="2763" selection-start-column="11" selection-end-line="2763" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/category-template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48012233">
+          <caret line="1149" column="29" selection-start-line="1149" selection-start-column="29" selection-end-line="1149" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bower_components/jsurl/url.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24929178">
+          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery.infinitescroll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
           <folding>
-            <marker date="1457277940000" expanded="true" signature="55007:55023" placeholder="Insert into post... " />
-            <marker date="1457277940000" expanded="true" signature="55033:55049" placeholder="Insert into page... " />
-            <marker date="1457277940000" expanded="true" signature="79088:79172" placeholder="SELECT post_... $" />
-            <marker date="1457277940000" expanded="true" signature="81108:81259" placeholder="SELECT post_... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="81429:81522" placeholder="SELECT COUNT... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="87249:87289" placeholder="SELECT * FRO... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="88695:88763" placeholder="SELECT * FRO... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="89063:89140" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="89592:89657" placeholder="SELECT comme... wp_comments" />
-            <marker date="1457277940000" expanded="true" signature="89850:89904" placeholder="SELECT meta_... wp_postmeta" />
-            <marker date="1457277940000" expanded="true" signature="94492:94575" placeholder="SELECT comme... wp_comments" />
-            <marker date="1457277940000" expanded="true" signature="96497:96580" placeholder="UPDATE wp_co... " />
-            <marker date="1457277940000" expanded="true" signature="114756:114797" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="125368:125444" placeholder="SELECT post_... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="126495:126630" placeholder="SELECT post_... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="127726:127821" placeholder="SELECT post_... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="138040:138085" placeholder="SELECT pinge... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="139608:139653" placeholder="SELECT pinge... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="140223:140269" placeholder="SELECT to_pi... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="141701:141753" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="143685:143825" placeholder="SELECT ID, p... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="145308:145406" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="145467:145544" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="157475:157533" placeholder="SELECT * FRO... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="161652:161692" placeholder="SELECT * FRO... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="162810:162875" placeholder="SELECT comme... wp_comments" />
-            <marker date="1457277940000" expanded="true" signature="163069:163123" placeholder="SELECT meta_... wp_postmeta" />
-            <marker date="1457277940000" expanded="true" signature="163690:163809" placeholder="SELECT meta_... wp_postmeta" />
-            <marker date="1457277940000" expanded="true" signature="185190:185335" placeholder="SELECT post_... " />
-            <marker date="1457277940000" expanded="true" signature="185394:185535" placeholder="SELECT post_... " />
-            <marker date="1457277940000" expanded="true" signature="185635:185829" placeholder="SELECT DATE_... " />
-            <marker date="1457277940000" expanded="true" signature="196574:196684" placeholder="SELECT ID FR... wp_posts" />
-            <marker date="1457277940000" expanded="true" signature="198224:198280" placeholder="SELECT wp_po... wp_posts" />
+            <marker date="1454684033000" expanded="true" signature="1309:1450" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/ui/widget/WPSOLR_Widget_Facet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/templates/template-temporary-account-form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="127" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="127" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/wp-db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3464837">
+          <caret line="652" column="39" selection-start-line="652" selection-start-column="39" selection-end-line="652" selection-end-column="39" />
+          <folding>
+            <marker date="1457277940000" expanded="true" signature="54101:54135" placeholder="UPDATE `${$t... " />
+            <marker date="1457277940000" expanded="true" signature="56090:56117" placeholder="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../custom-post-type-ui/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7884614">
-          <caret line="724" column="0" selection-start-line="724" selection-start-column="0" selection-end-line="724" selection-end-column="0" />
+        <state vertical-scroll-proportion="-1.5949367">
+          <caret line="607" column="89" selection-start-line="607" selection-start-column="89" selection-end-line="607" selection-end-column="89" />
           <folding>
             <marker date="1457360858000" expanded="true" signature="7634:7684" placeholder="SELECT %s FR... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php">
+    <entry file="file://$PROJECT_DIR$/js/autocomplete_solr.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.30769232">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.4548495">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
-            <marker date="1457360858000" expanded="true" signature="1394:1703" placeholder="..." />
+            <marker date="1457941678000" expanded="true" signature="3316:3356" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Query.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.6">
-          <caret line="148" column="23" selection-start-line="148" selection-start-column="23" selection-end-line="148" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.34666666">
+          <caret line="235" column="20" selection-start-line="235" selection-start-column="20" selection-end-line="235" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.64">
-          <caret line="731" column="109" selection-start-line="731" selection-start-column="109" selection-end-line="731" selection-end-column="109" />
+        <state vertical-scroll-proportion="-21.44">
+          <caret line="474" column="0" selection-start-line="474" selection-start-column="0" selection-end-line="474" selection-end-column="0" />
           <folding>
             <element signature="e#7#54#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/autocomplete_solr.js">
+    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
+        <state vertical-scroll-proportion="-13.76">
+          <caret line="34" column="80" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="80" />
+          <folding>
+            <marker date="1457943062000" expanded="true" signature="1433:1742" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.64">
+          <caret line="30" column="58" selection-start-line="30" selection-start-column="58" selection-end-line="30" selection-end-column="58" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/taxonomy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.32">
+          <caret line="2440" column="0" selection-start-line="2440" selection-start-column="0" selection-end-line="2440" selection-end-column="0" />
+          <folding>
+            <marker date="1457277943000" expanded="true" signature="26962:27189" placeholder="SELECT tr.ob... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="34201:34343" placeholder="SELECT t.*, wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="55046:55129" placeholder="SELECT ${$di... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="63704:63747" placeholder="SELECT term_... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="63767:63898" placeholder="SELECT tt.te... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="64826:64995" placeholder="SELECT tt.te... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="65092:65266" placeholder="SELECT tt.te... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="65358:65418" placeholder="SELECT term_... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="65505:65570" placeholder="SELECT term_... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="76808:76884" placeholder="SELECT term_... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="77966:78041" placeholder="SELECT objec... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="78824:78878" placeholder="SELECT meta_... wp_termmeta" />
+            <marker date="1457277943000" expanded="true" signature="79505:79565" placeholder="SELECT COUNT... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="86476:86710" placeholder="SELECT ${$se... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="87918:88143" placeholder="SELECT tr.te... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="94205:94233" placeholder="SELECT MAX(t... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="96698:96853" placeholder="SELECT tt.te... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="97546:97775" placeholder="SELECT t.ter... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="101906:102007" placeholder="SELECT term_... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="102993:103112" placeholder="SELECT tt.te... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="103763:103934" placeholder="INSERT INTO wp_term_relationships... " />
+            <marker date="1457277943000" expanded="true" signature="106685:106780" placeholder="DELETE FROM " />
+            <marker date="1457277943000" expanded="true" signature="109715:109778" placeholder="SELECT slug wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="109844:109889" placeholder="SELECT slug wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="110061:110106" placeholder="SELECT slug wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="113799:113827" placeholder="SELECT MAX(t... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="115115:115270" placeholder="SELECT tt.te... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="116914:116989" placeholder="SELECT objec... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="123523:123609" placeholder="SELECT term_... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="131664:131931" placeholder="SELECT objec... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="134069:134403" placeholder="SELECT COUNT... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="134268:134330" placeholder="SELECT post_... wp_posts" />
+            <marker date="1457277943000" expanded="true" signature="134493:134728" placeholder="SELECT COUNT... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="135577:135651" placeholder="SELECT COUNT... wp_term_relationships" />
+            <marker date="1457277943000" expanded="true" signature="137980:138076" placeholder="SELECT COUNT... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="138436:138504" placeholder="SELECT term_... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="138769:138820" placeholder="SELECT t.* F... wp_terms" />
+            <marker date="1457277943000" expanded="true" signature="139527:139589" placeholder="SELECT * FRO... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="139672:139757" placeholder="SELECT term_... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="140391:140451" placeholder="SELECT taxon... wp_term_taxonomy" />
+            <marker date="1457277943000" expanded="true" signature="141164:141361" placeholder="SELECT tt.te... $" />
+            <marker date="1457277943000" expanded="true" signature="143065:143263" placeholder="SELECT tt.te... $" />
+            <marker date="1457277943000" expanded="true" signature="143992:144068" placeholder="SELECT * FRO... $" />
+            <marker date="1457277943000" expanded="true" signature="147111:147513" placeholder="SELECT m1.po... $" />
+            <marker date="1457277943000" expanded="true" signature="150197:150257" placeholder="SELECT COUNT... wp_term_taxonomy" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajax_solr_services.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.0">
+          <caret line="58" column="65" selection-start-line="58" selection-start-column="65" selection-end-line="58" selection-end-column="65" />
+          <folding>
+            <marker date="1457360858000" expanded="true" signature="1138:1148" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="1594:2409" placeholder="..." />
+            <marker date="1457360858000" expanded="false" signature="2083:2111" placeholder="..." />
+            <marker date="1457360858000" expanded="false" signature="2377:2387" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="2999:3042" placeholder="..." />
+            <marker date="1457360858000" expanded="true" signature="5396:5407" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.56">
-          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        <state vertical-scroll-proportion="-5.12">
+          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
           <folding>
-            <marker date="1457420394000" expanded="true" signature="7751:7761" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8215:8799" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8716:8744" placeholder="..." />
-            <marker date="1457420394000" expanded="true" signature="8767:8777" placeholder="..." />
+            <element signature="e#6#311#0#PHP" expanded="true" />
+            <marker date="1457943319000" expanded="true" signature="7754:7764" placeholder="..." />
+            <marker date="1457943319000" expanded="true" signature="8218:8802" placeholder="..." />
+            <marker date="1457943319000" expanded="false" signature="8719:8747" placeholder="..." />
+            <marker date="1457943319000" expanded="false" signature="8770:8780" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.7363343">
-          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+        <state vertical-scroll-proportion="6.6048">
+          <caret line="258" column="37" selection-start-line="258" selection-start-column="37" selection-end-line="258" selection-end-column="37" />
           <folding />
         </state>
       </provider>

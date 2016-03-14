@@ -1,8 +1,8 @@
-=== WPSOLR Search Engine ===
+=== Search Bigger with WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 8.0
+Current Version: 8.1
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.0
+Stable tag: 8.1
 
-Boost your search and make your visitors happy, with our blazing fast search built on Apache Solr. Included: free test Solr index pre-configured.
+Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
 == Description ==
 
@@ -254,6 +254,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 
 == Changelog ==
+
+= 8.1 =
+* Fix blanks in custom taxonomy field names
 
 = 8.0 =
 * Fix a redirect loop in safari

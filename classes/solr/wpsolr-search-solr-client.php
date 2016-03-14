@@ -454,7 +454,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		if ( count( $facets_to_display ) ) {
 			foreach ( $facets_to_display as $facet ) {
 
-				$fact = strtolower( $facet );
+				$fact = strtolower( str_replace( ' ', '_', $facet ) );
 				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
 					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
 				}
@@ -674,7 +674,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$facetSet->setMinCount( $min_count );
 
 			foreach ( $field_names as $facet ) {
-				$fact = strtolower( $facet );
+				$fact = strtolower( str_replace( ' ', '_', $facet ) );
 
 				// Field 'categories' are now treated as other fields (dynamic string type)
 				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
