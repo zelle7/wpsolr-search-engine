@@ -44,12 +44,19 @@ class WPSOLR_Data_Facets {
 					$facet['id']    = $facet_to_display_id;
 					$facet['name']  = $facet_to_display_name;
 
-					foreach ( $facets_in_results[ $facet_to_display_id ] as $facet_in_results ) {
+					$items_hierachy = array();
+					self::buildHierarchies( $items_hierachy, $facets_in_results[ $facet_to_display_id ],
+						! empty( $facets_selected[ $facet_with_no_blank_id ] ) ? $facets_selected[ $facet_with_no_blank_id ] : array() );
+
+					foreach ( $items_hierachy as $facet_in_results ) {
+
 						array_push( $facet['items'], array(
-							'name'     => $facet_in_results[0],
-							'count'    => $facet_in_results[1],
-							'selected' => isset( $facets_selected[ $facet_with_no_blank_id ] ) && ( in_array( $facet_in_results[0], $facets_selected[ $facet_with_no_blank_id ] ) )
+							'value'    => $facet_in_results['value'],
+							'count'    => $facet_in_results['count'],
+							'items'    => $facet_in_results['items'],
+							'selected' => $facet_in_results['selected']
 						) );
+
 					}
 
 					// Add current facet to results
@@ -61,6 +68,74 @@ class WPSOLR_Data_Facets {
 		}
 
 		return $results;
+	}
+
+
+	/**
+	 * Build a hierachy of facets when facet name contains WpSolrSchema::FACET_HIERARCHY_SEPARATOR
+	 * Recursive
+	 *
+	 * @param $results
+	 * @param $items
+	 */
+	public static function buildHierarchies( &$results, $items, $facets_selected ) {
+
+		$result = array();
+		foreach ( $items as $item ) {
+
+			$item_hierarcy_item_names = explode( WpSolrSchema::FACET_HIERARCHY_SEPARATOR, $item['value'] );
+			$item_top_level_name      = array_shift( $item_hierarcy_item_names );
+
+			if ( empty( $result[ $item_top_level_name ] ) ) {
+				$result[ $item_top_level_name ]          = array(
+					'value'    => $item_top_level_name,
+					'count'    => $item['count'],
+					'selected' => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) )
+				);
+				$result[ $item_top_level_name ]['items'] = array();
+			}
+
+			if ( ! empty( $item_hierarcy_item_names ) ) {
+
+				array_push( $result[ $item_top_level_name ]['items'],
+					array(
+						'value'    => implode( WpSolrSchema::FACET_HIERARCHY_SEPARATOR, $item_hierarcy_item_names ),
+						'count'    => $item['count'],
+						'selected' => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) )
+					)
+				);
+			}
+		}
+
+
+		foreach ( $result as $top_name => $sub_items ) {
+
+			$level = array(
+				'value'    => $sub_items['value'],
+				'count'    => $sub_items['count'],
+				'selected' => $sub_items['selected'],
+				'items'    => array()
+			);
+
+			if ( ! empty( $sub_items['items'] ) ) {
+
+				self::buildHierarchies( $level['items'], $sub_items['items'], $facets_selected );
+			}
+
+			// Calculate the count by summing children count
+			if ( ! empty( $level['items'] ) ) {
+
+				$count = 0;
+				foreach ( $level['items'] as $item ) {
+
+					$count += $item['count'];
+				}
+				$level['count'] = $count;
+			}
+
+			array_push( $results, $level );
+		}
+
 	}
 
 }

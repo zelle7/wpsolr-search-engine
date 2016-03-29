@@ -242,6 +242,9 @@ jQuery(document).ready(function () {
         result = result.substring(0, result.length - 1);
 
         jQuery("#select_fac").val(result);
+        
+        
+        
     })
 
     jQuery('#save_sort_options_form').click(function () {

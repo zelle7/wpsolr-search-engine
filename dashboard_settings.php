@@ -240,7 +240,7 @@ function fun_set_solr_options() {
 				'localization_options' => '2.5 Localization Options',
 			);
 
-			$subtab = wpsolr_admin_sub_tabs( $subtabs );
+			$subtab              = wpsolr_admin_sub_tabs( $subtabs );
 
 			switch ( $subtab ) {
 				case 'result_opt':
@@ -332,8 +332,9 @@ function fun_set_solr_options() {
 													'code'  => 'use_current_theme_search_template',
 													'label' => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no facets, no sort)'
 												),
-												array( 'code'  => 'ajax',
-												       'label' => 'Use WPSOLR custom search templates with Ajax (full WPSOLR features)'
+												array(
+													'code'  => 'ajax',
+													'label' => 'Use WPSOLR custom search templates with Ajax (full WPSOLR features)'
 												),
 												array(
 													'code'  => 'ajax_with_parameters',
@@ -360,7 +361,8 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use your
+									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use
+										your
 										own theme css.
 									</div>
 									<div class='col_right'>
@@ -380,7 +382,8 @@ function fun_set_solr_options() {
 										       name='wdm_solr_res_data[<?php echo 'infinitescroll' ?>]'
 										       value='infinitescroll'
 											<?php checked( 'infinitescroll', isset( $solr_res_options['infinitescroll'] ) ? $solr_res_options['infinitescroll'] : '?' ); ?>>
-										This feature loads the next page of results automatically when visitors approach
+										This feature loads the next page of results automatically when visitors
+										approach
 										the bottom of search page.
 									</div>
 									<div class="clear"></div>
@@ -467,15 +470,15 @@ function fun_set_solr_options() {
 				case 'index_opt':
 
 
-					$posts          = get_post_types();
-					$args       = array(
+					$posts = get_post_types();
+					$args        = array(
 						'public'   => true,
 						'_builtin' => false
 
 					);
-					$output     = 'names'; // or objects
-					$operator   = 'and'; // 'and' or 'or'
-					$taxonomies = get_taxonomies( $args, $output, $operator );
+					$output      = 'names'; // or objects
+					$operator    = 'and'; // 'and' or 'or'
+					$taxonomies  = get_taxonomies( $args, $output, $operator );
 					global $wpdb;
 					$limit = (int) apply_filters( 'postmeta_form_limit', 30 );
 					$keys  = $wpdb->get_col( "
@@ -691,7 +694,7 @@ function fun_set_solr_options() {
 					break;
 
 				case 'facet_opt':
-					$solr_options   = get_option( 'wdm_solr_form_data' );
+					$solr_options = get_option( 'wdm_solr_form_data' );
 					$checked_fls = $solr_options['cust_fields'] . ',' . $solr_options['taxonomies'];
 
 					$checked_fields = array();
@@ -700,13 +703,16 @@ function fun_set_solr_options() {
 					$minus_path     = plugins_url( 'images/minus.png', __FILE__ );
 					$built_in       = array( 'Type', 'Author', 'Categories', 'Tags' );
 					$built_in       = array_merge( $built_in, $checked_fields );
+
+					$built_in_can_show_hierarchy = explode( ',', 'Categories' . ',' . $solr_options['taxonomies'] );
 					?>
 					<div id="solr-facets-options" class="wdm-vertical-tabs-content">
 						<form action="options.php" method="POST" id='fac_settings_form'>
 							<?php
 							settings_fields( 'solr_facet_options' );
-							$solr_fac_options      = get_option( 'wdm_solr_facet_data' );
-							$selected_facets_value = $solr_fac_options['facets'];
+							$solr_fac_options             = get_option( 'wdm_solr_facet_data' );
+							$selected_facets_value        = $solr_fac_options['facets'];
+							$selected_facets_is_hierarchy = ! empty( $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] ) ? $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] : array();
 							if ( $selected_facets_value != '' ) {
 								$selected_array = explode( ',', $selected_facets_value );
 							} else {
@@ -741,7 +747,6 @@ function fun_set_solr_options() {
 										<input type='hidden' id='select_fac' name='wdm_solr_facet_data[facets]'
 										       value='<?php echo $selected_facets_value ?>'>
 
-
 										<ul id="sortable1" class="wdm_ul connectedSortable">
 											<?php
 											if ( $selected_facets_value != '' ) {
@@ -752,12 +757,31 @@ function fun_set_solr_options() {
 														} else {
 															$dis_text = $selected_val;
 														}
+														$is_hierarchy = isset( $selected_facets_is_hierarchy[ $selected_val ] );
+														?>
+														<li id='<?php echo $selected_val; ?>'
+														    class='ui-state-default facets facet_selected'>
+															<span
+																style="float:left;width: 300px;"><?php echo $dis_text; ?></span>
 
+															<input type='checkbox'
+															       style='float:none;margin:10px;'
+															       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH; ?>][<?php echo $selected_val; ?>]'
+															       value='1'
+																<?php echo checked( $is_hierarchy ); ?>
+																<?php echo in_array( $selected_val, array_map( 'strtolower', $built_in_can_show_hierarchy ) ) ? '' : 'disabled'; ?>
+															/>
+															Show the hierarchy
+															<img src='<?php echo $img_path; ?>'
+															     class='plus_icon'
+															     style='display:none'>
+															<img src='<?php echo $minus_path ?>'
+															     class='minus_icon'
+															     style='display:inline'
+															     title='Click to Remove the Facet'>
+														</li>
 
-														echo "<li id='$selected_val' class='ui-state-default facets facet_selected'>$dis_text
-                                                                                                    <img src='$img_path'  class='plus_icon' style='display:none'>
-                                                                                                <img src='$minus_path' class='minus_icon' style='display:inline' title='Click to Remove the Facet'></li>";
-													}
+													<?php }
 												}
 											}
 											foreach ( $built_in as $built_fac ) {
@@ -803,7 +827,7 @@ function fun_set_solr_options() {
 
 				case 'sort_opt':
 					$img_path = plugins_url( 'images/plus.png', __FILE__ );
-					$minus_path = plugins_url( 'images/minus.png', __FILE__ );
+					$minus_path  = plugins_url( 'images/minus.png', __FILE__ );
 
 					$built_in = WPSolrSearchSolrClient::get_sort_options();
 

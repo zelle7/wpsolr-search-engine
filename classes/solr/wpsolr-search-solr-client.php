@@ -454,14 +454,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		if ( count( $facets_to_display ) ) {
 			foreach ( $facets_to_display as $facet ) {
 
-				$fact = strtolower( str_replace( ' ', '_', $facet ) );
-				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
-					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
-				}
+				$fact      = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
 				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
 
 				foreach ( $facet_res as $value => $count ) {
-					$output[ $facet ][] = array( $value, $count );
+					$output[ $facet ][] = array( 'value' => $value, 'count' => $count );
 				}
 
 
@@ -674,16 +671,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$facetSet->setMinCount( $min_count );
 
 			foreach ( $field_names as $facet ) {
-				$fact = strtolower( str_replace( ' ', '_', $facet ) );
 
-				// Field 'categories' are now treated as other fields (dynamic string type)
-				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $fact ) {
-					$fact = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
-				}
+				$fact = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
 
 				// Add the facet
 				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $limit );
-
 			}
 		}
 
@@ -768,6 +760,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 
 				if ( ! empty( $filter_query_field_name ) && ! empty( $filter_query_field_value ) ) {
+
+					$filter_query_field_name = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, $filter_query_field_name );
+
 					$fac_fd = "$filter_query_field_name";
 
 					// In case the facet contains white space, we enclose it with "".
@@ -857,5 +852,43 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
 	}
+
+	/**
+	 * Does a facet has to be shown as a hierarchy
+	 *
+	 * @param $facet_name
+	 *
+	 * @return bool
+	 */
+	private function is_facet_to_show_as_a_hierarchy( $facet_name ) {
+
+		$facets_to_show_as_a_hierarchy = WPSOLR_Global::getOption()->get_facets_to_show_as_hierarchy();
+
+		return ! empty( $facets_to_show_as_a_hierarchy ) && ! empty( $facets_to_show_as_a_hierarchy[ $facet_name ] );
+	}
+
+	/**
+	 * Get a facet name if it's hierarchy (or not)
+	 *
+	 * @param $facet_name
+	 *
+	 * @return string Facet name with hierarch or not
+	 */
+	private function get_facet_hierarchy_name( $hierarchy_field_name, $facet_name ) {
+
+		$facet_name   = strtolower( str_replace( ' ', '_', $facet_name ) );
+		$is_hierarchy = $this->is_facet_to_show_as_a_hierarchy( $facet_name );
+
+		if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $facet_name ) {
+
+			// Field 'categories' are now treated as other fields (dynamic string type)
+			$facet_name = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+		}
+
+		$result = $is_hierarchy ? sprintf( $hierarchy_field_name, $facet_name ) : $facet_name;
+
+		return $result;
+	}
+
 
 }

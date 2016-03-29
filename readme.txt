@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.1
+Current Version: 8.2
 
 Author: wpsolr
 
@@ -14,25 +14,29 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.1
+Stable tag: 8.2
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
 == Description ==
 
-= Pricing =
-The plugin is 100% FREE, and there is no so-called "premium" version.
+= Plugin demo video =
+[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
 
-= Solr server =
-- Install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
+= Search server =
 - Test the plugin with a free Solr index ready-to-use included.
-- If you lack the skills, buy an optional ready-to-use Solr hosting cloud subscription at [35.88 €/year](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
+- OR install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
+- OR if you lack the skills, buy an optional ready-to-use Solr hosting cloud subscription at [3 €/month](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
+[youtube https://www.youtube.com/watch?v=USJiu7HRhTQ&hd=1]
 
 = Consulting =
 If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
 
-= Videos =
-e-commerce, multi-filters facets, website front-end using WPSOLR:
+= Portfolio videos =
+e-commerce, non-ajax, multi-filters facets, website front-end using WPSOLR:
+[youtube https://www.youtube.com/watch?v=YCh9OqXJ3Gw&hd=1]
+
+e-commerce, ajax, multi-filters facets, website front-end using WPSOLR:
 [youtube https://www.youtube.com/watch?v=5ibXwouAPHM&hd=1]
 
 Multi-language, multi-filters facets, website front-end using WPSOLR:
@@ -52,9 +56,6 @@ German website front-end using WPSOLR:
 
 Turkish website front-end using WPSOLR:
 [youtube https://www.youtube.com/watch?v=S0JvK6oyX0w&hd=1]
-
-Back-end presentation:
-[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
 
 = Features =
 - Solr Indexes options
@@ -252,8 +253,13 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 25. 25) Admin: get a free instant cloud Solr index ready for testing.
 26. 26) Admin: create one or several Solr indexes.
 27. 27) Admin: create local or cloud Solr indexes.
+28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.2 =
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-28.png "Show categories and custom taxonomies facets hierarchy"): Show categories and custom taxonomies facets hierarchy, by selecting an option on facets.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 8.1 =
 * Fix blanks in custom taxonomy field names

@@ -316,6 +316,7 @@ class WPSOLR_Option {
 	 **************************************************************************************************************/
 	const OPTION_FACET = 'wdm_solr_facet_data';
 	const OPTION_FACET_FACETS = 'facets';
+	const OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH = 'facets_show_hierarchy';
 
 	/**
 	 * Get facet options array
@@ -331,6 +332,15 @@ class WPSOLR_Option {
 	 */
 	public function get_facets_to_display() {
 		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS, '' ) );
+	}
+
+	/**
+	 * Facets to show as a hierarcy
+	 *
+	 * @return array Facets names
+	 */
+	public function get_facets_to_show_as_hierarchy() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH, array() );
 	}
 
 	/***************************************************************************************************************

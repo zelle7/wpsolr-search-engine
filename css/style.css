@@ -6,6 +6,12 @@
     cursor: pointer;
 }
 
+#res_facets ul {
+    list-style: none;
+    padding-left: 7px;
+    margin: 0;
+}
+
 .wpsolr_facet_checkbox.checked {
     background-image: url(../images/1449252361_checked_checkbox.png); /* https://www.iconfinder.com/icons/175220/checkbox_checked_icon#size=128 */
 }

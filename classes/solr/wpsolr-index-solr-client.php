@@ -10,7 +10,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	protected $solr_indexing_options;
 
-
 	/**
 	 * Retrieve the Solr index for a post (usefull for multi languages extensions).
 	 *
@@ -532,10 +531,12 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		/*
 			Get all custom categories selected for indexing, including 'category'
 		*/
-		$cats   = array();
-		$taxo   = $this->solr_indexing_options['taxonomies'];
-		$aTaxo  = explode( ',', $taxo );
-		$newTax = array(); // Add categories by default
+		$cats                            = array();
+		$categories_flat_hierarchies     = array();
+		$categories_non_flat_hierarchies = array();
+		$taxo                            = $this->solr_indexing_options['taxonomies'];
+		$aTaxo                           = explode( ',', $taxo );
+		$newTax                          = array(); // Add categories by default
 		if ( is_array( $aTaxo ) && count( $aTaxo ) ) {
 		}
 		foreach ( $aTaxo as $a ) {
@@ -552,10 +553,30 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		// Get all categories ot this post
-		$term_names = wp_get_post_terms( $post_to_index->ID, array( 'category' ), array( "fields" => "names" ) );
-		if ( $term_names && ! is_wp_error( $term_names ) ) {
-			foreach ( $term_names as $term_name ) {
-				array_push( $cats, $term_name );
+		$terms = wp_get_post_terms( $post_to_index->ID, array( 'category' ), array( 'fields' => 'all_with_object_id' ) );
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+
+				// Add category and it's parents
+				$term_parents_names = array();
+				// Add parents in reverse order ( top-bottom)
+				$term_parents_ids = array_reverse( get_ancestors( $term->term_id, 'category' ) );
+				array_push( $term_parents_ids, $term->term_id );
+
+				foreach ( $term_parents_ids as $term_parent_id ) {
+					$term_parent = get_term( $term_parent_id, 'category' );
+
+					array_push( $term_parents_names, $term_parent->name );
+
+					// Add the term to the non-flat hierarchy (for filter queries on all the hierarchy levels)
+					array_push( $categories_non_flat_hierarchies, $term_parent->name );
+				}
+
+				// Add the term to the flat hierarchy
+				array_push( $categories_flat_hierarchies, implode( WpSolrSchema::FACET_HIERARCHY_SEPARATOR, $term_parents_names ) );
+
+				// Add the term to the categories
+				array_push( $cats, $term->name );
 			}
 		}
 
@@ -613,7 +634,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS ] = $pnumcomments;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES ]         = $cats;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ]     = $cats;
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TAGS ]               = $tag_array;
+		// Hierarchy of categories
+		$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ) ]     = $categories_flat_hierarchies;
+		$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ) ] = $categories_non_flat_hierarchies;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TAGS ]                                                                    = $tag_array;
 
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
 		foreach ( $taxonomies as $parent ) {
@@ -624,12 +648,42 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 					$nm1       = $parent . '_str';
 					$nm2       = $parent . '_srch';
 					$nm1_array = array();
+
+					$taxonomy_non_flat_hierarchies = array();
+					$taxonomy_flat_hierarchies     = array();
+
 					foreach ( $terms as $term ) {
+
+						// Add taxonomy and it's parents
+						$term_parents_names = array();
+						// Add parents in reverse order ( top-bottom)
+						$term_parents_ids = array_reverse( get_ancestors( $term->term_id, $parent ) );
+						array_push( $term_parents_ids, $term->term_id );
+
+						foreach ( $term_parents_ids as $term_parent_id ) {
+							$term_parent = get_term( $term_parent_id, $parent );
+
+							array_push( $term_parents_names, $term_parent->name );
+
+							// Add the term to the non-flat hierarchy (for filter queries on all the hierarchy levels)
+							array_push( $taxonomy_non_flat_hierarchies, $term_parent->name );
+						}
+
+						// Add the term to the flat hierarchy
+						array_push( $taxonomy_flat_hierarchies, implode( WpSolrSchema::FACET_HIERARCHY_SEPARATOR, $term_parents_names ) );
+
+						// Add the term to the taxonomy
 						array_push( $nm1_array, $term->name );
+
 					}
+
 					if ( count( $nm1_array ) > 0 ) {
 						$solarium_document_for_update->$nm1 = $nm1_array;
 						$solarium_document_for_update->$nm2 = $nm1_array;
+
+						$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $nm1 ) ]     = $taxonomy_flat_hierarchies;
+						$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, $nm1 ) ] = $taxonomy_non_flat_hierarchies;
+
 					}
 				}
 			}

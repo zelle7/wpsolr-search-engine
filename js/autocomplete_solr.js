@@ -273,12 +273,15 @@ jQuery(document).ready(function () {
 
             // Select/Unselect the element
             is_already_selected = jQuery(this).hasClass('checked');
+            var facet_name = jQuery(this).attr('id').split(":")[0];
             if (is_already_selected) {
                 // Unselect current selection
                 jQuery(this).removeClass('checked');
+                jQuery(this).closest("ul").children().find("[id^=" + facet_name + "]").removeClass('checked');
             } else {
                 // Select current selection
                 jQuery(this).addClass('checked');
+                jQuery(this).parents("ul").siblings("li").find("[id^=" + facet_name + "]").addClass('checked');
             }
 
             // Get facets state
