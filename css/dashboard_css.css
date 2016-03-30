@@ -13,6 +13,7 @@
 
     font: 32px Arial, sans-serif;
 }
+
 .wdm-wrap {
     margin: 10px 20px 0 2px;
 }
@@ -85,15 +86,15 @@
     margin: 0;
 }
 
-input[type=radio]:checked:before {
+.col_right input[type=radio]:checked:before {
     background-color: #C15F03 !important;
 }
 
-input[type=checkbox]:checked:before {
+.col_right input[type=checkbox]:checked:before {
     color: #C15F03 !important;
 }
 
-input[type=text] {
+.col_right input[type=text] {
     width: 300px;
 }
 

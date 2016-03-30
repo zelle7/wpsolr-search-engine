@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.2
+Current Version: 8.3
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.2
+Stable tag: 8.3
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
@@ -256,6 +256,11 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.3 =
+* Add an option to display partial keyword matches in results. For instance, 'search apache' will return results containing 'searching apachesolr'.
+* Add css class to admin notice messages, so they can be hidden: 'wpsolr_admin_notice_error' and 'wpsolr_admin_notice_updated'.
+* Prevent wpsolr admin css to interfere with other wordpress/plugins css.
 
 = 8.2 =
 * [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-28.png "Show categories and custom taxonomies facets hierarchy"): Show categories and custom taxonomies facets hierarchy, by selecting an option on facets.

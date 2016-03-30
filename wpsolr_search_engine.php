@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
- * Version: 8.2
+ * Version: 8.3
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -47,17 +47,17 @@ if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template
 function solr_post_save_admin_notice() {
 	if ( $out = get_transient( get_current_user_id() . 'error_solr_post_save_admin_notice' ) ) {
 		delete_transient( get_current_user_id() . 'error_solr_post_save_admin_notice' );
-		echo "<div class=\"error\"><p>(WPSOLR) Error while indexing this post/page in Solr:<br><br>$out</p></div>";
+		echo "<div class=\"error wpsolr_admin_notice_error\"><p>(WPSOLR) Error while indexing this post/page in Solr:<br><br>$out</p></div>";
 	}
 
 	if ( $out = get_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' ) ) {
 		delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
-		echo "<div class=\"updated\"><p>(WPSOLR) $out</p></div>";
+		echo "<div class=\"updated wpsolr_admin_notice_updated\"><p>(WPSOLR) $out</p></div>";
 	}
 
 	if ( $out = get_transient( get_current_user_id() . 'wpsolr_some_languages_have_no_solr_index_admin_notice' ) ) {
 		delete_transient( get_current_user_id() . 'wpsolr_some_languages_have_no_solr_index_admin_notice' );
-		echo "<div class=\"error\"><p>(WPSOLR) $out</p></div>";
+		echo "<div class=\"error wpsolr_admin_notice_error\"><p>(WPSOLR) $out</p></div>";
 	}
 
 }

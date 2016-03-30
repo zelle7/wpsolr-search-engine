@@ -204,6 +204,7 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_max_nb_items_by_facet = 'no_fac';
 	const OPTION_SEARCH_ITEM_highlighting_fragsize = 'highlighting_fragsize';
 	const OPTION_SEARCH_ITEM_is_spellchecker = 'spellchecker';
+	const OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES = 'is_partial_matches';
 
 	/**
 	 * Get search options array
@@ -308,6 +309,15 @@ class WPSOLR_Option {
 	public function get_search_is_did_you_mean() {
 		return ( 'spellchecker' == $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_is_spellchecker, false ) );
 	}
+
+	/**
+	 * Is "Partial matches?" activated ?
+	 * @return boolean
+	 */
+	public function get_search_is_partial_matches() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES ) );
+	}
+
 
 	/***************************************************************************************************************
 	 *

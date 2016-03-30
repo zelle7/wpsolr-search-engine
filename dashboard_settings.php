@@ -452,6 +452,19 @@ function fun_set_solr_options() {
 									</div>
 									<div class="clear"></div>
 								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Display partial keyword matches in results</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[is_partial_matches]'
+										       value='res_info'
+											<?php checked( isset( $solr_res_options['is_partial_matches'] ) ); ?>>
+										Warning: this will hurt both search performance and search accuracy !
+										<p>This adds '*' to all keywords.
+											For instance, 'search apache' will return results
+											containing 'searching apachesolr'</p>
+									</div>
+									<div class="clear"></div>
+								</div>
 								<div class='wdm_row'>
 									<div class="submit">
 										<input name="save_selected_options_res_form"

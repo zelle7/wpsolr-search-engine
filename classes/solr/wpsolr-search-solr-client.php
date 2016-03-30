@@ -850,6 +850,12 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		Query $solarium_query, $keywords
 	) {
 
+		if ( WPSOLR_Global::getOption()->get_search_is_partial_matches() ) {
+			// Add '*' to each world of the query string.
+			// 'word1  word2 ' => 'word1*  word2* '
+			$keywords = preg_replace( '/(\w+)/i', '$1*', $keywords );
+		}
+
 		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
 	}
 
