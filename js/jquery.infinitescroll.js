@@ -8,7 +8,7 @@ var info = {
 };
 
 jQuery("#pagination-flickr").hide();
-jQuery(".res_info").hide();
+//jQuery(".res_info").hide();
 
 jQuery.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

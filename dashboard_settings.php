@@ -436,8 +436,9 @@ function fun_set_solr_options() {
 									<div class='col_right'>
 										<input type='text' id='number_of_fac' name='wdm_solr_res_data[no_fac]'
 										       placeholder="Enter a Number"
-										       value="<?php echo empty( $solr_res_options['no_fac'] ) ? '20' : $solr_res_options['no_fac']; ?>"><span
-											class='fac_err'></span> <br>
+										       value="<?php echo ( empty( $solr_res_options['no_fac'] ) && $solr_res_options['no_fac'] !== '0' ) ? '20' : $solr_res_options['no_fac']; ?>"><span
+											class='fac_err'></span> 
+										0 for unlimited values
 									</div>
 									<div class="clear"></div>
 								</div>

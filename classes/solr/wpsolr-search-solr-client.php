@@ -627,7 +627,16 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$last = $found;
 		}
 
-		$search_result[] = "<span class='infor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_header_pagination_numbers' ), $fir, $last, $found ) . "</span>";
+		if ( WPSOLR_Global::getOption()->get_search_is_infinitescroll() ) {
+
+			$information_header = sprintf( OptionLocalization::get_term( $localization_options, 'infinitescroll_results_header_pagination_numbers' ), $found );
+
+		} else {
+
+			$information_header = sprintf( OptionLocalization::get_term( $localization_options, 'results_header_pagination_numbers' ), $fir, $last, $found );
+		}
+
+		$search_result[] = "<span class='infor'>" . $information_header . "</span>";
 
 
 		return $search_result;
@@ -675,7 +684,12 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				$fact = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
 
 				// Add the facet
-				$facetSet->createFacetField( "$fact" )->setField( "$fact" )->setLimit( $limit );
+				$facetSet->createFacetField( "$fact" )->setField( "$fact" );
+
+				if ( ! empty( $limit ) ) {
+
+					$facetSet->setLimit( $limit );
+				}
 			}
 		}
 

@@ -61,6 +61,7 @@ class OptionLocalization extends WpSolrExtensions {
 				/* Results header */
 				'results_header_did_you_mean'                             => _x( 'Did you mean: %s', 'Results header: did you mean ?', 'wpsolr' ),
 				'results_header_pagination_numbers'                       => _x( 'Showing %d to %d results out of %d', 'Results header: pagination numbers', 'wpsolr' ),
+				'infinitescroll_results_header_pagination_numbers'        => _x( 'Showing %d results', 'Results header: infinitescroll pagination numbers', 'wpsolr' ),
 				'results_header_no_results_found'                         => _x( 'No results found for %s', 'Results header: no results found', 'wpsolr' ),
 				'results_row_by_author'                                   => _x( 'By %s', 'Result row information box: by author', 'wpsolr' ),
 				'results_row_in_category'                                 => _x( ', in %s', 'Result row information box: in category', 'wpsolr' ),
@@ -127,7 +128,8 @@ class OptionLocalization extends WpSolrExtensions {
 			'Infinite Scroll'            =>
 				array(
 					self::KEY_SECTION_TERMS => array(
-						'infinitescroll_loading' => array( 'Text displayed while Infinite Scroll is loading the next page' ),
+						'infinitescroll_loading'                           => array( 'Text displayed while Infinite Scroll is loading the next page' ),
+						'infinitescroll_results_header_pagination_numbers' => array( 'Pagination header on top of results' )
 					)
 				)
 		);

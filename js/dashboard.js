@@ -280,8 +280,8 @@ jQuery(document).ready(function () {
             jQuery('.fac_err').text("Please enter valid number of facets");
             err = 0;
         }
-        else if (num_of_fac < 1 || num_of_fac > 100) {
-            jQuery('.fac_err').text("Number of facets must be between 1 and 100");
+        else if (num_of_fac < 0) {
+            jQuery('.fac_err').text("Number of facets must be >= 0");
             err = 0;
         }
         else {

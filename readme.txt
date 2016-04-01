@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.3
+Current Version: 8.4
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.3
+Stable tag: 8.4
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
@@ -256,6 +256,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.4 =
+* Authorize unlimited number of facets items (by using 0)
+* Add localized text for infinitescroll header
 
 = 8.3 =
 * Add an option to display partial keyword matches in results. For instance, 'search apache' will return results containing 'searching apachesolr'.
