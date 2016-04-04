@@ -632,7 +632,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PERMALINK ]          = $purl;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_COMMENTS ]           = $pcomments;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS ] = $pnumcomments;
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES ]         = $cats;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ]     = $cats;
 		// Hierarchy of categories
 		$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ) ]     = $categories_flat_hierarchies;
@@ -675,6 +674,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						// Add the term to the taxonomy
 						array_push( $nm1_array, $term->name );
 
+						// Add the term to the categories searchable
+						array_push( $cats, $term->name );
+
 					}
 
 					if ( count( $nm1_array ) > 0 ) {
@@ -688,6 +690,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 				}
 			}
 		}
+
+		// Set categories and custom taxonomies as searchable
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CATEGORIES ] = $cats;
 
 		// Add custom fields to the document
 		$this->set_custom_fields( $solarium_document_for_update, $post_to_index );
