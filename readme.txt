@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.5
+Current Version: 8.6
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.5
+Stable tag: 8.6
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
@@ -256,6 +256,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.6 =
+* Improve the sort on your current theme search template. Now, you can set your sort order by on your Solr search handler, it will be used on your search page.
 
 = 8.5 =
 * Fix custom taxonomies to be searchable (they used to be displayed in facets only).

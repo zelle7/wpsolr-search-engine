@@ -166,7 +166,9 @@ class WPSOLR_Query extends WP_Query {
 				'numberposts' => count( $posts_ids ),
 				'post_type'   => 'any',
 				'post_status' => 'any',
-				'post__in'    => $posts_ids
+				'post__in'    => $posts_ids,
+				'orderby'     => 'post__in',
+				// Get posts in same order as documents in Solr results.
 			) )
 			: array();
 
