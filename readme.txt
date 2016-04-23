@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.7
+Current Version: 8.8
 
 Author: wpsolr
 
@@ -14,11 +14,14 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.7
+Stable tag: 8.8
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
 == Description ==
+
+= Consulting =
+If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
 
 = Plugin demo video =
 [youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
@@ -28,9 +31,6 @@ Check our portfolio videos: search in multi-million posts, attachments, multi-la
 - OR install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
 - OR if you lack the skills, buy an optional ready-to-use Solr hosting cloud subscription at [3 €/month](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
 [youtube https://www.youtube.com/watch?v=USJiu7HRhTQ&hd=1]
-
-= Consulting =
-If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
 
 = Portfolio videos =
 e-commerce, non-ajax, multi-filters facets, website front-end using WPSOLR:
@@ -67,47 +67,48 @@ Turkish website front-end using WPSOLR:
   - Support Basic Http authentication
   - Solr config files delivered (schema.xml, config.xml)
   - Solr 4.x and 5.x supported
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"), [Screenshot POLYLANG](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "WPML integration"): Multi-language supported in the most flexible way: one index by language
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"), [Screenshot POLYLANG](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "WPML integration"): (Premium feature) Multi-language supported in the most flexible way: one index by language
   - Tune hundreds of Solr parameters by updating our config files and reloading your index
 - Display search results options
   - Search form and search page results generated from the options selected (no coding needed)
   - Use css and js to customize display of search form and search page (see website examples below)
   - Ajax search, to display results fast.
   - Option to display Ajax search parameters in url. Back/Forward browser buttons are compatible with Ajax search
-  - Replace WordPress default search form automatically (no change required in your code)
-  - Choose Infinite scroll pagination or standard pagination
+  - (Premium feature) Replace WordPress default search form automatically (no change required in your code)
+  - (Premium feature) Choose Infinite scroll pagination or standard pagination
   - Do not automatically trigger the search, when a user clicks on the autocomplete list
-  - Display suggestions (Did you mean?) when no results are found
+  - (Premium feature) Display suggestions (Did you mean?) when no results are found
   - Choose number of results displayed by page
   - Choose number of items displayed by facets
   - Choose maximum size of each snippet text in results
 - Indexing options
   - Choose to index post excerpt or not
   - Choose to expand shortcodes of post content before indexing
-  - Choose post types, including custom post types, to be indexed
-  - Choose attachement types to be indexed
-  - Choose taxonomies to be indexed
-  - Choose custom fields to be indexed
+  - Choose post types, including (Premium feature) custom post types, to be indexed
+  - (Premium feature) Choose attachement types to be indexed
+  - (Premium feature) Choose custom taxonomies to be indexed
+  - (Premium feature) Choose custom fields to be indexed
   - Choose to index comments or not
   - List of item ids excluded from indexing
 - Facets (filters) options
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-7.png "Solr facets"): Choose which indexed items are going to be used as facets (filters)
   - Drag and drop facets as you like them to be displayed
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Solr facets multi-selection"): Multi-selection of facets
+  - (Premium feature) Display facet hierarchies
 - Sort options
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-15.png "Solr sort"): Choose which items are going to be used as sort
   - Drag and drop sort items as you like them to be displayed
 - Localization options
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-16.png "Solr localization"): You can change every bit of text displayed in the search page/form
-  - You can use our/your translation files (.po, .mo) in a multi-language website
+  - (Premium feature) You can use our/your translation files (.po, .mo) in a multi-language website
 - Integration with other plugins
-  - Integration with WooCommerce
-  - Integration with Advanced Custom Fields
-  - Integration with Types
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Integration with WPML
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): Integration with Polylang
-  - Integration with Groups
-  - Integration with s2Member
+  - (Premium feature) Integration with WooCommerce
+  - (Premium feature) Integration with Advanced Custom Fields
+  - (Premium feature) Integration with Types
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): (Premium feature) Integration with WPML
+  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): (Premium feature) Integration with Polylang
+  - (Premium feature) Integration with Groups
+  - (Premium feature) Integration with s2Member
   - Contact us in the forum if you need another plugin integration
 - Indexing Batch options
   - Can index one or several Solr indexes
@@ -115,8 +116,8 @@ Turkish website front-end using WPSOLR:
   - Real-time indexing as soon as a post/attachement is updated
   - Option to empty a Solr index
   - Option to synchronize a Solr index (index remaining data)
-  - Option to fully synchronize a Solr index (index all data from start)
-  - Option to debug SQL queries
+  - (Premium feature) Option to fully synchronize a Solr index (index all data from start)
+  - (Premium feature) Option to debug SQL queries
 
 = Some websites using WPSOLR, with filters, suggestions, and did you mean features =
 - Search "thinktank" at http://www.avenir-suisse.ch
@@ -256,6 +257,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.8 =
+* Introduce Premium Packs activation in WPSOLR. More Packs will come very soon.
 
 = 8.7 =
 * Fix a potential security issue.
