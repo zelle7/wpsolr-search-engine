@@ -3,7 +3,7 @@
 /**
  * Included file to display admin options
  */
-
+global $license_manager;
 
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_GROUPS, true );
 
@@ -145,13 +145,19 @@ $plugin_name = "Groups";
 			</div>
 			<div class='wdm_row'>
 				<div class="submit">
-					<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
-						name="save_selected_options_res_form"
-						id="save_selected_extension_groups_form" type="submit"
-						class="button-primary wdm-save"
-						value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
+					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_GROUPS ) ) { ?>
+						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
+							name="save_selected_options_res_form"
+							id="save_selected_extension_groups_form" type="submit"
+							class="button-primary wdm-save"
+							value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
+					<?php } else { ?>
+						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_GROUPS, 'Save Options' ); ?>
+						<br/>
+					<?php } ?>
 				</div>
 			</div>
+
 		</div>
 
 	</form>

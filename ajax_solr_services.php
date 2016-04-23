@@ -1,8 +1,8 @@
 <?php
 
-include( dirname( __FILE__ ) . '/classes/solr/wpsolr-index-solr-client.php' );
-include( dirname( __FILE__ ) . '/classes/solr/wpsolr-search-solr-client.php' );
-include( dirname( __FILE__ ) . '/classes/ui/WPSOLR_Data_facets.php' );
+include( WPSOLR_PLUGIN_DIR . '/classes/solr/wpsolr-index-solr-client.php' );
+include( WPSOLR_PLUGIN_DIR . '/classes/solr/wpsolr-search-solr-client.php' );
+include( WPSOLR_PLUGIN_DIR . '/classes/ui/WPSOLR_Data_facets.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
@@ -177,7 +177,7 @@ function return_solr_instance() {
 
 	try {
 
-		$client->ping();
+		$result = $client->ping();
 
 	} catch ( Exception $e ) {
 

@@ -65,6 +65,9 @@ class WpSolrExtensions {
 	// Extension: Gotosolr hosting
 	const OPTION_MANAGED_SOLR_SERVERS = 'Managed Solr Servers';
 
+	// Option: licenses
+	const OPTION_LICENSES = 'Licenses';
+
 	/*
 	 * Extensions configuration
 	 */
@@ -198,6 +201,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'types/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_types_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::OPTION_LICENSES             =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionLicenses',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'OptionLicenses',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'licenses/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'licenses/option-licenses.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'licenses/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_licenses',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

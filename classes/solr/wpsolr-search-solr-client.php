@@ -749,7 +749,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	public
 	function ping() {
 
-		$this->solarium_client->ping( $this->solarium_client->createPing() );
+		return $this->solarium_client->ping( $this->solarium_client->createPing() );
 	}
 
 	/**

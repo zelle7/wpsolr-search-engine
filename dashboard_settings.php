@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  Route to controllers
  */
@@ -86,6 +87,9 @@ function wpsolr_admin_init() {
 	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_INDEXES, true );
 	register_setting( OptionIndexes::get_option_name( WpSolrExtensions::OPTION_INDEXES ), OptionIndexes::get_option_name( WpSolrExtensions::OPTION_INDEXES ) );
 
+	WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LICENSES, true );
+	register_setting( OptionIndexes::get_option_name( WpSolrExtensions::OPTION_LICENSES ), OptionLicenses::get_option_name( WpSolrExtensions::OPTION_LICENSES ) );
+
 	register_setting( 'solr_form_options', 'wdm_solr_form_data' );
 	register_setting( 'solr_res_options', 'wdm_solr_res_data' );
 	register_setting( 'solr_facet_options', 'wdm_solr_facet_data' );
@@ -121,6 +125,14 @@ function fun_add_solr_settings() {
 }
 
 function fun_set_solr_options() {
+	global $license_manager;
+
+	// Include license activation popup boxes in all admin tabs
+	add_thickbox();
+	if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		// Do not load in Ajax
+		require_once 'classes/extensions/licenses/admin_options.inc.php';
+	}
 
 	// Button Index
 	if ( isset( $_POST['solr_index_data'] ) ) {
@@ -322,15 +334,16 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										Search theme
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Search theme' ); ?>
 									</div>
 									<div class='col_right'>
 										<select name="wdm_solr_res_data[search_method]">
 											<?php
 											$options = array(
 												array(
-													'code'  => 'use_current_theme_search_template',
-													'label' => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no facets, no sort)'
+													'code'     => 'use_current_theme_search_template',
+													'label'    => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no facets, no sort)',
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
 												),
 												array(
 													'code'  => 'ajax',
@@ -343,9 +356,14 @@ function fun_set_solr_options() {
 											);
 											foreach ( $options as $option ) {
 												$selected = $solr_res_options['search_method'] == $option['code'] ? 'selected' : '';
+												$disabled = isset( $option['disabled'] ) ? $option['disabled'] : '';
 												?>
 												<option
-													value="<?php echo $option['code'] ?>" <?php echo $selected ?> ><?php echo $option['label'] ?></option>
+													value="<?php echo $option['code'] ?>"
+													<?php echo $selected ?>
+													<?php echo $disabled ?>>
+													<?php echo $option['label'] ?>
+												</option>
 											<?php } ?>
 
 										</select>
@@ -375,13 +393,16 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Activate the "Infinite scroll" pagination.
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Activate the "Infinite scroll" pagination' ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox'
 										       name='wdm_solr_res_data[<?php echo 'infinitescroll' ?>]'
 										       value='infinitescroll'
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 											<?php checked( 'infinitescroll', isset( $solr_res_options['infinitescroll'] ) ? $solr_res_options['infinitescroll'] : '?' ); ?>>
+
 										This feature loads the next page of results automatically when visitors
 										approach
 										the bottom of search page.
@@ -403,11 +424,14 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Display suggestions (Did you mean?)</div>
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display suggestions (Did you mean?)' ); ?>
+									</div>
 									<div class='col_right'>
 										<input type='checkbox'
 										       name='wdm_solr_res_data[<?php echo 'spellchecker' ?>]'
 										       value='spellchecker'
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 											<?php checked( 'spellchecker', isset( $solr_res_options['spellchecker'] ) ? $solr_res_options['spellchecker'] : '?' ); ?>>
 									</div>
 									<div class="clear"></div>
@@ -437,7 +461,7 @@ function fun_set_solr_options() {
 										<input type='text' id='number_of_fac' name='wdm_solr_res_data[no_fac]'
 										       placeholder="Enter a Number"
 										       value="<?php echo ( empty( $solr_res_options['no_fac'] ) && $solr_res_options['no_fac'] !== '0' ) ? '20' : $solr_res_options['no_fac']; ?>"><span
-											class='fac_err'></span> 
+											class='fac_err'></span>
 										0 for unlimited values
 									</div>
 									<div class="clear"></div>
@@ -582,8 +606,11 @@ function fun_set_solr_options() {
 										<?php
 										$post_types_opt = $solr_options['p_types'];
 										foreach ( $post_types as $type ) {
+											$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											?>
-											<input type='checkbox' name='post_tys' value='<?php echo $type ?>'
+											<input type='checkbox' name='post_tys'
+											       value='<?php echo $type ?>'
+												<?php echo $disabled; ?>
 												<?php if ( strpos( $post_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
 											<br>
 											<?php
@@ -595,16 +622,20 @@ function fun_set_solr_options() {
 								</div>
 
 								<div class="wdm_row">
-									<div class='col_left'>Attachment types to be indexed</div>
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attachment types to be indexed' ); ?>
+									</div>
 									<div class='col_right'>
 										<input type='hidden' name='wdm_solr_form_data[attachment_types]'
 										       id='attachment_types'>
 										<?php
 										$attachment_types_opt = $solr_options['attachment_types'];
+										$disabled             = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 										foreach ( $allowed_attachments_types as $type ) {
 											?>
 											<input type='checkbox' name='attachment_types'
 											       value='<?php echo $type ?>'
+												<?php echo $disabled; ?>
 												<?php if ( strpos( $attachment_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
 											<br>
 											<?php
@@ -615,19 +646,23 @@ function fun_set_solr_options() {
 								</div>
 
 								<div class="wdm_row">
-									<div class='col_left'>Custom taxonomies to be indexed</div>
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom taxonomies to be indexed' ); ?>
+									</div>
 									<div class='col_right'>
 										<div class='cust_tax'><!--new div class given-->
 											<input type='hidden' name='wdm_solr_form_data[taxonomies]'
 											       id='tax_types'>
 											<?php
 											$tax_types_opt = $solr_options['taxonomies'];
+											$disabled      = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											if ( count( $taxonomies ) > 0 ) {
 												foreach ( $taxonomies as $type ) {
 													?>
 
 													<input type='checkbox' name='taxon'
 													       value='<?php echo $type . "_str" ?>'
+														<?php echo $disabled; ?>
 														<?php if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) { ?> checked <?php } ?>
 													> <?php echo $type ?> <br>
 													<?php
@@ -642,7 +677,9 @@ function fun_set_solr_options() {
 								</div>
 
 								<div class="wdm_row">
-									<div class='col_left'>Custom Fields to be indexed</div>
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom Fields to be indexed' ); ?>
+									</div>
 
 									<div class='col_right'>
 										<input type='hidden' name='wdm_solr_form_data[cust_fields]'
@@ -651,12 +688,14 @@ function fun_set_solr_options() {
 										<div class='cust_fields'><!--new div class given-->
 											<?php
 											$field_types_opt = $solr_options['cust_fields'];
+											$disabled        = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											if ( count( $keys ) > 0 ) {
 												foreach ( $keys as $key ) {
 													?>
 
 													<input type='checkbox' name='cust_fields'
 													       value='<?php echo $key . "_str" ?>'
+														<?php echo $disabled; ?>
 														<?php if ( strpos( $field_types_opt, $key . "_str" ) !== false ) { ?> checked <?php } ?>> <?php echo $key ?>
 													<br>
 													<?php
@@ -764,6 +803,7 @@ function fun_set_solr_options() {
 										<ul id="sortable1" class="wdm_ul connectedSortable">
 											<?php
 											if ( $selected_facets_value != '' ) {
+												$disabled = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 												foreach ( $selected_array as $selected_val ) {
 													if ( $selected_val != '' ) {
 														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
@@ -771,7 +811,8 @@ function fun_set_solr_options() {
 														} else {
 															$dis_text = $selected_val;
 														}
-														$is_hierarchy = isset( $selected_facets_is_hierarchy[ $selected_val ] );
+														$is_hierarchy       = isset( $selected_facets_is_hierarchy[ $selected_val ] );
+														$can_show_hierarchy = in_array( $selected_val, array_map( 'strtolower', $built_in_can_show_hierarchy ) );
 														?>
 														<li id='<?php echo $selected_val; ?>'
 														    class='ui-state-default facets facet_selected'>
@@ -783,9 +824,11 @@ function fun_set_solr_options() {
 															       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH; ?>][<?php echo $selected_val; ?>]'
 															       value='1'
 																<?php echo checked( $is_hierarchy ); ?>
-																<?php echo in_array( $selected_val, array_map( 'strtolower', $built_in_can_show_hierarchy ) ) ? '' : 'disabled'; ?>
+																<?php echo ( empty( $disabled ) && $can_show_hierarchy ) ? '' : 'disabled'; ?>
 															/>
-															Show the hierarchy
+															<?php if ( $can_show_hierarchy ) {
+																echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show the hierarchy' );
+															} ?>
 															<img src='<?php echo $img_path; ?>'
 															     class='plus_icon'
 															     style='display:none'>
@@ -1115,21 +1158,22 @@ function fun_set_solr_options() {
 								<span class='res_err'></span><br>
 							</div>
 							<div class="clear"></div>
-							<div class='col_left'>Display debug infos during indexing</div>
+							<div class='col_left'>
+								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display debug infos during indexing' ); ?>
+							</div>
 							<div class='col_right'>
 
 								<input type='checkbox'
 								       id='is_debug_indexing'
 								       name='wdm_solr_operations_data[is_debug_indexing][<?php echo $current_index_indice ?>]'
 								       value='is_debug_indexing'
+									<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 									<?php checked( 'is_debug_indexing', isset( $solr_operations_options['is_debug_indexing'][ $current_index_indice ] ) ? $solr_operations_options['is_debug_indexing'][ $current_index_indice ] : '' ); ?>>
 								<span class='res_err'></span><br>
 							</div>
 							<div class="clear"></div>
 							<div class='col_left'>
-								Re-index all the data in place.<br/>
-								If you check this option, it will restart the indexing from start, without deleting the
-								data already in the Solr index.
+								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Re-index all the data in place.' ); ?>
 							</div>
 							<div class='col_right'>
 
@@ -1137,7 +1181,11 @@ function fun_set_solr_options() {
 								       id='is_reindexing_all_posts'
 								       name='is_reindexing_all_posts'
 								       value='is_reindexing_all_posts'
+									<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 									<?php checked( true, false ); ?>>
+
+								If you check this option, it will restart the indexing from start, without deleting the
+								data already in the Solr index.
 								<span class='res_err'></span><br>
 							</div>
 							<div class="clear"></div>
@@ -1168,6 +1216,9 @@ function fun_set_solr_options() {
 			<?php
 			break;
 
+		case 'wpsolr_licenses' :
+			WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_LICENSES );
+			break;
 
 		}
 
@@ -1199,6 +1250,7 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 				: $option_indexes->get_index_name( $default_search_solr_index ) );
 		$tabs['solr_plugins']    = '3. Define which plugins to work with';
 		$tabs['solr_operations'] = '4. Send your data';
+		//$tabs['wpsolr_licenses'] = '5. AddOns';
 	}
 
 	echo '<div id="icon-themes" class="icon32"><br></div>';
@@ -1235,7 +1287,12 @@ function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	foreach ( $subtabs as $subtab => $name ) {
 		$class = ( $subtab == $current_subtab ) ? ' nav-tab-active' : '';
-		echo "<a class='nav-tab$class' href='admin.php?page=solr_settings&tab=$tab&subtab=$subtab'>$name</a>";
+
+		if ( false === strpos( $name, 'wpsolr_premium_class' ) ) {
+			echo "<a class='nav-tab$class' href='admin.php?page=solr_settings&tab=$tab&subtab=$subtab'>$name</a>";
+		} else {
+			echo $name;
+		}
 
 	}
 

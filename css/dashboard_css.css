@@ -1,3 +1,7 @@
+a.wpsolr_premium_class.nav-tab span {
+    margin-left: 5px;
+}
+
 .numberCircle {
     border-radius: 50%;
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
@@ -141,6 +145,15 @@
     background: #ddd;
     padding: 15px;
     border-left: 4px solid #C15F03;
+}
+
+.wpsolr_license_popup .wdm_note {
+    font-style: italic;
+    color: #f8f8f8;
+    margin: 20px;
+    background: #fe59fc;
+    padding: 15px;
+    border-left: 4px solid #0a5374;
 }
 
 .name_err, .host_err, .port_err, .path_err, .key_err, .sec_err {

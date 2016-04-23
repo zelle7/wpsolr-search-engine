@@ -187,6 +187,19 @@ class WPSOLR_Option {
 		return $this->explode( $this->get_sortby_items() );
 	}
 
+	public function get_option_installation() {
+
+		if ( ! get_option( self::OPTION_INSTALLATION, false ) ) {
+
+			$search = $this->get_option_search();
+			if ( empty( $search ) ) {
+
+				update_option( self::OPTION_INSTALLATION, true );
+			}
+
+		}
+
+	}
 
 	/***************************************************************************************************************
 	 *
@@ -211,7 +224,7 @@ class WPSOLR_Option {
 	 * @return array
 	 */
 	public function get_option_search() {
-		return self::get_option( self::OPTION_SEARCH );
+		return self::get_option( self::OPTION_SEARCH, array() );
 	}
 
 	/**
@@ -318,6 +331,12 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES ) );
 	}
 
+	/***************************************************************************************************************
+	 *
+	 * Installation
+	 *
+	 **************************************************************************************************************/
+	const OPTION_INSTALLATION = 'wpsolr_install';
 
 	/***************************************************************************************************************
 	 *
@@ -377,6 +396,14 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_ARE_COMMENTS_INDEXED ) );
 	}
 
+	/**
+	 * Is installed
+	 * @return mixed|void
+	 */
+	public function get_option_is_installed() {
+
+		return get_option( self::OPTION_INSTALLATION, false );
+	}
 
 	/***************************************************************************************************************
 	 *
@@ -397,6 +424,5 @@ class WPSOLR_Option {
 	public function get_localization_is_internal() {
 		return ( 'localization_by_admin_options' == $this->get_option_value( __FUNCTION__, self::OPTION_LOCALIZATION, self::OPTION_LOCALIZATION_LOCALIZATION_METHOD, 'localization_by_admin_options' ) );
 	}
-
 
 }

@@ -8,6 +8,10 @@
  * License: GPL2
  */
 
+// Constants
+define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
+
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
@@ -339,3 +343,15 @@ function my_enqueue() {
 	}
 }
 
+function wpsolr_activate() {
+
+	if ( ! is_multisite() ) {
+		/**
+		 * Mark licenses
+		 */
+		WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LICENSES, true );
+		OptionLicenses::upgrade_licenses();
+	}
+}
+
+register_activation_hook( __FILE__, 'wpsolr_activate' );

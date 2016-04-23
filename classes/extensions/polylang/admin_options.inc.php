@@ -22,6 +22,8 @@ $plugin_version = "(>= 1.7.11)";
 if ( $is_plugin_active ) {
 	$ml_plugin = PluginPolylang::create();
 }
+
+$package_name = OptionLicenses::LICENSE_PACKAGE_POLYLANG;
 ?>
 
 <?php

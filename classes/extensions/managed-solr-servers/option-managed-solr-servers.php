@@ -43,18 +43,20 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 	 * Subscribe to actions
 	 */
 
+	function __construct( $managed_solr_service_id = null ) {
 
-	function __construct( $managed_solr_service_id ) {
+		if ( isset( $managed_solr_service_id ) ) {
 
-		$this->_managed_solr_service_id = $managed_solr_service_id;
+			$this->_managed_solr_service_id = $managed_solr_service_id;
 
-		//$this->set_service_option('token', '');
+			//$this->set_service_option('token', '');
 
-		$this->_options = self::get_option_data( self::OPTION_MANAGED_SOLR_SERVERS, null );
+			$this->_options = self::get_option_data( self::OPTION_MANAGED_SOLR_SERVERS, null );
 
-		$this->_managed_solr_service = $this->get_managed_solr_service();
+			$this->_managed_solr_service = $this->get_managed_solr_service();
 
-		$this->_api_path = $this->_managed_solr_service[ self::MANAGED_SOLR_SERVICE_API_PATH ];
+			$this->_api_path = $this->_managed_solr_service[ self::MANAGED_SOLR_SERVICE_API_PATH ];
+		}
 
 	}
 
@@ -77,11 +79,17 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 			'Content-Type' => 'application/json'
 		);
 
-		$response = Requests::get(
-			$full_path,
-			$headers,
-			$options
-		);
+		try {
+			$response = Requests::get(
+				$full_path,
+				$headers,
+				$options
+			);
+
+		} catch ( Exception $e ) {
+
+			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
+		}
 
 		//var_dump( $full_path );
 		//var_dump( $response->body );
@@ -107,12 +115,54 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 		// Json format.
 		$headers = array( 'Content-Type' => 'application/json' );
 
-		$response = Requests::post(
-			$full_path,
-			$headers,
-			json_encode( $data ),
-			$options
+		try {
+
+			$response = Requests::post(
+				$full_path,
+				$headers,
+				json_encode( $data ),
+				$options
+			);
+
+		} catch ( Exception $e ) {
+
+			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
+		}
+
+		//var_dump( $response->body );
+		if ( 200 != $response->success ) {
+			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $response->body ) );
+		}
+
+		return json_decode( $response->body );
+
+	}
+
+	public function call_rest_delete( $path ) {
+
+		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
+
+		// Pb with SSL certificate. Disabled.
+		$options = array(
+			'verify'  => false,
+			'timeout' => 60,
 		);
+
+		// Json format.
+		$headers = array( 'Content-Type' => 'application/json' );
+
+		try {
+
+			$response = Requests::delete(
+				$full_path,
+				$headers,
+				$options
+			);
+
+		} catch ( Exception $e ) {
+
+			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
+		}
 
 		//var_dump( $response->body );
 		if ( 200 != $response->success ) {
@@ -183,6 +233,39 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 				'response' => $g_recaptcha_response,
 				'remoteip' => $_SERVER['REMOTE_ADDR']
 			)
+		);
+
+		return $response_object;
+	}
+
+	public function call_rest_activate_license( $url, $matching_license, $subscription_number ) {
+
+		$response_object = $this->call_rest_post(
+			$url,
+			array(
+				'matchingLicense'  => $matching_license,
+				'subscriptionUuid' => $subscription_number,
+				'siteUrl'          => home_url()
+			)
+		);
+
+		return $response_object;
+	}
+
+	public function call_rest_deactivate_license( $url, $license_activation_uuid ) {
+
+		$response_object = $this->call_rest_delete(
+			$url . '/' . $license_activation_uuid
+		);
+
+		return $response_object;
+	}
+
+
+	public function call_rest_verify_license( $url, $license_activation_uuid ) {
+
+		$response_object = $this->call_rest_get(
+			$url . '/' . $license_activation_uuid
 		);
 
 		return $response_object;

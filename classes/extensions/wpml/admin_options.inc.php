@@ -22,6 +22,7 @@ $plugin_version = "(WPML Multilingual CMS > 3.1.6)";
 
 $ml_plugin = PluginWpml::create();
 
+$package_name = OptionLicenses::LICENSE_PACKAGE_WPML;
 ?>
 
 <?php

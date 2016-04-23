@@ -3,6 +3,7 @@
 /**
  * Included file to display admin options
  */
+global $license_manager;
 
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_ACF, true );
 
@@ -64,7 +65,8 @@ if ( $is_plugin_active ) {
 			</div>
 			<div class="wdm_row">
 				<div class='col_left'>Use the <a
-						href="<?php echo $plugin_link; ?>" target="_blank"><?php echo $plugin_name; ?> <?php echo $plugin_version; ?>
+						href="<?php echo $plugin_link; ?>"
+						target="_blank"><?php echo $plugin_name; ?> <?php echo $plugin_version; ?>
 						plugin</a>
 					to filter search results.
 					<br/>Think of re-indexing all your data if <a
@@ -95,11 +97,16 @@ if ( $is_plugin_active ) {
 
 			<div class='wdm_row'>
 				<div class="submit">
-					<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
-						name="save_selected_options_res_form"
-						id="save_selected_extension_groups_form" type="submit"
-						class="button-primary wdm-save"
-						value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
+					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_ACF ) ) { ?>
+						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
+							name="save_selected_options_res_form"
+							id="save_selected_extension_groups_form" type="submit"
+							class="button-primary wdm-save"
+							value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
+					<?php } else { ?>
+						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_ACF, 'Save Options' ); ?>
+						<br/>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
