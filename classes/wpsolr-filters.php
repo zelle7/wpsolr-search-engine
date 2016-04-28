@@ -60,4 +60,8 @@ class WpSolrFilters {
 
 	// Filter after retrieving an option value
 	const WPSOLR_FILTER_AFTER_GET_OPTION_VALUE = 'wpsolr_filter_after_get_option_value';
+
+	// Filter a sort option
+	const WPSOLR_FILTER_SORT = 'wpsolr_filter_sort';
+
 }

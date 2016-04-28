@@ -561,9 +561,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 					// Strip HTML and PHP tags
 					$content = strip_tags( $content );
 
-					if ( isset( $res_opt['highlighting_fragsize'] ) && is_numeric( $res_opt['highlighting_fragsize'] ) ) {
+					$solr_res_options = get_option( 'wdm_solr_res_data', array() );
+					if ( isset( $solr_res_options['highlighting_fragsize'] ) && is_numeric( $solr_res_options['highlighting_fragsize'] ) ) {
 						// Cut content at the max length defined in options.
-						$content = substr( $content, 0, $res_opt['highlighting_fragsize'] );
+						$content = substr( $content, 0, $solr_res_options['highlighting_fragsize'] );
 					}
 				}
 			}
@@ -828,6 +829,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
+		// Let a chance to add custom sort options
+		$solarium_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_SORT, $solarium_query, $sort_field_name );
 	}
 
 	/**
