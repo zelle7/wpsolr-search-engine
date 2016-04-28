@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Apache Solr search by WPSOLR
  * Description: Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
- * Version: 8.8
+ * Version: 8.9
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

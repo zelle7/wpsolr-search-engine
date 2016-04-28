@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 8.8
+Current Version: 8.9
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 8.8
+Stable tag: 8.9
 
 Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
 
@@ -257,6 +257,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 
 == Changelog ==
+
+= 8.9 =
+* Fix some results showing the full post contents rather than extracts.
+* Add a filter on sort elements.
 
 = 8.8 =
 * Introduce Premium Packs activation in WPSOLR. More Packs will come very soon.
