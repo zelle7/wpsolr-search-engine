@@ -9,6 +9,7 @@ require_once plugin_dir_path( __FILE__ ) . '../wpsolr-schema.php';
 
 class WpSolrExtensions {
 
+	static $wpsolr_extensions;
 	/*
     * Private constants
     */
@@ -228,7 +229,11 @@ class WpSolrExtensions {
 	 * @return WpSolrExtensions
 	 */
 	static function load() {
-		$wpsolr_extensions = new self();
+
+		if ( ! isset( static::$wpsolr_extensions ) ) {
+
+			static::$wpsolr_extensions = new self();
+		}
 	}
 
 	/**

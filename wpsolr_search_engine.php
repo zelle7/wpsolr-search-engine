@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Apache Solr search by WPSOLR
- * Description: Check our portfolio videos: search in multi-million posts, attachments, multi-languages, multisites, e-commerce, facets, ajax. Based on Apache Solr.
- * Version: 8.9
+ * Plugin Name: WooCommerce search with no limits by WPSOLR
+ * Description: See our WooCommerce search videos: search in products, at the speed of light. Based on Apache Solr.
+ * Version: 9.0
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

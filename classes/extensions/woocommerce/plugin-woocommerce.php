@@ -10,6 +10,9 @@ class PluginWooCommerce extends WpSolrExtensions {
 	// Polylang options
 	const _OPTIONS_NAME = 'wdm_solr_extension_woocommerce_data';
 
+	// Product types
+	const PRODUCT_TYPE_VARIABLE = 'variable';
+
 	/**
 	 * Factory
 	 *
@@ -49,20 +52,47 @@ class PluginWooCommerce extends WpSolrExtensions {
 		}
 
 		// Get the product correponding to this post
-		$product = new WC_Product( $post_id );
+		$product = wc_get_product( $post_id );
+
+		switch ( $product->get_type() ) {
+
+			case self::PRODUCT_TYPE_VARIABLE:
+
+				$product_variable = new WC_Product_Variable( $product );
+				foreach ( $product_variable->get_available_variations() as $variation_array ) {
+
+					foreach ( $variation_array['attributes'] as $attribute_name => $attribute_value ) {
+
+						if ( ! isset( $custom_fields[ $attribute_name ] ) ) {
+							$custom_fields[ $attribute_name ] = array();
+						}
+
+						if ( ! in_array( $attribute_value, $custom_fields[ $attribute_name ], true ) ) {
+
+							array_push( $custom_fields[ $attribute_name ], $attribute_value );
+						}
+					}
+				}
 
 
-		foreach ( $product->get_attributes() as $attribute ) {
+				break;
 
-			//$terms = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
+			default:
 
-			// Remove the eventual 'pa_' prefix from the attribute name
-			$attribute_name = $attribute['name'];
-			if ( substr( $attribute_name, 0, 3 ) == 'pa_' ) {
-				$attribute_name = substr( $attribute_name, 3, strlen( $attribute_name ) );
-			}
+				foreach ( $product->get_attributes() as $attribute ) {
 
-			$custom_fields[ $attribute_name ] = explode( ',', $product->get_attribute( $attribute['name'] ) );
+					//$terms = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
+
+					// Remove the eventual 'pa_' prefix from the attribute name
+					$attribute_name = $attribute['name'];
+					if ( substr( $attribute_name, 0, 3 ) === 'pa_' ) {
+						$attribute_name = substr( $attribute_name, 3, strlen( $attribute_name ) );
+					}
+
+					$custom_fields[ $attribute_name ] = explode( ',', $product->get_attribute( $attribute['name'] ) );
+				}
+
+				break;
 		}
 
 

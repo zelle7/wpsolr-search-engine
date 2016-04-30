@@ -600,13 +600,14 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Post types to be indexed</div>
+									<div
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Post types to be indexed' ); ?></div>
 									<div class='col_right'>
 										<input type='hidden' name='wdm_solr_form_data[p_types]' id='p_types'>
 										<?php
 										$post_types_opt = $solr_options['p_types'];
 										foreach ( $post_types as $type ) {
-											$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+											$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) || ( $type === 'product' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											?>
 											<input type='checkbox' name='post_tys'
 											       value='<?php echo $type ?>'
