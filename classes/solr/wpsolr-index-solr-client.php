@@ -32,10 +32,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solr_index_indice = null, $language_code = null ) {
 
-		// Load active extensions
-		$this->wpsolr_extensions = new WpSolrExtensions();
-
-
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
 

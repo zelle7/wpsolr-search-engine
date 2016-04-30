@@ -189,7 +189,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Localize (translate) the front search page with your .po files',
 					'Display debug infos during indexing',
 					'Reindex all your data in-place',
-					'Index in real-time (as soon as post/page is updated/deleted)'
+					'Deactivate real-time indexing to load huge external datafeeds'
 				)
 			),
 			self::LICENSE_PACKAGE_WOOCOMMERCE => array(
@@ -206,9 +206,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
-					'Index product attributes',
-					'Search in product attributes',
-					'Create facets on product attributes'
+					'Index product attributes/variations',
+					'Search in product attributes/variations',
+					'Create facets on product attributes/variations'
 				)
 			),
 			self::LICENSE_PACKAGE_ACF         => array(
