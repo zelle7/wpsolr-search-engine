@@ -379,6 +379,7 @@ class WPSOLR_Option {
 	 **************************************************************************************************************/
 	const OPTION_INDEX = 'wdm_solr_form_data';
 	const OPTION_INDEX_ARE_COMMENTS_INDEXED = 'comments';
+	const OPTION_INDEX_IS_REAL_TIME = 'is_real_time';
 
 	/**
 	 * Get indexing options array
@@ -394,6 +395,14 @@ class WPSOLR_Option {
 	 */
 	public function get_index_are_comments_indexed() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_ARE_COMMENTS_INDEXED ) );
+	}
+
+	/**
+	 * Index real-time (on save) ?
+	 * @return boolean
+	 */
+	public function get_index_is_real_time() {
+		return $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_IS_REAL_TIME ) );
 	}
 
 	/**

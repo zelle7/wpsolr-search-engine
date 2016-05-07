@@ -1,27 +1,51 @@
-=== WooCommerce search with no limits by WPSOLR ===
+=== Speed up WooCommerce/Coupons/Affiliate feeds search and filters with WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 9.0
+Current Version: 9.1
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: Solr in WordPress, WooCommerce search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, faceting, relevant search, custom search, facets, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: Solr in WordPress, WooCommerce search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 9.0
+Stable tag: 9.1
 
-See our WooCommerce search videos: search in products, at the speed of light. Based on Apache Solr.
+Is your WooCommerce/Coupons/Affiliate feeds search too slow ? WPSOLR speeds up your search and filters, whatever the size of your store or feeds.
 
 == Description ==
 
-= Consulting =
+= Why another WooCommerce/Coupons/Affiliate feeds plugin ? =
+Each store owner is (should) be aware that search is probaly the mot important feature for their visitors.
+Because potential customers have to find the right product among your catalog, before even starting the order funnel.
+
+Therefore, your search must be relevant, and fast.
+
+1) Fast
+
+If your search is not fast, I mean below a second, your visitor will leave because he knows there are other websites and does not want to spend too much time on each one.
+On the contrary, if a visitor finds quicky the product he looks for, he has achieved the first step to complete an order.
+But traditional search gets slower and slower the more products/attributes/variants you get in your store.
+
+Fortunatly, WPSOLR is powered by the world's most used search engine, Apache Solr. Apache Solr is built from the ground to perform under a large quantity of information (many millions) and simulatneous searches.
+
+2) Relevant
+
+A search must return results, and only relevant results.
+To do so, search should be performed on all the informations available on your products: pdfs, attributes, variants, description, excerpt, shortcodes ...
+And, search should be able to perform some automatic corrections (Did you mean ?), or suggestions.
+
+WPSOLR provides many configurations settings, and can be extended with many more Apache Solr tunings.
+
+= Premium/Consulting =
 If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
+
+[Premium features](http://wpsolr.com/pricing/ "premium features"), grouped in packs, are also available.
 
 = Plugin demo video =
 [youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
@@ -29,17 +53,17 @@ If you have specific needs, we also provide development services. Contact us at 
 = Search server =
 - Test the plugin with a free Solr index ready-to-use included.
 - OR install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
-- OR if you lack the skills, buy an optional ready-to-use Solr hosting cloud subscription at [3 €/month](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
+- OR if you lack the skills, buy an optional ready-to-use [Solr hosting cloud subscription](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
 [youtube https://www.youtube.com/watch?v=USJiu7HRhTQ&hd=1]
 
 = Portfolio videos =
-e-commerce, non-ajax, multi-filters facets, website front-end using WPSOLR:
+e-commerce, non-ajax, multi-filters, website front-end using WPSOLR:
 [youtube https://www.youtube.com/watch?v=YCh9OqXJ3Gw&hd=1]
 
-e-commerce, ajax, multi-filters facets, website front-end using WPSOLR:
+e-commerce, ajax, multi-filters, website front-end using WPSOLR:
 [youtube https://www.youtube.com/watch?v=5ibXwouAPHM&hd=1]
 
-Multi-language, multi-filters facets, website front-end using WPSOLR:
+Multi-language, multi-filters, website front-end using WPSOLR:
 [youtube https://www.youtube.com/watch?v=Cby0rJTSLt4&hd=1]
 
 US website front-end using WPSOLR:
@@ -79,7 +103,7 @@ Turkish website front-end using WPSOLR:
   - Do not automatically trigger the search, when a user clicks on the autocomplete list
   - (Premium feature) Display suggestions (Did you mean?) when no results are found
   - Choose number of results displayed by page
-  - Choose number of items displayed by facets
+  - Choose number of items displayed by filters
   - Choose maximum size of each snippet text in results
 - Indexing options
   - Choose to index post excerpt or not
@@ -90,11 +114,11 @@ Turkish website front-end using WPSOLR:
   - (Premium feature) Choose custom fields to be indexed
   - Choose to index comments or not
   - List of item ids excluded from indexing
-- Facets (filters) options
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-7.png "Solr facets"): Choose which indexed items are going to be used as facets (filters)
-  - Drag and drop facets as you like them to be displayed
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Solr facets multi-selection"): Multi-selection of facets
-  - (Premium feature) Display facet hierarchies
+- filters options
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-7.png "Solr filters"): Choose which indexed items are going to be used as filters (filters)
+  - Drag and drop filters as you like them to be displayed
+  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Solr filters multi-selection"): Multi-selection of filters
+  - (Premium feature) Display filter hierarchies
 - Sort options
   - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-15.png "Solr sort"): Choose which items are going to be used as sort
   - Drag and drop sort items as you like them to be displayed
@@ -165,8 +189,8 @@ Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?wpsolr_q=solr'>English/
 = Super fast live suggestions 500ms =
 Try on words like « solr », « cassandra », « security », « indexes », « search ».
 
-= Super fast facets filters 500ms =
-Notice the facets on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list.
+= Super fast filters 500ms =
+Notice the filters on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list.
 
 = Did you mean =
 To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
@@ -181,7 +205,7 @@ Tune even more your search with hundreds of parameters, just by tweaking the sta
 
 Search in multi-language content, with language specific stemming, stopwords, synonyms,
 
-Boost your search with multi-media content (pdf, .xls, .doc), facet filters, autocompletion, suggestions, and optional hosting.
+Boost your search with multi-media content (pdf, .xls, .doc), filters, autocompletion, suggestions, and optional hosting.
 
 = Why Apache Solr ? =
 Standard WP search is performed by SQL queries directly on the database. So do most of search plugins.
@@ -204,7 +228,7 @@ And now, with this plugin, you can get it for free. So, fasten your seat belt, a
 3. Real-time indexing: as soon as a post is published/unpublished, it is indexed/de-indexed. No outdated results are displayed.
 3. Search in post attachements: pdf, .doc, .xls ...
 4. Text-analysis to break down search phrases, to search entire phrase or individual words.
-5. Advanced faceted search on fields such as tags, categories, author, and page type and custom fields.
+5. Advanced filtered search on fields such as tags, categories, author, and page type and custom fields.
 6. Highlighted search words in the text.
 7. Autocomplete suggestions, correct spelling mistakes
 8. Provide a "Did you mean?" query suggestion.
@@ -233,12 +257,12 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 4. 4) Admin: Indexing option (part 1)
 5. 5) Admin: Indexing option (part 2)
 6. 6) Admin: Options to display results
-7. 7) Admin: Add facets and control their order
+7. 7) Admin: Add filters and control their order
 8. 8) Admin: Integration with the plugin 'groups'
 9. 9) Admin: Integration with the plugin 's2member'
 10. 10) Admin: Solr indexation
 11. 11) Front end: Auto suggestions while typing in search bar
-12. 12) Front end: Facets are displayed
+12. 12) Front end: filters are displayed
 13. 13) Front end: Did you mean ?
 14. 14) Admin: Select attachment types to index
 15. 15) Admin: The "Sort by" items list is configurable
@@ -247,10 +271,10 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 18. 18) Admin: POLYLANG setup
 19. 19) Admin: WooCommerce integration activation.
 20. 20) Admin: WooCommerce Product attribute selected for indexing
-21. 21) Admin: WooCommerce Product attribute selected for faceting
+21. 21) Admin: WooCommerce Product attribute selected for filtering
 22. 22) Admin: Advanced Custom Fields (ACF) integration activation.
 23. 23) Admin: Types plugin integration activation.
-24. 24) Front end: multi-selection on facets.
+24. 24) Front end: multi-selection on filters.
 25. 25) Admin: get a free instant cloud Solr index ready for testing.
 26. 26) Admin: create one or several Solr indexes.
 27. 27) Admin: create local or cloud Solr indexes.
@@ -258,8 +282,11 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 
 == Changelog ==
 
+= 9.1 =
+* WPSOLR Premium Pack: speed up the load of huge external datafeeds (affiliate, coupons ...) by momentarily deactivating real-time indexing.
+
 = 9.0 =
-* WooCommerce premium pack: add variations index/search/facets.
+* WooCommerce premium pack: add variations index/search/filters.
 
 = 8.9 =
 * Fix some results showing the full post contents rather than extracts.
@@ -275,11 +302,11 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Improve the sort on your current theme search template. Now, you can set your sort order by on your Solr search handler, it will be used on your search page.
 
 = 8.5 =
-* Fix custom taxonomies to be searchable (they used to be displayed in facets only).
+* Fix custom taxonomies to be searchable (they used to be displayed in filters only).
 * WARNING: this fix will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 8.4 =
-* Authorize unlimited number of facets items (by using 0)
+* Authorize unlimited number of filters items (by using 0)
 * Add localized text for infinitescroll header
 
 = 8.3 =
@@ -288,7 +315,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Prevent wpsolr admin css to interfere with other wordpress/plugins css.
 
 = 8.2 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-28.png "Show categories and custom taxonomies facets hierarchy"): Show categories and custom taxonomies facets hierarchy, by selecting an option on facets.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-28.png "Show categories and custom taxonomies filters hierarchy"): Show categories and custom taxonomies filters hierarchy, by selecting an option on filters.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 8.1 =
@@ -301,15 +328,15 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Attachements are now showing in results
 
 = 7.8 =
-* Separate custom taxonomies facets content from categories facets content
+* Separate custom taxonomies filters content from categories filters content
 
 = 7.7 =
-* Fix bug with custom taxonomies facets
+* Fix bug with custom taxonomies filters
 * Remove the '*' when search box is empty
 
 = 7.6 =
-* Extra option (default) to use your current theme search templates to display Solr results. Advantage: search results are fully controlled by your theme's standard loop. Drawback: advanced Solr features are not available: keyword autocompletion, did you mean, sort, facets.
-* New Widget 'WPSOLR Facets' to display facets wherever your theme can support it.
+* Extra option (default) to use your current theme search templates to display Solr results. Advantage: search results are fully controlled by your theme's standard loop. Drawback: advanced Solr features are not available: keyword autocompletion, did you mean, sort, filters.
+* New Widget 'WPSOLR filters' to display filters wherever your theme can support it.
 
 = 7.5 =
 * Extra option to prevent WPSOLR loading it's own css files. It will then be easier to apply your own theme styles.
@@ -319,7 +346,7 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Update of nl_NL translation files.
 
 = 7.3 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Facets multi-selection"): Add multi-selection to facets.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "filters multi-selection"): Add multi-selection to filters.
 
 = 7.2 =
 * Option to display Ajax search parameters in url. Back/Forward buttons is now compatible with Ajax search.
@@ -331,24 +358,24 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 * Fix a javascript error with infinite scroll.
 
 = 6.9 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-23.png "Types plugin integration"): Types plugin integration: display custom fields label, rather than name, in facets.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-23.png "Types plugin integration"): Types plugin integration: display custom fields label, rather than name, in filters.
 Just activate the Types integration, and select your options.
 * Plugins integrations minimum compatible version is indicated.
 
 = 6.8 =
 * Easier way to get a test Solr index.
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-22.png "Add Advanced Custom Fields (ACF) plugin integration"): Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in facets.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-22.png "Add Advanced Custom Fields (ACF) plugin integration"): Add Advanced Custom Fields (ACF) plugin integration: display custom fields label, rather than name, in filters.
 Just activate the Advanced Custom Fields (ACF) integration, and select your options.
 * Fix an error when WooCommerce plugin is activated but not configured in WPSOLR integration.
 
 = 6.7 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-19.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-20.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-21.png "WooCommerce integration"): WooCommerce integration, product attributes are now in search, facets, autocomplete and suggestions (did you mean).
-Just activate the WooCommerce integration, and select your products attributes in the indexed custom fields and facets options.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-19.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-20.png "WooCommerce integration"), [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-21.png "WooCommerce integration"): WooCommerce integration, product attributes are now in search, filters, autocomplete and suggestions (did you mean).
+Just activate the WooCommerce integration, and select your products attributes in the indexed custom fields and filters options.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 
 = 6.6 =
-* Fix a bug on facet categories containing a white space.
+* Fix a bug on filter categories containing a white space.
 
 = 6.5 =
 * Add Infinite Scroll pagination: this optional feature loads the next page of results automatically when visitors approach the bottom of search page.
@@ -388,7 +415,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 = 5.4 =
 * Improve search speed by 2-3 times.
-* Fix bug in category facet.
+* Fix bug in category filter.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.3 =
@@ -403,7 +430,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * New admin option to re-index all the posts, without deleting the index.
 
 = 5.1 =
-* Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as facets.
+* Use custom fields also in search, autocomplete and suggestions (did you mean). Until now, custom fields where only displayed as filters.
 * WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 5.0 =
@@ -508,7 +535,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * Integration with <a href="https://wordpress.org/plugins/s2member/" target="_blank">s2member plugin</a>: filter Solr results with user levels and custom capabilities.
 
 = 2.2 =
-* Fix custom taxonomies to be searchable (they used to be displayed in facets only). As a side effect, <a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> product taxonomies (product_cat , product_tag) are now searchable.
+* Fix custom taxonomies to be searchable (they used to be displayed in filters only). As a side effect, <a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> product taxonomies (product_cat , product_tag) are now searchable.
 
 = 2.1 =
 * Installation failed with PHP <= 5.3: fixed.
@@ -556,6 +583,12 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 == Frequently Asked Questions ==
 
+= Do you offer a premium version ? =
+Yes. Check out our <a href="http://wpsolr.com/pricing">Premium Packs</a>.
+
+= Can you manage millions of products/attributes/variations ? =
+Yes (Premium for attributes/variations). WPSOLR is based on the mighty Apache Solr search engine. It can easily manage millions of posts, and fast.
+
 = Why the search page does not show up ? =
 You have to select the admin option "Replace standard WP search", and verify that your urls permalinks are activated.
 
@@ -565,14 +598,14 @@ WPSOLR uses a Solr client library, Solarium, which requires namespaces.
 
 Namespaces are supported by PHP >= 5.3.0
 
-= How do I install and configure Solr? =
+= Can I have my Apache Solr server hosted ? =
+
+Yes, on <a href='http://gotosolr.com/en/'>Gotosolr Solr hosting</a>.
+
+
+= How do I install and configure my own Apache Solr server ? =
 
 Please refer to our detailed <a href='http://wpsolr.com/installation-guide/'>Installation Guide</a>.
-
-
-= Can I host Solr on my server? =
-
-Yes. But you can also host Solr remotely on gotosolr.
 
 
 = What version of Solr does the WPSOLR Search Engine plugin need? =
@@ -585,16 +618,12 @@ WPSOLR Search Engine plugin is <a href="http://wpsolr.com/releases/#1.0"> compat
 As of now, the WPSOLR Search Engine Plugin works with WordPress version 3.8 or above.
 
 
-= Does WPSOLR Search Engine plugin handle custom post type, custom taxonomies and custom fields? =
+= Can custom post type, custom taxonomies and custom fields be added filtered search? =
 
-Yes. The WPSOLR Search Engine plugin provides an option in dashboard, to select custom post types, custom taxonomies and custom fields, which have to be indexed.
-
-
-= Can custom post type, custom taxonomies and custom fields be added faceted search? =
-
-Yes. The WPSOLR Search Engine plugin provides option in dashboard, to select custom post types, custom taxonomies and custom fields, to be added in faceted search.
+Yes (Premium feature). The WPSOLR Search Engine plugin provides option in dashboard, to select custom post types, custom taxonomies and custom fields, to be added in filtered search.
 
 
 = Do you offer support? =
 
-You can raise a support question for our plugin from wordpress.org
+You can raise a support question for our plugin from wordpress.org.
+Premium users can use our zendesk support.

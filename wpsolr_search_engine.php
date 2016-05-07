@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce search with no limits by WPSOLR
  * Description: See our WooCommerce search videos: search in products, at the speed of light. Based on Apache Solr.
- * Version: 9.0
+ * Version: 9.1
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -68,6 +68,13 @@ function solr_post_save_admin_notice() {
 
 add_action( 'admin_notices', "solr_post_save_admin_notice" );
 
+if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
+	// Index as soon as a save is performed.
+	add_action( 'save_post', 'add_remove_document_to_solr_index', 10, 3 );
+	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
+	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
+}
+
 /*
  * Add/remove document to/from Solr index when status changes to/from published
  * We have to use action 'save_post', as it is used by other plugins to trigger meta boxes save
@@ -111,12 +118,9 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 
 }
 
-add_action( 'save_post', 'add_remove_document_to_solr_index', 10, 3 );
-
 /*
  * Add an attachment to Solr
  */
-add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
 function add_attachment_to_solr_index( $attachment_id ) {
 
 	// Index the new attachment
@@ -137,7 +141,6 @@ function add_attachment_to_solr_index( $attachment_id ) {
 /*
  * Delete an attachment from Solr
  */
-add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 function delete_attachment_to_solr_index( $attachment_id ) {
 
 	// Remove the attachment from Solr index

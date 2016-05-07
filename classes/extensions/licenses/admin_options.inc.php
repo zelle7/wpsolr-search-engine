@@ -192,6 +192,12 @@ $license_manager = new OptionLicenses();
 								Select both packs on the order page.
 							</h4>
 
+							<h3>Chat</h3>
+							If you are quite, but not completely, convinced, let's have a chat at <a
+								href="http://www.wpsolr.com"
+								target="__new1">wpsolr.com chat box</a>.
+							<br/> We also deliver custom developments, if your project needs extra care.
+
 							<h3>Instructions:</h3>
 							Click on the button to be redirected to your order page.
 							After completion of your order, you will receive an email with a link to your account.

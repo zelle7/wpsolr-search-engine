@@ -360,12 +360,7 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 				self::MANAGED_SOLR_SERVICE_CHANNEL_GOOGLE_RECAPTCHA_TOKEN_URL => 'http://10.0.2.2:8082/v1/providers/d26a384b-fa62-4bdb-a1dd-27d714a3f519/accounts/2c93bcdc-e6cd-4251-b4f7-8130e398dc36/addons/51e110f8-a8df-4791-8c09-f22ee81671e6/google-recaptcha-token',
 				self::MANAGED_SOLR_SERVICE_ORDERS_URLS                        => array(
 					array(
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Yearly Plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Yearly plan',
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1'
-					),
-					array(
-						self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Monthly Plan',
+						self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Convert the trial with a Monthly Plan',
 						self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Monthly plan',
 						self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1'
 					)
@@ -381,12 +376,7 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 			self::MANAGED_SOLR_SERVICE_CHANNEL_GOOGLE_RECAPTCHA_TOKEN_URL => 'https://api.gotosolr.com/v1/providers/8c25d2d6-54ae-4ff6-a478-e2c03f1e08a4/accounts/24b7729e-02dc-47d1-9c15-f1310098f93f/addons/f8622320-5a3b-48cf-a331-f52459c46573/google-recaptcha-token',
 			self::MANAGED_SOLR_SERVICE_ORDERS_URLS                        => array(
 				array(
-					self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Yearly Plan',
-					self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Yearly plan',
-					self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4642999&QTY=1&CART=1&CARD=1'
-				),
-				array(
-					self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend with a Monthly Plan',
+					self::MANAGED_SOLR_SERVICE_ORDER_URL_BUTTON_LABEL => 'Extend the trial with a Monthly Plan',
 					self::MANAGED_SOLR_SERVICE_ORDER_URL_TEXT         => 'Monthly plan',
 					self::MANAGED_SOLR_SERVICE_ORDER_URL_LINK         => 'https://secure.avangate.com/order/checkout.php?PRODS=4653966&QTY=1&CART=1&CARD=1'
 				)

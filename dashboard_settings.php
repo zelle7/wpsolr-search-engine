@@ -245,11 +245,11 @@ function fun_set_solr_options() {
 			<?php
 
 			$subtabs = array(
-				'result_opt'           => '2.1 Result Options',
-				'index_opt'            => '2.2 Indexing Options',
-				'facet_opt'            => '2.3 Facets Options',
-				'sort_opt'             => '2.4 Sort Options',
-				'localization_options' => '2.5 Localization Options',
+				'result_opt'           => '2.1 Search',
+				'index_opt'            => '2.2 Data',
+				'facet_opt'            => '2.3 Filters',
+				'sort_opt'             => '2.4 Sort',
+				'localization_options' => '2.5 Localization',
 			);
 
 			$subtab              = wpsolr_admin_sub_tabs( $subtabs );
@@ -342,7 +342,7 @@ function fun_set_solr_options() {
 											$options = array(
 												array(
 													'code'     => 'use_current_theme_search_template',
-													'label'    => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no facets, no sort)',
+													'label'    => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no filters, no sort)',
 													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
 												),
 												array(
@@ -372,7 +372,7 @@ function fun_set_solr_options() {
 										To display your search results, you can choose among:<br/>
 										<b>- Full integration to your theme, but less Solr features:</b> <br/>
 										Use your own theme's search templates customized with Widget 'WPSOLR
-										Facets'.<br/>
+										filters'.<br/>
 										<b>- Full Solr features, but less integration to your theme:</b><br/>
 										Use WPSOLR's custom search templates with your own css.<br/>
 									</div>
@@ -456,7 +456,7 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>No. of values to be displayed by facets</div>
+									<div class='col_left'>No. of values to be displayed by filters</div>
 									<div class='col_right'>
 										<input type='text' id='number_of_fac' name='wdm_solr_res_data[no_fac]'
 										       placeholder="Enter a Number"
@@ -573,6 +573,24 @@ function fun_set_solr_options() {
 
 								</div>
 
+								<div class="wdm_row">
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Stop real-time indexing' ); ?>
+									</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_form_data[is_real_time]'
+										       value='1'
+											<?php checked( '1', isset( $solr_options['is_real_time'] ) ? $solr_options['is_real_time'] : '' ); ?>
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+										>
+										<br/>The Solr index will no more be updated as soon as a post/attachment is
+										added/saved/deleted, but only when you launch the indexing bach.
+										<br/> Useful to load a large number of posts, for instance coupons/products from
+										affiliate datafeeds.
+
+									</div>
+									<div class="clear"></div>
+								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
 										Index post excerpt.<br/>
@@ -774,30 +792,30 @@ function fun_set_solr_options() {
 							}
 							?>
 							<div class='wrapper'>
-								<h4 class='head_div'>Facets Options</h4>
+								<h4 class='head_div'>Filters Options</h4>
 
 								<div class="wdm_note">
 
-									In this section, you will choose which data you want to display as facets in
-									your search results. Facets are extra filters usually seen in the left hand
-									side of the results, displayed as a list of links. You can add facets only
+									In this section, you will choose which data you want to display as filters in
+									your search results. filters are extra filters usually seen in the left hand
+									side of the results, displayed as a list of links. You can add filters only
 									to data you've selected to be indexed.
 
 								</div>
 								<div class="wdm_note">
 									<h4>Instructions</h4>
 									<ul class="wdm_ul wdm-instructions">
-										<li>Click on the 'Plus' icon to add the facets</li>
-										<li>Click on the 'Minus' icon to remove the facets</li>
+										<li>Click on the 'Plus' icon to add the filters</li>
+										<li>Click on the 'Minus' icon to remove the filters</li>
 										<li>Sort the items in the order you want to display them by dragging and
-											dropping them at the desired plcae
+											dropping them at the desired place
 										</li>
 									</ul>
 								</div>
 
 								<div class="wdm_row">
 									<div class='avail_fac'>
-										<h4>Available items for facets</h4>
+										<h4>Available items for filters</h4>
 										<input type='hidden' id='select_fac' name='wdm_solr_facet_data[facets]'
 										       value='<?php echo $selected_facets_value ?>'>
 
@@ -836,7 +854,7 @@ function fun_set_solr_options() {
 															<img src='<?php echo $minus_path ?>'
 															     class='minus_icon'
 															     style='display:inline'
-															     title='Click to Remove the Facet'>
+															     title='Click to Remove the filter'>
 														</li>
 
 													<?php }
