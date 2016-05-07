@@ -177,6 +177,7 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
+					'Create a test Solr indexes, valid 3 days',
 					'Configure several Solr indexes',
 					'Select your theme search page',
 					'Select Infinite Scroll navigation in Ajax search',
