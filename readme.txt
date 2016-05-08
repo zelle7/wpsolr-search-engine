@@ -279,11 +279,12 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 26. 26) Admin: create one or several Solr indexes.
 27. 27) Admin: create local or cloud Solr indexes.
 28. 28) Admin: show categories and custom taxonomies hierarchy.
+29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
 
 = 9.1 =
-* WPSOLR Premium Pack: speed up the load of huge external datafeeds (affiliate, coupons ...) by momentarily deactivating real-time indexing.
+* WPSOLR Premium Pack: speed up the load of huge external datafeeds (affiliate, coupons ...) by momentarily deactivating real-time indexing. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-29.png "Stop real-time indexing")
 
 = 9.0 =
 * WooCommerce premium pack: add variations index/search/filters.
