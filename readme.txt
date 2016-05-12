@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 9.1
+Current Version: 9.2
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.4
 
-Stable tag: 9.1
+Stable tag: 9.2
 
 Is your WooCommerce/Coupons/Affiliate feeds search too slow ? WPSOLR speeds up your search and filters, whatever the size of your store or feeds.
 
@@ -282,6 +282,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.2 =
+* Fix a potential blank admin page.
 
 = 9.1 =
 * WPSOLR Premium Pack: speed up the load of huge external datafeeds (affiliate, coupons ...) by momentarily deactivating real-time indexing. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-29.png "Stop real-time indexing")
