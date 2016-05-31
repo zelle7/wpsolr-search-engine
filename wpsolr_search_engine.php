@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce search with no limits by WPSOLR
  * Description: See our WooCommerce search videos: search in products, at the speed of light. Based on Apache Solr.
- * Version: 9.2
+ * Version: 9.3
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -278,15 +278,10 @@ function solr_search_form() {
 
 add_action( 'plugins_loaded', 'my_plugins_loaded' );
 function my_plugins_loaded() {
-	/*
-	global $g_wpsolr_extensions;
 
 	// Load active extensions
-	if ( ! isset( $g_wpsolr_extensions ) ) {
-		$g_wpsolr_extensions = new WpSolrExtensions();
-	}
-	*/
-
+	WpSolrExtensions::load();
+	
 	/*
 	 * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
 	 * Copy your .mo files there

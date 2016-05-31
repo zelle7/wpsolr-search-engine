@@ -1,28 +1,37 @@
-=== Speed up WooCommerce/Coupons/Affiliate feeds search and filters with WPSOLR ===
+=== Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 9.2
+Current Version: 9.3
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: Solr in WordPress, WooCommerce search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
-Tested up to: 4.4
+Tested up to: 4.5.2
 
-Stable tag: 9.2
+Stable tag: 9.3
 
-Is your WooCommerce/Coupons/Affiliate feeds search too slow ? WPSOLR speeds up your search and filters, whatever the size of your store or feeds.
+Upgrade to a true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
 == Description ==
 
-= Why another WooCommerce/Coupons/Affiliate feeds plugin ? =
-Each store owner is (should) be aware that search is probaly the mot important feature for their visitors.
-Because potential customers have to find the right product among your catalog, before even starting the order funnel.
+= Premium/Consulting =
+
+[Premium features](http://wpsolr.com/pricing/ "premium features"), grouped in packs, are described here.
+
+If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
+
+= Plugin demo video =
+[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
+
+= Why another search plugin for WP / WooCommerce / Coupons / Affiliate feeds ? =
+Each blog/store owner is (should) be aware that search is probaly the mot important feature for their visitors.
+Because potential visitors/customers have to find the right post/product among your blog/catalog, before even starting the order funnel.
 
 Therefore, your search must be relevant, and fast.
 
@@ -41,14 +50,6 @@ To do so, search should be performed on all the informations available on your p
 And, search should be able to perform some automatic corrections (Did you mean ?), or suggestions.
 
 WPSOLR provides many configurations settings, and can be extended with many more Apache Solr tunings.
-
-= Premium/Consulting =
-If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
-
-[Premium features](http://wpsolr.com/pricing/ "premium features"), grouped in packs, are also available.
-
-= Plugin demo video =
-[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
 
 = Search server =
 - Test the plugin with a free Solr index ready-to-use included.
@@ -282,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.3 =
+* WPSOLR Polylang Pack: Fix Polylang extension not activating.
 
 = 9.2 =
 * Fix a potential blank admin page.

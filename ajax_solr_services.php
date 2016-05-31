@@ -6,7 +6,7 @@ include( WPSOLR_PLUGIN_DIR . '/classes/ui/WPSOLR_Data_facets.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
-WpSolrExtensions::load();
+//WpSolrExtensions::load();
 
 
 function solr_format_date( $thedate ) {

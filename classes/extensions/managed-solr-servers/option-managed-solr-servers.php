@@ -68,9 +68,8 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 
 		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path . '&access_token=' . $this->get_service_option( 'token' );
 
-		// Pb with SSL certificate. Disabled.
 		$options = array(
-			'verify'  => false,
+			'verify'  => true,
 			'timeout' => 30,
 		);
 
@@ -106,9 +105,8 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 
 		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
 
-		// Pb with SSL certificate. Disabled.
 		$options = array(
-			'verify'  => false,
+			'verify'  => true,
 			'timeout' => 60,
 		);
 
@@ -142,9 +140,8 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 
 		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
 
-		// Pb with SSL certificate. Disabled.
 		$options = array(
-			'verify'  => false,
+			'verify'  => true,
 			'timeout' => 60,
 		);
 
