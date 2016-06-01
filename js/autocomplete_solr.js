@@ -280,14 +280,13 @@ jQuery(document).ready(function () {
                 jQuery(this).closest("ul").children().find("[id^=" + facet_name + "]").removeClass('checked');
             } else {
                 // Select current selection
-                jQuery(this).addClass('checked');
-                jQuery(this).parents("ul").siblings("li").find("[id^=" + facet_name + "]").addClass('checked');
+                jQuery(this).parents("li").children(".select_opt").addClass('checked');
             }
 
             // Get facets state
             state = get_ui_facets_state();
         }
-
+        
         //alert(JSON.stringify(state));
 
         // Ajax call on the current selection

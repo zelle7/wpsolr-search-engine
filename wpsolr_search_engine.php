@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: WooCommerce search with no limits by WPSOLR
- * Description: See our WooCommerce search videos: search in products, at the speed of light. Based on Apache Solr.
- * Version: 9.3
+ * Plugin Name: Universal search with WPSOLR
+ * Description: A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
+ * Version: 9.4
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

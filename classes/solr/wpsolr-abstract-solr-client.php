@@ -19,4 +19,33 @@ class WPSolrAbstractSolrClient {
 	// Array of active extension objects
 	protected $wpsolr_extensions;
 
+
+	/**
+	 * Execute a solarium query. Retry 2 times if an error occurs.
+	 *
+	 * @param $solarium_client
+	 * @param $solarium_update_query
+	 *
+	 * @return mixed
+	 */
+	protected function execute( $solarium_client, $solarium_update_query ) {
+
+
+		for ( $i = 0; $i < 3; $i ++ ) {
+
+			try {
+
+				$result = $solarium_client->execute( $solarium_update_query );
+
+				return $result;
+
+			} catch ( Exception $e ) {
+
+				// Catch error here, to retry in next loop.
+				$test = 1;
+			}
+
+		}
+
+	}
 }

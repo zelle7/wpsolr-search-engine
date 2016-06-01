@@ -28,7 +28,7 @@ class WPSOLR_UI_Facets {
 
 			foreach ( $facets as $facet ) {
 
-				$html .= "<lh >" . sprintf( $facet_title, $facet['name'] ) . "</lh><br>";
+				$html .= "<div class='wpsolr_facet_title'>" . sprintf( $facet_title, $facet['name'] ) . "</div>";
 
 				self::displayFacetHierarchy( $facet_element, $html, $facet, ! empty( $facet['items'] ) ? $facet['items'] : array() );
 			}
@@ -52,6 +52,12 @@ class WPSOLR_UI_Facets {
 
 	public static function displayFacetHierarchy( $facet_element, &$html, $facet, $items ) {
 
+		if ( empty( $items ) ) {
+			return;
+		}
+
+		$html .= '<ul>';
+
 		$is_facet_selected = false;
 
 		$facet_id = strtolower( str_replace( ' ', '_', $facet['id'] ) );
@@ -68,21 +74,21 @@ class WPSOLR_UI_Facets {
 
 			$facet_class = self::WPSOLR_FACET_CHECKBOX_CLASS . ( $item_selected ? ' checked' : '' );
 
-			$html .= '<ul>';
 			$html .= '<li>';
 			$html .= "<div class='select_opt $facet_class' id='$facet_id:$item_name'>"
 			         . sprintf( $facet_element, $item_name, $item_count )
 			         . "</div>";
-			$html .= '</li>';
 
 			if ( ! empty( $item['items'] ) ) {
 
 				self::displayFacetHierarchy( $facet_element, $html, $facet, $item['items'] );
 			}
 
-			$html .= '</ul>';
+			$html .= '</li>';
 
 		}
+
+		$html .= '</ul>';
 
 	}
 

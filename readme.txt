@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 9.3
+Current Version: 9.4
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.3
+Stable tag: 9.4
 
-Upgrade to a true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
+A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
 == Description ==
 
@@ -283,6 +283,12 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.4 =
+* Add an indexing option: custom fields and categories can be indexed with post content, and appear in autocomplete and highlighted results.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+* Fix some HTML syntax elements (remove hl, remove labels, fix ul inside ul) in the Ajax search page.
+* WARNING: The HTML fix can require you to update your own CSS.
 
 = 9.3 =
 * WPSOLR Polylang Pack: Fix Polylang extension not activating.

@@ -1,3 +1,7 @@
+.wpsolr_facet_title {
+    margin-top: 10px;
+}
+
 .wpsolr_facet_checkbox {
     background: url(../images/1449252372_unchecked_checkbox.png) 0 50% no-repeat; /* https://www.iconfinder.com/icons/175466/checkbox_unchecked_icon#size=128 */
     background-size: 14px 14px;

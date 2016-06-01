@@ -693,6 +693,11 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Add custom fields to the document
 		$this->set_custom_fields( $solarium_document_for_update, $post_to_index );
 
+		if ( isset( $this->solr_indexing_options['p_custom_fields'] ) && isset( $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] ) ) {
+
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] .= implode( ". ", $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] );
+		}
+
 		// Last chance to customize the solarium update document
 		$solarium_document_for_update = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLARIUM_DOCUMENT_FOR_UPDATE, $solarium_document_for_update, $this->solr_indexing_options, $post_to_index, $attachment_body );
 
