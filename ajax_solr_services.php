@@ -42,7 +42,7 @@ function fun_search_indexed_data() {
         <div class="ui-widget">
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
         <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . WPSOLR_Global::getQuery()->get_wpsolr_query() . '" name="search" id="search_que" class="search-field sfl2" autocomplete="off"/>
-	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
+	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" >
 	<input type="hidden" value="' . WPSOLR_Global::getOption()->get_search_after_autocomplete_block_submit() . '" id="is_after_autocomplete_block_submit">
 	<input type="hidden" value="' . WPSOLR_Global::getQuery()->get_wpsolr_paged() . '" id="paginate">
 <div style="clear:both"></div>
