@@ -1,3 +1,8 @@
+=== AAU CHANGES ===
+to pull changes from github origin
+git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
+
+
 === Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
 
 Contributors: wpsolr
