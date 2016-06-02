@@ -73,7 +73,9 @@ class WPSOLR_UI_Facets {
 			}
 
 			$facet_class = self::WPSOLR_FACET_CHECKBOX_CLASS . ( $item_selected ? ' checked' : '' );
-
+			if($facet['id'] == 'type'){
+				$item_name = get_post_type_object($item_name)->labels->singular_name;
+			}
 			$html .= '<li>';
 			$html .= "<div class='select_opt $facet_class' id='$facet_id:$item_name'>"
 			         . sprintf( $facet_element, $item_name, $item_count )
