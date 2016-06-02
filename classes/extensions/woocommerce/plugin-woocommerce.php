@@ -83,7 +83,7 @@ class PluginWooCommerce extends WpSolrExtensions {
 
 					//$terms = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
 
-					// Remove the eventual 'pa_' prefix from the attribute name
+					// Remove the eventual 'pa_' prefix from the global attribute name
 					$attribute_name = $attribute['name'];
 					if ( substr( $attribute_name, 0, 3 ) === 'pa_' ) {
 						$attribute_name = substr( $attribute_name, 3, strlen( $attribute_name ) );

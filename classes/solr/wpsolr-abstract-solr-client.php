@@ -31,7 +31,7 @@ class WPSolrAbstractSolrClient {
 	protected function execute( $solarium_client, $solarium_update_query ) {
 
 
-		for ( $i = 0; $i < 3; $i ++ ) {
+		for ( $i = 0; ; $i ++ ) {
 
 			try {
 
@@ -41,8 +41,14 @@ class WPSolrAbstractSolrClient {
 
 			} catch ( Exception $e ) {
 
-				// Catch error here, to retry in next loop.
-				$test = 1;
+				// Catch error here, to retry in next loop, or throw error after enough retries.
+				if ( $i >= 3 ) {
+					throw $e;
+				}
+
+				// Sleep 3 seconds before retrying
+				sleep( 3 );
+
 			}
 
 		}

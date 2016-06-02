@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 9.4
+Current Version: 9.5
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.4
+Stable tag: 9.5
 
 A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.5 =
+* Better Solr connection management: automatic retry (twice) before throwing errors. Prevent indexing/search errors due to minor network disconnections.
 
 = 9.4 =
 * Add an indexing option: custom fields and categories can be indexed with post content, and appear in autocomplete and highlighted results.

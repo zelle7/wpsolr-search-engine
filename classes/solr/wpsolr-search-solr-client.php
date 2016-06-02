@@ -126,7 +126,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$suggestqry->setCollate( true );
 		$suggestqry->setOnlyMorePopular( true );
 
-		$resultset = $client->execute( $suggestqry );
+		$resultset = $this->execute( $client, $suggestqry );
 
 		foreach ( $resultset as $term => $termResult ) {
 
@@ -372,7 +372,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	public function execute_solarium_query( Query $solarium_query = null ) {
 
 		// Perform the query, return the Solarium result set
-		return $this->solarium_results = $this->solarium_client->execute( isset( $solarium_query ) ? $solarium_query : $this->solarium_query );
+		return $this->solarium_results = $this->execute( $this->solarium_client, isset( $solarium_query ) ? $solarium_query : $this->solarium_query );
 	}
 
 	/**

@@ -59,8 +59,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$deleteQuery = $client->createUpdate();
 		$deleteQuery->addDeleteQuery( 'id:*' );
 		$deleteQuery->addCommit();
-		$client->execute( $deleteQuery );
-
+		$this->execute( $client, $deleteQuery );
 
 	}
 
@@ -108,7 +107,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$query = $client->createSelect();
 		$query->setQuery( '*:*' );
 		$query->setRows( 0 );
-		$resultset = $client->execute( $query );
+		$resultset = $this->execute( $client, $query );
 
 		// Store 0 in # of index documents
 		self::set_index_indice_option_value( 'solr_docs', $resultset->getNumFound() );
@@ -125,8 +124,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$deleteQuery->addDeleteQuery( 'id:' . $post->ID );
 		$deleteQuery->addCommit();
 
-		$result = $client->execute( $deleteQuery );
-
+		$result = $this->execute( $client, $deleteQuery );
 
 		return $result->getStatus();
 
@@ -789,7 +787,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$solarium_extract_query->addParam( 'extractOnly', 'true' );
 			// Try to extract the document body
 			$client                              = $this->solarium_client;
-			$result                              = $client->execute( $solarium_extract_query );
+			$result                              = $this->execute( $client, $solarium_extract_query );
 			$response                            = $result->getResponse()->getBody();
 			$attachment_text_extracted_from_tika = preg_replace( '/^.*?\<body\>(.*?)\<\/body\>.*$/i', '\1', $response );
 			$attachment_text_extracted_from_tika = str_replace( '\n', ' ', $attachment_text_extracted_from_tika );
@@ -817,7 +815,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$client = $this->solarium_client;
 		$solarium_update_query->addDocuments( $documents );
 		$solarium_update_query->addCommit();
-		$result = $client->execute( $solarium_update_query );
+		$result = $this->execute( $client, $solarium_update_query );
 
 		return $result;
 
