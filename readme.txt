@@ -2,19 +2,19 @@
 
 Contributors: wpsolr
 
-Current Version: 9.5
+Current Version: 9.6
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.5
+Stable tag: 9.6
 
 A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.6 =
+* Partial matching now returns also results with the exact keywords. For instance, SKUs can now be used with the partial matching option.
 
 = 9.5 =
 * Better Solr connection management: automatic retry (twice) before throwing errors. Prevent indexing/search errors due to minor network disconnections.
