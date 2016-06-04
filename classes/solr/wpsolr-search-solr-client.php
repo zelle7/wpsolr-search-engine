@@ -93,10 +93,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solarium_config ) {
 
-		// Load active extensions
-		$this->wpsolr_extensions = new WpSolrExtensions();
-
-
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
 		$this->solarium_client = new Solarium\Client( $solarium_config );

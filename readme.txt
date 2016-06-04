@@ -1,8 +1,8 @@
-=== Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
+=== Solr Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 9.6
+Current Version: 9.7
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.6
+Stable tag: 9.7
 
-A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
+A true universal Solr search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
 == Description ==
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.7 =
+* WPSOLR Groups plugin Pack: fix issue 'A filterquery must have a unique key value within a query'.
 
 = 9.6 =
 * Partial matching now returns also results with the exact keywords. For instance, SKUs can now be used with the partial matching option.
@@ -617,6 +620,12 @@ You have to select the admin option "Replace standard WP search", and verify tha
 WPSOLR uses a Solr client library, Solarium, which requires namespaces.
 
 Namespaces are supported by PHP >= 5.3.0
+
+= Which Apache Solr version is supported ? =
+
+Solr 4.x, Solr 5.x, Solr 6.x
+
+WPSOLR was tested till Solr 6.0.1
 
 = Can I have my Apache Solr server hosted ? =
 
