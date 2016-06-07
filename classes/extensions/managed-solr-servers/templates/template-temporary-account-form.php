@@ -43,7 +43,7 @@ global $license_manager;
 				       class="button-primary "
 				       value="Create my instant free Solr index"/>
 				<?php } else { ?>
-					<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Create a test Solr index, hosted by gotosolr, valid 3 days' ); ?>
+					<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Create a test Solr index, hosted by gotosolr, valid 2 hours' ); ?>
 				<br/>
 				<?php } ?>
 
@@ -88,7 +88,7 @@ global $license_manager;
 
 				<div class="wdm_note">
 					If you want to quickly test WPSOLR, without the burden of your own Solr server.</br><br/>
-					Valid during 3 days. After that, the index will be deleted automatically, or you can purchase
+					Valid during 2 hours. After that, the index will be deleted automatically, or you can purchase
 					it.<br/><br/>
 				</div>
 

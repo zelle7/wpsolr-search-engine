@@ -160,7 +160,7 @@ Turkish website front-end using WPSOLR:
 - Deutch (nl_NL) by matthijs.
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
-We provide a free anonymous Apache Solr index for 3 days, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
+We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
 
 = About us =
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
@@ -605,6 +605,21 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 
 == Frequently Asked Questions ==
+
+= What WPSOLR can do to help my search ? =
+Relevanssi, Better Search, Search Everything, are really great because they do not need other external softwares or services to work.
+
+WPSOLR, on the other hand, requires Apache Solr, the worlds's most popular search engine on the planet, to index and search your data.
+
+If you can manage to install Solr (or to buy a hosting Solr service), WPSOLR can really help you to:
+
+* Search in thousands or millions of posts/products
+
+* Search in attached files (pdf, word, excel....)
+
+* Filter results with dynamic facets
+
+* Tweak your search in many many ways with Solr solrconfig.cml and schema.xml files (language analysers, stopwords, synonyms, stemmers ...)
 
 = Do you offer a premium version ? =
 Yes. Check out our <a href="http://wpsolr.com/pricing">Premium Packs</a>.

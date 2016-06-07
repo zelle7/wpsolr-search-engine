@@ -7,6 +7,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	// Posts table name
 	const TABLE_POSTS = 'posts';
+	const CONTENT_SEPARATOR = ' ';
 
 	protected $solr_indexing_options;
 
@@ -595,7 +596,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 			// Index post excerpt, by adding it to the post content.
 			// Excerpt can therefore be: searched, autocompleted, highlighted.
-			$pcontent .= ' ' . $pexcerpt;
+			$pcontent .= self::CONTENT_SEPARATOR . $pexcerpt;
 		}
 
 		$content_with_shortcodes_expanded_or_stripped = $pcontent;
@@ -693,7 +694,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		if ( isset( $this->solr_indexing_options['p_custom_fields'] ) && isset( $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] ) ) {
 
-			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] .= implode( ". ", $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] );
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CONTENT ] .= self::CONTENT_SEPARATOR . implode( ". ", $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] );
 		}
 
 		// Last chance to customize the solarium update document

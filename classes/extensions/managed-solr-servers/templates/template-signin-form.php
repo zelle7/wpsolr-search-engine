@@ -59,7 +59,7 @@
 			<div class="wdm_row">
 				<div class='col_left'>Email<br/></br>
 					If you want to quickly test WPSOLR, without the burden of your own Solr server.</br><br/>
-					Valid during 3 days. After that, the index will be deleted automatically.<br/><br/>
+					Valid during 2 hours. After that, the index will be deleted automatically.<br/><br/>
 				</div>
 
 				<div class='col_right'>
