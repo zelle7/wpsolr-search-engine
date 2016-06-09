@@ -19,7 +19,10 @@ jQuery(document).ready(function () {
     });
 
     // Clean the Solr index
-    jQuery('#solr_delete_index').click(function () {
+    jQuery('#solr_delete_index').click(function (e) {
+
+        // Block submit while Ajax is running
+        e.preventDefault();
 
         jQuery('.status_del_message').addClass('loading');
         jQuery('#solr_delete_index').attr('value', 'Deleting ... please wait');
@@ -47,6 +50,8 @@ jQuery(document).ready(function () {
                 // Block submit
                 alert('An error occured.');
             }
+
+            jQuery('#solr_actions').submit();
         });
 
         request.fail(function (req, status, error) {
@@ -54,8 +59,12 @@ jQuery(document).ready(function () {
             if (error) {
 
                 jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + error + '<br><br>');
+
+                // Block submit
+                alert('An error occured.');
             }
 
+            jQuery('#solr_actions').submit();
         });
 
     });
@@ -242,9 +251,9 @@ jQuery(document).ready(function () {
         result = result.substring(0, result.length - 1);
 
         jQuery("#select_fac").val(result);
-        
-        
-        
+
+
+
     })
 
     jQuery('#save_sort_options_form').click(function () {

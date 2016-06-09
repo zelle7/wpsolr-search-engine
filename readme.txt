@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 9.7
+Current Version: 9.8
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.7
+Stable tag: 9.8
 
 A true universal Solr search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 9.8 =
+* Fix the 'Empty index' action, that was effectless on Windows7/Firefox.
 
 = 9.7 =
 * WPSOLR Groups plugin Pack: fix issue 'A filterquery must have a unique key value within a query'.
