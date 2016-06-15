@@ -56,7 +56,7 @@ class WPSOLR_Option {
 		} else {
 
 			// Not in cache, retrieve option from database
-			$option = get_option( $option_name );
+			$option = get_option( $option_name, null );
 
 			// Add option to cached options
 			$this->cached_options[ $option_name ] = $option;
@@ -83,13 +83,14 @@ class WPSOLR_Option {
 		$option = $this->get_option( $option_name );
 
 		// Retrieve option value from option
-		if ( isset( $option[ $option_key ] ) || isset( $option[ $option_default ] ) ) {
+		if ( isset( $option ) ) {
 
 			$result = isset( $option[ $option_key ] ) ? $option[ $option_key ] : $option_default;
 
 		} else {
 
 			// undefined
+			$result = null;
 		}
 
 		if ( ! empty( $caller_function_name ) ) {
