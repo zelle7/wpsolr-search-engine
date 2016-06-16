@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Universal search with WPSOLR
  * Description: A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
- * Version: 9.9
+ * Version: 10.0
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

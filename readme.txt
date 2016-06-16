@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 9.9
+Current Version: 10.0
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.9
+Stable tag: 10.0
 
 A true universal Solr search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 10.0 =
+* Fix activation on Firefox.
 
 = 9.9 =
 * Fix warning: Illegal offset type in isset or empty in WPSOLR_Option.php on line 86

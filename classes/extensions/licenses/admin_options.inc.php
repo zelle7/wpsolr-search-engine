@@ -16,25 +16,37 @@ $license_manager = new OptionLicenses();
 ?>
 
 	<script>
-		jQuery(document).on("submit", ".wpsolr_form_license", function (e) {
+		jQuery(document).on("click", "#<?php echo OptionLicenses::AJAX_VERIFY_LICENCE; ?>, #<?php echo OptionLicenses::AJAX_ACTIVATE_LICENCE; ?>, #<?php echo OptionLicenses::AJAX_DEACTIVATE_LICENCE; ?>", function (e) {
 
 			// Remember this for ajax
 			var current = this;
 
 			// Show progress
-			var button_clicked = jQuery(document.activeElement);
+			var button_clicked = jQuery(this);
+			var button_form = button_clicked.parents('.wpsolr_form_license');
 			var buttonText = button_clicked.val(); // Remmember button text
 			button_clicked.val('Operation in progress ... Please wait.');
 			button_clicked.prop('disabled', true);
-			var error_message_element = jQuery(this).find(".error-message");
+			var error_message_element = jQuery('.wpsolr_form_license').find(".error-message");
 			error_message_element.css("display", "none");
 			error_message_element.html("");
 
 
 			// Extract form data
-			var subscription_number = jQuery(this).find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_SUBSCRIPTION_NUMBER; ?>]").val()
-			var license_package = jQuery(this).find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_PACKAGE; ?>]").val()
-			var license_matching_reference = jQuery(this).find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_MATCHING_REFERENCE; ?>]").val()
+			var subscription_number = button_form.find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_SUBSCRIPTION_NUMBER; ?>]").val()
+
+			if (subscription_number.length == 0) {
+				// End progress
+				button_clicked.val(buttonText);
+				button_clicked.prop('disabled', false);
+
+				error_message_element.css("display", "inline-block");
+				error_message_element.html('Please enter a license#.');
+				return;
+			}
+
+			var license_package = button_form.find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_PACKAGE; ?>]").val()
+			var license_matching_reference = button_form.find("input[name=<?php echo OptionLicenses::FIELD_LICENSE_MATCHING_REFERENCE; ?>]").val()
 			var data = {
 				action: button_clicked.attr('id'),
 				data: {
@@ -62,9 +74,6 @@ $license_manager = new OptionLicenses();
 					// Error message
 					if ("OK" != data1.status.state) {
 
-						// Prevent form submit
-						e.preventDefault();
-
 						// End progress
 						button_clicked.val(buttonText);
 						button_clicked.prop('disabled', false);
@@ -75,7 +84,7 @@ $license_manager = new OptionLicenses();
 					} else {
 
 						// Continue the submit
-						current.submit();
+						button_form.submit();
 					}
 
 				},
@@ -99,7 +108,8 @@ $license_manager = new OptionLicenses();
 
 
 			return false;
-		});
+		})
+		;
 	</script>
 
 <?php foreach ( $license_manager->get_license_types() as $license_type => $license ) { ?>
@@ -131,7 +141,7 @@ $license_manager = new OptionLicenses();
 						<?php
 						$subscription_number = $license_manager->get_license_subscription_number( $license_type );
 						?>
-						<input type="text" placeholder="Your subscription #"
+						<input type="text" placeholder="Your license #"
 						       name="<?php echo OptionLicenses::FIELD_LICENSE_SUBSCRIPTION_NUMBER; ?>"
 						       value="<?php echo $subscription_number; ?>"
 							<?php disabled( $license_manager->get_license_is_need_verification( $license_type ) || $license_manager->get_license_is_can_be_deactivated( $license_type, true ) ); ?>
@@ -141,7 +151,7 @@ $license_manager = new OptionLicenses();
 						<p>
 							<?php if ( $license_manager->get_license_is_need_verification( $license_type ) ) { ?>
 
-								<input id="<?php echo OptionLicenses::AJAX_VERIFY_LICENCE; ?>" type="submit"
+								<input id="<?php echo OptionLicenses::AJAX_VERIFY_LICENCE; ?>" type="button"
 								       class="button-primary wdm-save wpsolr_license_submit"
 								       value="Verify"/>
 
@@ -149,7 +159,7 @@ $license_manager = new OptionLicenses();
 
 							<?php if ( $license_manager->get_license_is_can_be_deactivated( $license_type ) ) { ?>
 
-								<input id="<?php echo OptionLicenses::AJAX_DEACTIVATE_LICENCE; ?>" type="submit"
+								<input id="<?php echo OptionLicenses::AJAX_DEACTIVATE_LICENCE; ?>" type="button"
 								       class="button-primary wdm-save wpsolr_license_submit"
 								       value="Deactivate"/>
 
@@ -157,7 +167,7 @@ $license_manager = new OptionLicenses();
 
 							<?php if ( ! $license_manager->get_license_is_can_be_deactivated( $license_type ) ) { ?>
 
-								<input id="<?php echo OptionLicenses::AJAX_ACTIVATE_LICENCE; ?>" type="submit"
+								<input id="<?php echo OptionLicenses::AJAX_ACTIVATE_LICENCE; ?>" type="button"
 								       class="button-primary wdm-save wpsolr_license_submit"
 								       value="Activate"/>
 
