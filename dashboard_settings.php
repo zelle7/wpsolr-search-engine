@@ -285,6 +285,20 @@ function fun_set_solr_options() {
 
 								</div>
 								<div class="wdm_row">
+									<div class='col_left'>
+										Replace WordPress default search by WPSOLR's.<br/><br/>
+									</div>
+									<div class='col_right'>
+										<input type='checkbox' name='wdm_solr_res_data[default_search]'
+										       value='1'
+											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
+										If your website is already in production, check this option after tabs
+										1-4 are completed. <br/><br/>
+										Warning: permalinks must be activated.
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
 									<div class='col_left'>Search with this Solr index<br/>
 
 									</div>
@@ -320,15 +334,45 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										Replace WordPress default search by WPSOLR's.<br/><br/>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search' ); ?>
 									</div>
 									<div class='col_right'>
-										<input type='checkbox' name='wdm_solr_res_data[default_search]'
-										       value='1'
-											<?php checked( '1', isset( $solr_res_options['default_search'] ) ? $solr_res_options['default_search'] : '0' ); ?>>
-										If your website is already in production, check this option after tabs
-										1-4 are completed. <br/><br/>
-										Warning: permalinks must be activated.
+										<select
+											name="wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_ITEM_GALAXY_MODE; ?>]">
+											<?php
+											$options = array(
+												array(
+													'code'  => '',
+													'label' => 'No, this is a standalone search'
+												),
+												array(
+													'code'     => WPSOLR_Option::OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE,
+													'label'    => 'Yes, as one of local searches (suggestions will not work)',
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+												),
+												array(
+													'code'     => WPSOLR_Option::OPTION_SEARCH_ITEM_IS_GALAXY_MASTER,
+													'label'    => 'Yes, as the global search (only with ajax)',
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+												),
+											);
+											foreach ( $options as $option ) {
+												$selected = $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_ITEM_GALAXY_MODE ] == $option['code'] ? 'selected' : '';
+												$disabled = isset( $option['disabled'] ) ? $option['disabled'] : '';
+												?>
+												<option
+													value="<?php echo $option['code'] ?>"
+													<?php echo $selected ?>
+													<?php echo $disabled ?>>
+													<?php echo $option['label'] ?>
+												</option>
+											<?php } ?>
+
+										</select>
+										<ul>
+											<li>- The global site searches in all local sites data</li>
+											<li>- Each local site searches in it's own data</li>
+										</ul>
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -608,7 +652,8 @@ function fun_set_solr_options() {
 								<div class="wdm_row">
 									<div class='col_left'>
 										Index custom fields and categories.<br/>
-										Custom fields and categories will be added to the post content, and be searchable, highlighted,
+										Custom fields and categories will be added to the post content, and be
+										searchable, highlighted,
 										and
 										autocompleted.
 									</div>
@@ -1254,7 +1299,6 @@ function fun_set_solr_options() {
 			break;
 
 		}
-
 		?>
 
 

@@ -5,6 +5,11 @@ use Solarium\QueryType\Select\Query\Query;
 
 require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
 
+/**
+ * Class WPSolrSearchSolrClient
+ *
+ * @property \Solarium\QueryType\Select\Result\Result $solarium_results
+ */
 class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 	protected $solarium_results;
@@ -92,6 +97,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 	public function __construct( $solarium_config ) {
+
+		$this->init_galaxy();
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
@@ -475,11 +482,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$are_comments_indexed = WPSOLR_Global::getOption()->get_index_are_comments_indexed();
 		foreach ( $resultset as $document ) {
 
-			$id      = $document->id;
+			$post_id = $document->PID;
 			$title   = $document->title;
 			$content = '';
 
-			$image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $id ) );
+			$image_url = $this->get_post_thumbnail( $document, $post_id );
 
 			$no_comments = $document->numcomments;
 			if ( $are_comments_indexed ) {
@@ -495,7 +502,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$cat  = implode( ',', $cat_arr );
 			$auth = $document->author;
 
-			$url = get_permalink( $id );
+			$url = $this->get_post_url( $document, $post_id );
 
 			$highlightedDoc = $highlighting->getResult( $document->id );
 			$cont_no        = 0;
@@ -528,13 +535,13 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			$image_fragment = '';
 			// Display first image
-			if ( is_array( $image_url ) && count( $image_url ) > 0 ) {
-				$image_fragment .= "<img class='wdm_result_list_thumb' src='$image_url[0]' />";
+			if ( ! empty( $image_url ) ) {
+				$image_fragment .= "<img class='wdm_result_list_thumb' src='$image_url' />";
 			}
 
 			if ( empty( $content ) ) {
 				// Set a default value for content if no highlighting returned.
-				$post_to_show = get_post( $id );
+				$post_to_show = get_post( $post_id );
 				if ( isset( $post_to_show ) ) {
 					// Excerpt first, or content.
 					$content = ( ! empty( $post_to_show->post_excerpt ) ) ? $post_to_show->post_excerpt : $post_to_show->post_content;
@@ -760,6 +767,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		Query $solarium_query, $filter_query_fields = array()
 	) {
 
+		if ( $this->is_galaxy_slave ) {
+			// Filter results by the slave filter
+			array_push( $filter_query_fields, sprintf( '%s:%s', WpSolrSchema::_FIELD_NAME_BLOG_NAME_STR, $this->galaxy_slave_filter_value ) );
+		}
+
 		foreach ( $filter_query_fields as $filter_query_field ) {
 
 			if ( ! empty( $filter_query_field ) ) {
@@ -838,18 +850,24 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	private
 	function add_fields(
-		Query $solarium_query,
-		$field_names = array(
-			WpSolrSchema::_FIELD_NAME_ID,
-			WpSolrSchema::_FIELD_NAME_TITLE,
-			WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
-			WpSolrSchema::_FIELD_NAME_COMMENTS,
-			WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
-			WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
-			WpSolrSchema::_FIELD_NAME_AUTHOR
-		)
+		Query $solarium_query
 	) {
-		$solarium_query->setFields( $field_names );
+
+		// We add '*' to dynamic fields, else they are not returned by Solr (Solr bug ?)
+		$solarium_query->setFields(
+			array(
+				WpSolrSchema::_FIELD_NAME_ID,
+				WpSolrSchema::_FIELD_NAME_PID,
+				WpSolrSchema::_FIELD_NAME_TITLE,
+				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
+				WpSolrSchema::_FIELD_NAME_COMMENTS,
+				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+				'*' . WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
+				WpSolrSchema::_FIELD_NAME_AUTHOR,
+				'*' . WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR,
+				'*' . WpSolrSchema::_FIELD_NAME_POST_HREF_STR,
+			)
+		);
 	}
 
 	/**
@@ -922,5 +940,106 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		return $result;
 	}
 
+	/**
+	 * Retrieve a post thumbnail, from local database, or from the index content.
+	 *
+	 * @param \Solarium\QueryType\Select\Result\Document $document Solarium document
+	 * @param $post_id
+	 *
+	 * @return array|false
+	 */
+	private function get_post_thumbnail( $document, $post_id ) {
+
+		if ( $this->is_galaxy_master ) {
+
+			// Master sites must get thumbnails from the index, as the $post_id is not in local database
+			$results = $document->post_thumbnail_href_str;
+
+		} else {
+
+			// $post_id is in local database, use the standard way
+			$results = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ) );
+		}
+
+		return ! empty( $results ) ? $results[0] : null;
+	}
+
+	/**
+	 * Retrieve a post url, from local database, or from the index content.
+	 *
+	 * @param \Solarium\QueryType\Select\Result\Document $document Solarium document
+	 * @param $post_id
+	 *
+	 * @return string
+	 */
+	private function get_post_url( $document, $post_id ) {
+
+		if ( $this->is_galaxy_master ) {
+
+			// Master sites must get thumbnails from the index, as the $post_id is not in local database
+			$result = ! empty( $document->post_href_str ) ? $document->post_href_str[0] : null;
+
+		} else {
+
+			// $post_id is in local database, use the standard way
+			$result = get_permalink( $post_id );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Return posts from Solr results post PIDs
+	 *
+	 * @param $posts_ids
+	 *
+	 * @return WP_Post[]
+	 */
+	public function get_posts_from_pids() {
+
+		if ( $this->solarium_results->getNumFound() === 0 ) {
+			return array();
+		}
+
+		// Fetch all posts from the documents ids, in ONE call.
+		if ( ! $this->is_galaxy_master ) {
+			// Local search: return posts from local database
+
+			$posts_ids = array();
+			foreach ( $this->solarium_results as $document ) {
+				array_push( $posts_ids, $document->PID );
+			}
+
+			if ( empty( $posts_ids ) ) {
+				return array();
+			}
+
+			return get_posts( array(
+				'numberposts' => count( $posts_ids ),
+				'post_type'   => 'any',
+				'post_status' => 'any',
+				'post__in'    => $posts_ids,
+				'orderby'     => 'post__in',
+				// Get posts in same order as documents in Solr results.
+			) );
+
+		}
+
+		// Create pseudo posts from Solr results
+		$results = array();
+		foreach ( $this->solarium_results as $document ) {
+
+			unset( $current_post );
+			$current_post     = new stdClass();
+			$current_post->ID = $document->id;
+			$current_post->filter = 'raw';
+
+			$wp_post          = new WP_Post( $current_post );
+
+			array_push( $results, $wp_post );
+		}
+
+		return $results;
+	}
 
 }

@@ -33,6 +33,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solr_index_indice = null, $language_code = null ) {
 
+		$this->init_galaxy();
+
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
 
@@ -58,7 +60,15 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		// Execute delete query
 		$client      = $this->solarium_client;
 		$deleteQuery = $client->createUpdate();
-		$deleteQuery->addDeleteQuery( 'id:*' );
+
+		if ( $this->is_in_galaxy ) {
+			// Delete only current site content
+			$deleteQuery->addDeleteQuery( sprintf( '%s:"%s"', WpSolrSchema::_FIELD_NAME_BLOG_NAME_STR, $this->galaxy_slave_filter_value ) );
+		} else {
+			// Delete all content
+			$deleteQuery->addDeleteQuery( 'id:*' );
+		}
+
 		$deleteQuery->addCommit();
 		$this->execute( $client, $deleteQuery );
 
@@ -122,7 +132,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$client = $this->solarium_client;
 
 		$deleteQuery = $client->createUpdate();
-		$deleteQuery->addDeleteQuery( 'id:' . $post->ID );
+		$deleteQuery->addDeleteQuery( 'id:' . $this->generate_unique_post_id( $post->ID ) );
 		$deleteQuery->addCommit();
 
 		$result = $this->execute( $client, $deleteQuery );
@@ -588,7 +598,11 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		$solarium_document_for_update = $solarium_update_query->createDocument();
 
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $pid;
+		if ( $this->is_in_galaxy ) {
+			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_BLOG_NAME_STR ] = $this->galaxy_slave_filter_value;
+		}
+
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $this->generate_unique_post_id( $pid );
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
 
@@ -632,6 +646,12 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ) ]     = $categories_flat_hierarchies;
 		$solarium_document_for_update[ sprintf( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, WpSolrSchema::_FIELD_NAME_CATEGORIES_STR ) ] = $categories_non_flat_hierarchies;
 		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TAGS ]                                                                    = $tag_array;
+
+		// Index post thumbnail
+		$this->index_post_thumbnails( $solarium_document_for_update, $pid );
+
+		// Index post url
+		$this->index_post_url( $solarium_document_for_update, $pid );
 
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
 		foreach ( $taxonomies as $parent ) {
@@ -822,5 +842,47 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	}
 
+	/**
+	 * Index a post thumbnail
+	 *
+	 * @param Solarium\QueryType\Update\Query\Document\Document $document Solarium document
+	 * @param $post_id
+	 *
+	 * @return array|false
+	 */
+	private function index_post_thumbnails( $solarium_document_for_update, $post_id ) {
 
+		if ( $this->is_in_galaxy ) {
+
+			// Master must get thumbnails from the index, as the $post_id is not in local database
+			$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ) );
+			if ( false !== $thumbnail ) {
+
+				$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR ] = $thumbnail[0];
+			}
+		}
+
+	}
+
+	/**
+	 * Index a post url
+	 *
+	 * @param Solarium\QueryType\Update\Query\Document\Document $document Solarium document
+	 * @param $post_id
+	 *
+	 * @return array|false
+	 */
+	private function index_post_url( $solarium_document_for_update, $post_id ) {
+
+		if ( $this->is_in_galaxy ) {
+
+			// Master must get urls from the index, as the $post_id is not in local database
+			$url = get_permalink( $post_id );
+			if ( false !== $url ) {
+
+				$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_POST_HREF_STR ] = $url;
+			}
+		}
+
+	}
 }

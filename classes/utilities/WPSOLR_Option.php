@@ -219,6 +219,9 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_highlighting_fragsize = 'highlighting_fragsize';
 	const OPTION_SEARCH_ITEM_is_spellchecker = 'spellchecker';
 	const OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES = 'is_partial_matches';
+	const OPTION_SEARCH_ITEM_GALAXY_MODE = 'galaxy_mode';
+	const OPTION_SEARCH_ITEM_IS_GALAXY_MASTER = 'is_galaxy_master';
+	const OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE = 'is_galaxy_slave';
 
 	/**
 	 * Get search options array
@@ -330,6 +333,31 @@ class WPSOLR_Option {
 	 */
 	public function get_search_is_partial_matches() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES ) );
+	}
+
+
+	/**
+	 * Is site in a galaxy ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_mode() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE ) );
+	}
+
+	/**
+	 * Is site a galaxy slave search ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_slave() {
+		return ( self::OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE === $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE, '' ) );
+	}
+
+	/**
+	 * Is site a galaxy master search ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_master() {
+		return ( self::OPTION_SEARCH_ITEM_IS_GALAXY_MASTER === $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE, '' ) );
 	}
 
 	/***************************************************************************************************************

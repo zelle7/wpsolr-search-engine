@@ -1,8 +1,8 @@
-=== Solr Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
+=== Search in one or several sites with Solr - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 10.0
+Current Version: 10.1
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.0
+Stable tag: 10.1
 
-A true universal Solr search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
+Stand-alone or multi-sites search with Apache Solr. Hundred of features. Scalable.
 
 == Description ==
 
@@ -283,6 +283,9 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 10.1 =
+* (Premium pack) Add a multi-site search: a site with wpsolr can search in (thousands) other sites with wpsolr
 
 = 10.0 =
 * Fix activation on Firefox.

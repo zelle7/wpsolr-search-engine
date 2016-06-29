@@ -19,6 +19,17 @@ class WPSolrAbstractSolrClient {
 	// Array of active extension objects
 	protected $wpsolr_extensions;
 
+	// Is blog in a galaxy
+	protected $is_in_galaxy;
+
+	// Is blog a slave search
+	protected $is_galaxy_slave;
+
+	// Is blog a master search
+	protected $is_galaxy_master;
+
+	// Galaxy slave filter value
+	protected $galaxy_slave_filter_value;
 
 	/**
 	 * Execute a solarium query. Retry 2 times if an error occurs.
@@ -54,4 +65,38 @@ class WPSolrAbstractSolrClient {
 		}
 
 	}
+
+	/**
+	 * Init galaxy details
+	 */
+	protected function init_galaxy() {
+
+		$this->is_in_galaxy     = WPSOLR_Global::getOption()->get_search_is_galaxy_mode();
+		$this->is_galaxy_slave  = WPSOLR_Global::getOption()->get_search_is_galaxy_slave();
+		$this->is_galaxy_master = WPSOLR_Global::getOption()->get_search_is_galaxy_master();
+
+		// After
+		$this->galaxy_slave_filter_value = get_bloginfo( 'blogname' );
+	}
+
+	/**
+	 * Geenrate a unique post_id for sites in a galaxy, else keep post_id
+	 *
+	 * @param $post_id
+	 *
+	 * @return string
+	 */
+	protected function generate_unique_post_id( $post_id ) {
+
+		if ( ! $this->is_in_galaxy ) {
+			// Current site is not in a galaxy: post_id is already unique
+			return $post_id;
+		}
+
+		// Create a unique id by adding the galaxy name to the post_id
+		$result = sprintf( '%s_%s', $this->galaxy_slave_filter_value, $post_id );
+
+		return $result;
+	}
+
 }
