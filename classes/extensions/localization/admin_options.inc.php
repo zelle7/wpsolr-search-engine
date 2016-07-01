@@ -32,7 +32,7 @@ $options = OptionLocalization::get_options( true );
 
 			<div class='wdm_row'>
 				<div class='col_left'>
-					<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Choose how the front-end texts are localized' ); ?>
+					<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Choose how the front-end texts are localized', true ); ?>
 				</div>
 				<div class='col_right'>
 

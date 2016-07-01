@@ -134,7 +134,13 @@ $license_manager = new OptionLicenses();
 				<hr/>
 				<div class="wdm_row">
 					<div class='col_left'>
-						Activate your pack
+						Your
+						license# <?php echo $license_manager->get_license_is_activated( $license_type ) ? 'is already activated' : 'is not yet activated.'; ?>
+						<p>
+							<a href="http://www.gotosolr.com/en/solr-documentation/license-activations" target="__new1">
+								Where is my license# ?
+							</a>
+						</p>
 					</div>
 					<div class='col_right'>
 
@@ -144,7 +150,7 @@ $license_manager = new OptionLicenses();
 						<input type="text" placeholder="Your license #"
 						       name="<?php echo OptionLicenses::FIELD_LICENSE_SUBSCRIPTION_NUMBER; ?>"
 						       value="<?php echo $subscription_number; ?>"
-							<?php disabled( $license_manager->get_license_is_need_verification( $license_type ) || $license_manager->get_license_is_can_be_deactivated( $license_type, true ) ); ?>
+							<?php disabled( $license_manager->get_license_is_need_verification( $license_type ) || $license_manager->get_license_is_can_be_deactivated( $license_type ) ); ?>
 
 						>
 
@@ -202,12 +208,6 @@ $license_manager = new OptionLicenses();
 								Select both packs on the order page.
 							</h4>
 
-							<h3>Chat</h3>
-							If you are quite, but not completely, convinced, let's have a chat at <a
-								href="http://www.wpsolr.com"
-								target="__new1">wpsolr.com chat box</a>.
-							<br/> We also deliver custom developments, if your project needs extra care.
-
 							<h3>Instructions:</h3>
 							Click on the button to be redirected to your order page.
 							After completion of your order, you will receive an email with a link to your account.
@@ -225,6 +225,11 @@ $license_manager = new OptionLicenses();
 								<?php } ?>
 							</ol>
 
+							<h3>Chat</h3>
+							If you are quite, but not completely, convinced, let's have a chat at <a
+								href="http://www.wpsolr.com"
+								target="__new1">wpsolr.com chat box</a>.
+							<br/> We also deliver custom developments, if your project needs extra care.
 
 						<?php } ?>
 

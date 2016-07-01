@@ -39,6 +39,10 @@ class OptionLicenses extends WpSolrExtensions {
 	const FIELD_NEEDS_VERIFICATION = 'needs_verification';
 	const FIELD_LICENSE_ACTIVATION_UUID = 'activation_uuid';
 
+	// Texts
+	const TEXT_LICENSE_ACTIVATED = 'License is activated';
+	const TEXT_LICENSE_DEACTIVATED = 'License is not activated. Click to activate.';
+
 	public $is_installed;
 	private $_options;
 
@@ -313,23 +317,29 @@ class OptionLicenses extends WpSolrExtensions {
 	 *
 	 * @param $license_type
 	 * @param $text_to_show
+	 * @param $is_show_link
 	 *
 	 * @return string
 	 */
-	function show_premium_link( $license_type, $text_to_show ) {
+	function show_premium_link( $license_type, $text_to_show, $is_show_link ) {
 
 		if ( ! $this->is_installed || $this->get_license_is_activated( $license_type ) ) {
 
-			$result = $text_to_show;
+			if ( ! $is_show_link ) {
+				return $text_to_show;
+			}
+
+			$img_url = plugins_url( 'images/success.png', WPSOLR_PLUGIN_FILE );
 
 		} else {
 
 			$img_url = plugins_url( 'images/warning.png', WPSOLR_PLUGIN_FILE );
 
-			$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class nav-tab">' .
-			                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline" title="Click to activate the premium features addon"><span>%s</span></a>',
-				$license_type, $img_url, $text_to_show );
 		}
+
+		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class nav-tab">' .
+		                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline" title="Click to activate the premium features addon"><span>%s</span></a>',
+			$license_type, $img_url, $text_to_show );
 
 		return $result;
 	}

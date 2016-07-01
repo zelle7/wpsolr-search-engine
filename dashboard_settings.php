@@ -334,7 +334,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search', true ); ?>
 									</div>
 									<div class='col_right'>
 										<select
@@ -378,7 +378,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Search theme' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Search theme', true ); ?>
 									</div>
 									<div class='col_right'>
 										<select name="wdm_solr_res_data[search_method]">
@@ -438,7 +438,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Activate the "Infinite scroll" pagination' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Activate the "Infinite scroll" pagination', true ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox'
@@ -469,7 +469,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display suggestions (Did you mean?)' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display suggestions (Did you mean?)', true ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox'
@@ -619,7 +619,7 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Stop real-time indexing' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Stop real-time indexing', true ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox' name='wdm_solr_form_data[is_real_time]'
@@ -678,7 +678,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div
-										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Post types to be indexed' ); ?></div>
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Post types to be indexed', true ); ?></div>
 									<div class='col_right'>
 										<input type='hidden' name='wdm_solr_form_data[p_types]' id='p_types'>
 										<?php
@@ -701,7 +701,7 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attachment types to be indexed' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attachment types to be indexed', true ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='hidden' name='wdm_solr_form_data[attachment_types]'
@@ -725,7 +725,7 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom taxonomies to be indexed' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom taxonomies to be indexed', true ); ?>
 									</div>
 									<div class='col_right'>
 										<div class='cust_tax'><!--new div class given-->
@@ -756,7 +756,7 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom Fields to be indexed' ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom Fields to be indexed', true ); ?>
 									</div>
 
 									<div class='col_right'>
@@ -905,7 +905,7 @@ function fun_set_solr_options() {
 																<?php echo ( empty( $disabled ) && $can_show_hierarchy ) ? '' : 'disabled'; ?>
 															/>
 															<?php if ( $can_show_hierarchy ) {
-																echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show the hierarchy' );
+																echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show the hierarchy', true );
 															} ?>
 															<img src='<?php echo $img_path; ?>'
 															     class='plus_icon'
@@ -1237,7 +1237,7 @@ function fun_set_solr_options() {
 							</div>
 							<div class="clear"></div>
 							<div class='col_left'>
-								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display debug infos during indexing' ); ?>
+								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display debug infos during indexing', true ); ?>
 							</div>
 							<div class='col_right'>
 
@@ -1251,7 +1251,7 @@ function fun_set_solr_options() {
 							</div>
 							<div class="clear"></div>
 							<div class='col_left'>
-								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Re-index all the data in place.' ); ?>
+								<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Re-index all the data in place.', true ); ?>
 							</div>
 							<div class='col_right'>
 

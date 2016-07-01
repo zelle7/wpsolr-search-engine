@@ -1,3 +1,9 @@
+.wpsolr_premium_block_class {
+    float: left;
+    padding-bottom: 15px;
+    width: 100%
+}
+
 a.wpsolr_premium_class.nav-tab span {
     margin-left: 5px;
 }

@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: WPSOLR
- * Description: Search in one or several sites with Solr.
- * Version: 10.1
+ * Description: Search from one to thousands of sites with Solr
+ * Version: 10.2
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -70,7 +70,7 @@ add_action( 'admin_notices', "solr_post_save_admin_notice" );
 
 if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	// Index as soon as a save is performed.
-	add_action( 'save_post', 'add_remove_document_to_solr_index', 10, 3 );
+	add_action( 'save_post', 'add_remove_document_to_solr_index', 11, 3 );
 	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 }

@@ -39,7 +39,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 		$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
 	}
 
-	$subtabs['new_index'] = count( $option_object->get_indexes() ) > 0 ? $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Configure another index' ) : 'Configure your first index';
+	$subtabs['new_index'] = count( $option_object->get_indexes() ) > 0 ? $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Configure another index', false ) : 'Configure your first index';
 
 	// Create subtabs on the left side
 	$subtab = wpsolr_admin_sub_tabs( $subtabs );
