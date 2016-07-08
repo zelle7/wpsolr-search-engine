@@ -76,7 +76,7 @@ class WPSOLR_UI_Facets {
 
 			$html .= '<li>';
 			$html .= "<div class='select_opt $facet_class' id='$facet_id:$item_name'>"
-			         . sprintf( $facet_element, $item_name, $item_count )
+			         . ( empty( $item['items'] ) ? sprintf( $facet_element, $item_name, $item_count ) : $item_name ) // only show count on leaf items (else count is false)
 			         . "</div>";
 
 			if ( ! empty( $item['items'] ) ) {

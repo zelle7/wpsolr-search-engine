@@ -325,8 +325,8 @@ class OptionLicenses extends WpSolrExtensions {
 
 		if ( ! $this->is_installed || $this->get_license_is_activated( $license_type ) ) {
 
-			if ( ! $is_show_link ) {
-				return $text_to_show;
+			if ( ( ! $is_show_link ) || ( ! $this->is_installed ) ) {
+				return ( self::TEXT_LICENSE_ACTIVATED === $text_to_show ) ? '' : $text_to_show;
 			}
 
 			$img_url = plugins_url( 'images/success.png', WPSOLR_PLUGIN_FILE );

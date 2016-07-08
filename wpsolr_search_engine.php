@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search from one to thousands of sites with Solr
- * Version: 10.2
+ * Version: 10.3
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
