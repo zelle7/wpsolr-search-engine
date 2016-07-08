@@ -89,13 +89,7 @@
             var txt1;
 
             if (text == '') {
-                txt1 = jQuery('.sfl2').val();
-                if (txt1 != '')
-                    text = txt1;
-
-                else
-                    text = jQuery('.sfl1').val();
-
+                text = jQuery('.sfl1').val();
             }
 
             if (this.options.onSelect) {

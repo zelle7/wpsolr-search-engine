@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.3
+Current Version: 10.4
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.3
+Stable tag: 10.4
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -285,6 +285,9 @@ Installation procedure for Apache Solr: see FAQ section.
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 10.4 =
+* Fix search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed.
 
 = 10.3 =
 * (Premium pack) Do not display facets count on top levels hierarchies anymore (too confusing).

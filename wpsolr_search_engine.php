@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search from one to thousands of sites with Solr
- * Version: 10.3
+ * Version: 10.4
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -300,7 +300,7 @@ function my_enqueue() {
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_galaxy_slave() ) {
 		// In this mode, suggestions do not work, as suggestions cannot be filtered by site.
-		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), false, true );
+		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), 'wpsolr_10.4', true );
 	}
 
 	// Url utilities to manipulate the url parameters
