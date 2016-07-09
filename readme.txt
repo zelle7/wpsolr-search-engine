@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.4
+Current Version: 10.5
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.4
+Stable tag: 10.5
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -286,8 +286,11 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 10.5 =
+* Fix ajax page search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed, and the search widget was also displayed on the search page.
+
 = 10.4 =
-* Fix search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed.
+* Fix widget search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed.
 
 = 10.3 =
 * (Premium pack) Do not display facets count on top levels hierarchies anymore (too confusing).

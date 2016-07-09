@@ -89,7 +89,7 @@
             var txt1;
 
             if (text == '') {
-                text = jQuery('.sfl1').val();
+                text = this.query;
             }
 
             if (this.options.onSelect) {
