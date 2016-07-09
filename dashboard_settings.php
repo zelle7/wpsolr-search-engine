@@ -111,10 +111,12 @@ function fun_add_solr_settings() {
 	add_menu_page( 'WPSOLR', 'WPSOLR', 'manage_options', 'solr_settings', 'fun_set_solr_options', $img_url );
 	wp_enqueue_style( 'dashboard_style', plugins_url( 'css/dashboard_css.css', __FILE__ ) );
 	wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_script( 'dashboard_js1', plugins_url( 'js/dashboard.js', __FILE__ ), array(
-		'jquery',
-		'jquery-ui-sortable'
-	) );
+	wp_enqueue_script( 'dashboard_js1', plugins_url( 'js/dashboard.js', __FILE__ ),
+		array(
+			'jquery',
+			'jquery-ui-sortable'
+		),
+		'wpsolr_10.6' );
 
 	$plugin_vals = array( 'plugin_url' => plugins_url( 'images/', __FILE__ ) );
 	wp_localize_script( 'dashboard_js1', 'plugin_data', $plugin_vals );
@@ -522,15 +524,31 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
-									<div class='col_left'>Display partial keyword matches in results</div>
+									<div class='col_left'>Use partial keyword matches in results</div>
 									<div class='col_right'>
-										<input type='checkbox' name='wdm_solr_res_data[is_partial_matches]'
-										       value='res_info'
-											<?php checked( isset( $solr_res_options['is_partial_matches'] ) ); ?>>
+										<input type='checkbox' class='wpsolr_checkbox_mono_wpsolr_is_partial'
+										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES; ?>]'
+										       value='1'
+											<?php checked( isset( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES ] ) ); ?>>
 										Warning: this will hurt both search performance and search accuracy !
 										<p>This adds '*' to all keywords.
 											For instance, 'search apache' will return results
 											containing 'searching apachesolr'</p>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>Use fuzzy keyword matches in results</div>
+									<div class='col_right'>
+										<input type='checkbox' class='wpsolr_checkbox_mono_wpsolr_is_partial other'
+										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES; ?>]'
+										       value='1'
+											<?php checked( isset( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ] ) ); ?>>
+										See <a
+											href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser"
+											target="_new">Fuzzy description at Solr wiki</a>
+										<p>The search 'roam' will match terms like roams, foam, & foams. It will also
+											match the word "roam" itself.</p>
 									</div>
 									<div class="clear"></div>
 								</div>

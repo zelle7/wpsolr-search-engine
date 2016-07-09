@@ -881,9 +881,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		Query $solarium_query, $keywords
 	) {
 
-		if ( WPSOLR_Global::getOption()->get_search_is_partial_matches() ) {
+		$keywords = trim( $keywords );
 
-			$keywords = trim( $keywords );
+		if ( WPSOLR_Global::getOption()->get_search_is_partial_matches() ) {
 
 			// Add '*' to each world of the query string.
 			// 'word1  word2 ' => 'word1*  word2* '
@@ -898,6 +898,13 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 				$keywords = $keywords1;
 			}
+
+			$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
+
+		} elseif ( WPSOLR_Global::getOption()->get_search_is_fuzzy_matches() ) {
+
+			$keywords = preg_replace( '/(\S+)/i', '$1~', $keywords );
+
 		}
 
 		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
@@ -1030,11 +1037,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		foreach ( $this->solarium_results as $document ) {
 
 			unset( $current_post );
-			$current_post     = new stdClass();
-			$current_post->ID = $document->id;
+			$current_post         = new stdClass();
+			$current_post->ID     = $document->id;
 			$current_post->filter = 'raw';
 
-			$wp_post          = new WP_Post( $current_post );
+			$wp_post = new WP_Post( $current_post );
 
 			array_push( $results, $wp_post );
 		}

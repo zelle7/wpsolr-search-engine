@@ -4,6 +4,20 @@ var timeoutHandlerIsCleared = false;
 
 jQuery(document).ready(function () {
 
+
+    // Simulate a combobox with checkboxes, when it's class is like 'wpsolr_checkbox_mono_someidhere'
+    jQuery('[class^="wpsolr_checkbox_mono"]').change(function () {
+
+        if (jQuery(this).prop("checked")) {
+            var classes = jQuery(this).prop("class");
+            var matches = classes.match(/wpsolr_checkbox_(\w+)/g);
+
+            // Deactivate all checks with same class
+            jQuery('.' + matches[0]).not(this).filter(":checked").prop("checked", false).css('background-color', 'yellow');
+        }
+
+    });
+
     jQuery(".radio_type").change(function () {
 
         if (jQuery("#self_host").attr("checked")) {
@@ -251,7 +265,6 @@ jQuery(document).ready(function () {
         result = result.substring(0, result.length - 1);
 
         jQuery("#select_fac").val(result);
-
 
 
     })

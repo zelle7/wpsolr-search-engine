@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.5
+Current Version: 10.6
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.5
+Stable tag: 10.6
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -285,6 +285,9 @@ Installation procedure for Apache Solr: see FAQ section.
 29. 29) Admin: stop real-time indexing.
 
 == Changelog ==
+
+= 10.6 =
+* Add fuzzy search option.
 
 = 10.5 =
 * Fix ajax page search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed, and the search widget was also displayed on the search page.

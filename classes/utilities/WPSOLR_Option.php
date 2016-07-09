@@ -222,6 +222,7 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_GALAXY_MODE = 'galaxy_mode';
 	const OPTION_SEARCH_ITEM_IS_GALAXY_MASTER = 'is_galaxy_master';
 	const OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE = 'is_galaxy_slave';
+	const OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES = 'is_fuzzy_matches';
 
 	/**
 	 * Get search options array
@@ -358,6 +359,14 @@ class WPSOLR_Option {
 	 */
 	public function get_search_is_galaxy_master() {
 		return ( self::OPTION_SEARCH_ITEM_IS_GALAXY_MASTER === $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE, '' ) );
+	}
+
+	/**
+	 * Is "Fuzzy matches?" activated ?
+	 * @return boolean
+	 */
+	public function get_search_is_fuzzy_matches() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ) );
 	}
 
 	/***************************************************************************************************************
