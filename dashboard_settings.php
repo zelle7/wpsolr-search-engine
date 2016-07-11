@@ -93,6 +93,7 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_form_options', 'wdm_solr_form_data' );
 	register_setting( 'solr_res_options', 'wdm_solr_res_data' );
 	register_setting( 'solr_facet_options', 'wdm_solr_facet_data' );
+	register_setting( 'solr_search_field_options', WPSOLR_Option::OPTION_SEARCH_FIELDS );
 	register_setting( 'solr_sort_options', WPSOLR_Option::OPTION_SORTBY );
 	register_setting( 'solr_localization_options', 'wdm_solr_localization_data' );
 	register_setting( 'solr_extension_groups_options', 'wdm_solr_extension_groups_data' );
@@ -116,7 +117,7 @@ function fun_add_solr_settings() {
 			'jquery',
 			'jquery-ui-sortable'
 		),
-		'wpsolr_10.6' );
+		'wpsolr_10.7' );
 
 	$plugin_vals = array( 'plugin_url' => plugins_url( 'images/', __FILE__ ) );
 	wp_localize_script( 'dashboard_js1', 'plugin_data', $plugin_vals );
@@ -247,11 +248,12 @@ function fun_set_solr_options() {
 			<?php
 
 			$subtabs = array(
-				'result_opt'           => '2.1 Search',
-				'index_opt'            => '2.2 Data',
-				'facet_opt'            => '2.3 Filters',
-				'sort_opt'             => '2.4 Sort',
-				'localization_options' => '2.5 Localization',
+				'result_opt'           => '2.1 Settings',
+				'index_opt'            => '2.2 Indexed data',
+				'field_opt'            => '2.3 Search fields boosts',
+				'facet_opt'            => '2.4 Results facets',
+				'sort_opt'             => '2.5 Results sort',
+				'localization_options' => '2.6 Localization',
 			);
 
 			$subtab              = wpsolr_admin_sub_tabs( $subtabs );
@@ -545,7 +547,7 @@ function fun_set_solr_options() {
 										       value='1'
 											<?php checked( isset( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ] ) ); ?>>
 										See <a
-											href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser"
+											href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser#TheStandardQueryParser-FuzzySearches"
 											target="_new">Fuzzy description at Solr wiki</a>
 										<p>The search 'roam' will match terms like roams, foam, & foams. It will also
 											match the word "roam" itself.</p>
@@ -836,6 +838,162 @@ function fun_set_solr_options() {
 									</div>
 								</div>
 
+							</div>
+						</form>
+					</div>
+					<?php
+					break;
+
+				case 'field_opt':
+					$solr_options = get_option( 'wdm_solr_form_data' );
+					$checked_fls = $solr_options['cust_fields'] . ',' . $solr_options['taxonomies'];
+
+					$checked_fields = explode( ',', $checked_fls );
+					$img_path       = plugins_url( 'images/plus.png', __FILE__ );
+					$minus_path     = plugins_url( 'images/minus.png', __FILE__ );
+					$built_in       = array(
+						WpSolrSchema::_FIELD_NAME_CONTENT,
+						WpSolrSchema::_FIELD_NAME_TITLE,
+						WpSolrSchema::_FIELD_NAME_TYPE,
+						WpSolrSchema::_FIELD_NAME_AUTHOR,
+						WpSolrSchema::_FIELD_NAME_CATEGORIES,
+						WpSolrSchema::_FIELD_NAME_TAGS
+					);
+					$built_in       = array_merge( $built_in, $checked_fields );
+
+					?>
+					<div id="solr-facets-options" class="wdm-vertical-tabs-content">
+						<form action="options.php" method="POST" id='fac_settings_form'>
+							<?php
+							settings_fields( 'solr_search_field_options' );
+							$solr_search_fields_is_active      = WPSOLR_Global::getOption()->get_search_fields_is_active();
+							$solr_search_fields_boosts_options = WPSOLR_Global::getOption()->get_search_fields_boosts();
+							$selected_values                   = WPSOLR_Global::getOption()->get_option_search_fields_str();
+							$selected_array                    = WPSOLR_Global::getOption()->get_option_search_fields();
+							?>
+							<div class='wrapper'>
+								<h4 class='head_div'>Search fields boosts Options</h4>
+
+								<div class="wdm_row">
+									<div class='col_left'>Activate the boosts</div>
+									<div class='col_right'>
+										<input type='checkbox'
+										       name='<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS; ?>[<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS_IS_ACTIVE; ?>]'
+										       value='1' <?php checked( $solr_search_fields_is_active ); ?>>
+
+										First, select among the fields indexed (see below) those you want to search in,
+										then define their boosts.
+										Select none if you want to use the default search configuration.
+
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='avail_fac' style="width:90%">
+										<input type='hidden' id='select_fac'
+										       name='<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS; ?>[<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS_FIELDS; ?>]'
+										       value='<?php echo $selected_values ?>'>
+
+										<ul id="sortable1" class="wdm_ul connectedSortable">
+											<?php
+											if ( $selected_values != '' ) {
+												foreach ( $selected_array as $selected_val ) {
+													if ( $selected_val != '' ) {
+														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
+															$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
+														} else {
+															$dis_text = $selected_val;
+														}
+														?>
+														<li id='<?php echo $selected_val; ?>'
+														    class='ui-state-default facets facet_selected'>
+
+															<img src='<?php echo $img_path; ?>'
+															     class='plus_icon'
+															     style='display:none'>
+															<img src='<?php echo $minus_path ?>'
+															     class='minus_icon'
+															     style='display:inline'
+															     title='Click to remove the field from the search'>
+															<span style="float:left;width: 80%;">
+																<?php echo $dis_text; ?>
+															</span>
+
+															<div>&nbsp;</div>
+
+															<?php
+															$search_field_boost = empty( $solr_search_fields_boosts_options[ $selected_val ] )
+																? '' : $solr_search_fields_boosts_options[ $selected_val ];
+															?>
+															<div class="wdm_row" style="top-margin:5px;">
+																<div class='col_left'>Boost factor</div>
+																<div class='col_right'>
+																	<input type='input'
+																		<?php echo empty( $search_field_boost ) ? 'style="border-color:red;"' : ''; ?>
+																		   class='wpsolr_field_boost_factor_class'
+																		   name='<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS; ?>[<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS_BOOST; ?>][<?php echo $selected_val; ?>]'
+																		   value='<?php echo esc_attr( $search_field_boost ); ?>'
+																	/>
+																	<?php echo empty( $search_field_boost ) ? "<span class='res_err'>Please enter a number > 0. Examples: '0.5', '2', '3.1'</span>" : ''; ?>
+																	<p>
+																		Set a boost factor to increase or decrease that
+																		particular field's importance in the search.
+																		Like '0.4', '2', '3.5'. Default value is '1'.
+																		<a target="__new"
+																		   href="https://cwiki.apache.org/confluence/display/solr/The+DisMax+Query+Parser#TheDisMaxQueryParser-Theqf(QueryFields)Parameter">See
+																			Solr boost</a>
+																	</p>
+
+																</div>
+																<div class="clear"></div>
+															</div>
+
+														</li>
+
+													<?php }
+												}
+											}
+											foreach ( $built_in as $built_fac ) {
+												if ( $built_fac != '' ) {
+													$buil_fac = strtolower( $built_fac );
+													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == "_str" ) {
+														$dis_text = substr( $buil_fac, 0, ( strlen( $buil_fac ) - 4 ) );
+													} else {
+														$dis_text = $buil_fac;
+													}
+
+													if ( ! in_array( $buil_fac, $selected_array ) ) {
+
+														echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
+                                                                                                    <img src='$img_path'  class='plus_icon' style='display:inline' title='Click to add the field from the search'>
+                                                                                                <img src='$minus_path' class='minus_icon' style='display:none'></li>";
+													}
+												}
+											}
+											?>
+
+
+										</ul>
+									</div>
+
+									<div class="clear"></div>
+								</div>
+
+								<div class='wdm_row'>
+									<div class="submit">
+										<?php if ( $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_CORE ) ) { ?>
+											<div
+												class="wpsolr_premium_block_class"><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, OptionLicenses::TEXT_LICENSE_ACTIVATED, true, true ); ?></div>
+											<input name="save_fields_options_form" id="save_fields_options_form"
+											       type="submit" class="button-primary wdm-save"
+											       value="Save Options"/>
+										<?php } else { ?>
+											<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Save Options', true, true ); ?>
+											<br/>
+										<?php } ?>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>

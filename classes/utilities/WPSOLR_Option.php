@@ -468,8 +468,64 @@ class WPSOLR_Option {
 		return self::get_option( self::OPTION_LOCALIZATION );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function get_localization_is_internal() {
-		return ( 'localization_by_admin_options' == $this->get_option_value( __FUNCTION__, self::OPTION_LOCALIZATION, self::OPTION_LOCALIZATION_LOCALIZATION_METHOD, 'localization_by_admin_options' ) );
+		return ( 'localization_by_admin_options' === $this->get_option_value( __FUNCTION__, self::OPTION_LOCALIZATION, self::OPTION_LOCALIZATION_LOCALIZATION_METHOD, 'localization_by_admin_options' ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Search fields option and items
+	 *
+	 **************************************************************************************************************/
+	const OPTION_SEARCH_FIELDS = 'wdm_solr_search_field_data';
+	const OPTION_SEARCH_FIELDS_IS_ACTIVE = 'search_fields_is_active';
+	const OPTION_SEARCH_FIELDS_FIELDS = 'search_fields';
+	const OPTION_SEARCH_FIELDS_BOOST = 'search_field_boost';
+	const OPTION_SEARCH_FIELDS_TERMS_BOOST = 'search_field_terms_boosts';
+
+	/**
+	 * @return string Comma separated Fields
+	 */
+	public function get_option_search_fields_str() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_FIELDS, '' );
+	}
+
+	/**
+	 * @return array Array of fields
+	 */
+	public function get_option_search_fields() {
+		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_FIELDS, '' ) );
+	}
+
+	/**
+	 * Field boosts
+	 *
+	 * @return array Field boosts
+	 */
+	public function get_search_fields_boosts() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_BOOST, array() );
+	}
+
+
+	/**
+	 * Field terms boosts
+	 *
+	 * @return array Field term boosts
+	 */
+	public function get_search_fields_terms_boosts() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_TERMS_BOOST, array() );
+	}
+
+	/**
+	 * Is search fields options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_search_fields_is_active() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_IS_ACTIVE ) );
 	}
 
 }

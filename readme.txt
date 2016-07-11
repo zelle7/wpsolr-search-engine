@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.6
+Current Version: 10.7
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.6
+Stable tag: 10.7
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -283,8 +283,12 @@ Installation procedure for Apache Solr: see FAQ section.
 27. 27) Admin: create local or cloud Solr indexes.
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 29. 29) Admin: stop real-time indexing.
+30. 30) Admin: Add boosts to any searched field.
 
 == Changelog ==
+
+= 10.7 =
+* (Premium pack) Add boost (weights) factors to any searched fields. You can now add more weight to titles in a search, or to contents, or to a custom field, or to prices. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1452799 "Add boosts to any searched field")
 
 = 10.6 =
 * Add fuzzy search option.

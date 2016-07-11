@@ -321,11 +321,11 @@ class OptionLicenses extends WpSolrExtensions {
 	 *
 	 * @return string
 	 */
-	function show_premium_link( $license_type, $text_to_show, $is_show_link ) {
+	function show_premium_link( $license_type, $text_to_show, $is_show_link, $is_new_feature = false ) {
 
-		if ( ! $this->is_installed || $this->get_license_is_activated( $license_type ) ) {
+		if ( ( ! $this->is_installed && ! $is_new_feature ) || $this->get_license_is_activated( $license_type ) ) {
 
-			if ( ( ! $is_show_link ) || ( ! $this->is_installed ) ) {
+			if ( ( ! $is_show_link ) || ( ! $this->is_installed && ! $is_new_feature ) ) {
 				return ( self::TEXT_LICENSE_ACTIVATED === $text_to_show ) ? '' : $text_to_show;
 			}
 

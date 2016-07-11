@@ -256,7 +256,7 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery('#save_facets_options_form').click(function () {
+    jQuery('#save_facets_options_form, #save_fields_options_form').click(function () {
 
         result = '';
         jQuery(".facet_selected").each(function () {
@@ -266,8 +266,7 @@ jQuery(document).ready(function () {
 
         jQuery("#select_fac").val(result);
 
-
-    })
+    });
 
     jQuery('#save_sort_options_form').click(function () {
 
@@ -279,7 +278,7 @@ jQuery(document).ready(function () {
 
         jQuery("#select_sort").val(result);
 
-    })
+    });
 
     jQuery('#save_selected_res_options_form').click(function () {
         num_of_res = jQuery('#number_of_res').val();
@@ -326,12 +325,49 @@ jQuery(document).ready(function () {
 
         if (err == 0)
             return false;
-    })
+    });
+
     jQuery('#save_selected_extension_groups_form').click(function () {
         err = 1;
         if (err == 0)
             return false;
-    })
+    });
+
+    jQuery('#save_fields_options_form').click(function () {
+
+        err = 1;
+
+        // Clear errors
+        jQuery('.res_err').empty();
+
+        // Verify each boost factor is a numbers > 0
+        jQuery(".wpsolr_field_boost_factor_class").each(function () {
+
+            if (jQuery(this).data('wpsolr_is_error')) {
+                jQuery(this).css('border-color', 'green');
+                jQuery(this).data('wpsolr_is_error', false);
+            }
+
+            var boost_factor = jQuery(this).val();
+            if (isNaN(boost_factor) || (boost_factor <= 0)) {
+
+                jQuery(this).data('wpsolr_is_error', true);
+                jQuery(this).css('border-color', 'red');
+                jQuery(this).after("<span class='res_err'>Please enter a number > 0. Examples: '0.5', '2', '3.1'</span>");
+                err = 0;
+            }
+
+            if ('none' == jQuery(this).css('display')) {
+                jQuery(this).remove();
+            }
+
+        });
+
+        if (err == 0) {
+            return false;
+        }
+
+    });
 
     /*
      Create a temporary managed index
@@ -463,13 +499,15 @@ jQuery(document).ready(function () {
     jQuery('.plus_icon').click(function () {
         jQuery(this).parent().addClass('facet_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'block');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery('.minus_icon').click(function () {
         jQuery(this).parent().removeClass('facet_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'none');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery("#sortable1").sortable(

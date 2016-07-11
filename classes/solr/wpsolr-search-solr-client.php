@@ -881,7 +881,26 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		Query $solarium_query, $keywords
 	) {
 
+		$query_field_name = '';
+
 		$keywords = trim( $keywords );
+		
+		if ( ! WPSOLR_Global::getOption()->get_search_fields_is_active() ) {
+
+			// No search fields selected, use the default search field
+			$query_field_name = WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':';
+
+		} else {
+
+			/// Use search fields with their boost defined in qf instead of default field 'text'
+			$query_fields_str = $this->get_query_fields();
+			if ( ! empty( $query_fields_str ) ) {
+
+				$solarium_query->getEDisMax()->setQueryFields( $query_fields_str );
+			}
+
+		}
+
 
 		if ( WPSOLR_Global::getOption()->get_search_is_partial_matches() ) {
 
@@ -899,7 +918,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				$keywords = $keywords1;
 			}
 
-			$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
+			$solarium_query->setQuery( $query_field_name . ! empty( $keywords ) ? $keywords : '*' );
 
 		} elseif ( WPSOLR_Global::getOption()->get_search_is_fuzzy_matches() ) {
 
@@ -907,7 +926,45 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
-		$solarium_query->setQuery( WpSolrSchema::_FIELD_NAME_DEFAULT_QUERY . ':' . ! empty( $keywords ) ? $keywords : '*' );
+		$solarium_query->setQuery( $query_field_name . ! empty( $keywords ) ? $keywords : '*' );
+	}
+
+
+	/**
+	 * Build a query fields with boosts
+	 *
+	 * @return string
+	 */
+	private function get_query_fields() {
+
+		$option_search_fields_boosts = WPSOLR_Global::getOption()->get_search_fields_boosts();
+
+
+		// Build a query fields with boosts
+		$query_fields_str = '';
+		foreach ( $option_search_fields_boosts as $search_field_name => $search_field_boost ) {
+
+			if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $search_field_name ) {
+
+				// Field 'categories' are now treated as other fields (dynamic string type)
+				$search_field_name = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+			}
+
+			if ( '1' === $search_field_boost ) {
+
+				// Boost of '1' is a default value. No need to add it with it's field.
+				$query_fields_str .= sprintf( ' %s ', $search_field_name );
+
+			} else {
+
+				// Add field and it's (non default) boost value.
+				$query_fields_str .= sprintf( ' %s^%s ', $search_field_name, $search_field_boost );
+			}
+		}
+
+		$query_fields_str = trim( $query_fields_str );
+
+		return $query_fields_str;
 	}
 
 	/**
