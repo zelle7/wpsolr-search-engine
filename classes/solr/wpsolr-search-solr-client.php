@@ -884,7 +884,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$query_field_name = '';
 
 		$keywords = trim( $keywords );
-		
+
 		if ( ! WPSOLR_Global::getOption()->get_search_fields_is_active() ) {
 
 			// No search fields selected, use the default search field
@@ -897,6 +897,13 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			if ( ! empty( $query_fields_str ) ) {
 
 				$solarium_query->getEDisMax()->setQueryFields( $query_fields_str );
+			}
+
+			/// Add boosts on field values
+			$query_boosts_fields_str = $this->get_query_boosts_fields();
+			if ( ! empty( $query_boosts_fields_str ) ) {
+
+				$solarium_query->getEDisMax()->setBoostQuery( $query_boosts_fields_str );
 			}
 
 		}
@@ -965,6 +972,46 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$query_fields_str = trim( $query_fields_str );
 
 		return $query_fields_str;
+	}
+
+	/**
+	 * Build a query with boosts values
+	 *
+	 * @return string
+	 */
+	private function get_query_boosts_fields() {
+
+		$option_search_fields_terms_boosts = WPSOLR_Global::getOption()->get_search_fields_terms_boosts();
+
+
+		$query_boost_str = '';
+		foreach ( $option_search_fields_terms_boosts as $search_field_name => $search_field_term_boost_lines ) {
+
+			$search_field_term_boost_lines = trim( $search_field_term_boost_lines );
+
+			if ( ! empty( $search_field_term_boost_lines ) ) {
+
+				if ( WpSolrSchema::_FIELD_NAME_CATEGORIES === $search_field_name ) {
+
+					// Field 'categories' are now treated as other fields (dynamic string type)
+					$search_field_name = WpSolrSchema::_FIELD_NAME_CATEGORIES_STR;
+				}
+
+				foreach ( preg_split( "/(\r\n|\n|\r)/", $search_field_term_boost_lines ) as $search_field_term_boost_line ) {
+
+					// Transform apache solr^2 in "apache solr"^2
+					$search_field_term_boost_line = preg_replace( "/(.*)\^(.*)/", '"$1"^$2', $search_field_term_boost_line );
+
+					// Add field and it's boost term value.
+					$query_boost_str .= sprintf( ' %s:%s ', $search_field_name, $search_field_term_boost_line );
+				}
+
+			}
+		}
+
+		$query_boost_str = trim( $query_boost_str );
+
+		return $query_boost_str;
 	}
 
 	/**

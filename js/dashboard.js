@@ -363,6 +363,15 @@ jQuery(document).ready(function () {
 
         });
 
+        // Verify each boost term factor
+        jQuery(".wpsolr_field_boost_term_factor_class").each(function () {
+
+            if ('none' == jQuery(this).css('display')) {
+                jQuery(this).remove();
+            }
+
+        });
+
         if (err == 0) {
             return false;
         }

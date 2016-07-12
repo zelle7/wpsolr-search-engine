@@ -117,7 +117,7 @@ function fun_add_solr_settings() {
 			'jquery',
 			'jquery-ui-sortable'
 		),
-		'wpsolr_10.7' );
+		'wpsolr_10.8' );
 
 	$plugin_vals = array( 'plugin_url' => plugins_url( 'images/', __FILE__ ) );
 	wp_localize_script( 'dashboard_js1', 'plugin_data', $plugin_vals );
@@ -866,10 +866,11 @@ function fun_set_solr_options() {
 						<form action="options.php" method="POST" id='fac_settings_form'>
 							<?php
 							settings_fields( 'solr_search_field_options' );
-							$solr_search_fields_is_active      = WPSOLR_Global::getOption()->get_search_fields_is_active();
-							$solr_search_fields_boosts_options = WPSOLR_Global::getOption()->get_search_fields_boosts();
-							$selected_values                   = WPSOLR_Global::getOption()->get_option_search_fields_str();
-							$selected_array                    = WPSOLR_Global::getOption()->get_option_search_fields();
+							$solr_search_fields_is_active            = WPSOLR_Global::getOption()->get_search_fields_is_active();
+							$solr_search_fields_boosts_options       = WPSOLR_Global::getOption()->get_search_fields_boosts();
+							$solr_search_fields_terms_boosts_options = WPSOLR_Global::getOption()->get_search_fields_terms_boosts();
+							$selected_values                         = WPSOLR_Global::getOption()->get_option_search_fields_str();
+							$selected_array                          = WPSOLR_Global::getOption()->get_option_search_fields();
 							?>
 							<div class='wrapper'>
 								<h4 class='head_div'>Search fields boosts Options</h4>
@@ -927,7 +928,7 @@ function fun_set_solr_options() {
 																? '' : $solr_search_fields_boosts_options[ $selected_val ];
 															?>
 															<div class="wdm_row" style="top-margin:5px;">
-																<div class='col_left'>Boost factor</div>
+																<div class='col_left'>Boost field</div>
 																<div class='col_right'>
 																	<input type='input'
 																		<?php echo empty( $search_field_boost ) ? 'style="border-color:red;"' : ''; ?>
@@ -943,6 +944,34 @@ function fun_set_solr_options() {
 																		<a target="__new"
 																		   href="https://cwiki.apache.org/confluence/display/solr/The+DisMax+Query+Parser#TheDisMaxQueryParser-Theqf(QueryFields)Parameter">See
 																			Solr boost</a>
+																	</p>
+
+																</div>
+																<div class="clear"></div>
+															</div>
+
+															<?php
+															$solr_search_fields_terms_boosts = empty( $solr_search_fields_terms_boosts_options[ $selected_val ] )
+																? '' : $solr_search_fields_terms_boosts_options[ $selected_val ];
+															?>
+															<div class="wdm_row" style="top-margin:5px;">
+																<div class='col_left'>Boost values</div>
+																<div class='col_right'>
+																	<textarea
+																		class='wpsolr_field_boost_term_factor_class'
+																		rows="5"
+																		placeholder="solr^0.5&#10;apache solr^2.5&#10;apache solr search^3"
+																		name="<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS; ?>[<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS_TERMS_BOOST; ?>][<?php echo $selected_val; ?>]"
+																	><?php echo esc_attr( $solr_search_fields_terms_boosts ); ?></textarea>
+
+																	<p>
+																		Boost results that have
+																		field '<?php echo $selected_val; ?>' that
+																		matches
+																		a specific value
+																		<a target="__new"
+																		   href="https://cwiki.apache.org/confluence/display/solr/The+DisMax+Query+Parser#TheDisMaxQueryParser-Thebq(BoostQuery)Parameter">See
+																			Solr boost query</a>
 																	</p>
 
 																</div>

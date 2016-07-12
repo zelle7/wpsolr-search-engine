@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.7
+Current Version: 10.8
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.7
+Stable tag: 10.8
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -287,8 +287,11 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 10.8 =
+* (Premium pack) Add boost values to certain fields to favor results matching certain values. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boost query to any searched field")
+
 = 10.7 =
-* (Premium pack) Add boost (weights) factors to any searched fields. You can now add more weight to titles in a search, or to contents, or to a custom field, or to prices. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1452799 "Add boosts to any searched field")
+* (Premium pack) Add boost (weights) to any searched fields. You can now add more weight to titles in a search, or to contents, or to a custom field, or to prices. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boosts to any searched field")
 
 = 10.6 =
 * Add fuzzy search option.
