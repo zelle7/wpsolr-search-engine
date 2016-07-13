@@ -4,6 +4,20 @@ var timeoutHandlerIsCleared = false;
 
 jQuery(document).ready(function () {
 
+
+    // Simulate a combobox with checkboxes, when it's class is like 'wpsolr_checkbox_mono_someidhere'
+    jQuery('[class^="wpsolr_checkbox_mono"]').change(function () {
+
+        if (jQuery(this).prop("checked")) {
+            var classes = jQuery(this).prop("class");
+            var matches = classes.match(/wpsolr_checkbox_(\w+)/g);
+
+            // Deactivate all checks with same class
+            jQuery('.' + matches[0]).not(this).filter(":checked").prop("checked", false).css('background-color', 'yellow');
+        }
+
+    });
+
     jQuery(".radio_type").change(function () {
 
         if (jQuery("#self_host").attr("checked")) {
@@ -19,7 +33,10 @@ jQuery(document).ready(function () {
     });
 
     // Clean the Solr index
-    jQuery('#solr_delete_index').click(function () {
+    jQuery('#solr_delete_index').click(function (e) {
+
+        // Block submit while Ajax is running
+        e.preventDefault();
 
         jQuery('.status_del_message').addClass('loading');
         jQuery('#solr_delete_index').attr('value', 'Deleting ... please wait');
@@ -47,6 +64,8 @@ jQuery(document).ready(function () {
                 // Block submit
                 alert('An error occured.');
             }
+
+            jQuery('#solr_actions').submit();
         });
 
         request.fail(function (req, status, error) {
@@ -54,8 +73,12 @@ jQuery(document).ready(function () {
             if (error) {
 
                 jQuery('.status_index_message').html('<br><br>An error or timeout occured. <br><br>' + '<b>Error code:</b> ' + status + '<br><br>' + '<b>Error message:</b> ' + error + '<br><br>');
+
+                // Block submit
+                alert('An error occured.');
             }
 
+            jQuery('#solr_actions').submit();
         });
 
     });
@@ -233,7 +256,7 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery('#save_facets_options_form').click(function () {
+    jQuery('#save_facets_options_form, #save_fields_options_form').click(function () {
 
         result = '';
         jQuery(".facet_selected").each(function () {
@@ -242,10 +265,8 @@ jQuery(document).ready(function () {
         result = result.substring(0, result.length - 1);
 
         jQuery("#select_fac").val(result);
-        
-        
-        
-    })
+
+    });
 
     jQuery('#save_sort_options_form').click(function () {
 
@@ -257,7 +278,7 @@ jQuery(document).ready(function () {
 
         jQuery("#select_sort").val(result);
 
-    })
+    });
 
     jQuery('#save_selected_res_options_form').click(function () {
         num_of_res = jQuery('#number_of_res').val();
@@ -304,12 +325,58 @@ jQuery(document).ready(function () {
 
         if (err == 0)
             return false;
-    })
+    });
+
     jQuery('#save_selected_extension_groups_form').click(function () {
         err = 1;
         if (err == 0)
             return false;
-    })
+    });
+
+    jQuery('#save_fields_options_form').click(function () {
+
+        err = 1;
+
+        // Clear errors
+        jQuery('.res_err').empty();
+
+        // Verify each boost factor is a numbers > 0
+        jQuery(".wpsolr_field_boost_factor_class").each(function () {
+
+            if (jQuery(this).data('wpsolr_is_error')) {
+                jQuery(this).css('border-color', 'green');
+                jQuery(this).data('wpsolr_is_error', false);
+            }
+
+            var boost_factor = jQuery(this).val();
+            if (isNaN(boost_factor) || (boost_factor <= 0)) {
+
+                jQuery(this).data('wpsolr_is_error', true);
+                jQuery(this).css('border-color', 'red');
+                jQuery(this).after("<span class='res_err'>Please enter a number > 0. Examples: '0.5', '2', '3.1'</span>");
+                err = 0;
+            }
+
+            if ('none' == jQuery(this).css('display')) {
+                jQuery(this).remove();
+            }
+
+        });
+
+        // Verify each boost term factor
+        jQuery(".wpsolr_field_boost_term_factor_class").each(function () {
+
+            if ('none' == jQuery(this).css('display')) {
+                jQuery(this).remove();
+            }
+
+        });
+
+        if (err == 0) {
+            return false;
+        }
+
+    });
 
     /*
      Create a temporary managed index
@@ -441,13 +508,15 @@ jQuery(document).ready(function () {
     jQuery('.plus_icon').click(function () {
         jQuery(this).parent().addClass('facet_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'block');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery('.minus_icon').click(function () {
         jQuery(this).parent().removeClass('facet_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'none');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery("#sortable1").sortable(

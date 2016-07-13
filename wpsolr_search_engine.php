@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Universal search with WPSOLR
- * Description: A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
- * Version: 9.5
+ * Plugin Name: WPSOLR
+ * Description: Search from one to thousands of sites with Solr
+ * Version: 10.8
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -70,7 +70,7 @@ add_action( 'admin_notices', "solr_post_save_admin_notice" );
 
 if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	// Index as soon as a save is performed.
-	add_action( 'save_post', 'add_remove_document_to_solr_index', 10, 3 );
+	add_action( 'save_post', 'add_remove_document_to_solr_index', 11, 3 );
 	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 }
@@ -281,7 +281,7 @@ function my_plugins_loaded() {
 
 	// Load active extensions
 	WpSolrExtensions::load();
-	
+
 	/*
 	 * Load WPSOLR text domain to the Wordpress languages plugin directory (WP_LANG_DIR/plugins)
 	 * Copy your .mo files there
@@ -298,7 +298,11 @@ function my_enqueue() {
 		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
-	wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), false, true );
+	if ( ! WPSOLR_Global::getOption()->get_search_is_galaxy_slave() ) {
+		// In this mode, suggestions do not work, as suggestions cannot be filtered by site.
+		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), 'wpsolr_10.5', true );
+	}
+
 	// Url utilities to manipulate the url parameters
 	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), false, true );
 	wp_enqueue_script( 'autocomplete', plugins_url( 'js/autocomplete_solr.js', __FILE__ ), array(

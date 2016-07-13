@@ -155,22 +155,8 @@ class WPSOLR_Query extends WP_Query {
 		$this->solr_client = WPSOLR_Global::getSolrClient();
 		$this->resultSet   = $this->solr_client->execute_wpsolr_query( $this );
 
-		// Fetch all posts from the documents ids, in ONE call.
-		$posts_ids = array();
-		foreach ( $this->resultSet as $document ) {
-
-			array_push( $posts_ids, $document->id );
-		}
-		$posts_in_results = count( $posts_ids ) > 0
-			? get_posts( array(
-				'numberposts' => count( $posts_ids ),
-				'post_type'   => 'any',
-				'post_status' => 'any',
-				'post__in'    => $posts_ids,
-				'orderby'     => 'post__in',
-				// Get posts in same order as documents in Solr results.
-			) )
-			: array();
+		// Create posts from Solr PIDs
+		$posts_in_results = $this->solr_client->get_posts_from_pids( $this->resultSet );
 
 		foreach ( $posts_in_results as $post ) {
 			$this->set_the_title( $post );
@@ -259,20 +245,6 @@ class WPSOLR_Query extends WP_Query {
 
 		return $results;
 	}
-
-	/*
-	public function get( $query_var, $default = '' ) {
-
-		// Replace call to 's' parameter by our search parameter
-		return parent::get( 's' == $query_var ? self::_SEARCH_PARAMETER_QUERY_NAME : $query_var, $default );
-	}*/
-
-
-	/**************************************************************************
-	 *
-	 * Non standard query methods
-	 *
-	 *************************************************************************/
 
 
 }

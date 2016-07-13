@@ -161,13 +161,16 @@ global $license_manager;
 			<div class='wdm_row'>
 				<div class="submit">
 					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( $package_name ) ) { ?>
+						<div class="wpsolr_premium_block_class">
+							<?php echo $license_manager->show_premium_link( $package_name, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?>
+						</div>
 						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
 							name="save_selected_options_res_form"
 							id="save_selected_extension_groups_form" type="submit"
 							class="button-primary wdm-save"
 							value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
 					<?php } else { ?>
-						<?php echo $license_manager->show_premium_link( $package_name, 'Save Options' ); ?>
+						<?php echo $license_manager->show_premium_link( $package_name, 'Save Options', true ); ?>
 						<br/>
 					<?php } ?>
 				</div>

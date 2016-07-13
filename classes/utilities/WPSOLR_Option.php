@@ -56,7 +56,7 @@ class WPSOLR_Option {
 		} else {
 
 			// Not in cache, retrieve option from database
-			$option = get_option( $option_name );
+			$option = get_option( $option_name, null );
 
 			// Add option to cached options
 			$this->cached_options[ $option_name ] = $option;
@@ -83,13 +83,14 @@ class WPSOLR_Option {
 		$option = $this->get_option( $option_name );
 
 		// Retrieve option value from option
-		if ( isset( $option[ $option_key ] ) || isset( $option[ $option_default ] ) ) {
+		if ( isset( $option ) ) {
 
 			$result = isset( $option[ $option_key ] ) ? $option[ $option_key ] : $option_default;
 
 		} else {
 
 			// undefined
+			$result = null;
 		}
 
 		if ( ! empty( $caller_function_name ) ) {
@@ -218,6 +219,10 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_highlighting_fragsize = 'highlighting_fragsize';
 	const OPTION_SEARCH_ITEM_is_spellchecker = 'spellchecker';
 	const OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES = 'is_partial_matches';
+	const OPTION_SEARCH_ITEM_GALAXY_MODE = 'galaxy_mode';
+	const OPTION_SEARCH_ITEM_IS_GALAXY_MASTER = 'is_galaxy_master';
+	const OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE = 'is_galaxy_slave';
+	const OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES = 'is_fuzzy_matches';
 
 	/**
 	 * Get search options array
@@ -331,6 +336,39 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_PARTIAL_MATCHES ) );
 	}
 
+
+	/**
+	 * Is site in a galaxy ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_mode() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE ) );
+	}
+
+	/**
+	 * Is site a galaxy slave search ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_slave() {
+		return ( self::OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE === $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE, '' ) );
+	}
+
+	/**
+	 * Is site a galaxy master search ?
+	 * @return boolean
+	 */
+	public function get_search_is_galaxy_master() {
+		return ( self::OPTION_SEARCH_ITEM_IS_GALAXY_MASTER === $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_GALAXY_MODE, '' ) );
+	}
+
+	/**
+	 * Is "Fuzzy matches?" activated ?
+	 * @return boolean
+	 */
+	public function get_search_is_fuzzy_matches() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ) );
+	}
+
 	/***************************************************************************************************************
 	 *
 	 * Installation
@@ -430,8 +468,64 @@ class WPSOLR_Option {
 		return self::get_option( self::OPTION_LOCALIZATION );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function get_localization_is_internal() {
-		return ( 'localization_by_admin_options' == $this->get_option_value( __FUNCTION__, self::OPTION_LOCALIZATION, self::OPTION_LOCALIZATION_LOCALIZATION_METHOD, 'localization_by_admin_options' ) );
+		return ( 'localization_by_admin_options' === $this->get_option_value( __FUNCTION__, self::OPTION_LOCALIZATION, self::OPTION_LOCALIZATION_LOCALIZATION_METHOD, 'localization_by_admin_options' ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Search fields option and items
+	 *
+	 **************************************************************************************************************/
+	const OPTION_SEARCH_FIELDS = 'wdm_solr_search_field_data';
+	const OPTION_SEARCH_FIELDS_IS_ACTIVE = 'search_fields_is_active';
+	const OPTION_SEARCH_FIELDS_FIELDS = 'search_fields';
+	const OPTION_SEARCH_FIELDS_BOOST = 'search_field_boost';
+	const OPTION_SEARCH_FIELDS_TERMS_BOOST = 'search_field_terms_boosts';
+
+	/**
+	 * @return string Comma separated Fields
+	 */
+	public function get_option_search_fields_str() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_FIELDS, '' );
+	}
+
+	/**
+	 * @return array Array of fields
+	 */
+	public function get_option_search_fields() {
+		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_FIELDS, '' ) );
+	}
+
+	/**
+	 * Field boosts
+	 *
+	 * @return array Field boosts
+	 */
+	public function get_search_fields_boosts() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_BOOST, array() );
+	}
+
+
+	/**
+	 * Field terms boosts
+	 *
+	 * @return array Field term boosts
+	 */
+	public function get_search_fields_terms_boosts() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_TERMS_BOOST, array() );
+	}
+
+	/**
+	 * Is search fields options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_search_fields_is_active() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_IS_ACTIVE ) );
 	}
 
 }

@@ -2,26 +2,28 @@
 to pull changes from github origin
 git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
 
+=== Search from one to thousands of sites with Solr - WPSOLR ===
+
 
 === Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 9.5
+Current Version: 10.8
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 9.5
+Stable tag: 10.8
 
-A true universal search: ACF, WooCommerce, WPML, Polylang, products/attributes, pdf files, custom post/field/taxonomy, tags, shortcodes ...
+Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
 == Description ==
 
@@ -165,7 +167,7 @@ Turkish website front-end using WPSOLR:
 - Deutch (nl_NL) by matthijs.
 
 = I don't have an Apache Solr server, how can I test WPSOLR search ? =
-We provide a free anonymous Apache Solr index for 3 days, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
+We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
 
 = About us =
 WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
@@ -255,6 +257,8 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 3. Go to the 'WPSOLR' settings page and configure the plugin.
 4. Please refer the Installation and User Guide for further reference.
 
+Installation procedure for Apache Solr: see FAQ section.
+
 == Screenshots ==
 
 1. 1) Admin: Download the Solr files solrconfig.xml and schema.xml
@@ -286,8 +290,49 @@ For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
 27. 27) Admin: create local or cloud Solr indexes.
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 29. 29) Admin: stop real-time indexing.
+30. 30) Admin: Add boosts to any searched field.
 
 == Changelog ==
+
+= 10.8 =
+* (Premium pack) Add boost values to certain fields to favor results matching certain values. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boost query to any searched field")
+
+= 10.7 =
+* (Premium pack) Add boost (weights) to any searched fields. You can now add more weight to titles in a search, or to contents, or to a custom field, or to prices. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boosts to any searched field")
+
+= 10.6 =
+* Add fuzzy search option.
+
+= 10.5 =
+* Fix ajax page search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed, and the search widget was also displayed on the search page.
+
+= 10.4 =
+* Fix widget search form: 'undefined' was selected when a user pressed ENTER while the suggestion list was displayed.
+
+= 10.3 =
+* (Premium pack) Do not display facets count on top levels hierarchies anymore (too confusing).
+
+= 10.2 =
+* Fix custom fields not indexed immediately on a new post with plugin the Toolset plugin.
+* Improve license UI.
+
+= 10.1 =
+* (Premium pack) Add a multi-site search: a site with wpsolr can search in (thousands) other sites with wpsolr
+
+= 10.0 =
+* Fix activation on Firefox.
+
+= 9.9 =
+* Fix warning: Illegal offset type in isset or empty in WPSOLR_Option.php on line 86
+
+= 9.8 =
+* Fix the 'Empty index' action, that was effectless on Windows7/Firefox.
+
+= 9.7 =
+* WPSOLR Groups plugin Pack: fix issue 'A filterquery must have a unique key value within a query'.
+
+= 9.6 =
+* Partial matching now returns also results with the exact keywords. For instance, SKUs can now be used with the partial matching option.
 
 = 9.5 =
 * Better Solr connection management: automatic retry (twice) before throwing errors. Prevent indexing/search errors due to minor network disconnections.
@@ -605,8 +650,69 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 == Frequently Asked Questions ==
 
+= What is the installation procedure for Solr on Windows ? =
+
+!!! Important: always reload the index in your Solr admin UI after each install/change of file schema.xml
+
+A tutorial at WPSOLR: [Solr 4.x](http://wpsolr.com/installation-guide/ "Apache Solr installation, Solr 4.x")
+
+A tutorial at Wordpress support: [Windows, Solr 5.x/6.x](https://wordpress.org/support/topic/great-software-but-needs-some-documentation "Apache Solr installation, Windows, Solr 5.x/6.x")
+
+= What is the installation procedure for Solr on linux ? =
+
+!!! Important: always reload the index in your Solr admin UI after each install/change of file schema.xml
+
+A tutorial at Wordpress support: [Linux, Solr 4.x](https://wordpress.org/support/topic/no-support-for-self-hosted-solr-and-not-working-for-self-hosted "Apache Solr installation, Linux, Solr 4.x")
+
+A tutorial at Linode: [Linux, Solr 4.x](https://www.linode.com/docs/websites/cms/turbocharge-wordpress-search-with-solr "Apache Solr installation, Linux, Solr 4.x")
+
+For Linux, Solr 6.1.0 (tested). Replace 6.1.0 with your current Solr version.
+`
+wget http://archive.apache.org/dist/lucene/solr/6.1.0/solr-6.1.0.tgz
+tar xvf solr-6.1.0.tgz
+solr-6.1.0/bin/solr start
+solr-6.1.0/bin/solr create -c wpsolr-6.1.0
+(download solr 5.xx config files from http://wpsolr.com/releases/#1.0)
+cp solrconfig.xml schema.xml solr-6.1.0/server/solr/wpsolr-6.1.0/conf/
+(reload index with solr admin UI)
+(configure a new index in wpsolr admin UI:
+Index name: wpsolr - local 6.1.0
+Solr Protocol: http
+Solr host: localhost
+Solr port: 8983
+Solr path: /solr/wpsolr-6.1.0
+)
+(index posts on wpsolr admin UI, including a pdf file)
+(search in posts, retrieve the pdf)
+`
+
+= What WPSOLR can do to help my search ? =
+Relevanssi, Better Search, Search Everything, are really great because they do not need other external softwares or services to work.
+
+WPSOLR, on the other hand, requires Apache Solr, the worlds's most popular search engine on the planet, to index and search your data.
+
+If you can manage to install Solr (or to buy a hosting Solr service), WPSOLR can really help you to:
+
+* Search in many sites for aggregated searches
+
+* Search in thousands or millions of posts/products
+
+* Search in attached files (pdf, word, excel....)
+
+* Filter results with dynamic facets
+
+* Tweak your search in many many ways with Solr solrconfig.cml and schema.xml files (language analysers, stopwords, synonyms, stemmers ...)
+
 = Do you offer a premium version ? =
 Yes. Check out our <a href="http://wpsolr.com/pricing">Premium Packs</a>.
+
+= Can you search in several sites and show results on one site ? =
+Yes, there is a (Premium) multisites option in wpsolr.
+
+You configure the sites belonging to the network search as "local", and one or several "global" sites to show results from "local" sites consolidated, while "Local" sites continue to search their own data.
+
+As Solr manages the whole network search, there is almost no limits to the number of "local" sites, and number of posts indexed.
+Contact us for more information on this multisites feature.
 
 = Can you manage millions of products/attributes/variations ? =
 Yes (Premium for attributes/variations). WPSOLR is based on the mighty Apache Solr search engine. It can easily manage millions of posts, and fast.
@@ -620,10 +726,19 @@ WPSOLR uses a Solr client library, Solarium, which requires namespaces.
 
 Namespaces are supported by PHP >= 5.3.0
 
+= Which Apache Solr version is supported ? =
+
+Solr 4.x, Solr 5.x, Solr 6.x
+
+WPSOLR was tested till Solr 6.1.0
+
 = Can I have my Apache Solr server hosted ? =
 
 Yes, on <a href='http://gotosolr.com/en/'>Gotosolr Solr hosting</a>.
 
+[Gotosolr Solr hosting tutorial](http://www.gotosolr.com/en/solr-tutorial-for-wordpress/ "Gotosolr Solr hosting tutorial")
+
+[sitepoint tutorial on Gotosolr Solr hosting with WPSOLR](https://www.sitepoint.com/enterprise-search-with-apache-solr-and-wordpress/ "sitepoint tutorial on Gotosolr Solr hosting with WPSOLR")
 
 = How do I install and configure my own Apache Solr server ? =
 

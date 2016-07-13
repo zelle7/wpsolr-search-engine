@@ -39,7 +39,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 		$subtabs[ $index_indice ] = isset( $index['index_name'] ) ? $index['index_name'] : 'Index with no name';
 	}
 
-	$subtabs['new_index'] = count( $option_object->get_indexes() ) > 0 ? $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Configure another index' ) : 'Configure your first index';
+	$subtabs['new_index'] = count( $option_object->get_indexes() ) > 0 ? $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Configure another index', false ) : 'Configure your first index';
 
 	// Create subtabs on the left side
 	$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -158,7 +158,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 
 					<h4 class='head_div'>
 						<?php echo $is_index_type_temporary
-							? 'This is your temporary (3 days) Solr Index configuration for testing'
+							? 'This is your temporary (2 hours) Solr Index configuration for testing'
 							: ( $is_index_type_managed
 								? sprintf( 'This is your Index configuration managed by %s', $option_object->get_index_managed_solr_service_id( $option_data['solr_indexes'][ $index_indice ] ) )
 								: sprintf( 'Manually configure your existing Solr index. %s', '<a href="http://www.gotosolr.com/en" target="_wpsolr">Sorry, no free support by chat to setup your own local index</a>' ) );
