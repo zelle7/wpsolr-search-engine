@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.8
+Current Version: 10.9
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.8
+Stable tag: 10.9
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -284,8 +284,15 @@ Installation procedure for Apache Solr: see FAQ section.
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 29. 29) Admin: stop real-time indexing.
 30. 30) Admin: Add boosts to any searched field.
+31. 31) Admin: Change facets labels.
+32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 10.9 =
+* (Premium pack) Manage facets labels, including their translations with WPML/POLYLANG string modules.
+[Screenshot: add facets labels](https://s.w.org/plugins/wpsolr-search-engine/screenshot-31.png "Add facets labels")
+[Screenshot: translate facets labels with WPML/POLYLANG string modules](https://s.w.org/plugins/wpsolr-search-engine/screenshot-32.png "translate facets labels with WPML/POLYLANG string modules")
 
 = 10.8 =
 * (Premium pack) Add boost values to certain fields to favor results matching certain values. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boost query to any searched field")

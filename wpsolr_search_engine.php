@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search from one to thousands of sites with Solr
- * Version: 10.8
+ * Version: 10.9
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -289,6 +289,16 @@ function my_plugins_loaded() {
 	 * You can find our template file in this plugin's /languages/wpsolr.pot file
 	 */
 	load_plugin_textdomain( 'wpsolr', false, false );
+
+	/**
+	 * Load dynamic string translations
+	 */
+	if ( is_admin() ) {
+
+		// Load all string translations for all data managed by all extensions
+		WpSolrExtensions::extract_strings_to_translate_for_all_extensions();
+	}
+
 }
 
 function my_enqueue() {

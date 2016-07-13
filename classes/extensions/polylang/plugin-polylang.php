@@ -204,4 +204,31 @@ class PluginPolylang extends PluginWpml {
 		return WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG . "-" . $this->get_current_language_code();
 	}
 
+	/**
+	 * Register translation strings to translatable strings
+	 *
+	 * @param $parameters ["translations" => [ ["domain" => "wpsolr facel label", "name" => "categories", "text" => "my categories"]
+	 */
+	function register_translation_strings( $parameters ) {
+
+		foreach ( $parameters['translations'] as $text_to_add ) {
+
+			pll_register_string( $text_to_add['text'], $text_to_add['name'], $text_to_add['domain'], false );
+		}
+
+		return;
+	}
+
+	/**
+	 * Add translation strings to translatable strings
+	 *
+	 * @param array $parameter ["domain" => "wpsolr facel label", "name" => "categories", "text" => "my categories"]
+	 */
+	function get_translation_string( $string, $parameter ) {
+
+		$result = pll__( $parameter['name'] );
+
+		return $result;
+	}
+
 }

@@ -576,4 +576,37 @@ class WpSolrExtensions {
 
 		return $form_data;
 	}
+
+	/**
+	 * Get the dynamic strings to translate among the group data of all extensions translatable.
+	 *
+	 * @return array Translations
+	 */
+	public static function extract_strings_to_translate_for_all_extensions() {
+
+		$facets_labels = WPSOLR_Global::getOption()->get_facets_labels();
+		$translations  = array();
+		foreach ( $facets_labels as $facet_name => $facet_label ) {
+			if ( ! empty( $facet_label ) ) {
+				$translation           = array();
+				$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
+				$translation['name']   = $facet_name;
+				$translation['text']   = $facet_label;
+
+				array_push( $translations, $translation );
+			}
+		}
+
+		if ( count( $translations ) > 0 ) {
+
+			// Translate
+			do_action( WpSolrFilters::ACTION_TRANSLATION_REGISTER_STRINGS,
+				array(
+					'translations' => $translations
+				)
+			);
+		}
+
+	}
+
 }

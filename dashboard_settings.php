@@ -549,7 +549,8 @@ function fun_set_solr_options() {
 										See <a
 											href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser#TheStandardQueryParser-FuzzySearches"
 											target="_new">Fuzzy description at Solr wiki</a>
-										<p>The search 'roam' will match terms like roams, foam, & foams. It will also
+										<p>The search 'roam' will match terms like roams, foam, & foams. It will
+											also
 											match the word "roam" itself.</p>
 									</div>
 									<div class="clear"></div>
@@ -649,7 +650,8 @@ function fun_set_solr_options() {
 										>
 										<br/>The Solr index will no more be updated as soon as a post/attachment is
 										added/saved/deleted, but only when you launch the indexing bach.
-										<br/> Useful to load a large number of posts, for instance coupons/products from
+										<br/> Useful to load a large number of posts, for instance coupons/products
+										from
 										affiliate datafeeds.
 
 									</div>
@@ -882,7 +884,8 @@ function fun_set_solr_options() {
 										       name='<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS; ?>[<?php echo WPSOLR_Option::OPTION_SEARCH_FIELDS_IS_ACTIVE; ?>]'
 										       value='1' <?php checked( $solr_search_fields_is_active ); ?>>
 
-										First, select among the fields indexed (see below) those you want to search in,
+										First, select among the fields indexed (see below) those you want to search
+										in,
 										then define their boosts.
 										Select none if you want to use the default search configuration.
 
@@ -938,9 +941,11 @@ function fun_set_solr_options() {
 																	/>
 																	<?php echo empty( $search_field_boost ) ? "<span class='res_err'>Please enter a number > 0. Examples: '0.5', '2', '3.1'</span>" : ''; ?>
 																	<p>
-																		Set a boost factor to increase or decrease that
+																		Set a boost factor to increase or decrease
+																		that
 																		particular field's importance in the search.
-																		Like '0.4', '2', '3.5'. Default value is '1'.
+																		Like '0.4', '2', '3.5'. Default value is
+																		'1'.
 																		<a target="__new"
 																		   href="https://cwiki.apache.org/confluence/display/solr/The+DisMax+Query+Parser#TheDisMaxQueryParser-Theqf(QueryFields)Parameter">See
 																			Solr boost</a>
@@ -1049,6 +1054,7 @@ function fun_set_solr_options() {
 							$solr_fac_options             = get_option( 'wdm_solr_facet_data' );
 							$selected_facets_value        = $solr_fac_options['facets'];
 							$selected_facets_is_hierarchy = ! empty( $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] ) ? $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] : array();
+							$selected_facets_labels       = WPSOLR_Global::getOption()->get_facets_labels();
 							if ( $selected_facets_value != '' ) {
 								$selected_array = explode( ',', $selected_facets_value );
 							} else {
@@ -1078,7 +1084,7 @@ function fun_set_solr_options() {
 								</div>
 
 								<div class="wdm_row">
-									<div class='avail_fac'>
+									<div class='avail_fac' style="width:100%">
 										<h4>Available items for filters</h4>
 										<input type='hidden' id='select_fac' name='wdm_solr_facet_data[facets]'
 										       value='<?php echo $selected_facets_value ?>'>
@@ -1101,17 +1107,6 @@ function fun_set_solr_options() {
 														    class='ui-state-default facets facet_selected'>
 															<span
 																style="float:left;width: 300px;"><?php echo $dis_text; ?></span>
-
-															<input type='checkbox'
-															       style='float:none;margin:10px;'
-															       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH; ?>][<?php echo $selected_val; ?>]'
-															       value='1'
-																<?php echo checked( $is_hierarchy ); ?>
-																<?php echo ( empty( $disabled ) && $can_show_hierarchy ) ? '' : 'disabled'; ?>
-															/>
-															<?php if ( $can_show_hierarchy ) {
-																echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show the hierarchy', true );
-															} ?>
 															<img src='<?php echo $img_path; ?>'
 															     class='plus_icon'
 															     style='display:none'>
@@ -1119,6 +1114,50 @@ function fun_set_solr_options() {
 															     class='minus_icon'
 															     style='display:inline'
 															     title='Click to Remove the filter'>
+															<br/>
+
+															<div class="wdm_row" style="top-margin:5px;">
+																<div class='col_left'>
+																	<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Facet label', true ); ?>
+																</div>
+																<?php
+																$facet_label = ! empty( $selected_facets_labels[ $selected_val ] ) ? $selected_facets_labels[ $selected_val ] : '';
+																?>
+																<div class='col_right'>
+																	<input type='text'
+																	       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_LABEL; ?>][<?php echo $selected_val; ?>]'
+																	       value='<?php echo $facet_label; ?>'
+																		<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+																	/>
+																	<p>
+																		Will be shown on the front-end (and translated in WPML/POLYLANG string modules).
+																		Leave empty if you wish to use the current facet
+																		name "<?php echo $dis_text; ?>".
+																	</p>
+
+																</div>
+																<div class="clear"></div>
+															</div>
+
+															<?php if ( $can_show_hierarchy ) { ?>
+																<div class="wdm_row" style="top-margin:5px;">
+																	<div class='col_left'>
+																		<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show the hierarchy', true ); ?>
+																	</div>
+																	<div class='col_right'>
+																		<input type='checkbox'
+																		       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH; ?>][<?php echo $selected_val; ?>]'
+																		       value='1'
+																			<?php echo checked( $is_hierarchy ); ?>
+																			<?php echo ( empty( $disabled ) && $can_show_hierarchy ) ? '' : 'disabled'; ?>
+																		/>
+																		Select to display the facet as a tree
+
+																	</div>
+																	<div class="clear"></div>
+																</div>
+															<?php } ?>
+
 														</li>
 
 													<?php }

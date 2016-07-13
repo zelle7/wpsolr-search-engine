@@ -64,4 +64,10 @@ class WpSolrFilters {
 	// Filter a sort option
 	const WPSOLR_FILTER_SORT = 'wpsolr_filter_sort';
 
+	// Action to add string translations to WPML/Polylang
+	const ACTION_TRANSLATION_REGISTER_STRINGS = 'wpsolr_action_translation_register_strings';
+
+	// Get a translated string from WPML/Polylang
+	const WPSOLR_FILTER_TRANSLATION_STRING = 'wpsolr_filter_translation_string';
+
 }

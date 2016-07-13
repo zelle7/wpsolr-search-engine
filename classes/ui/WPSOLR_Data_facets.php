@@ -24,6 +24,8 @@ class WPSOLR_Data_Facets {
 
 		if ( count( $facets_in_results ) && count( $facets_to_display ) ) {
 
+			$facets_labels = WPSOLR_Global::getOption()->get_facets_labels();
+
 			foreach ( $facets_to_display as $facet_to_display_id ) {
 
 				if ( isset( $facets_in_results[ $facet_to_display_id ] ) && count( $facets_in_results[ $facet_to_display_id ] ) > 0 ) {
@@ -36,8 +38,27 @@ class WPSOLR_Data_Facets {
 					// Give plugins a chance to change the facet name (ACF).
 					$facet_to_display_name = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME, $facet_to_display_id_without_str );
 
-					$facet_to_display_name = str_replace( '_', ' ', $facet_to_display_name );
-					$facet_to_display_name = ucfirst( $facet_to_display_name );
+					if ( $facet_to_display_name === $facet_to_display_id_without_str ) {
+						// Facet label not changed by filter
+
+						if ( ! empty( $facets_labels[ $facet_to_display_id ] ) ) {
+							// Facet label is defined in options
+							$facet_to_display_name = $facets_labels[ $facet_to_display_id ];
+
+							// Give plugins a chance to change the facet name (WPML, POLYLANG).
+							$facet_to_display_name = apply_filters( WpSolrFilters::WPSOLR_FILTER_TRANSLATION_STRING, $facet_to_display_name,
+								array(
+									'domain' => WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL,
+									'name'   => $facet_to_display_id,
+									'text'   => $facet_to_display_name
+								) );
+
+						} else {
+							// Try to make a decent label from the facet raw id
+							$facet_to_display_name = str_replace( '_', ' ', $facet_to_display_name );
+							$facet_to_display_name = ucfirst( $facet_to_display_name );
+						}
+					}
 
 					$facet          = array();
 					$facet['items'] = array();
