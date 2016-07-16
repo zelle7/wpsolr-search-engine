@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/polylang/plugin-polylang.php" afterPath="$PROJECT_DIR$/classes/extensions/polylang/plugin-polylang.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" afterPath="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" afterPath="$PROJECT_DIR$/classes/extensions/wpsolr-extensions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" afterPath="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/utilities/WPSOLR_Option.php" afterPath="$PROJECT_DIR$/classes/utilities/WPSOLR_Option.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/wpsolr-filters.php" afterPath="$PROJECT_DIR$/classes/wpsolr-filters.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard_settings.php" afterPath="$PROJECT_DIR$/dashboard_settings.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php" afterPath="$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php" afterPath="$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
@@ -63,23 +58,24 @@
       <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/readme.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+            <state relative-caret-position="225">
+              <caret line="657" column="0" selection-start-line="657" selection-start-column="0" selection-end-line="657" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+            <state relative-caret-position="144">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding>
-                <marker date="1468406788000" expanded="true" signature="7929:7939" ph="..." />
-                <marker date="1468406788000" expanded="true" signature="8393:8977" ph="..." />
-                <marker date="1468406788000" expanded="false" signature="8894:8922" ph="..." />
-                <marker date="1468406788000" expanded="false" signature="8945:8955" ph="..." />
+                <element signature="e#6#189#0#PHP" expanded="true" />
+                <marker date="1468602855000" expanded="true" signature="7929:7939" ph="..." />
+                <marker date="1468602855000" expanded="true" signature="8393:8977" ph="..." />
+                <marker date="1468602855000" expanded="false" signature="8894:8922" ph="..." />
+                <marker date="1468602855000" expanded="false" signature="8945:8955" ph="..." />
               </folding>
             </state>
           </provider>
@@ -115,6 +111,32 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="option-licenses.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="34" column="67" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
+              <folding>
+                <marker date="1468602365000" expanded="true" signature="12721:12735" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="207" column="136" selection-start-line="207" selection-start-column="136" selection-end-line="207" selection-end-column="136" />
+              <folding>
+                <element signature="e#6631#6654#0#HTML" expanded="true" />
+                <marker date="1468602588000" expanded="true" signature="3209:8019" ph="..." />
+                <marker date="1468602588000" expanded="true" signature="6195:7921" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="wpsolr-filters.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -125,52 +147,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard_settings.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard_settings.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="1132" column="150" selection-start-line="1132" selection-start-column="150" selection-end-line="1132" selection-end-column="150" />
+            <state relative-caret-position="96">
+              <caret line="1121" column="48" selection-start-line="1121" selection-start-column="48" selection-end-line="1121" selection-end-column="48" />
               <folding>
                 <element signature="e#44862#44880#0#HTML" expanded="true" />
                 <element signature="e#46530#46553#0#HTML" expanded="true" />
-                <marker date="1468409974000" expanded="true" signature="6425:6659" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="6476:6636" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="6715:6945" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="6762:6922" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="7062:7367" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="7109:7344" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="7635:7855" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="7682:7832" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="7911:8146" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="7958:8123" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="8263:8563" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="8310:8541" ph="{...}" />
-                <marker date="1468409974000" expanded="true" signature="22857:22878" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="23659:23961" ph="SELECT disti... wp_postmeta" />
-                <marker date="1468409974000" expanded="true" signature="41097:41482" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="41255:41269" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="41464:41476" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="43190:43241" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="44061:44341" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="47779:47794" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="47795:47824" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="47835:47996" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="48037:48525" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="48079:48266" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="49217:49586" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="49375:49389" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="49568:49580" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="49760:49781" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="50691:50759" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="51180:51310" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="51486:51510" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="52688:53069" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="52851:52863" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="53016:53030" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="53412:53790" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="53575:53589" ph="..." />
-                <marker date="1468409974000" expanded="false" signature="53772:53784" ph="..." />
-                <marker date="1468409974000" expanded="true" signature="64963:64995" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="6425:6659" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="6476:6636" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="6715:6945" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="6762:6922" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="7062:7367" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="7109:7344" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="7635:7855" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="7682:7832" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="7911:8146" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="7958:8123" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="8263:8563" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="8310:8541" ph="{...}" />
+                <marker date="1468410093000" expanded="true" signature="22857:22878" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="23659:23961" ph="SELECT disti... wp_postmeta" />
+                <marker date="1468410093000" expanded="true" signature="41097:41482" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="41255:41269" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="41464:41476" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="43190:43241" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="44061:44341" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="47779:47794" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="47795:47824" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="47835:47996" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="48037:48525" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="48079:48266" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="49217:49586" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="49375:49389" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="49568:49580" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="49760:49781" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="50691:50759" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="51180:51310" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="51486:51510" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="52688:53069" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="52851:52863" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="53016:53030" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="53412:53790" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="53575:53589" ph="..." />
+                <marker date="1468410093000" expanded="false" signature="53772:53784" ph="..." />
+                <marker date="1468410093000" expanded="true" signature="64963:64995" ph="..." />
               </folding>
             </state>
           </provider>
@@ -227,14 +249,12 @@
         <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
         <option value="$PROJECT_DIR$/classes/extensions/woocommerce/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/indexes/admin_options.inc.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/acf/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/wpml/template.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php" />
         <option value="$PROJECT_DIR$/js/bootstrap-typeahead.js" />
         <option value="$PROJECT_DIR$/css/dashboard_css.css" />
-        <option value="$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php" />
         <option value="$PROJECT_DIR$/js/dashboard.js" />
         <option value="$PROJECT_DIR$/classes/solr/wpsolr-search-solr-client.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/768cc5b7-5b10-4a20-9b4c-0270030bc27c/console.sql" />
@@ -244,11 +264,13 @@
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" />
         <option value="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
         <option value="$PROJECT_DIR$/classes/extensions/polylang/plugin-polylang.php" />
-        <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
         <option value="$PROJECT_DIR$/dashboard_settings.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php" />
+        <option value="$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php" />
+        <option value="$PROJECT_DIR$/readme.txt" />
+        <option value="$PROJECT_DIR$/readme.txt" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
       </list>
     </option>
   </component>
@@ -932,6 +954,40 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="licenses" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="htdocs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wp-content" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plugins" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="polylang" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -1249,7 +1305,7 @@
       <workItem from="1467816397094" duration="3230000" />
       <workItem from="1468005735438" duration="10267000" />
       <workItem from="1468169431063" duration="24326000" />
-      <workItem from="1468313993945" duration="22538000" />
+      <workItem from="1468313993945" duration="24298000" />
     </task>
     <servers />
   </component>
@@ -1286,7 +1342,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="455830000" />
+    <option name="totallyTimeSpent" value="457590000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1554,13 +1610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="210" column="50" selection-start-line="210" selection-start-column="50" selection-end-line="210" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../wp-includes/plugin.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="311">
@@ -1786,16 +1835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="353" column="13" selection-start-line="353" selection-start-column="13" selection-end-line="353" selection-end-column="13" />
-          <folding>
-            <marker date="1468254915000" expanded="true" signature="12668:12682" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/classes/extensions/acf/plugin-acf.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
@@ -1899,27 +1938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding>
-            <marker date="1468406788000" expanded="true" signature="7929:7939" ph="..." />
-            <marker date="1468406788000" expanded="true" signature="8393:8977" ph="..." />
-            <marker date="1468406788000" expanded="false" signature="8894:8922" ph="..." />
-            <marker date="1468406788000" expanded="false" signature="8945:8955" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/screenshot-31.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1927,49 +1945,93 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dashboard_settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="1132" column="150" selection-start-line="1132" selection-start-column="150" selection-end-line="1132" selection-end-column="150" />
+        <state relative-caret-position="96">
+          <caret line="1121" column="48" selection-start-line="1121" selection-start-column="48" selection-end-line="1121" selection-end-column="48" />
           <folding>
             <element signature="e#44862#44880#0#HTML" expanded="true" />
             <element signature="e#46530#46553#0#HTML" expanded="true" />
-            <marker date="1468409974000" expanded="true" signature="6425:6659" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="6476:6636" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="6715:6945" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="6762:6922" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="7062:7367" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="7109:7344" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="7635:7855" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="7682:7832" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="7911:8146" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="7958:8123" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="8263:8563" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="8310:8541" ph="{...}" />
-            <marker date="1468409974000" expanded="true" signature="22857:22878" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="23659:23961" ph="SELECT disti... wp_postmeta" />
-            <marker date="1468409974000" expanded="true" signature="41097:41482" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="41255:41269" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="41464:41476" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="43190:43241" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="44061:44341" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="47779:47794" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="47795:47824" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="47835:47996" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="48037:48525" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="48079:48266" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="49217:49586" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="49375:49389" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="49568:49580" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="49760:49781" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="50691:50759" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="51180:51310" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="51486:51510" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="52688:53069" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="52851:52863" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="53016:53030" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="53412:53790" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="53575:53589" ph="..." />
-            <marker date="1468409974000" expanded="false" signature="53772:53784" ph="..." />
-            <marker date="1468409974000" expanded="true" signature="64963:64995" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="6425:6659" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="6476:6636" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="6715:6945" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="6762:6922" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="7062:7367" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="7109:7344" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="7635:7855" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="7682:7832" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="7911:8146" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="7958:8123" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="8263:8563" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="8310:8541" ph="{...}" />
+            <marker date="1468410093000" expanded="true" signature="22857:22878" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="23659:23961" ph="SELECT disti... wp_postmeta" />
+            <marker date="1468410093000" expanded="true" signature="41097:41482" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="41255:41269" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="41464:41476" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="43190:43241" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="44061:44341" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="47779:47794" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="47795:47824" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="47835:47996" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="48037:48525" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="48079:48266" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="49217:49586" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="49375:49389" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="49568:49580" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="49760:49781" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="50691:50759" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="51180:51310" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="51486:51510" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="52688:53069" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="52851:52863" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="53016:53030" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="53412:53790" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="53575:53589" ph="..." />
+            <marker date="1468410093000" expanded="false" signature="53772:53784" ph="..." />
+            <marker date="1468410093000" expanded="true" signature="64963:64995" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="34" column="67" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
+          <folding>
+            <marker date="1468602365000" expanded="true" signature="12721:12735" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/admin_options.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="207" column="136" selection-start-line="207" selection-start-column="136" selection-end-line="207" selection-end-column="136" />
+          <folding>
+            <element signature="e#6631#6654#0#HTML" expanded="true" />
+            <marker date="1468602588000" expanded="true" signature="3209:8019" ph="..." />
+            <marker date="1468602588000" expanded="true" signature="6195:7921" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="657" column="0" selection-start-line="657" selection-start-column="0" selection-end-line="657" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#189#0#PHP" expanded="true" />
+            <marker date="1468602855000" expanded="true" signature="7929:7939" ph="..." />
+            <marker date="1468602855000" expanded="true" signature="8393:8977" ph="..." />
+            <marker date="1468602855000" expanded="false" signature="8894:8922" ph="..." />
+            <marker date="1468602855000" expanded="false" signature="8945:8955" ph="..." />
           </folding>
         </state>
       </provider>

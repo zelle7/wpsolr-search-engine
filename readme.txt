@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 10.9
+Current Version: 11.0
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 10.9
+Stable tag: 11.0
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -288,6 +288,9 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.0 =
+* Add a 7 days trial for all packs (Premium, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF).
 
 = 10.9 =
 * (Premium pack) Manage facets labels, including their translations with WPML/POLYLANG string modules.
@@ -649,6 +652,10 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 
 == Frequently Asked Questions ==
+
+= Is there a trial for the extra packs ? =
+
+Yes, we added a 7 days trial for all packs (Premium, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF). Download wpsolr, then the trial instructions.
 
 = What is the installation procedure for Solr on Windows ? =
 

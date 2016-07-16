@@ -202,10 +202,10 @@ $license_manager = new OptionLicenses();
 							       onclick="window.open('<?php echo $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_LINK ]; ?>', '__blank');"
 							/>
 
-							<h4 class="solr_error" style="font-size: 10px">
-								This pack requires the pack 'Premium Pack'.
+							<h4 class="solr_error" style="font-size: 12px">
+								This will give you 7 days to test the 'Premium Pack'.
 								<br/>
-								Select both packs on the order page.
+								Contact us if you need other packs to test with your trial. We will add them to your trial subscription.
 							</h4>
 
 							<h3>Instructions:</h3>

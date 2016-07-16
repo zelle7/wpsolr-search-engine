@@ -32,7 +32,7 @@ class OptionLicenses extends WpSolrExtensions {
 	const FIELD_ORDER_URL_BUTTON_LABEL = 'order_url_button_label';
 	const FIELD_ORDER_URL_TEXT = 'order_url_text';
 	const FIELD_ORDER_URL_LINK = 'order_url_link';
-	const FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT = 'Order your %s now';
+	const FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT = '7 days free trial';
 	const FIELD_FEATURES = 'features';
 	const FIELD_LICENSE_TITLE = 'LICENSE_TITLE';
 	const FIELD_LICENSE_MATCHING_REFERENCE = 'matching_license_reference';
@@ -47,7 +47,7 @@ class OptionLicenses extends WpSolrExtensions {
 	private $_options;
 
 	// Order link
-	const ORDER_LINK_URL = 'https://secure.avangate.com/order/checkout.php?PRODS=4687291&QTY=1&CART=1&CARD=2';
+	const ORDER_LINK_URL = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
 
 	// Features
 	const FEATURE_ZENDESK_SUPPORT = 'Get support via Zendesk <br/>(Apache Solr setup/installation not supported)';
