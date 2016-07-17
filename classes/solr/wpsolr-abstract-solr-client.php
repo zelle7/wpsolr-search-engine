@@ -30,7 +30,7 @@ class WPSolrAbstractSolrClient {
 
 	// Galaxy slave filter value
 	protected $galaxy_slave_filter_value;
-
+	
 	/**
 	 * Execute a solarium query. Retry 2 times if an error occurs.
 	 *
@@ -98,5 +98,5 @@ class WPSolrAbstractSolrClient {
 
 		return $result;
 	}
-
+	
 }

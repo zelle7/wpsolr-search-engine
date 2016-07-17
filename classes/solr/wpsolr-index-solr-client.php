@@ -32,7 +32,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 	public function __construct( $solr_index_indice = null, $language_code = null ) {
-
+		
 		$this->init_galaxy();
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
@@ -505,11 +505,15 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$pcontent = $post_to_index->post_content;
 		}
 
-		$pexcerpt         = $post_to_index->post_excerpt;
-		$pauth_info       = get_userdata( $post_to_index->post_author );
-		$pauthor          = isset( $pauth_info ) ? $pauth_info->display_name : '';
-		$pauthor_s        = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
-		$ptype            = $post_to_index->post_type;
+		$pexcerpt   = $post_to_index->post_excerpt;
+		$pauth_info = get_userdata( $post_to_index->post_author );
+		$pauthor    = isset( $pauth_info ) ? $pauth_info->display_name : '';
+		$pauthor_s  = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
+
+		// Get the current post language
+		$post_language = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_LANGUAGE, null, $post_to_index );
+		$ptype         = $post_to_index->post_type;
+
 		$pdate            = solr_format_date( $post_to_index->post_date_gmt );
 		$pmodified        = solr_format_date( $post_to_index->post_modified_gmt );
 		$pdisplaydate     = $post_to_index->post_date;
@@ -885,4 +889,5 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 	}
+
 }

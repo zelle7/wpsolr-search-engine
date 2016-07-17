@@ -226,7 +226,16 @@ class PluginPolylang extends PluginWpml {
 	 */
 	function get_translation_string( $string, $parameter ) {
 
-		$result = pll__( $parameter['name'] );
+		if ( empty( $parameter['language'] ) ) {
+
+			// Translate with current language
+			$result = pll__( $parameter['name'] );
+
+		} else {
+
+			// Translate with parameter language
+			$result = pll_translate_string( $parameter['name'], $parameter['language'] );
+		}
 
 		return $result;
 	}

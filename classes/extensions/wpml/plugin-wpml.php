@@ -433,7 +433,7 @@ class PluginWpml extends WpSolrExtensions {
 	 */
 	function get_translation_string( $string, $parameter ) {
 
-		$result = apply_filters( 'wpml_translate_single_string', $parameter['text'], $parameter['domain'], $parameter['name'] );
+		$result = apply_filters( 'wpml_translate_single_string', $parameter['text'], $parameter['domain'], $parameter['name'], ! empty( $parameter['language'] ) ? $parameter['language'] : null );
 
 		return $result;
 	}

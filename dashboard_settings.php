@@ -1038,7 +1038,6 @@ function fun_set_solr_options() {
 					$solr_options = get_option( 'wdm_solr_form_data' );
 					$checked_fls = $solr_options['cust_fields'] . ',' . $solr_options['taxonomies'];
 
-					$checked_fields = array();
 					$checked_fields = explode( ',', $checked_fls );
 					$img_path       = plugins_url( 'images/plus.png', __FILE__ );
 					$minus_path     = plugins_url( 'images/minus.png', __FILE__ );
@@ -1055,6 +1054,7 @@ function fun_set_solr_options() {
 							$selected_facets_value        = $solr_fac_options['facets'];
 							$selected_facets_is_hierarchy = ! empty( $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] ) ? $solr_fac_options[ WPSOLR_Option::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH ] : array();
 							$selected_facets_labels       = WPSOLR_Global::getOption()->get_facets_labels();
+							$selected_facets_item_labels  = WPSOLR_Global::getOption()->get_facets_items_labels();
 							if ( $selected_facets_value != '' ) {
 								$selected_array = explode( ',', $selected_facets_value );
 							} else {
@@ -1118,7 +1118,7 @@ function fun_set_solr_options() {
 
 															<div class="wdm_row" style="top-margin:5px;">
 																<div class='col_left'>
-																	<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Facet label', true ); ?>
+																	<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, sprintf( '%s label', ucfirst( $selected_val ) ), true ); ?>
 																</div>
 																<?php
 																$facet_label = ! empty( $selected_facets_labels[ $selected_val ] ) ? $selected_facets_labels[ $selected_val ] : '';
@@ -1126,18 +1126,60 @@ function fun_set_solr_options() {
 																<div class='col_right'>
 																	<input type='text'
 																	       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_LABEL; ?>][<?php echo $selected_val; ?>]'
-																	       value='<?php echo $facet_label; ?>'
+																	       value='<?php echo esc_attr( $facet_label ); ?>'
 																		<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 																	/>
 																	<p>
-																		Will be shown on the front-end (and translated in WPML/POLYLANG string modules).
-																		Leave empty if you wish to use the current facet
+																		Will be shown on the front-end (and
+																		translated in WPML/POLYLANG string modules).
+																		Leave empty if you wish to use the current
+																		facet
 																		name "<?php echo $dis_text; ?>".
 																	</p>
 
 																</div>
 																<div class="clear"></div>
 															</div>
+															<?php
+															if ( 'type' === $selected_val ) {
+																$all_post_types = get_post_types();
+																$post_types     = array( 'attachment' );
+																foreach ( $all_post_types as $post_type ) {
+																	if ( $post_type != 'attachment' && $post_type != 'revision' && $post_type != 'nav_menu_item' ) {
+																		array_push( $post_types, $post_type );
+																	}
+																}
+
+																foreach ( $post_types as $post_type ) {
+																	?>
+																	<div class="wdm_row" style="top-margin:5px;">
+																		<div class='col_left'>
+																			<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, sprintf( '%s label', ucfirst( $post_type ) ), true ); ?>
+																		</div>
+																		<?php
+																		$facet_label = ( ! empty( $selected_facets_item_labels[ $selected_val ] ) && ! empty( $selected_facets_item_labels[ $selected_val ][ $post_type ] ) )
+																			? $selected_facets_item_labels[ $selected_val ][ $post_type ] : '';
+																		?>
+																		<div class='col_right'>
+																			<input type='text'
+																			       name='wdm_solr_facet_data[<?php echo WPSOLR_Option::OPTION_FACET_FACETS_ITEMS_LABEL; ?>][<?php echo $selected_val; ?>][<?php echo $post_type; ?>]'
+																			       value='<?php echo esc_attr( $facet_label ); ?>'
+																				<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+																			/>
+																			<p>
+																				Will be shown on the front-end (and
+																				translated in WPML/POLYLANG string
+																				modules).
+																				Leave empty if you wish to use the
+																				current facet
+																				name "<?php echo $post_type; ?>".
+																			</p>
+
+																		</div>
+																		<div class="clear"></div>
+																	</div>
+																<?php }
+															} ?>
 
 															<?php if ( $can_show_hierarchy ) { ?>
 																<div class="wdm_row" style="top-margin:5px;">

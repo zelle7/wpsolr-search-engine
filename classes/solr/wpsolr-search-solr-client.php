@@ -1152,5 +1152,5 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		return $results;
 	}
-
+	
 }

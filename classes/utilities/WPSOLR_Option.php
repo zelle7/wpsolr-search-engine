@@ -385,6 +385,7 @@ class WPSOLR_Option {
 	const OPTION_FACET_FACETS = 'facets';
 	const OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH = 'facets_show_hierarchy';
 	const OPTION_FACET_FACETS_LABEL = 'facets_label';
+	const OPTION_FACET_FACETS_ITEMS_LABEL = 'facets_item_label';
 
 	/**
 	 * Get facet options array
@@ -418,6 +419,15 @@ class WPSOLR_Option {
 	 */
 	public function get_facets_labels() {
 		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_LABEL, array() );
+	}
+
+	/**
+	 * Facets items labels
+	 *
+	 * @return array Facets items names
+	 */
+	public function get_facets_items_labels() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_ITEMS_LABEL, array() );
 	}
 
 	/***************************************************************************************************************
