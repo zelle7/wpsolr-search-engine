@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 11.1
+Current Version: 11.2
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.1
+Stable tag: 11.2
 
 Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
 
@@ -288,6 +288,9 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.2 =
+* (WooCommerce pack) Fix error when indexing also non-product types.
 
 = 11.1 =
 * (Premium pack) Manage post type facets labels ('post', 'page', 'product' ...), including their translations with WPML/POLYLANG string modules.

@@ -53,6 +53,11 @@ class PluginWooCommerce extends WpSolrExtensions {
 
 		// Get the product correponding to this post
 		$product = wc_get_product( $post_id );
+		
+		if ( false === $product ) {
+			// Not a product
+			return $custom_fields;
+		}
 
 		switch ( $product->get_type() ) {
 

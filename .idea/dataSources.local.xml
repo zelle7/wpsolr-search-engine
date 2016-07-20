@@ -4,8 +4,8 @@
     <data-source name="MySQL - local_eostisolr_api@vvv.dev" uuid="768cc5b7-5b10-4a20-9b4c-0270030bc27c">
       <secret-storage>master_key</secret-storage>
       <user-name>external</user-name>
-      <schema-pattern>dev-wpsolr-search-engine.*</schema-pattern>
-      <default-schemas>local_eostisolr_api.*</default-schemas>
+      <introspection-scope>dev-wpsolr-search-engine:*</introspection-scope>
+      <resolve-scope>local_eostisolr_api:*</resolve-scope>
     </data-source>
   </component>
 </project>
