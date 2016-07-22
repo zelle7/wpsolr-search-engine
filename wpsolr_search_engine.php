@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: WPSOLR
- * Description: Search from one to thousands of sites with Solr
- * Version: 11.2
+ * Description: The search that never gets stuck - WPSOLR
+ * Version: 11.3
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

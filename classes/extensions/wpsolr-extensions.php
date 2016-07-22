@@ -588,28 +588,32 @@ class WpSolrExtensions {
 
 		// Translate facet labels
 		$labels = WPSOLR_Global::getOption()->get_facets_labels();
-		foreach ( $labels as $facet_name => $facet_label ) {
-			if ( ! empty( $facet_label ) ) {
-				$translation           = array();
-				$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
-				$translation['name']   = $facet_name;
-				$translation['text']   = $facet_label;
+		if ( is_array( $labels ) && ! empty( $labels ) ) {
+			foreach ( $labels as $facet_name => $facet_label ) {
+				if ( ! empty( $facet_label ) ) {
+					$translation           = array();
+					$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
+					$translation['name']   = $facet_name;
+					$translation['text']   = $facet_label;
 
-				array_push( $translations, $translation );
+					array_push( $translations, $translation );
+				}
 			}
 		}
 
 		// Translate facet items labels
 		$labels = WPSOLR_Global::getOption()->get_facets_items_labels();
-		foreach ( $labels as $facet_name => $facet_items_labels ) {
-			foreach ( $facet_items_labels as $facet_item_name => $facet_item_label ) {
-				if ( ! empty( $facet_item_label ) ) {
-					$translation           = array();
-					$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
-					$translation['name']   = $facet_item_name;
-					$translation['text']   = $facet_item_label;
+		if ( is_array( $labels ) && ! empty( $labels ) ) {
+			foreach ( $labels as $facet_name => $facet_items_labels ) {
+				foreach ( $facet_items_labels as $facet_item_name => $facet_item_label ) {
+					if ( ! empty( $facet_item_label ) ) {
+						$translation           = array();
+						$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
+						$translation['name']   = $facet_item_name;
+						$translation['text']   = $facet_item_label;
 
-					array_push( $translations, $translation );
+						array_push( $translations, $translation );
+					}
 				}
 			}
 		}
