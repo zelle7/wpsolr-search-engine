@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: The search that never gets stuck - WPSOLR
- * Version: 11.3
+ * Version: 11.4
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -72,6 +72,7 @@ if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	// Index as soon as a save is performed.
 	add_action( 'save_post', 'add_remove_document_to_solr_index', 11, 3 );
 	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
+	add_action( 'edit_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 }
 

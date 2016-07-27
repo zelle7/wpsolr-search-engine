@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 11.3
+Current Version: 11.4
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.3
+Stable tag: 11.4
 
 When your blog search fails, when your woocommerce search gets stuck, you need a drastic change of technology.
 
@@ -88,6 +88,9 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.4 =
+* Index attachments when they are updated.
 
 = 11.3 =
 * Remove a php warning message on admin pages.
