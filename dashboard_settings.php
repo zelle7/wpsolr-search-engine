@@ -105,6 +105,7 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_extension_woocommerce_options', 'wdm_solr_extension_woocommerce_data' );
 	register_setting( 'solr_extension_acf_options', 'wdm_solr_extension_acf_data' );
 	register_setting( 'solr_extension_types_options', 'wdm_solr_extension_types_data' );
+	register_setting( 'solr_extension_bbpress_options', 'wdm_solr_extension_bbpress_data' );
 }
 
 function fun_add_solr_settings() {
@@ -1380,6 +1381,7 @@ function fun_set_solr_options() {
 			/* 'extension_qtranslatex_opt' => 'qTranslate X', */
 			'extension_groups_opt'      => 'Groups',
 			'extension_s2member_opt'    => 's2Member',
+			'extension_bbpress_opt'     => 'bbPress',
 		);
 
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -1417,6 +1419,9 @@ function fun_set_solr_options() {
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_TYPES );
 				break;
 
+			case 'extension_bbpress_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_BBPRESS );
+				break;
 		}
 
 		break;

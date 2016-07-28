@@ -1127,7 +1127,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			return get_posts( array(
 				'numberposts' => count( $posts_ids ),
-				'post_type'   => 'any',
+				'post_type'   => WPSOLR_Global::getOption()->get_option_index_post_types(),
 				'post_status' => 'any',
 				'post__in'    => $posts_ids,
 				'orderby'     => 'post__in',
@@ -1152,5 +1152,5 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		return $results;
 	}
-	
+
 }

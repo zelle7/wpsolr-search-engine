@@ -203,6 +203,9 @@ $license_manager = new OptionLicenses();
 							/>
 
 							<h4 class="solr_error" style="font-size: 12px">
+								See our packs <a
+									href="http://www.wpsolr.com/pricing"
+									target="__new1">pricing and features</a>.<br/>
 								This will give you 7 days to test the 'Premium Pack'.
 								<br/>
 								Contact us if you need other packs to test with your trial. We will add them to your trial subscription.

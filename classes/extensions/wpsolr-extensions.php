@@ -69,6 +69,9 @@ class WpSolrExtensions {
 	// Option: licenses
 	const OPTION_LICENSES = 'Licenses';
 
+	// Extension: bbpress
+	const EXTENSION_BBPRESS = 'bbpress';
+
 	/*
 	 * Extensions configuration
 	 */
@@ -214,6 +217,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'licenses/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_licenses',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_BBPRESS           =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginBbPress',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'bbPress',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'bbpress/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'bbpress/plugin-bbpress.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'bbpress/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_bbpress_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

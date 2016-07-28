@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: WPSOLR
- * Description: The search that never gets stuck - WPSOLR
- * Version: 11.4
+ * Description: Search for WordPress/WooCommerce/bbPress that never gets stuck - WPSOLR
+ * Version: 11.5
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2

@@ -22,6 +22,7 @@ class OptionLicenses extends WpSolrExtensions {
 	const LICENSE_PACKAGE_POLYLANG = 'LICENSE_PACKAGE_POLYLANG';
 	const LICENSE_PACKAGE_GROUPS = 'LICENSE_PACKAGE_GROUPS';
 	const LICENSE_PACKAGE_S2MEMBER = 'LICENSE_PACKAGE_S2MEMBER';
+	const LICENSE_PACKAGE_BBPRESS = 'LICENSE_PACKAGE_BBPRESS';
 
 	// License type fields
 	const FIELD_LICENSE_SUBSCRIPTION_NUMBER = 'license_subscription_number';
@@ -305,6 +306,23 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Results are indexed and filtered with s2Member user\'s levels/capabilities capabilities',
+				)
+			),
+			self::LICENSE_PACKAGE_BBPRESS     => array(
+				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_bbpress',
+				self::FIELD_LICENSE_TITLE              => 'bbPress Extension',
+				self::FIELD_DESCRIPTION                => 'bbPress Extension description',
+				self::FIELD_ORDERS_URLS                => array(
+					array(
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+					),
+				),
+				self::FIELD_FEATURES                   => array(
+					self::FEATURE_ZENDESK_SUPPORT,
+					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
+					'Benefit from the Solr search features (speed, relevancy, partial match, fuzzy match ...), while keeping your current bbPress theme.',
 				)
 			)
 		);

@@ -1,22 +1,22 @@
-=== The search that never gets stuck - WPSOLR ===
+=== Search for WordPress/WooCommerce/bbPress that never gets stuck - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 11.4
+Current Version: 11.5
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: search, Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, Solr in WordPress, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.4
+Stable tag: 11.5
 
-When your blog search fails, when your woocommerce search gets stuck, you need a drastic change of technology.
+When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a drastic change of technology.
 
 == Description ==
 
@@ -88,6 +88,10 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.5 =
+* (bbPress pack) The new bbPress integration replaces the bbPress search in forums / topics / replies, with the Solr search, while keeping your bbPress theme.
+You can now easily and quickly search in millions of topics and replies.
 
 = 11.4 =
 * Index attachments when they are updated.
@@ -467,7 +471,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 = Is there a trial for the extra packs ? =
 
-Yes, we added a 7 days trial for all packs (Premium, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF). Download wpsolr, then the trial instructions.
+Yes, we added a 7 days trial for all packs (Premium, bbPress, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF). Download wpsolr, then the trial instructions.
 
 = What is the installation procedure for Solr on Windows ? =
 

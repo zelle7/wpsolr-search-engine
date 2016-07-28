@@ -70,7 +70,7 @@ class WPSOLR_Query extends WP_Query {
 	 * @return array
 	 */
 	public function get_filter_query_fields() {
-		return $this->wpsolr_filter_query;
+		return ! empty( $this->wpsolr_filter_query ) ? $this->wpsolr_filter_query : array();
 	}
 
 	/**
@@ -156,7 +156,7 @@ class WPSOLR_Query extends WP_Query {
 		$this->resultSet   = $this->solr_client->execute_wpsolr_query( $this );
 
 		// Create posts from Solr PIDs
-		$posts_in_results = $this->solr_client->get_posts_from_pids( $this->resultSet );
+		$posts_in_results = $this->solr_client->get_posts_from_pids();
 
 		foreach ( $posts_in_results as $post ) {
 			$this->set_the_title( $post );
