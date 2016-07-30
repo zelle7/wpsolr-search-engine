@@ -355,8 +355,8 @@ class OptionLicenses extends WpSolrExtensions {
 
 		}
 
-		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class nav-tab">' .
-		                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline" title="Click to activate the premium features addon"><span>%s</span></a>',
+		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class nav-tab" >' .
+		                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline"><span>%s</span></a>',
 			$license_type, $img_url, $text_to_show );
 
 		return $result;
@@ -576,6 +576,45 @@ class OptionLicenses extends WpSolrExtensions {
 		echo json_encode( $response_object );
 
 		die();
+	}
+
+	/**
+	 * Get all activated licenses
+	 *
+	 * @return array
+	 */
+	public static function get_activated_licenses_titles() {
+
+		$results = array();
+
+		$option_licenses = new OptionLicenses();
+		$licenses        = $option_licenses->get_licenses();
+
+		foreach ( $licenses as $license_code => $license ) {
+
+			if ( $option_licenses->get_license_is_activated( $license_code ) ) {
+				array_push( $results, $option_licenses->get_license_title( $license_code ) );
+			}
+		}
+
+		return $results;
+	}
+
+
+	/**
+	 * Get a license title
+	 *
+	 * @param $license_code
+	 *
+	 * @return array
+	 */
+	public function get_license_title(
+		$license_code
+	) {
+
+		$license_defs = self::get_license_types();
+
+		return ! empty( $license_defs[ $license_code ] ) && ! empty( $license_defs[ $license_code ][ self::FIELD_LICENSE_TITLE ] ) ? $license_defs[ $license_code ][ self::FIELD_LICENSE_TITLE ] : $license_code;
 	}
 
 }

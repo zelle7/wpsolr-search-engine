@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 11.5
+Current Version: 11.6
 
 Author: wpsolr
 
@@ -14,9 +14,9 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.5
+Stable tag: 11.6
 
-When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a drastic change of technology.
+Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a drastic change of technology.
 
 == Description ==
 
@@ -88,6 +88,9 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.6 =
+* Add a feedback link in admin pages footer. Tell us what you do not like, what is missing, or why not what you love.
 
 = 11.5 =
 * (bbPress pack) The new bbPress integration replaces the bbPress search in forums / topics / replies, with the Solr search, while keeping your bbPress theme.

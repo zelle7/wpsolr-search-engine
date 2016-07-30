@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress/WooCommerce/bbPress that never gets stuck - WPSOLR
- * Version: 11.5
+ * Version: 11.6
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -37,7 +37,8 @@ add_action( 'wp_head', 'check_default_options_and_function' );
 add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
 add_action( 'wp_enqueue_scripts', 'my_enqueue' );
-
+add_filter( 'admin_footer_text', 'wpsolr_admin_footer_text' );
+add_filter( 'update_footer', 'wpsolr_update_footer', 11 );
 
 // Register WpSolr widgets when current theme's search is used.
 if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
@@ -368,3 +369,34 @@ function wpsolr_activate() {
 }
 
 register_activation_hook( __FILE__, 'wpsolr_activate' );
+
+
+/**
+ * Action to replace the admin footer text
+ * @return string
+ */
+function wpsolr_admin_footer_text() {
+
+	$result = 'If you like WPSOLR, thank you for letting others know with a <a href="https://wordpress.org/support/view/plugin-reviews/wpsolr-search-engine" target="__new">***** review</a>.';
+	$result .= ' Else, we\'d like very much your feedbacks throught our <a href="http://www.wpsolr.com" target="__new">chat box</a> to improve the plugin.';
+
+	return $result;
+}
+
+/**
+ * Action to replace the admin footer version
+ * @return string
+ */
+function wpsolr_update_footer() {
+
+	$results = 'You are using the free plugin.';
+
+	$licenses = OptionLicenses::get_activated_licenses_titles();
+
+	if ( is_array( $licenses ) && ! empty( $licenses ) ) {
+
+		$results = sprintf( 'You have activated packs %s.', implode( ', ', $licenses ) );
+	}
+
+	return $results . ' See all <a href="http://www.wpsolr.com/pricing" target="__new">other features</a>.';
+}
