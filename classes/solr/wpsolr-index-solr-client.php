@@ -32,7 +32,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 	public function __construct( $solr_index_indice = null, $language_code = null ) {
-		
+
 		$this->init_galaxy();
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
@@ -48,7 +48,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		$this->index_indice    = $solr_index_indice;
-		$this->index = $options_indexes->get_index($solr_index_indice);
+		$this->index           = $options_indexes->get_index( $solr_index_indice );
 		$this->solarium_client = new Solarium\Client( $config );
 
 	}
@@ -368,8 +368,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			for ( $idx = 0; $idx < $postcount; $idx ++ ) {
 				$postid = $ids_array[ $idx ]['ID'];
 
-				// If post is not on blacklist
-				if ( ! in_array( $postid, $ex_ids ) ) {
+				// If post is not on blacklist, and post is not marked as not indexed
+				if ( ! in_array( $postid, $ex_ids ) && ( ! WPSOLR_Metabox::get_metabox_is_do_not_index( $postid ) ) ) {
 					// If post is not an attachment
 					if ( $ids_array[ $idx ]['post_type'] != 'attachment' ) {
 

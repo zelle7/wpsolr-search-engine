@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 11.8
+ * Version: 11.9
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -44,6 +44,14 @@ add_filter( 'update_footer', 'wpsolr_update_footer', 11 );
 if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
 	require_once 'classes/ui/widget/WPSOLR_Widget.php';
 	WPSOLR_Widget::Autoload();
+}
+
+if ( is_admin() ) {
+	/*
+	 * Register metabox
+	 */
+	require_once 'classes/metabox/wpsolr-metabox.php';
+	WPSOLR_Metabox::register();
 }
 
 /*
@@ -89,22 +97,29 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 	}
 
 	// If this is just a new post opened in editor, don't go on.
-	if ( 'auto-draft' == $post->post_status ) {
+	if ( 'auto-draft' === $post->post_status ) {
 		return;
 	}
 
+	// Delete previous message first
+	delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
+
 	try {
-		if ( 'publish' == $post->post_status ) {
+		if ( 'publish' === $post->post_status ) {
 			// post published, add/update it from Solr index
 
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
-			$solr->index_data( 1, $post );
+			$results = $solr->index_data( 1, $post );
 
-			// Display confirmation in admin
-			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s updated in index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
+			// Display confirmation in admin, if one doc at least has been indexed
+			if ( ! empty( $results ) && ! empty( $results['nb_results'] ) ) {
+
+				set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s updated in index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
+			}
 
 		} else {
+
 			// post unpublished, remove it from Solr index
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
@@ -129,9 +144,13 @@ function add_attachment_to_solr_index( $attachment_id ) {
 	try {
 		$solr = WPSolrIndexSolrClient::create();
 
-		$solr->index_data( 1, get_post( $attachment_id ) );
+		$results = $solr->index_data( 1, get_post( $attachment_id ) );
 
-		set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment added to Solr' );
+		// Display confirmation in admin, if one doc at least has been indexed
+		if ( ! empty( $results ) && ! empty( $results['nb_results'] ) ) {
+
+			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Media file uploaded to Solr' );
+		}
 
 	} catch ( Exception $e ) {
 

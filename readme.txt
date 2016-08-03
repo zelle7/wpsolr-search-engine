@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 11.8
+Current Version: 11.9
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.8
+Stable tag: 11.9
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -87,8 +87,13 @@ Installation procedure for Apache Solr: see FAQ section.
 30. 30) Admin: Add boosts to any searched field.
 31. 31) Admin: Change facets labels.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
+33. 33) Admin: Metabox.
 
 == Changelog ==
+
+= 11.9 =
+* Add a metabox to all post types.
+* [Screenshot: Add checkbox indexing/not indexing in the metabox](https://s.w.org/plugins/wpsolr-search-engine/screenshot-33.png "Enable/disable indexing in the metabox")
 
 = 11.8 =
 * Show index name in admin notice when a post is saved/deleted. Usefull to check that the current post is indexed in it's language related Solr index, with WPML or Polylang.
