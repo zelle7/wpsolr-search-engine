@@ -45,6 +45,10 @@ class PluginAcf extends WpSolrExtensions {
 			'get_field_label'
 		), 10, 1 );
 
+		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, array(
+			$this,
+			'filter_custom_fields'
+		), 10, 2 );
 
 	}
 
@@ -111,6 +115,35 @@ class PluginAcf extends WpSolrExtensions {
 		}
 
 		return $result;
+	}
+
+
+	/**
+	 * Decode acf multi-values before indexing
+	 *
+	 * @param $custom_fields
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
+	public function filter_custom_fields( $custom_fields, $post_id ) {
+
+		if ( ! isset( $custom_fields ) ) {
+			$custom_fields = array();
+		}
+
+		$fields = $this->get_fields();
+
+		foreach ( $custom_fields as $custom_field_name => $custom_field_value ) {
+
+			if ( isset( $fields[ self::FIELD_PREFIX . $custom_field_name ] ) ) {
+				$field_key                           = $fields[ self::FIELD_PREFIX . $custom_field_name ];
+				$field                               = get_field_object( $field_key, $post_id );
+				$custom_fields[ $custom_field_name ] = $field['value'];
+			}
+		}
+
+		return $custom_fields;
 	}
 
 }

@@ -48,6 +48,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		$this->index_indice    = $solr_index_indice;
+		$this->index = $options_indexes->get_index($solr_index_indice);
 		$this->solarium_client = new Solarium\Client( $config );
 
 	}

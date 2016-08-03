@@ -1,26 +1,26 @@
-=== Search for WordPress/WooCommerce/bbPress that never gets stuck - WPSOLR ===
+=== Search for WordPress, WooCommerce, bbPress, that never gets stuck - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 11.6
+Current Version: 11.8
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: search, Solr in WordPress, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.6
+Stable tag: 11.8
 
-Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a drastic change of technology.
+Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
 
-You definitely need wpsolr if you recognize yourself in at least one of:
+You definitely need wpsolr search if you recognize yourself in at least one of:
 
 - My current search page is so slow, my visitors are leaving without buying anything, without subscribing to anything
 
@@ -28,19 +28,20 @@ You definitely need wpsolr if you recognize yourself in at least one of:
 
 - Most of my data is stored in pdf files, word files, excel files. I need to search these formats too.
 
-- My customers are international, they speak different languages. So should do my search.
+- My customers are international, they speak different languages. My search should be multilingual also.
 
-- I want a modern search with tons of features. Ajax, facets, partial match, fuzzy match.
+- I want a modern search with tons of features. Ajax, facets, partial match search, fuzzy match search.
 
-- I want to filter my woocommerce results with any taxonomies, custom fields, attributes, or variations.
+- I want to filter my woocommerce search results with any taxonomies, custom fields, attributes, or variations.
 
 - I have several sites, unrelated, but I want to give my visitors a single search page combining all their content
 
+- My bbPress search cannot handle thousands, hundreds of thousands of topics and replies.
 
-Else, well, it's probably not worth it, because greater power comes with greater efforts.
 
+Else, well, it's probably not worth it, because a greater search comes with greater efforts.
 
-But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr to give it a try.
+But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
 
 
 == Installation ==
@@ -88,6 +89,13 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 
 == Changelog ==
+
+= 11.8 =
+* Show index name in admin notice when a post is saved/deleted. Usefull to check that the current post is indexed in it's language related Solr index, with WPML or Polylang.
+
+= 11.7 =
+* (ACF Pack) Decode multi-valued ACF fields before sending to Solr index.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
 
 = 11.6 =
 * Add a feedback link in admin pages footer. Tell us what you do not like, what is missing, or why not what you love.
@@ -282,7 +290,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * Custom fields beginning with "_" can be indexed/searched/autocompleted.
 
 = 6.0 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): fully support multilingual search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
 
 = 5.9 =
 * Fix a bug when configuring several Solr indexes.
@@ -326,7 +334,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * Fix error while updating the Solr index when post/page are published or trashed.
 
 = 4.9 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multilingual search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
 * Use .mo files to translate the search form and search results front-end texts.
 * Manage several Solr indexes.
 * The search page is now /search-wpsolr (to be sure it does not exist yet). Migrate your /search-results page content if you customized it.
@@ -347,7 +355,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 - With gettext() standard .po/.mo files
 - With WPML string translation module
 * Translation files are not delivered, but /lang/wpsolr.pot can be used to generate the .po and .mo files, or WPSOLR sources can be parsed to generate a .pot file (with poedit free tool for instance).
-* Multi-language is not supported in Solr search, yet. Only the front-end texts can be multi-language.
+* Multi-language is not supported in Solr search, yet. Only the front-end texts can be multilingual.
 
 = 4.4 =
 * Fix several admin and front-end php notices

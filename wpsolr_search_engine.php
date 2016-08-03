@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: WPSOLR
- * Description: Search for WordPress/WooCommerce/bbPress that never gets stuck - WPSOLR
- * Version: 11.6
+ * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
+ * Version: 11.8
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -102,7 +102,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 			$solr->index_data( 1, $post );
 
 			// Display confirmation in admin
-			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Post/page indexed in Solr' );
+			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s updated in index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
 
 		} else {
 			// post unpublished, remove it from Solr index
@@ -111,7 +111,7 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 			$solr->delete_document( $post );
 
 			// Display confirmation in admin
-			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Post/Page deleted from Solr' );
+			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s removed from index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
 		}
 
 	} catch ( Exception $e ) {
