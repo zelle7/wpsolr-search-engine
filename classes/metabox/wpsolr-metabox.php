@@ -8,6 +8,7 @@ class WPSOLR_Metabox {
 	// Fields stored in metabox
 	const METABOX_FIELD_IS_DO_NOT_INDEX = '_wpsolr-meta-is-do-not-index';
 	const METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES = '_wpsolr-meta-is-do-index-acf-field-files';
+	const METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT = '_wpsolr-meta-is-do-index-embed-any-document';
 
 	// Metabox id
 	const METABOX_NONCE_ID = 'wpsolr-metabox-nonce-id';
@@ -106,9 +107,28 @@ class WPSOLR_Metabox {
 				} ?>
 					<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_ACF ); ?>
 				/>
-				<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_ACF, _x( 'Search also in ACF fields file content', 'wpsolr' ), true, true ); ?>
+				<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_ACF, _x( 'Search in ACF fields file content', 'wpsolr' ), true, true ); ?>
 			</label>
 		</div>
+
+		<?php
+		/*
+		?>
+		<div class="wpsolr-metabox-row-content">
+			<label for="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT ); ?>">
+				<input type="checkbox"
+				       name="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT ); ?>"
+				       id="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT ); ?>"
+				       value="<?php echo esc_attr( self::METABOX_CHECKBOX_YES ); ?>" <?php if ( isset ( $post_meta[ self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT ] ) ) {
+			checked( $post_meta[ self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT ][0], self::METABOX_CHECKBOX_YES );
+		} ?>
+					<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT ); ?>
+				/>
+				<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT, _x( 'Search in Embed Any Document', 'wpsolr' ), true, true ); ?>
+			</label>
+		</div>
+		*/
+		?>
 
 	<?php }
 
@@ -226,6 +246,19 @@ class WPSOLR_Metabox {
 	public static function get_metabox_is_do_index_acf_field_files( $post_id ) {
 
 		return self::get_metabox_checkbox_value( self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES, $post_id );
+	}
+
+	/**
+	 * Is a post index it's embedd any document shortcodes ?
+	 *
+	 * @param $post_id
+	 *
+	 * @return bool
+	 *
+	 */
+	public static function get_metabox_is_do_index_embed_any_document( $post_id ) {
+
+		return self::get_metabox_checkbox_value( self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT, $post_id );
 	}
 
 }

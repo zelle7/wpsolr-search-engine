@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.0
+Current Version: 12.1
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.0
+Stable tag: 12.1
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -89,8 +89,13 @@ Installation procedure for Apache Solr: see FAQ section.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 33. 33) Admin: Metabox.
 34. 34) Admin: Metabox selection to index and search embedded files defined with an ACF field of type file ID or file object.
+35. 35) Admin: Search in Embed Any Document post content.
 
 == Changelog ==
+
+= 12.1 =
+* (Embed Any Document Pack) New pack integrating with plugin Embed Any Document.Documents embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded document).
+* [Screenshot: Search in Embed Any Document post content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-35.png "Search in Embed Any Document post content")
 
 = 12.0 =
 * (ACF Pack) Add checkbox to wpsolr metabox. When a post contains an ACF field of type "file" (File Object, File ID, File URL), the file content is added to the post body (indexed and searched).

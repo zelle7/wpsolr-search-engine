@@ -106,12 +106,14 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_extension_acf_options', 'wdm_solr_extension_acf_data' );
 	register_setting( 'solr_extension_types_options', 'wdm_solr_extension_types_data' );
 	register_setting( 'solr_extension_bbpress_options', 'wdm_solr_extension_bbpress_data' );
+	register_setting( 'extension_embed_any_document_opt', WPSOLR_Option::OPTION_EMBED_ANY_DOCUMENT );
+
 }
 
 function fun_add_solr_settings() {
 	$img_url = plugins_url( 'images/WPSOLRDashicon.png', __FILE__ );
 	add_menu_page( 'WPSOLR', 'WPSOLR', 'manage_options', 'solr_settings', 'fun_set_solr_options', $img_url );
-	wp_enqueue_style( 'dashboard_style', plugins_url( 'css/dashboard_css.css', __FILE__ ) );
+	wp_enqueue_style( 'dashboard_style', plugins_url( 'css/dashboard_css.css', __FILE__ ), array(), 'wpsolr_12.1' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'dashboard_js1', plugins_url( 'js/dashboard.js', __FILE__ ),
 		array(
@@ -222,7 +224,8 @@ function fun_set_solr_options() {
 
 	?>
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
-	<div class="page_title"><h1>Power your search with <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>, the world's leading search engine</h1></div>
+	<div class="page_title"><h1>Power your search with <a href="http://lucene.apache.org/solr/" target="_blank">Apache
+				Solr</a>, the world's leading search engine</h1></div>
 
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
@@ -1372,16 +1375,17 @@ function fun_set_solr_options() {
 		<?php
 
 		$subtabs = array(
-			'extension_woocommerce_opt' => 'WooCommerce',
-			'extension_acf_opt'         => 'Advanced Custom Fields (ACF)',
-			'extension_types_opt'       => 'Types',
-			'extension_wpml_opt'        => 'WPML',
-			'extension_polylang_opt'    => 'Polylang',
+			'extension_woocommerce_opt'        => 'WooCommerce',
+			'extension_acf_opt'                => 'Advanced Custom Fields (ACF)',
+			'extension_types_opt'              => 'Types',
+			'extension_wpml_opt'               => 'WPML',
+			'extension_polylang_opt'           => 'Polylang',
 			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
 			/* 'extension_qtranslatex_opt' => 'qTranslate X', */
-			'extension_groups_opt'      => 'Groups',
-			'extension_s2member_opt'    => 's2Member',
-			'extension_bbpress_opt'     => 'bbPress',
+			'extension_groups_opt'             => 'Groups',
+			'extension_s2member_opt'           => 's2Member',
+			'extension_bbpress_opt'            => 'bbPress',
+			'extension_embed_any_document_opt' => 'Embed Any Document'
 		);
 
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -1421,6 +1425,10 @@ function fun_set_solr_options() {
 
 			case 'extension_bbpress_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_BBPRESS );
+				break;
+
+			case 'extension_embed_any_document_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_EMBED_ANY_DOCUMENT );
 				break;
 		}
 

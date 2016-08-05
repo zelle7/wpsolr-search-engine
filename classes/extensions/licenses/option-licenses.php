@@ -23,6 +23,7 @@ class OptionLicenses extends WpSolrExtensions {
 	const LICENSE_PACKAGE_GROUPS = 'LICENSE_PACKAGE_GROUPS';
 	const LICENSE_PACKAGE_S2MEMBER = 'LICENSE_PACKAGE_S2MEMBER';
 	const LICENSE_PACKAGE_BBPRESS = 'LICENSE_PACKAGE_BBPRESS';
+	const LICENSE_PACKAGE_EMBED_ANY_DOCUMENT = 'LICENSE_PACKAGE_EMBED_ANY_DOCUMENT';
 
 	// License type fields
 	const FIELD_LICENSE_SUBSCRIPTION_NUMBER = 'license_subscription_number';
@@ -153,7 +154,7 @@ class OptionLicenses extends WpSolrExtensions {
 	function get_license_types() {
 
 		return array(
-			self::LICENSE_PACKAGE_CORE        => array(
+			self::LICENSE_PACKAGE_CORE               => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_premium',
 				self::FIELD_LICENSE_TITLE              => 'WPSOLR Premium Pack',
 				self::FIELD_DESCRIPTION                => '',
@@ -183,7 +184,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Deactivate real-time indexing to load huge external datafeeds'
 				)
 			),
-			self::LICENSE_PACKAGE_WOOCOMMERCE => array(
+			self::LICENSE_PACKAGE_WOOCOMMERCE        => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_woocommerce',
 				self::FIELD_LICENSE_TITLE              => 'WooCommerce Extension',
 				self::FIELD_DESCRIPTION                => 'WooCommerce Extension description',
@@ -202,7 +203,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Create facets on product attributes/variations'
 				)
 			),
-			self::LICENSE_PACKAGE_ACF         => array(
+			self::LICENSE_PACKAGE_ACF                => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_acf',
 				self::FIELD_LICENSE_TITLE              => 'ACF Extension',
 				self::FIELD_DESCRIPTION                => 'ACF Extension description',
@@ -219,7 +220,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Replace facet names with their ACF label'
 				)
 			),
-			self::LICENSE_PACKAGE_TYPES       => array(
+			self::LICENSE_PACKAGE_TYPES              => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_types',
 				self::FIELD_LICENSE_TITLE              => 'Types Extension',
 				self::FIELD_DESCRIPTION                => 'Types Extension description',
@@ -236,7 +237,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Replace facet names with their Types label'
 				)
 			),
-			self::LICENSE_PACKAGE_WPML        => array(
+			self::LICENSE_PACKAGE_WPML               => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_wpml',
 				self::FIELD_LICENSE_TITLE              => 'WPML Extension',
 				self::FIELD_DESCRIPTION                => 'WPML Extension description',
@@ -255,7 +256,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Search results are displayed in each WPML languages'
 				)
 			),
-			self::LICENSE_PACKAGE_POLYLANG    => array(
+			self::LICENSE_PACKAGE_POLYLANG           => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_polylang',
 				self::FIELD_LICENSE_TITLE              => 'Polylang Extension',
 				self::FIELD_DESCRIPTION                => 'Polylang Extension description',
@@ -274,7 +275,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Search results are displayed in each Polylang languages'
 				)
 			),
-			self::LICENSE_PACKAGE_GROUPS      => array(
+			self::LICENSE_PACKAGE_GROUPS             => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_groups',
 				self::FIELD_LICENSE_TITLE              => 'Groups Extension',
 				self::FIELD_DESCRIPTION                => 'Groups Extension description',
@@ -291,7 +292,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Results are indexed and filtered with Groups user\'s groups/capabilities',
 				)
 			),
-			self::LICENSE_PACKAGE_S2MEMBER    => array(
+			self::LICENSE_PACKAGE_S2MEMBER           => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_s2member',
 				self::FIELD_LICENSE_TITLE              => 's2Member Extension',
 				self::FIELD_DESCRIPTION                => 's2Member Extension description',
@@ -308,7 +309,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Results are indexed and filtered with s2Member user\'s levels/capabilities capabilities',
 				)
 			),
-			self::LICENSE_PACKAGE_BBPRESS     => array(
+			self::LICENSE_PACKAGE_BBPRESS            => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_bbpress',
 				self::FIELD_LICENSE_TITLE              => 'bbPress Extension',
 				self::FIELD_DESCRIPTION                => 'bbPress Extension description',
@@ -323,6 +324,23 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Benefit from the Solr search features (speed, relevancy, partial match, fuzzy match ...), while keeping your current bbPress theme.',
+				)
+			),
+			self::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT => array(
+				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_embed_any_document',
+				self::FIELD_LICENSE_TITLE              => 'Embed Any Document Extension',
+				self::FIELD_DESCRIPTION                => 'Embed Any Document  Extension description',
+				self::FIELD_ORDERS_URLS                => array(
+					array(
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+					),
+				),
+				self::FIELD_FEATURES                   => array(
+					self::FEATURE_ZENDESK_SUPPORT,
+					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
+					'Automatically index and search embedded documents with the plugin shortcode.',
 				)
 			)
 		);
