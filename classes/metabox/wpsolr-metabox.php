@@ -7,6 +7,7 @@ class WPSOLR_Metabox {
 
 	// Fields stored in metabox
 	const METABOX_FIELD_IS_DO_NOT_INDEX = '_wpsolr-meta-is-do-not-index';
+	const METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES = '_wpsolr-meta-is-do-index-acf-field-files';
 
 	// Metabox id
 	const METABOX_NONCE_ID = 'wpsolr-metabox-nonce-id';
@@ -34,7 +35,6 @@ class WPSOLR_Metabox {
 		add_action( 'add_attachment', array( $this, 'action_save_post_callback' ) );
 		add_action( 'edit_attachment', array( $this, 'action_save_post_callback' ) );
 	}
-
 
 	/**
 	 * Metabox action
@@ -69,9 +69,21 @@ class WPSOLR_Metabox {
 			return;
 		}
 
+		$license_manager = new OptionLicenses();
+
 		wp_nonce_field( basename( __FILE__ ), self::METABOX_NONCE_ID );
 		$post_meta = get_post_meta( $post->ID );
 		?>
+
+		<?php
+		// Include license activation popup boxes in all admin tabs
+		add_thickbox();
+		if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			// Do not load in Ajax
+			require_once WPSOLR_PLUGIN_DIR . '/classes/extensions/licenses/admin_options.inc.php';
+		}
+		?>
+
 
 		<div class="wpsolr-metabox-row-content">
 			<label for="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_NOT_INDEX ); ?>">
@@ -80,7 +92,21 @@ class WPSOLR_Metabox {
 				       value="<?php echo esc_attr( self::METABOX_CHECKBOX_YES ); ?>" <?php if ( isset ( $post_meta[ self::METABOX_FIELD_IS_DO_NOT_INDEX ] ) ) {
 					checked( $post_meta[ self::METABOX_FIELD_IS_DO_NOT_INDEX ][0], self::METABOX_CHECKBOX_YES );
 				} ?> />
-				<?php _e( 'Do not index', 'wpsolr' ) ?>
+				<?php _e( 'Do not search', 'wpsolr' ) ?>
+			</label>
+		</div>
+
+		<div class="wpsolr-metabox-row-content">
+			<label for="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ); ?>">
+				<input type="checkbox"
+				       name="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ); ?>"
+				       id="<?php echo esc_attr( self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ); ?>"
+				       value="<?php echo esc_attr( self::METABOX_CHECKBOX_YES ); ?>" <?php if ( isset ( $post_meta[ self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ] ) ) {
+					checked( $post_meta[ self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ][0], self::METABOX_CHECKBOX_YES );
+				} ?>
+					<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_ACF ); ?>
+				/>
+				<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_ACF, _x( 'Search also in ACF fields file content', 'wpsolr' ), true, true ); ?>
 			</label>
 		</div>
 
@@ -156,6 +182,7 @@ class WPSOLR_Metabox {
 
 		// Checks for input and sanitizes/saves if needed
 		update_post_meta( $post_id, self::METABOX_FIELD_IS_DO_NOT_INDEX, isset( $_POST[ self::METABOX_FIELD_IS_DO_NOT_INDEX ] ) ? sanitize_text_field( $_POST[ self::METABOX_FIELD_IS_DO_NOT_INDEX ] ) : '' );
+		update_post_meta( $post_id, self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES, isset( $_POST[ self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ] ) ? sanitize_text_field( $_POST[ self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES ] ) : '' );
 
 	}
 
@@ -186,6 +213,19 @@ class WPSOLR_Metabox {
 	public static function get_metabox_is_do_not_index( $post_id ) {
 
 		return self::get_metabox_checkbox_value( self::METABOX_FIELD_IS_DO_NOT_INDEX, $post_id );
+	}
+
+	/**
+	 * Is a post index it's embedded documents ?
+	 *
+	 * @param $post_id
+	 *
+	 * @return bool
+	 *
+	 */
+	public static function get_metabox_is_do_index_acf_field_files( $post_id ) {
+
+		return self::get_metabox_checkbox_value( self::METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES, $post_id );
 	}
 
 }

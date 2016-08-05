@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 11.9
+Current Version: 12.0
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 11.9
+Stable tag: 12.0
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -88,8 +88,13 @@ Installation procedure for Apache Solr: see FAQ section.
 31. 31) Admin: Change facets labels.
 32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
 33. 33) Admin: Metabox.
+34. 34) Admin: Metabox selection to index and search embedded files defined with an ACF field of type file ID or file object.
 
 == Changelog ==
+
+= 12.0 =
+* (ACF Pack) Add checkbox to wpsolr metabox. When a post contains an ACF field of type "file" (File Object, File ID, File URL), the file content is added to the post body (indexed and searched).
+* [Screenshot: Metabox selection to index and search embedded files defined with an ACF field of type file](https://s.w.org/plugins/wpsolr-search-engine/screenshot-34.png "Metabox selection to index and search embedded files defined with an ACF field of type file ")
 
 = 11.9 =
 * Add a metabox to all post types.

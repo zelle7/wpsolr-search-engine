@@ -70,4 +70,7 @@ class WpSolrFilters {
 	// Get a translated string from WPML/Polylang
 	const WPSOLR_FILTER_TRANSLATION_STRING = 'wpsolr_filter_translation_string';
 
+	// Get attachments that will be added to the body of the indexed post
+	const WPSOLR_FILTER_GET_POST_ATTACHMENTS = 'wpsolr_filter_get_post_attachments';
+
 }

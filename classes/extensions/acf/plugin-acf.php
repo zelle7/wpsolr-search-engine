@@ -50,6 +50,11 @@ class PluginAcf extends WpSolrExtensions {
 			'filter_custom_fields'
 		), 10, 2 );
 
+		add_filter( WpSolrFilters::WPSOLR_FILTER_GET_POST_ATTACHMENTS, array(
+			$this,
+			'filter_get_post_attachments'
+		), 10, 2 );
+
 	}
 
 
@@ -146,4 +151,52 @@ class PluginAcf extends WpSolrExtensions {
 		return $custom_fields;
 	}
 
+	/**
+	 * Retrieve attachments in the fields of type file of the post
+	 *
+	 * @param array $attachments
+	 * @param string $post
+	 *
+	 */
+	public function filter_get_post_attachments( $attachments, $post_id ) {
+
+		if ( ! WPSOLR_Metabox::get_metabox_is_do_index_acf_field_files( $post_id ) ) {
+			// Do nothing
+			return $attachments;
+		}
+
+		// Get post ACF field objects
+		$fields = get_field_objects( $post_id );
+
+		if ( $fields ) {
+
+			foreach ( $fields as $field_name => $field ) {
+
+				// Retrieve the post_id of the file
+				if ( ! empty( $field['value'] ) && ( 'file' === $field['type'] ) ) {
+
+					switch ( $field['save_format'] ) {
+						case 'id':
+							array_push( $attachments, array( 'post_id' => $field['value'] ) );
+							break;
+
+						case 'object':
+							array_push( $attachments, array( 'post_id' => $field['value']['id'] ) );
+							break;
+
+						case 'url':
+							array_push( $attachments, array( 'url' => $field['value'] ) );
+							break;
+
+						default:
+							// Do nothing
+							break;
+					}
+				}
+			}
+
+		}
+
+		return $attachments;
+	}
 }

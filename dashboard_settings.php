@@ -222,7 +222,7 @@ function fun_set_solr_options() {
 
 	?>
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
-	<div class="page_title"><h1>Power your search with Solr, the world's leading search engine</h1></div>
+	<div class="page_title"><h1>Power your search with <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>, the world's leading search engine</h1></div>
 
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
