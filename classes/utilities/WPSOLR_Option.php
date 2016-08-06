@@ -574,19 +574,36 @@ class WPSOLR_Option {
 
 	/***************************************************************************************************************
 	 *
-	 * Embed any document plugin
+	 * Plugin Embed any document
 	 *
 	 **************************************************************************************************************/
 	const OPTION_EMBED_ANY_DOCUMENT = 'wdm_solr_extension_embed_any_document_data';
 	const OPTION_EMBED_ANY_DOCUMENT_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
 
 	/**
-	 * Is search fields options active ?
+	 * Is search embedded documents options active ?
 	 *
 	 * @return boolean
 	 */
 	public function get_embed_any_document_is_do_embed_documents() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_EMBED_ANY_DOCUMENT, self::OPTION_EMBED_ANY_DOCUMENT_IS_EMBED_DOCUMENTS ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Pdf Embedder
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PDF_EMBEDDER = 'wdm_solr_extension_pdf_embedder_data';
+	const OPTION_PDF_EMBEDDER_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
+
+	/**
+	 * Is search embedded documents options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_pdf_embedder_is_do_embed_documents() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PDF_EMBEDDER, self::OPTION_PDF_EMBEDDER_IS_EMBED_DOCUMENTS ) );
 	}
 
 }

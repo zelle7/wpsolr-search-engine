@@ -107,6 +107,7 @@ function wpsolr_admin_init() {
 	register_setting( 'solr_extension_types_options', 'wdm_solr_extension_types_data' );
 	register_setting( 'solr_extension_bbpress_options', 'wdm_solr_extension_bbpress_data' );
 	register_setting( 'extension_embed_any_document_opt', WPSOLR_Option::OPTION_EMBED_ANY_DOCUMENT );
+	register_setting( 'extension_pdf_embedder_opt', WPSOLR_Option::OPTION_PDF_EMBEDDER );
 
 }
 
@@ -1385,7 +1386,8 @@ function fun_set_solr_options() {
 			'extension_groups_opt'             => 'Groups',
 			'extension_s2member_opt'           => 's2Member',
 			'extension_bbpress_opt'            => 'bbPress',
-			'extension_embed_any_document_opt' => 'Embed Any Document'
+			'extension_embed_any_document_opt' => 'Embed Any Document',
+			'extension_pdf_embedder_opt'       => 'Pdf Embedder'
 		);
 
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -1429,6 +1431,10 @@ function fun_set_solr_options() {
 
 			case 'extension_embed_any_document_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_EMBED_ANY_DOCUMENT );
+				break;
+
+			case 'extension_pdf_embedder_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_PDF_EMBEDDER );
 				break;
 		}
 

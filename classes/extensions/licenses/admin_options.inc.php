@@ -128,8 +128,8 @@ $license_manager = new OptionLicenses();
 					class='head_div'><?php echo $license[ OptionLicenses::FIELD_LICENSE_TITLE ]; ?></h4>
 				<div class="wdm_note">
 					<?php echo $license_manager->get_license_is_activated( $license_type ) ?
-						sprintf( 'This feature is already activated with the %s', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] )
-						: sprintf( 'This feature requires the %s', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] );
+						sprintf( 'This feature is already activated with the WPSOLR %s', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] )
+						: sprintf( 'This feature requires the WPSOLR %s Extension', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] );
 					?>
 					<br/>
 				</div>

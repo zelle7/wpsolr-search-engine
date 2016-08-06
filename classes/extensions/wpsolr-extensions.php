@@ -75,6 +75,9 @@ class WpSolrExtensions {
 	// Extension: Embed Any Document
 	const EXTENSION_EMBED_ANY_DOCUMENT = 'embed any document';
 
+	// Extension: Pdf Embedder
+	const EXTENSION_PDF_EMBEDDER = 'pdf embedder';
+
 	/*
 	 * Extensions configuration
 	 */
@@ -244,6 +247,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'embed-any-document/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_embed_any_document_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_PDF_EMBEDDER       =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginPdfEmbedder',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'pdfemb_basic_pdf_embedder',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'pdf-embedder/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'pdf-embedder/plugin-pdf-embedder.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'pdf-embedder/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_pdf_embedder_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

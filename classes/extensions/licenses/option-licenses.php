@@ -24,6 +24,7 @@ class OptionLicenses extends WpSolrExtensions {
 	const LICENSE_PACKAGE_S2MEMBER = 'LICENSE_PACKAGE_S2MEMBER';
 	const LICENSE_PACKAGE_BBPRESS = 'LICENSE_PACKAGE_BBPRESS';
 	const LICENSE_PACKAGE_EMBED_ANY_DOCUMENT = 'LICENSE_PACKAGE_EMBED_ANY_DOCUMENT';
+	const LICENSE_PACKAGE_PDF_EMBEDDER = 'LICENSE_PACKAGE_PDF_EMBEDDER';
 
 	// License type fields
 	const FIELD_LICENSE_SUBSCRIPTION_NUMBER = 'license_subscription_number';
@@ -329,7 +330,7 @@ class OptionLicenses extends WpSolrExtensions {
 			self::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_embed_any_document',
 				self::FIELD_LICENSE_TITLE              => 'Embed Any Document Extension',
-				self::FIELD_DESCRIPTION                => 'Embed Any Document  Extension description',
+				self::FIELD_DESCRIPTION                => 'Embed Any Document Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
 						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
@@ -341,6 +342,23 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Automatically index and search embedded documents with the plugin shortcode.',
+				)
+			),
+			self::LICENSE_PACKAGE_PDF_EMBEDDER => array(
+				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_pdf_embedder',
+				self::FIELD_LICENSE_TITLE              => 'Pdf Embedder',
+				self::FIELD_DESCRIPTION                => 'Pdf Embedder Extension description',
+				self::FIELD_ORDERS_URLS                => array(
+					array(
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+					),
+				),
+				self::FIELD_FEATURES                   => array(
+					self::FEATURE_ZENDESK_SUPPORT,
+					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
+					'Automatically index and search embedded pdfs with the plugin shortcode.',
 				)
 			)
 		);
