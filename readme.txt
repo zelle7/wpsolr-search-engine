@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.2
+Current Version: 12.3
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.2
+Stable tag: 12.3
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -91,8 +91,13 @@ Installation procedure for Apache Solr: see FAQ section.
 34. 34) Admin: Metabox selection to index and search embedded files defined with an ACF field of type file ID or file object.
 35. 35) Admin: Search in Embed Any Document post content.
 36. 36) Admin: Search in Pdf Embedder post content.
+37. 37) Admin: Search in Google Doc Embedder post content.
 
 == Changelog ==
+
+= 12.3 =
+* (Google Doc Embedder Pack) New pack integrating with plugin Google Doc Embedder. Documents embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded pdf).
+* [Screenshot: Search in Google Doc Embedder post content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-37.png "Search in Google Doc Embedder post content")
 
 = 12.2 =
 * (Pdf Embedder Pack) New pack integrating with plugin Pdf Embedder. Pdfs embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded pdf).

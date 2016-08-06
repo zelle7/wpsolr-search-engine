@@ -606,4 +606,22 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PDF_EMBEDDER, self::OPTION_PDF_EMBEDDER_IS_EMBED_DOCUMENTS ) );
 	}
 
+	/***************************************************************************************************************
+	 *
+	 * Plugin Google Doc Embedder
+	 *
+	 **************************************************************************************************************/
+	const OPTION_GOOGLE_DOC_EMBEDDER = 'wdm_solr_extension_google_doc_embedder_data';
+	const OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
+
+	/**
+	 * Is search embedded documents options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_google_doc_embedder_is_do_embed_documents() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GOOGLE_DOC_EMBEDDER, self::OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS ) );
+	}
+
+
 }

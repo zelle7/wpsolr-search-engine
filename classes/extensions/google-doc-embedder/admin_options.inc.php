@@ -5,19 +5,19 @@
  */
 global $license_manager;
 
-WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_PDF_EMBEDDER, true );
+WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_GOOGLE_DOC_EMBEDDER, true );
 
-$extension_options_name = WPSOLR_Option::OPTION_PDF_EMBEDDER;
-$settings_fields_name   = 'extension_pdf_embedder_opt';
+$extension_options_name = WPSOLR_Option::OPTION_GOOGLE_DOC_EMBEDDER;
+$settings_fields_name   = 'extension_google_doc_embedder_opt';
 
 $options          = get_option( $extension_options_name, array(
 	'is_extension_active' => '0',
 ) );
-$is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_PDF_EMBEDDER );
+$is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_GOOGLE_DOC_EMBEDDER );
 
-$plugin_name    = "PDF Embedder";
-$plugin_link    = "https://wordpress.org/plugins/pdf-embedder/";
-$plugin_version = "(>= 2.7.3)";
+$plugin_name    = "Google Doc Embedder";
+$plugin_link    = "https://wordpress.org/plugins/google-document-embedder/";
+$plugin_version = "(>= 2.6)";
 
 ?>
 
@@ -80,7 +80,7 @@ $plugin_version = "(>= 2.7.3)";
 			</div>
 
 			<div class="wdm_row">
-				<div class='col_left'>Index embedded pdfs content within their post body.
+				<div class='col_left'>Index embedded documents content within their post body.
 				</div>
 				<div class='col_right'>
 					<input type='checkbox'
@@ -94,9 +94,9 @@ $plugin_version = "(>= 2.7.3)";
 
 			<div class='wdm_row'>
 				<div class="submit">
-					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_PDF_EMBEDDER ) ) { ?>
+					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER ) ) { ?>
 						<div class="wpsolr_premium_block_class">
-							<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_PDF_EMBEDDER, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?>
+							<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?>
 						</div>
 						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
 							name="save_selected_options_res_form"
@@ -104,7 +104,7 @@ $plugin_version = "(>= 2.7.3)";
 							class="button-primary wdm-save"
 							value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
 					<?php } else { ?>
-						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_PDF_EMBEDDER, 'Save Options', true ); ?>
+						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER, 'Save Options', true ); ?>
 						<br/>
 					<?php } ?>
 				</div>

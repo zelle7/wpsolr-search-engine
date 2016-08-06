@@ -84,7 +84,7 @@ class PluginEmbedAnyDocument extends WpSolrExtensions {
 
 				if ( ! empty( $attributes ) && ! empty( $attributes[ static::EMBEDDOC_SHORTCODE_ATTRIBUTE_URL ] ) ) {
 
-					array_push( $attachments, array( 'url' => $attributes['url'] ) );
+					array_push( $attachments, array( 'url' => $attributes[ static::EMBEDDOC_SHORTCODE_ATTRIBUTE_URL ] ) );
 				}
 			}
 		}

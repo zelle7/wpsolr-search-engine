@@ -14,15 +14,6 @@ class PluginPdfEmbedder extends PluginEmbedAnyDocument {
 
 	const EMBEDDOC_SHORTCODE = 'pdf-embedder';
 
-	/**
-	 * PluginPdfEmbedder constructor.
-	 */
-	public function __construct() {
-
-		parent::__construct();
-
-	}
-
 	protected function set_is_do_embed_documents() {
 		$this->is_do_embed_documents = WPSOLR_Global::getOption()->get_pdf_embedder_is_do_embed_documents();
 	}
