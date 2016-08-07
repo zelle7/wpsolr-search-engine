@@ -188,7 +188,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_WOOCOMMERCE         => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_woocommerce',
-				self::FIELD_LICENSE_TITLE              => 'WooCommerce Extension',
+				self::FIELD_LICENSE_TITLE              => 'WooCommerce',
 				self::FIELD_DESCRIPTION                => 'WooCommerce Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -207,7 +207,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_ACF                 => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_acf',
-				self::FIELD_LICENSE_TITLE              => 'ACF Extension',
+				self::FIELD_LICENSE_TITLE              => 'ACF',
 				self::FIELD_DESCRIPTION                => 'ACF Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -226,7 +226,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_types',
-				self::FIELD_LICENSE_TITLE              => 'Types Extension',
+				self::FIELD_LICENSE_TITLE              => 'Types',
 				self::FIELD_DESCRIPTION                => 'Types Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -243,7 +243,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_WPML                => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_wpml',
-				self::FIELD_LICENSE_TITLE              => 'WPML Extension',
+				self::FIELD_LICENSE_TITLE              => 'WPML',
 				self::FIELD_DESCRIPTION                => 'WPML Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -262,7 +262,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_POLYLANG            => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_polylang',
-				self::FIELD_LICENSE_TITLE              => 'Polylang Extension',
+				self::FIELD_LICENSE_TITLE              => 'Polylang',
 				self::FIELD_DESCRIPTION                => 'Polylang Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -281,7 +281,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_GROUPS              => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_groups',
-				self::FIELD_LICENSE_TITLE              => 'Groups Extension',
+				self::FIELD_LICENSE_TITLE              => 'Groups',
 				self::FIELD_DESCRIPTION                => 'Groups Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -298,7 +298,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_S2MEMBER            => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_s2member',
-				self::FIELD_LICENSE_TITLE              => 's2Member Extension',
+				self::FIELD_LICENSE_TITLE              => 's2Member',
 				self::FIELD_DESCRIPTION                => 's2Member Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -315,7 +315,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_BBPRESS             => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_bbpress',
-				self::FIELD_LICENSE_TITLE              => 'bbPress Extension',
+				self::FIELD_LICENSE_TITLE              => 'bbPress',
 				self::FIELD_DESCRIPTION                => 'bbPress Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -332,7 +332,7 @@ class OptionLicenses extends WpSolrExtensions {
 			),
 			self::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT  => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_embed_any_document',
-				self::FIELD_LICENSE_TITLE              => 'Embed Any Document Extension',
+				self::FIELD_LICENSE_TITLE              => 'Embed Any Document',
 				self::FIELD_DESCRIPTION                => 'Embed Any Document Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(

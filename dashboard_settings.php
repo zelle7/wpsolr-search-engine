@@ -130,6 +130,11 @@ function fun_add_solr_settings() {
 	// Google api recaptcha - Used for temporary indexes creation
 	wp_enqueue_script( 'google-api-recaptcha', '//www.google.com/recaptcha/api.js', array() );
 
+	// Bootstrap tour
+	/*
+	wp_enqueue_style( 'bootstrap_tour_css', plugins_url( 'css/bootstrap-tour-standalone.css', __FILE__ ), array(), 'v0.10.3' );
+	wp_enqueue_script( 'bootstrap_tour_js', plugins_url( 'js/bootstrap-tour-standalone.js', __FILE__ ), array( 'jquery' ), 'v0.10.3' );
+	*/
 }
 
 function fun_set_solr_options() {
@@ -226,23 +231,38 @@ function fun_set_solr_options() {
 
 	?>
 	<div class="wdm-wrap" xmlns="http://www.w3.org/1999/html">
-	<div class="page_title"><h1>Power your search with <a href="http://lucene.apache.org/solr/" target="_blank">Apache
-				Solr</a>, the world's leading search engine</h1></div>
+	<div class="page_title">
+		<h1>
+			<!--<input id="wpsolr_tour_button_start" type="button" class="button-secondary" value="Resume the Tour" style="align:right">-->
+			Power your search with <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>, the world's
+			leading search engine
+		</h1>
+	</div>
 
 	<?php
 	if ( isset ( $_GET['tab'] ) ) {
 		wpsolr_admin_tabs( $_GET['tab'] );
 	} else {
-		wpsolr_admin_tabs( 'solr_indexes' );
+		wpsolr_admin_tabs( 'solr_presentation' );
 	}
 
 	if ( isset ( $_GET['tab'] ) ) {
 		$tab = $_GET['tab'];
 	} else {
-		$tab = 'solr_indexes';
+		$tab = 'solr_presentation';
 	}
 
 	switch ( $tab ) {
+	case 'solr_presentation' :
+		?>
+		<h1>Overview of WPSOLR</h1>
+		<h2>Walkthrough of the different steps to configure a search with Solr</h2>
+		<iframe width="1020" height="630" src="https://www.youtube.com/embed/Di2QExcliCo" frameborder="0"
+		        allowfullscreen></iframe>
+		<?php
+
+		break;
+
 	case 'solr_indexes' :
 		WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_INDEXES );
 		break;
@@ -1627,10 +1647,11 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 	$default_search_solr_index = $option_indexes->get_default_search_solr_index();
 
 	$nb_indexes        = count( $option_indexes->get_indexes() );
-	$are_there_indexes = ( $nb_indexes > 0 );
+	$are_there_indexes = ( $nb_indexes >= 0 );
 
-	$tabs                 = array();
-	$tabs['solr_indexes'] = $are_there_indexes ? '1. Define your Solr Indexes' : '1. Define your Solr Index';
+	$tabs                      = array();
+	$tabs['solr_presentation'] = 'What is WPSOLR ?';
+	$tabs['solr_indexes']      = $are_there_indexes ? '1. Define your Solr Indexes' : '1. Define your Solr Index';
 	if ( $are_there_indexes ) {
 		$tabs['solr_option']     = sprintf( "2. Define your search with '%s'",
 			! isset( $default_search_solr_index )
@@ -1642,7 +1663,7 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 	}
 
 	echo '<div id="icon-themes" class="icon32"><br></div>';
-	echo '<h2 class="nav-tab-wrapper">';
+	echo '<h2 class="nav-tab-wrapper wpsolr-tour-navigation-tabs">';
 	foreach ( $tabs as $tab => $name ) {
 		$class = ( $tab == $current ) ? ' nav-tab-active' : '';
 		echo "<a class='nav-tab$class' href='admin.php?page=solr_settings&tab=$tab'>$name</a>";
@@ -1655,7 +1676,7 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 function wpsolr_admin_sub_tabs( $subtabs, $before = null ) {
 
 	// Tab selected by the user
-	$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'solr_indexes';
+	$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'solr_presentation';
 
 	if ( isset ( $_GET['subtab'] ) ) {
 
