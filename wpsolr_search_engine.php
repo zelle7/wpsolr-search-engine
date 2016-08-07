@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 12.4
+ * Version: 12.5
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -360,7 +360,7 @@ function my_enqueue() {
 		// Get localization options
 		$localization_options = OptionLocalization::get_options();
 
-		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), 'wpsolr_12.5', true );
 
 		wp_enqueue_script( 'infinitescroll' );
 

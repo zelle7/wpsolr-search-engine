@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.4
+Current Version: 12.5
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.4
+Stable tag: 12.5
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -94,6 +94,9 @@ Installation procedure for Apache Solr: see FAQ section.
 37. 37) Admin: Search in Google Doc Embedder post content.
 
 == Changelog ==
+
+= 12.5 =
+* Fix Ajax InfiniteScroll pagination javascript.
 
 = 12.4 =
 * Add a video explainer.

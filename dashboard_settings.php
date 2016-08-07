@@ -255,10 +255,27 @@ function fun_set_solr_options() {
 	switch ( $tab ) {
 	case 'solr_presentation' :
 		?>
-		<h1>Overview of WPSOLR</h1>
-		<h2>Walkthrough of the different steps to configure a search with Solr</h2>
+		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
+
+		<ul>
+			<li>1. Download <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>. WPSOLR replaces
+				the slow WP SQL search by the mighty Solr search.
+			</li>
+			<li>2. Install <a href="http://wpsolr.com/installation-guide/" target="_blank">Apache Solr</a> (if you want
+				to host it yourself).
+			</li>
+			<li>3. <a href="http://www.wpsolr.com/installation-guide/" target="_blank">Create a Solr index</a>, or <a
+					href="http://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
+			</li>
+			<li>4. <a href="http://wpsolr.com/user-guide/" target="_blank">Configure WPSOLR with your own Solr index</a>,
+				<a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR with
+					Gotosolr</a></li>
+		</ul>
+
+		<h2>Quick video to watch the setup steps</h2>
 		<iframe width="1020" height="630" src="https://www.youtube.com/embed/Di2QExcliCo" frameborder="0"
-		        allowfullscreen></iframe>
+		        allowfullscreen>
+		</iframe>
 		<?php
 
 		break;
