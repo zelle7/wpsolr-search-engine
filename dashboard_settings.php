@@ -255,6 +255,9 @@ function fun_set_solr_options() {
 	switch ( $tab ) {
 	case 'solr_presentation' :
 		?>
+		<h2>See our little <a href="http://www.gotosolr.com/en/search-wpsolr/" target="_blank">demo (WPSOLR, Ajax,
+				Infinite scroll pagination, WPML, Products suggestions, attachments)</a>. Try "solr", "cluster", ....
+		</h2>
 		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
 
 		<ul>
@@ -550,6 +553,19 @@ function fun_set_solr_options() {
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
+									<div
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search forms', true ); ?></div>
+									<div class='col_right'>
+										<input type='text'
+										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR; ?>]'
+										       placeholder=".search_form1, #search_form2"
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+											   value="<?php echo( ! empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] ) ? $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] : '' ); ?>">
+										Enter a jQuery selector for your search forms.
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
 									<div class='col_left'>Do not automatically trigger the search, when a user
 										clicks on the
 										autocomplete list
@@ -565,7 +581,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display suggestions (Did you mean?)', true ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Display "Did you mean?" in search results header ?', true ); ?>
 									</div>
 									<div class='col_right'>
 										<input type='checkbox'

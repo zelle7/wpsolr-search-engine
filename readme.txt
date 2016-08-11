@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.6
+Current Version: 12.7
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.6
+Stable tag: 12.7
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -22,7 +22,7 @@ Search faster. When your Wordpress search fails, when your WooCommerce search or
 
 You definitely need wpsolr search if you recognize yourself in at least one of:
 
-- My current search page is so slow, my visitors are leaving without buying anything, without subscribing to anything
+- My current search page, my instant (live) product suggestions, are so slow that my visitors are leaving without buying anything, without subscribing to anything
 
 - I have too many posts, products, visitors, and I cannot afford hundred of dollars on external search hosted services
 
@@ -95,6 +95,9 @@ Installation procedure for Apache Solr: see FAQ section.
 38. 38) Admin: Ajax product suggestions.
 
 == Changelog ==
+
+= 12.7 =
+* You can now attach suggestions list to any search form in your own theme, by setting a jQuery selector.
 
 = 12.6 =
 * Add Ajax product suggestions to search form. You now have the choice between products or keywords suggestions.
