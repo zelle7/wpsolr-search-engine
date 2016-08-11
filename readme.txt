@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.5
+Current Version: 12.6
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.5
+Stable tag: 12.6
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -92,8 +92,13 @@ Installation procedure for Apache Solr: see FAQ section.
 35. 35) Admin: Search in Embed Any Document post content.
 36. 36) Admin: Search in Pdf Embedder post content.
 37. 37) Admin: Search in Google Doc Embedder post content.
+38. 38) Admin: Ajax product suggestions.
 
 == Changelog ==
+
+= 12.6 =
+* Add Ajax product suggestions to search form. You now have the choice between products or keywords suggestions.
+* [Screenshot: Ajax product suggestions](https://s.w.org/plugins/wpsolr-search-engine/screenshot-38.png "Ajax product suggestions")
 
 = 12.5 =
 * Fix Ajax InfiniteScroll pagination javascript.

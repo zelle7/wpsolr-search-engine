@@ -88,6 +88,20 @@
             var text = this.$menu.find('.active a').text();
             var txt1;
 
+            console.log(JSON.stringify(value));
+            console.log(JSON.stringify(text));
+
+            var container = document.createElement("p");
+            container.innerHTML = value;
+            var anchors = container.getElementsByTagName("a");
+            if (anchors != null & anchors.length > 0) {
+                //console.log(JSON.stringify(anchors[0].href));
+
+                window.location.href = anchors[0].href;
+                return null;
+            }
+
+
             if (text == '') {
                 text = this.query;
             }
@@ -108,6 +122,7 @@
             this.$element[0].value = item;
             if (is_after_autocomplete_block_submit != '1') {
                 this.$element[0].form.submit();
+
             }
             return item;
 

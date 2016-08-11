@@ -258,17 +258,22 @@ function fun_set_solr_options() {
 		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
 
 		<ul>
-			<li>1. Download <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>. WPSOLR replaces
+			<li>1. Download <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>. WPSOLR
+				replaces
 				the slow WP SQL search by the mighty Solr search.
 			</li>
-			<li>2. Install <a href="http://wpsolr.com/installation-guide/" target="_blank">Apache Solr</a> (if you want
+			<li>2. Install <a href="http://wpsolr.com/installation-guide/" target="_blank">Apache Solr</a> (if you
+				want
 				to host it yourself).
 			</li>
-			<li>3. <a href="http://www.wpsolr.com/installation-guide/" target="_blank">Create a Solr index</a>, or <a
+			<li>3. <a href="http://www.wpsolr.com/installation-guide/" target="_blank">Create a Solr index</a>, or
+				<a
 					href="http://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
 			</li>
-			<li>4. <a href="http://wpsolr.com/user-guide/" target="_blank">Configure WPSOLR with your own Solr index</a>,
-				<a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR with
+			<li>4. <a href="http://wpsolr.com/user-guide/" target="_blank">Configure WPSOLR with your own Solr
+					index</a>,
+				<a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR
+					with
 					Gotosolr</a></li>
 		</ul>
 
@@ -497,6 +502,50 @@ function fun_set_solr_options() {
 										This feature loads the next page of results automatically when visitors
 										approach
 										the bottom of search page.
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="wdm_row">
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show suggestions in the search box', true ); ?>
+									</div>
+									<div class='col_right'>
+										<select
+											name="wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE; ?>]">
+											<?php
+											$options = array(
+												array(
+													'code'     => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE,
+													'label'    => 'No suggestions',
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+												),
+												array(
+													'code'  => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS,
+													'label' => 'Suggest Keywords'
+												),
+												array(
+													'code'     => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS,
+													'label'    => 'Suggest Products',
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+												)
+											);
+											foreach ( $options as $option ) {
+												$selected = ( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE ] === $option['code'] ) || ( empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE ] ) && WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS === $option['code'] ) ? 'selected' : '';
+												$disabled = isset( $option['disabled'] ) ? $option['disabled'] : '';
+												?>
+												<option
+													value="<?php echo $option['code'] ?>"
+													<?php echo $selected ?>
+													<?php echo $disabled ?>>
+													<?php echo $option['label'] ?>
+												</option>
+											<?php } ?>
+
+										</select>
+
+										<br/><br/>
+										Suggestions are shown only with WPSOLR Ajax theme.
+										You can choose to show product suggestions, or keywords suggestions.
 									</div>
 									<div class="clear"></div>
 								</div>

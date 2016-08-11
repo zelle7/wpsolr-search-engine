@@ -108,13 +108,60 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 
 	/**
-	 * Get suggestions from Solr suggester.
+	 * Get suggestions from Solr (keywords or posts).
 	 *
 	 * @param string $query Keywords to suggest from
 	 *
 	 * @return array
 	 */
 	public function get_suggestions( $query ) {
+
+		$results = array();
+
+		switch ( WPSOLR_Global::getOption()->get_search_suggest_content_type() ) {
+
+			case WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS:
+				$results = $this->get_suggestions_posts( $query );
+				break;
+
+			case WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS:
+				$results = $this->get_suggestions_keywords( $query );
+				break;
+
+			default:
+				break;
+		}
+
+		return $results;
+	}
+
+
+	/**
+	 * Get suggestions from Solr search.
+	 *
+	 * @param string $query Keywords to suggest from
+	 *
+	 * @return array
+	 */
+	public function get_suggestions_posts( $query ) {
+
+		$wpsolr_query = WPSOLR_Global::getQuery();
+		$wpsolr_query->set_wpsolr_query( $query );
+
+		$results = WPSOLR_Global::getSolrClient()->display_results( $wpsolr_query );
+
+		return array_slice( $results[3], 0, 5 );
+	}
+
+
+	/**
+	 * Get suggestions from Solr suggester.
+	 *
+	 * @param string $query Keywords to suggest from
+	 *
+	 * @return array
+	 */
+	public function get_suggestions_keywords( $query ) {
 
 		$results = array();
 

@@ -223,6 +223,10 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_IS_GALAXY_MASTER = 'is_galaxy_master';
 	const OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE = 'is_galaxy_slave';
 	const OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES = 'is_fuzzy_matches';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE = 'suggest_content_type';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS = 'suggest_content_type_keywords';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS = 'suggest_content_type_posts';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE = 'suggest_content_type_none';
 
 	/**
 	 * Get search options array
@@ -367,6 +371,14 @@ class WPSOLR_Option {
 	 */
 	public function get_search_is_fuzzy_matches() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ) );
+	}
+
+	/**
+	 * Search suggestions content
+	 * @return boolean
+	 */
+	public function get_search_suggest_content_type() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_SUGGEST_CONTENT_TYPE, self::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS );
 	}
 
 	/***************************************************************************************************************
