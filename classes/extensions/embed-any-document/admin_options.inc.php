@@ -94,9 +94,9 @@ $plugin_version = "(>= 2.2.5)";
 
 			<div class='wdm_row'>
 				<div class="submit">
-					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT ) ) { ?>
+					<?php if ( $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT ) ) { ?>
 						<div class="wpsolr_premium_block_class">
-							<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?>
+							<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT, OptionLicenses::TEXT_LICENSE_ACTIVATED, true, true ); ?>
 						</div>
 						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
 							name="save_selected_options_res_form"
@@ -104,7 +104,7 @@ $plugin_version = "(>= 2.2.5)";
 							class="button-primary wdm-save"
 							value="<?php echo $is_plugin_active ? 'Save Options' : sprintf( 'Install and activate the plugin %s first.', $plugin_name ); ?>"/>
 					<?php } else { ?>
-						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT, 'Save Options', true ); ?>
+						<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT, 'Save Options', true, true ); ?>
 						<br/>
 					<?php } ?>
 				</div>

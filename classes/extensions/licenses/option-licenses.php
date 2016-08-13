@@ -411,7 +411,7 @@ class OptionLicenses extends WpSolrExtensions {
 
 		}
 
-		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class nav-tab" >' .
+		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class" >' .
 		                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline"><span>%s</span></a>',
 			$license_type, $img_url, $text_to_show );
 
@@ -425,9 +425,9 @@ class OptionLicenses extends WpSolrExtensions {
 	 *
 	 * @return string
 	 */
-	function get_license_enable_html_code( $license_type ) {
+	function get_license_enable_html_code( $license_type, $is_new_feature = false ) {
 
-		return ( ! $this->is_installed || $this->get_license_is_activated( $license_type ) ) ? '' : 'disabled';
+		return ( ( ! $this->is_installed && ! $is_new_feature ) || $this->get_license_is_activated( $license_type ) ) ? '' : 'disabled';
 	}
 
 

@@ -389,7 +389,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search', true ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search', true, true ); ?>
 									</div>
 									<div class='col_right'>
 										<select
@@ -403,12 +403,12 @@ function fun_set_solr_options() {
 												array(
 													'code'     => WPSOLR_Option::OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE,
 													'label'    => 'Yes, as one of local searches (suggestions will not work)',
-													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ),
 												),
 												array(
 													'code'     => WPSOLR_Option::OPTION_SEARCH_ITEM_IS_GALAXY_MASTER,
 													'label'    => 'Yes, as the global search (only with ajax)',
-													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ),
 												),
 											);
 											foreach ( $options as $option ) {
@@ -510,7 +510,7 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show suggestions in the search box', true ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Show suggestions in the search box', true, true ); ?>
 									</div>
 									<div class='col_right'>
 										<select
@@ -520,16 +520,16 @@ function fun_set_solr_options() {
 												array(
 													'code'     => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE,
 													'label'    => 'No suggestions',
-													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ),
 												),
 												array(
 													'code'  => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS,
-													'label' => 'Suggest Keywords'
+													'label' => 'Suggest Keywords',
 												),
 												array(
 													'code'     => WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS,
 													'label'    => 'Suggest Products',
-													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
+													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ),
 												)
 											);
 											foreach ( $options as $option ) {
@@ -546,20 +546,20 @@ function fun_set_solr_options() {
 
 										</select>
 
-										<br/><br/>
-										Suggestions are shown only with WPSOLR Ajax theme.
-										You can choose to show product suggestions, or keywords suggestions.
+										By default, suggestions are shown only with the WPSOLR Ajax theme's search form.
+										Use the jQuery selectors field below to show suggestions on your own theme's
+										search forms.
 									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="wdm_row">
 									<div
-										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search forms', true ); ?></div>
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search forms', true, true ); ?></div>
 									<div class='col_right'>
 										<input type='text'
 										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR; ?>]'
 										       placeholder=".search_form1, #search_form2"
-											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ); ?>
 											   value="<?php echo( ! empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] ) ? $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] : '' ); ?>">
 										Enter a jQuery selector for your search forms.
 									</div>
