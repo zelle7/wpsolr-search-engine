@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.7
+Current Version: 12.8
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.5.2
 
-Stable tag: 12.7
+Stable tag: 12.8
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -95,6 +95,10 @@ Installation procedure for Apache Solr: see FAQ section.
 38. 38) Admin: Ajax product suggestions.
 
 == Changelog ==
+
+= 12.8 =
+* Fix pages content not indexed
+* Fix metabox warning when a page is saved and indexed in real-time
 
 = 12.7 =
 * You can now attach suggestions list to any search form in your own theme, by setting a jQuery selector.

@@ -1,6 +1,7 @@
 <?php
 
 require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
+require_once plugin_dir_path( __FILE__ ) . '../metabox/wpsolr-metabox.php';
 
 class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
@@ -521,7 +522,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		$pid    = $post_to_index->ID;
 		$ptitle = $post_to_index->post_title;
-		if ( isset( $attachment_body ) ) {
+		if ( ! empty( $attachment_body ) ) {
 			// Post is an attachment: we get the document body from the function call
 			$pcontent = $attachment_body;
 		} else {
