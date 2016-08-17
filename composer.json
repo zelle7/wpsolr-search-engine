@@ -1,6 +1,5 @@
 {
   "require": {
-    "solarium/solarium": "3.4.1",
-    "rmccue/requests": ">=1.0"
+    "solarium/solarium": "3.4.1"
   }
 }

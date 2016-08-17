@@ -60,114 +60,94 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 
 	}
 
+	/**
+	 * @param $full_path
+	 *
+	 * @args array $args
+	 *
+	 * @return array|mixed|object
+	 */
+	public function call_rest_request( $full_path, $args ) {
 
-	/*
+		$default_args = array(
+			'timeout' => 60,
+			'verify'  => true,
+			'headers' => array( 'Content-Type' => 'application/json' ),
+		);
+
+		$response = wp_remote_request(
+			$full_path,
+			array_merge( $default_args, $args )
+		);
+
+		if ( is_wp_error( $response ) ) {
+
+			return (object) array(
+				'status' => (object) array(
+					'state'   => 'ERROR',
+					'message' => $response->get_error_message()
+				)
+			);
+		}
+
+		if ( 200 !== $response['response']['code'] ) {
+			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $response['body'] ) );
+		}
+
+		return json_decode( $response['body'] );
+	}
+
+
+	/**
+	 * @param $path
+	 * @param array $data
+	 *
+	 * @return array|mixed|object
+	 */
+	public function call_rest_post( $path, $data = array() ) {
+
+		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
+
+		$args = array(
+			'method' => 'POST',
+			'body'   => wp_json_encode( $data ),
+		);
+
+		return $this->call_rest_request( $full_path, $args );
+	}
+
+	/**
 	 * Generic REST calls
+	 *
+	 * @param $path
+	 *
+	 * @return array|mixed|object
 	 */
 	public function call_rest_get( $path ) {
 
 		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path . '&access_token=' . $this->get_service_option( 'token' );
 
-		$options = array(
-			'verify'  => true,
-			'timeout' => 30,
+		$args = array(
+			'method' => 'GET',
 		);
 
-		// Json format.
-		$headers = array(
-			'Content-Type' => 'application/json'
-		);
-
-		try {
-			$response = Requests::get(
-				$full_path,
-				$headers,
-				$options
-			);
-
-		} catch ( Exception $e ) {
-
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
-		}
-
-		//var_dump( $full_path );
-		//var_dump( $response->body );
-
-		if ( 200 != $response->success ) {
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $response->body ) );
-		}
-
-		return json_decode( $response->body );
-
+		return $this->call_rest_request( $full_path, $args );
 	}
 
-	public function call_rest_post( $path, $data = array() ) {
-
-		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
-
-		$options = array(
-			'verify'  => true,
-			'timeout' => 60,
-		);
-
-		// Json format.
-		$headers = array( 'Content-Type' => 'application/json' );
-
-		try {
-
-			$response = Requests::post(
-				$full_path,
-				$headers,
-				json_encode( $data ),
-				$options
-			);
-
-		} catch ( Exception $e ) {
-
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
-		}
-
-		//var_dump( $response->body );
-		if ( 200 != $response->success ) {
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $response->body ) );
-		}
-
-		return json_decode( $response->body );
-
-	}
-
+	/**
+	 * @param $path
+	 *
+	 * @return array|mixed|object
+	 */
 	public function call_rest_delete( $path ) {
 
 		$full_path = ( 'http' === substr( $path, 0, 4 ) ) ? $path : $this->_api_path . $path;
 
-		$options = array(
-			'verify'  => true,
-			'timeout' => 60,
+		$args = array(
+			'method' => 'DELETE',
 		);
 
-		// Json format.
-		$headers = array( 'Content-Type' => 'application/json' );
-
-		try {
-
-			$response = Requests::delete(
-				$full_path,
-				$headers,
-				$options
-			);
-
-		} catch ( Exception $e ) {
-
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $e->getMessage() ) );
-		}
-
-		//var_dump( $response->body );
-		if ( 200 != $response->success ) {
-			return (object) array( 'status' => (object) array( 'state' => 'ERROR', 'message' => $response->body ) );
-		}
-
-		return json_decode( $response->body );
-
+		return $this->call_rest_request( $full_path, $args );
 	}
 
 	public static function is_response_ok( $response_object ) {

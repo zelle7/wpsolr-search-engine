@@ -5,11 +5,119 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab468aab-fb21-4977-b005-a2c5caca8c3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/.coveralls.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/bin/create_pear_package.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/composer.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/authentication-custom.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/authentication.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/goals.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/hooks.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/proxy.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/usage-advanced.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/usage.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/docs/why-requests.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/basic-auth.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/get.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/multiple.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/post.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/proxy.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/examples/session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Auth.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Auth/Basic.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Cookie.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Cookie/Jar.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/400.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/401.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/402.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/403.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/404.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/405.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/406.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/407.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/408.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/409.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/410.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/411.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/412.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/413.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/414.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/415.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/416.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/417.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/418.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/428.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/429.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/431.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/500.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/501.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/502.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/503.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/504.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/505.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/511.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Exception/HTTP/Unknown.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Hooker.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Hooks.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IDNAEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IPv6.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/IRI.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Proxy.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Proxy/HTTP.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Response.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Response/Headers.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/SSL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/cURL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/cacert.pem" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Transport/fsockopen.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Utility/CaseInsensitiveDictionary.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Utility/FilteredIterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/package.xml.tpl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Auth/Basic.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/ChunkedEncoding.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Cookies.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Encoding.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/IDNAEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/IRI.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Requests.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Response/Headers.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/SSL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Session.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/Base.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/cURL.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/Transport/fsockopen.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/bootstrap.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/rmccue/requests/tests/phpunit.xml.dist" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wpsolr-search-engine.iml" afterPath="$PROJECT_DIR$/.idea/wpsolr-search-engine.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" afterPath="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" afterPath="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/DependencyInjection/RegisterListenersPass.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/DependencyInjection/RegisterListenersPass.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Event.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Event.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcher.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcher.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcherInterface.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventDispatcherInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventSubscriberInterface.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/EventSubscriberInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/GenericEvent.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/GenericEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/ImmutableEventDispatcher.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/ImmutableEventDispatcher.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/LICENSE" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/README.md" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/AbstractEventDispatcherTest.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/AbstractEventDispatcherTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/ContainerAwareEventDispatcherTest.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/ContainerAwareEventDispatcherTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/Debug/TraceableEventDispatcherTest.php" afterPath="$PROJECT_DIR$/vendor/symfony/event-dispatcher/Tests/Debug/TraceableEventDispatcherTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wpsolr_search_engine.php" afterPath="$PROJECT_DIR$/wpsolr_search_engine.php" />
     </list>
     <ignored path="wpsolr-search-engine.iws" />
@@ -47,42 +155,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="option-licenses.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
+      <file leaf-file-name="debug.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../debug.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6195">
-              <caret line="413" column="102" selection-start-line="413" selection-start-column="102" selection-end-line="413" selection-end-column="102" />
-              <folding>
-                <marker date="1471086179000" expanded="true" signature="16392:16406" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard_css.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/dashboard_css.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="1661">
+              <caret line="176" column="108" selection-start-line="176" selection-start-column="108" selection-end-line="176" selection-end-column="108" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+      <file leaf-file-name="option-licenses.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="196">
+              <caret line="512" column="73" selection-start-line="512" selection-start-column="73" selection-end-line="512" selection-end-column="73" />
               <folding>
-                <element signature="e#6#215#0#PHP" expanded="true" />
-                <marker date="1471374121000" expanded="true" signature="8829:8839" ph="..." />
-                <marker date="1471374121000" expanded="true" signature="9293:9608" ph="..." />
-                <marker date="1471374121000" expanded="true" signature="9293:9609" ph="..." />
-                <marker date="1471374121000" expanded="true" signature="9293:9923" ph="..." />
-                <marker date="1471374121000" expanded="false" signature="9840:9868" ph="..." />
-                <marker date="1471374121000" expanded="false" signature="9891:9901" ph="..." />
+                <marker date="1471376834000" expanded="true" signature="16392:16406" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="autoload.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,18 +203,8 @@
             <state relative-caret-position="45">
               <caret line="3" column="73" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
               <folding>
-                <marker date="1471374848000" expanded="true" signature="8059:8109" ph="SELECT %s FR... " />
+                <marker date="1471376834000" expanded="true" signature="8059:8109" ph="SELECT %s FR... " />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wpsolr-metabox.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/metabox/wpsolr-metabox.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -112,48 +212,35 @@
       <file leaf-file-name="readme.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/readme.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="100" column="21" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
+            <state relative-caret-position="375">
+              <caret line="99" column="6" selection-start-line="99" selection-start-column="6" selection-end-line="99" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/bbpress/admin_options.inc.php">
+      <file leaf-file-name="wpsolr_search_engine.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="74" column="93" selection-start-line="74" selection-start-column="93" selection-end-line="74" selection-end-column="93" />
-              <folding />
+            <state relative-caret-position="60">
+              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+              <folding>
+                <marker date="1471434837000" expanded="true" signature="8829:8839" ph="..." />
+                <marker date="1471434837000" expanded="true" signature="9293:9608" ph="..." />
+                <marker date="1471434837000" expanded="true" signature="9293:9609" ph="..." />
+                <marker date="1471434837000" expanded="true" signature="9293:9923" ph="..." />
+                <marker date="1471434837000" expanded="false" signature="9840:9868" ph="..." />
+                <marker date="1471434837000" expanded="false" signature="9891:9901" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin-google-doc-embedder.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/google-doc-embedder/plugin-google-doc-embedder.php">
+      <file leaf-file-name="option-managed-solr-servers.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/google-doc-embedder/admin_options.inc.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1305">
-              <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_options.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/extensions/embed-any-document/admin_options.inc.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="78" column="39" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="39" />
+            <state relative-caret-position="325">
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -181,9 +268,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/classes/extensions/groups/admin_options.inc.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/polylang/plugin-polylang.php" />
-        <option value="$PROJECT_DIR$/classes/extensions/wpml/plugin-wpml.php" />
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_UI_Facets.php" />
         <option value="$PROJECT_DIR$/classes/ui/WPSOLR_Data_facets.php" />
         <option value="$PROJECT_DIR$/classes/extensions/woocommerce/plugin-woocommerce.php" />
@@ -227,9 +311,12 @@
         <option value="$PROJECT_DIR$/classes/extensions/google-doc-embedder/admin_options.inc.php" />
         <option value="$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php" />
         <option value="$PROJECT_DIR$/css/dashboard_css.css" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
-        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
         <option value="$PROJECT_DIR$/classes/solr/wpsolr-index-solr-client.php" />
+        <option value="$PROJECT_DIR$/../../debug.log" />
+        <option value="$PROJECT_DIR$/composer.json" />
+        <option value="$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
+        <option value="$PROJECT_DIR$/wpsolr_search_engine.php" />
         <option value="$PROJECT_DIR$/readme.txt" />
         <option value="$PROJECT_DIR$/readme.txt" />
       </list>
@@ -261,7 +348,6 @@
     <include_path>
       <path value="$PROJECT_DIR$/../../.." />
       <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/rmccue/requests" />
       <path value="$PROJECT_DIR$/vendor/solarium/solarium" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
@@ -344,6 +430,38 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="wp-includes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="htdocs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wp-includes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Requests" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wpsolr-search-engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="htdocs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="wp-content" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -410,7 +528,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -436,11 +554,15 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="solr" />
+              <option name="myItemId" value="symfony" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event-dispatcher" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -466,16 +588,25 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="metabox" />
+              <option name="myItemId" value="symfony" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event-dispatcher" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tests" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -774,7 +905,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1031,7 +1161,9 @@
       <workItem from="1471207708739" duration="33000" />
       <workItem from="1471208198595" duration="100000" />
       <workItem from="1471208677111" duration="96000" />
-      <workItem from="1471373534246" duration="1453000" />
+      <workItem from="1471373534246" duration="1904000" />
+      <workItem from="1471424076745" duration="3187000" />
+      <workItem from="1471429087362" duration="5462000" />
     </task>
     <servers />
   </component>
@@ -1068,7 +1200,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="676418000" />
+    <option name="totallyTimeSpent" value="685518000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1083,16 +1215,16 @@
     <frame x="0" y="23" width="1920" height="1108" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2401491" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2454739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32862905" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3888889" sideWeight="0.48189563" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2140575" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5637105" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35764945" sideWeight="0.58027524" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18577981" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29891303" sideWeight="0.48828542" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979798" sideWeight="0.48828542" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3888889" sideWeight="0.5181044" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3272727" sideWeight="0.5181044" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1199,11 +1331,6 @@
           <option name="timeStamp" value="5398" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php</url>
-          <line>600</line>
-          <option name="timeStamp" value="5547" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/../../../wp-includes/ms-blogs.php</url>
           <line>122</line>
           <option name="timeStamp" value="5554" />
@@ -1237,7 +1364,7 @@
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="6063" />
+      <option name="time" value="6094" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="wp-login.php">
@@ -1281,7 +1408,7 @@
         <watch expression="$field_value" language="PHP" />
       </configuration>
       <configuration name="admin-ajax.php">
-        <watch expression="json_encode( $results[3] )" language="PHP" />
+        <watch expression="$response['body']" />
       </configuration>
       <configuration name="update.php">
         <watch expression="apply_filters( 'wpml_default_language', null )" language="PHP" />
@@ -1297,81 +1424,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/classes/extensions/acf/admin_options.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/768cc5b7-5b10-4a20-9b4c-0270030bc27c/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="62" column="36" selection-start-line="62" selection-start-column="36" selection-end-line="62" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screenshot-33.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/solarium/solarium/library/Solarium/QueryType/Extract/Query.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="159" column="20" selection-start-line="159" selection-start-column="20" selection-end-line="159" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../wp-includes/rss.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="551" column="9" selection-start-line="551" selection-start-column="9" selection-end-line="551" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screenshot-34.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/Core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="322" column="9" selection-start-line="322" selection-start-column="9" selection-end-line="322" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../embed-any-document/inc/settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/acf/plugin-acf.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../embed-any-document/awsm-embed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/wpsolr-filters.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../wp-includes/shortcodes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1558,9 +1610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4710">
           <caret line="315" column="51" selection-start-line="315" selection-start-column="45" selection-end-line="315" selection-end-column="51" />
-          <folding>
-            <element signature="e#7#54#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1568,34 +1617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5865">
           <caret line="391" column="77" selection-start-line="391" selection-start-column="77" selection-end-line="391" selection-end-column="77" />
-          <folding>
-            <marker date="1471080648000" expanded="true" signature="7112:7346" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="7163:7323" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="7402:7632" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="7449:7609" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="7749:8054" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="7796:8031" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="8322:8542" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="8369:8519" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="8598:8833" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="8645:8810" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="8950:9250" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="8997:9228" ph="{...}" />
-            <marker date="1471080648000" expanded="true" signature="29028:29330" ph="SELECT disti... wp_postmeta" />
-            <marker date="1471080648000" expanded="true" signature="46466:46851" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="46624:46638" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="46833:46845" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="56785:57154" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="56943:56957" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="57136:57148" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="60256:60637" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="60419:60431" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="60584:60598" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="60980:61358" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="61143:61157" ph="..." />
-            <marker date="1471080648000" expanded="false" signature="61340:61352" ph="..." />
-            <marker date="1471080648000" expanded="true" signature="73579:73611" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1603,7 +1624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1260">
           <caret line="86" column="95" selection-start-line="86" selection-start-column="95" selection-end-line="86" selection-end-column="95" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1611,7 +1631,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
           <caret line="74" column="93" selection-start-line="74" selection-start-column="93" selection-end-line="74" selection-end-column="93" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1619,7 +1638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1140">
           <caret line="78" column="39" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1627,7 +1645,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1635,7 +1652,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1305">
           <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1643,32 +1659,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/metabox/wpsolr-metabox.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3510">
+          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/wp-db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6195">
-          <caret line="413" column="102" selection-start-line="413" selection-start-column="102" selection-end-line="413" selection-end-column="102" />
+        <state relative-caret-position="225">
+          <caret line="668" column="0" selection-start-line="668" selection-start-column="0" selection-end-line="668" selection-end-column="0" />
           <folding>
-            <marker date="1471086179000" expanded="true" signature="16392:16406" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#6#215#0#PHP" expanded="true" />
-            <marker date="1471374121000" expanded="true" signature="8829:8839" ph="..." />
-            <marker date="1471374121000" expanded="true" signature="9293:9608" ph="..." />
-            <marker date="1471374121000" expanded="true" signature="9293:9609" ph="..." />
-            <marker date="1471374121000" expanded="true" signature="9293:9923" ph="..." />
-            <marker date="1471374121000" expanded="false" signature="9840:9868" ph="..." />
-            <marker date="1471374121000" expanded="false" signature="9891:9901" ph="..." />
+            <marker date="1471420896000" expanded="true" signature="24584:24591" ph="..." />
+            <marker date="1471420896000" expanded="true" signature="39513:39520" ph="..." />
+            <marker date="1471420896000" expanded="true" signature="42649:42656" ph="..." />
+            <marker date="1471420896000" expanded="true" signature="55857:55891" ph="UPDATE `${$t... " />
+            <marker date="1471420896000" expanded="true" signature="57846:57873" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1678,23 +1689,131 @@
         <state relative-caret-position="45">
           <caret line="3" column="73" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
           <folding>
-            <marker date="1471374848000" expanded="true" signature="8059:8109" ph="SELECT %s FR... " />
+            <marker date="1471376834000" expanded="true" signature="8059:8109" ph="SELECT %s FR... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/metabox/wpsolr-metabox.php">
+    <entry file="file://$PROJECT_DIR$/vendor/rmccue/requests/library/Requests/Response.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/Requests/Response.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="3060" column="9" selection-start-line="3060" selection-start-column="9" selection-end-line="3060" selection-end-column="9" />
+          <folding>
+            <marker date="1471420897000" expanded="true" signature="17432:17536" ph="SELECT meta_... wp_postmeta" />
+            <marker date="1471420897000" expanded="true" signature="18595:18699" ph="SELECT post_... wp_postmeta" />
+            <marker date="1471420897000" expanded="true" signature="38576:38645" ph="SELECT optio... wp_options" />
+            <marker date="1471420897000" expanded="true" signature="134179:134227" ph="SELECT id FR... $" />
+            <marker date="1471420897000" expanded="true" signature="142618:142714" ph="SELECT post_... wp_postmeta" />
+            <marker date="1471420897000" expanded="true" signature="143177:143279" ph="SELECT comme... wp_commentmeta" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/class-requests.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#166#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../debug.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1661">
+          <caret line="176" column="108" selection-start-line="176" selection-start-column="108" selection-end-line="176" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/class-http.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1452">
+          <caret line="149" column="20" selection-start-line="149" selection-start-column="20" selection-end-line="149" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../wp-includes/http.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="152" column="23" selection-start-line="152" selection-start-column="23" selection-end-line="152" selection-end-column="23" />
+          <folding>
+            <marker date="1471420897000" expanded="true" signature="17961:18018" ph="SELECT domai... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/licenses/option-licenses.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="512" column="73" selection-start-line="512" selection-start-column="73" selection-end-line="512" selection-end-column="73" />
+          <folding>
+            <marker date="1471376834000" expanded="true" signature="16392:16406" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/extensions/managed-solr-servers/option-managed-solr-servers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wpsolr_search_engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding>
+            <marker date="1471434837000" expanded="true" signature="8829:8839" ph="..." />
+            <marker date="1471434837000" expanded="true" signature="9293:9608" ph="..." />
+            <marker date="1471434837000" expanded="true" signature="9293:9609" ph="..." />
+            <marker date="1471434837000" expanded="true" signature="9293:9923" ph="..." />
+            <marker date="1471434837000" expanded="false" signature="9840:9868" ph="..." />
+            <marker date="1471434837000" expanded="false" signature="9891:9901" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="100" column="21" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
+        <state relative-caret-position="375">
+          <caret line="99" column="6" selection-start-line="99" selection-start-column="6" selection-end-line="99" selection-end-column="6" />
           <folding />
         </state>
       </provider>

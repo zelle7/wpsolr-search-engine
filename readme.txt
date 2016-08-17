@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.8
+Current Version: 12.9
 
 Author: wpsolr
 
@@ -12,9 +12,9 @@ Tags: search, Solr in WordPress, wordpress search, bbPress search, WooCommerce s
 
 Requires at least: 3.7.1
 
-Tested up to: 4.5.2
+Tested up to: 4.6
 
-Stable tag: 12.8
+Stable tag: 12.9
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -95,6 +95,11 @@ Installation procedure for Apache Solr: see FAQ section.
 38. 38) Admin: Ajax product suggestions.
 
 == Changelog ==
+
+= 12.9 =
+* !!! You need to upgrade to this version before upgrading to Wordpress 4.6
+* Compatibility with Wordpress 4.6.
+* Remove dependency to http library http://requests.ryanmccue.info/ in conflict with the version newly delivered with Wordpress 4.6.
 
 = 12.8 =
 * Fix pages content not indexed
