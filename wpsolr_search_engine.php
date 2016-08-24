@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 12.9
+ * Version: 13.0
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -11,6 +11,7 @@
 // Constants
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
+define( 'WPSOLR_PLUGIN_VERSION', '13.0' );
 
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
@@ -37,8 +38,6 @@ add_action( 'wp_head', 'check_default_options_and_function' );
 add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
 add_action( 'wp_enqueue_scripts', 'my_enqueue' );
-add_filter( 'admin_footer_text', 'wpsolr_admin_footer_text' );
-add_filter( 'update_footer', 'wpsolr_update_footer', 11 );
 
 // Register WpSolr widgets when current theme's search is used.
 if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
@@ -83,13 +82,37 @@ if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'edit_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
+
+	/*
+	add_action( 'comment_post', 'add_remove_comment_to_solr_index', 11, 1 );
+	add_action( 'delete_comment', 'add_remove_comment_to_solr_index', 11, 1 );
+	add_action( 'trash_comment', 'add_remove_comment_to_solr_index', 11, 1 );
+	*/
 }
 
-/*
+/**
+ * Reindex a post when one of it's comment is updated.
+ *
+ * @param $comment_id
+ */
+function add_remove_comment_to_solr_index( $comment_id ) {
+
+	$comment = get_comment( $comment_id );
+
+	if ( ! empty( $comment ) ) {
+
+		add_remove_document_to_solr_index( $comment->comment_post_ID, get_post( $comment->comment_post_ID ) );
+	}
+}
+
+/**
  * Add/remove document to/from Solr index when status changes to/from published
  * We have to use action 'save_post', as it is used by other plugins to trigger meta boxes save
+ *
+ * @param $post_id
+ * @param $post
  */
-function add_remove_document_to_solr_index( $post_id, $post, $update ) {
+function add_remove_document_to_solr_index( $post_id, $post ) {
 
 	// If this is just a revision, don't go on.
 	if ( wp_is_post_revision( $post_id ) ) {
@@ -297,8 +320,8 @@ function solr_search_form() {
 
 }
 
-add_action( 'plugins_loaded', 'my_plugins_loaded' );
-function my_plugins_loaded() {
+add_action( 'after_setup_theme', 'wpsolr_after_setup_theme' ); // Some plugins are loaded with the theme, like ACF. We need to wait till then.
+function wpsolr_after_setup_theme() {
 
 	// Load active extensions
 	WpSolrExtensions::load();
@@ -390,33 +413,3 @@ function wpsolr_activate() {
 
 register_activation_hook( __FILE__, 'wpsolr_activate' );
 
-
-/**
- * Action to replace the admin footer text
- * @return string
- */
-function wpsolr_admin_footer_text() {
-
-	$result = 'If you like WPSOLR, thank you for letting others know with a <a href="https://wordpress.org/support/view/plugin-reviews/wpsolr-search-engine" target="__new">***** review</a>.';
-	$result .= ' Else, we\'d like very much your feedbacks throught our <a href="http://www.wpsolr.com" target="__new">chat box</a> to improve the plugin.';
-
-	return $result;
-}
-
-/**
- * Action to replace the admin footer version
- * @return string
- */
-function wpsolr_update_footer() {
-
-	$results = 'You are using the free plugin.';
-
-	$licenses = OptionLicenses::get_activated_licenses_titles();
-
-	if ( is_array( $licenses ) && ! empty( $licenses ) ) {
-
-		$results = sprintf( 'You have activated packs %s.', implode( ', ', $licenses ) );
-	}
-
-	return $results . ' See all <a href="http://www.wpsolr.com/pricing" target="__new">other features</a>.';
-}

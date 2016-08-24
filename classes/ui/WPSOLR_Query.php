@@ -183,7 +183,7 @@ class WPSOLR_Query extends WP_Query {
 
 		$highlighting = $this->resultSet->getHighlighting();
 
-		$highlightedDoc = $highlighting->getResult( $post_id );
+		$highlightedDoc = $highlighting ? $highlighting->getResult( $post_id ) : null;
 		if ( $highlightedDoc ) {
 
 			$highlighted_field = $highlightedDoc->getField( $field_name );

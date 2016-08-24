@@ -12,6 +12,8 @@ require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
  */
 class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
+	protected $is_query_wildcard;
+
 	protected $solarium_results;
 
 	protected $solarium_query;
@@ -551,9 +553,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			$url = $this->get_post_url( $document, $post_id );
 
-			$highlightedDoc = $highlighting->getResult( $document->id );
-			$cont_no        = 0;
 			$comm_no        = 0;
+			$highlightedDoc = $highlighting ? $highlighting->getResult( $document->id ) : null;
 			if ( $highlightedDoc ) {
 
 				foreach ( $highlightedDoc as $field => $highlight ) {
@@ -758,6 +759,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$highlighting_parameters
 	) {
 
+		if ( $this->is_query_wildcard ) {
+			// Wilcard queries does not need highlighting.
+			return;
+		}
+
 		// Field names
 		$field_names = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ] )
 			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ]
@@ -909,6 +915,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
 				WpSolrSchema::_FIELD_NAME_COMMENTS,
 				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+				WpSolrSchema::_FIELD_NAME_DISPLAY_MODIFIED,
 				'*' . WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
 				WpSolrSchema::_FIELD_NAME_AUTHOR,
 				'*' . WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR,
@@ -980,7 +987,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
-		$solarium_query->setQuery( $query_field_name . ! empty( $keywords ) ? $keywords : '*' );
+		$this->is_query_wildcard = ( empty( $keywords ) || ( '*' === $keywords ) );
+
+		$solarium_query->setQuery( $query_field_name . ( ! $this->is_query_wildcard ? $keywords : '*' ) );
 	}
 
 

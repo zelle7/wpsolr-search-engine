@@ -1,4 +1,50 @@
 <?php
+/**
+ * Action to replace the admin footer text
+ * @return string
+ */
+function wpsolr_admin_footer_text( $footer_text ) {
+	$current_screen = get_current_screen();
+
+	// Display wpsolr footer only on wpsolr admin pages
+	if ( 'solr_settings' === $current_screen->parent_file ) {
+		$footer_text = 'If you like WPSOLR, thank you for letting others know with a <a href="https://wordpress.org/support/view/plugin-reviews/wpsolr-search-engine" target="__new">***** review</a>.';
+		$footer_text .= ' Else, we\'d like very much your feedbacks throught our <a href="http://www.wpsolr.com" target="__new">chat box</a> to improve the plugin.';
+
+		$footer_version = 'You are using the free plugin.';
+		$licenses       = OptionLicenses::get_activated_licenses_titles();
+		if ( is_array( $licenses ) && ! empty( $licenses ) ) {
+
+			$footer_version = sprintf( 'Activated packs: %s.', implode( ', ', $licenses ) );
+		}
+		$footer_version .= ' See <a href="http://www.wpsolr.com/pricing" target="__new">other packs</a>.';
+
+		$footer_text = $footer_version . '<br/>' . $footer_text;
+	}
+
+	return $footer_text;
+}
+
+add_filter( 'admin_footer_text', 'wpsolr_admin_footer_text' );
+
+/**
+ * Action to replace the admin footer version
+ * @return string
+ */
+function wpsolr_update_footer( $footer_version ) {
+
+	$current_screen = get_current_screen();
+
+	// Display wpsolr footer version only on wpsolr admin pages
+	if ( 'solr_settings' === $current_screen->parent_file ) {
+		$footer_version = 'WPSOLR ' . WPSOLR_PLUGIN_VERSION;
+	}
+
+	return $footer_version;
+}
+
+add_filter( 'update_footer', 'wpsolr_update_footer', 11 );
+
 
 /*
  *  Route to controllers
@@ -680,16 +726,17 @@ function fun_set_solr_options() {
 					break;
 				case 'index_opt':
 
+					$custom_fields_error_message = '';
 
-					$posts = get_post_types();
-					$args        = array(
+					$posts      = get_post_types();
+					$args       = array(
 						'public'   => true,
 						'_builtin' => false
 
 					);
-					$output      = 'names'; // or objects
-					$operator    = 'and'; // 'and' or 'or'
-					$taxonomies  = get_taxonomies( $args, $output, $operator );
+					$output     = 'names'; // or objects
+					$operator   = 'and'; // 'and' or 'or'
+					$taxonomies = get_taxonomies( $args, $output, $operator );
 					global $wpdb;
 					$limit = (int) apply_filters( 'postmeta_form_limit', 30 );
 					$keys  = $wpdb->get_col( "
@@ -697,6 +744,12 @@ function fun_set_solr_options() {
                                                                     FROM $wpdb->postmeta
                                                                     WHERE meta_key!='bwps_enable_ssl' 
                                                                     ORDER BY meta_key" );
+
+					try {// Filter custom fields to be indexed.
+						$keys = apply_filters( WpSolrFilters::WPSOLR_FILTER_INDEX_CUSTOM_FIELDS, $keys );
+					} catch ( Exception $e ) {
+						$custom_fields_error_message = $e->getMessage();
+					}
 
 					// WooCommerce attributes are added to custom fields
 					if ( function_exists( 'wc_get_attribute_taxonomies' ) ) {
@@ -890,6 +943,12 @@ function fun_set_solr_options() {
 									</div>
 
 									<div class='col_right'>
+										<?php
+										if ( ! empty( $custom_fields_error_message ) ) {
+											echo sprintf( '<div class="error-message">%s</div>', $custom_fields_error_message );
+										}
+										?>
+
 										<input type='hidden' name='wdm_solr_form_data[cust_fields]'
 										       id='field_types'>
 
@@ -1480,7 +1539,7 @@ function fun_set_solr_options() {
 
 		$subtabs = array(
 			'extension_woocommerce_opt'         => 'WooCommerce',
-			'extension_acf_opt'                 => 'Advanced Custom Fields (ACF)',
+			'extension_acf_opt'                 => 'ACF',
 			'extension_types_opt'               => 'Types',
 			'extension_wpml_opt'                => 'WPML',
 			'extension_polylang_opt'            => 'Polylang',

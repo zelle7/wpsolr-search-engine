@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 12.9
+Current Version: 13.0
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6
 
-Stable tag: 12.9
+Stable tag: 13.0
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -93,12 +93,28 @@ Installation procedure for Apache Solr: see FAQ section.
 36. 36) Admin: Search in Pdf Embedder post content.
 37. 37) Admin: Search in Google Doc Embedder post content.
 38. 38) Admin: Ajax product suggestions.
+39. 39) ACF: Create ACF repeater fields.
+40. 40) Admin: Index ACF repeater fields.
+41. 41) Admin: Select ACF repeater fields as facets.
+42. 42) Admin: Create a post with ACF repeater fields.
+43. 43) Front: Search in ACF repeater fields, and filter ACF repeater fields with facets.
 
 == Changelog ==
 
+= 13.0 =
+* (ACF Pack) Index and search, with facets, ACF repeater fields. Do not index empty ACF fields.
+* [Screenshot: ACF: Create ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-39.png "ACF: Create ACF repeater fields")
+* [Screenshot: Admin: Index ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-40.png "Admin: Index ACF repeater fields")
+* [Screenshot: Admin: Select ACF repeater fields as facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-41.png "Admin: Select ACF repeater fields as facets")
+* [Screenshot: Admin: Create a post with ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-42.png "Admin: Create a post with ACF repeater fields")
+* [Screenshot: Front: Search in ACF repeater fields, and filter ACF repeater fields with facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-43.png "Front: Search in ACF repeater fields, and filter ACF repeater fields with facets")
+* Show displaymodified instead of displaydate in Ajax results.
+* Do not show keywords highlighting with empty keywords.
+* Extensions now detect plugins loaded by the active theme (for instance, ACF can do that).
+
 = 12.9 =
-* !!! You need to upgrade to this version before upgrading to Wordpress 4.6
 * Compatibility with Wordpress 4.6.
+* You need to upgrade to this version before upgrading to Wordpress 4.6
 * Remove dependency to http library http://requests.ryanmccue.info/ in conflict with the version newly delivered with Wordpress 4.6.
 
 = 12.8 =

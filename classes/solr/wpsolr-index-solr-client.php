@@ -642,6 +642,14 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$pcontent .= self::CONTENT_SEPARATOR . $pexcerpt;
 		}
 
+		if ( ! empty( $pcomments ) ) {
+
+			// Index post comments, by adding it to the post content.
+			// Excerpt can therefore be: searched, autocompleted, highlighted.
+			//$pcontent .= self::CONTENT_SEPARATOR . implode( self::CONTENT_SEPARATOR, $pcomments );
+		}
+
+
 		$content_with_shortcodes_expanded_or_stripped = $pcontent;
 		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) && ( strpos( $pcontent, '[solr_search_shortcode]' ) === false ) ) {
 

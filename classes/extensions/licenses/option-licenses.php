@@ -158,7 +158,7 @@ class OptionLicenses extends WpSolrExtensions {
 		return array(
 			self::LICENSE_PACKAGE_CORE                => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_premium',
-				self::FIELD_LICENSE_TITLE              => 'Premium Pack',
+				self::FIELD_LICENSE_TITLE              => 'Premium',
 				self::FIELD_DESCRIPTION                => '',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
@@ -221,7 +221,8 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Replace facet names with their ACF label',
 					'Decode ACF field values before indexing a post',
-					'Index ACF field files content inside the post'
+					'Index ACF field files content inside the post',
+					'Manage ACF repeaters'
 				)
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(
