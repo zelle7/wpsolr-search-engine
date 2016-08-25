@@ -800,12 +800,16 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						foreach ( $field as $field_value ) {
 							$field_value_stripped = strip_tags( $field_value );
 
-							array_push( $array_nm1, $field_value_stripped );
-							array_push( $array_nm2, $field_value_stripped );
+							// Only index the field if it has a value.
+							if ( ! empty( $field_value_stripped ) ) {
 
-							// Add current custom field values to custom fields search field
-							// $field being an array, we add each of it's element
-							array_push( $existing_custom_fields, $field_value_stripped );
+								array_push( $array_nm1, $field_value_stripped );
+								array_push( $array_nm2, $field_value_stripped );
+
+								// Add current custom field values to custom fields search field
+								// $field being an array, we add each of it's element
+								array_push( $existing_custom_fields, $field_value_stripped );
+							}
 						}
 
 						$solarium_document_for_update->$nm1 = $array_nm1;

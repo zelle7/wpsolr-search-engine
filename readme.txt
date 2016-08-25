@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 13.0
+Current Version: 13.1
 
 Author: wpsolr
 
@@ -14,17 +14,17 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6
 
-Stable tag: 13.0
+Stable tag: 13.1
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
 
-You definitely need wpsolr search if you recognize yourself in at least one of:
+You definitely need wpsolr search if you agree with one of:
 
 - My current search page, my instant (live) product suggestions, are so slow that my visitors are leaving without buying anything, without subscribing to anything
 
-- I have too many posts, products, visitors, and I cannot afford hundred of dollars on external search hosted services
+- I have too many posts, products, visitors, comments, and I cannot afford hundred of dollars on external search hosted services
 
 - Most of my data is stored in pdf files, word files, excel files. I need to search these formats too.
 
@@ -39,7 +39,7 @@ You definitely need wpsolr search if you recognize yourself in at least one of:
 - My bbPress search cannot handle thousands, hundreds of thousands of topics and replies.
 
 
-Else, well, it's probably not worth it, because a greater search comes with greater efforts.
+If not, there are plenty of great search plugins out there to help you.
 
 But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
 
@@ -101,6 +101,14 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 13.1 =
+* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from http://wpsolr.com/releases/#1.0, install on your Solr index, and reload the Solr index (or restart Solr).
+* Comments/Replies are indexed in real-time.
+* Comments/Replies are searchable, autocompleted, and spellchecked.
+* Comments/Replies fields and terms can be boosted.
+* Reorder selected/Unselected options in screen "indexed data".
+* WARNING: if you want to activate comments/replies indexing/searching, this will require you to re-index all your documents containing comments/replies. It can take a while if you have a large amount of documents in your WP database.
+
 = 13.0 =
 * (ACF Pack) Index and search, with facets, ACF repeater fields. Do not index empty ACF fields.
 * [Screenshot: ACF: Create ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-39.png "ACF: Create ACF repeater fields")
@@ -108,7 +116,6 @@ Installation procedure for Apache Solr: see FAQ section.
 * [Screenshot: Admin: Select ACF repeater fields as facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-41.png "Admin: Select ACF repeater fields as facets")
 * [Screenshot: Admin: Create a post with ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-42.png "Admin: Create a post with ACF repeater fields")
 * [Screenshot: Front: Search in ACF repeater fields, and filter ACF repeater fields with facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-43.png "Front: Search in ACF repeater fields, and filter ACF repeater fields with facets")
-* Show displaymodified instead of displaydate in Ajax results.
 * Do not show keywords highlighting with empty keywords.
 * Extensions now detect plugins loaded by the active theme (for instance, ACF can do that).
 

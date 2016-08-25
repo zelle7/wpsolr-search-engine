@@ -161,20 +161,20 @@ function wpsolr_admin_init() {
 function fun_add_solr_settings() {
 	$img_url = plugins_url( 'images/WPSOLRDashicon.png', __FILE__ );
 	add_menu_page( 'WPSOLR', 'WPSOLR', 'manage_options', 'solr_settings', 'fun_set_solr_options', $img_url );
-	wp_enqueue_style( 'dashboard_style', plugins_url( 'css/dashboard_css.css', __FILE__ ), array(), 'wpsolr_12.1' );
+	wp_enqueue_style( 'dashboard_style', plugins_url( 'css/dashboard_css.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'dashboard_js1', plugins_url( 'js/dashboard.js', __FILE__ ),
 		array(
 			'jquery',
 			'jquery-ui-sortable'
 		),
-		'wpsolr_10.8' );
+		WPSOLR_PLUGIN_VERSION );
 
 	$plugin_vals = array( 'plugin_url' => plugins_url( 'images/', __FILE__ ) );
 	wp_localize_script( 'dashboard_js1', 'plugin_data', $plugin_vals );
 
 	// Google api recaptcha - Used for temporary indexes creation
-	wp_enqueue_script( 'google-api-recaptcha', '//www.google.com/recaptcha/api.js', array() );
+	wp_enqueue_script( 'google-api-recaptcha', '//www.google.com/recaptcha/api.js', array(), WPSOLR_PLUGIN_VERSION );
 
 	// Bootstrap tour
 	/*
@@ -302,7 +302,8 @@ function fun_set_solr_options() {
 	case 'solr_presentation' :
 		?>
 		<h2>See our little <a href="http://www.gotosolr.com/en/search-wpsolr/" target="_blank">demo (WPSOLR, Ajax,
-				Infinite scroll pagination, WPML, Products suggestions, attachments)</a>. Try "solr", "cluster", ....
+				Infinite scroll pagination, WPML, Products suggestions, attachments)</a>. Try "solr", "cluster",
+			....
 		</h2>
 		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
 
@@ -592,7 +593,8 @@ function fun_set_solr_options() {
 
 										</select>
 
-										By default, suggestions are shown only with the WPSOLR Ajax theme's search form.
+										By default, suggestions are shown only with the WPSOLR Ajax theme's search
+										form.
 										Use the jQuery selectors field below to show suggestions on your own theme's
 										search forms.
 									</div>
@@ -809,7 +811,8 @@ function fun_set_solr_options() {
 											<?php checked( '1', isset( $solr_options['is_real_time'] ) ? $solr_options['is_real_time'] : '' ); ?>
 											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
 										>
-										<br/>The Solr index will no more be updated as soon as a post/attachment is
+										<br/>The Solr index will no more be updated as soon as a post/comment/attachment
+										is
 										added/saved/deleted, but only when you launch the indexing bach.
 										<br/> Useful to load a large number of posts, for instance coupons/products
 										from
@@ -866,16 +869,39 @@ function fun_set_solr_options() {
 										<input type='hidden' name='wdm_solr_form_data[p_types]' id='p_types'>
 										<?php
 										$post_types_opt = $solr_options['p_types'];
+										// Sort post types
+										asort( $post_types );
+
+										// Selected first
 										foreach ( $post_types as $type ) {
-											$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) || ( $type === 'product' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
-											?>
-											<input type='checkbox' name='post_tys'
-											       value='<?php echo $type ?>'
-												<?php echo $disabled; ?>
-												<?php if ( strpos( $post_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
-											<br>
-											<?php
+											if ( strpos( $post_types_opt, $type ) !== false ) {
+												$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) || ( $type === 'product' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+
+												?>
+												<input type='checkbox' name='post_tys'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+													   checked> <?php echo $type ?>
+												<br>
+												<?php
+											}
 										}
+
+										// Unselected 2nd
+										foreach ( $post_types as $type ) {
+											if ( strpos( $post_types_opt, $type ) === false ) {
+												$disabled = ( ( $type === 'post' ) || ( $type === 'page' ) || ( $type === 'product' ) ) ? '' : $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+
+												?>
+												<input type='checkbox' name='post_tys'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+												> <?php echo $type ?>
+												<br>
+												<?php
+											}
+										}
+
 										?>
 
 									</div>
@@ -892,15 +918,35 @@ function fun_set_solr_options() {
 										<?php
 										$attachment_types_opt = $solr_options['attachment_types'];
 										$disabled             = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+										// sort attachments
+										asort( $allowed_attachments_types );
+
+										// Selected first
 										foreach ( $allowed_attachments_types as $type ) {
-											?>
-											<input type='checkbox' name='attachment_types'
-											       value='<?php echo $type ?>'
-												<?php echo $disabled; ?>
-												<?php if ( strpos( $attachment_types_opt, $type ) !== false ) { ?> checked <?php } ?>> <?php echo $type ?>
-											<br>
-											<?php
+											if ( strpos( $attachment_types_opt, $type ) !== false ) {
+												?>
+												<input type='checkbox' name='attachment_types'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+													   checked> <?php echo $type ?>
+												<br>
+												<?php
+											}
 										}
+
+										// Unselected 2nd
+										foreach ( $allowed_attachments_types as $type ) {
+											if ( strpos( $attachment_types_opt, $type ) === false ) {
+												?>
+												<input type='checkbox' name='attachment_types'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+												> <?php echo $type ?>
+												<br>
+												<?php
+											}
+										}
+
 										?>
 									</div>
 									<div class="clear"></div>
@@ -918,15 +964,32 @@ function fun_set_solr_options() {
 											$tax_types_opt = $solr_options['taxonomies'];
 											$disabled      = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											if ( count( $taxonomies ) > 0 ) {
-												foreach ( $taxonomies as $type ) {
-													?>
 
-													<input type='checkbox' name='taxon'
-													       value='<?php echo $type . "_str" ?>'
-														<?php echo $disabled; ?>
-														<?php if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) { ?> checked <?php } ?>
-													> <?php echo $type ?> <br>
-													<?php
+												// Selected first
+												foreach ( $taxonomies as $type ) {
+													if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) {
+														?>
+
+														<input type='checkbox' name='taxon'
+														       value='<?php echo $type . "_str" ?>'
+															<?php echo $disabled; ?>
+															   checked
+														> <?php echo $type ?> <br>
+														<?php
+													}
+												}
+
+												// Unselected 2nd
+												foreach ( $taxonomies as $type ) {
+													if ( strpos( $tax_types_opt, $type . "_str" ) === false ) {
+														?>
+
+														<input type='checkbox' name='taxon'
+														       value='<?php echo $type . "_str" ?>'
+															<?php echo $disabled; ?>
+														> <?php echo $type ?> <br>
+														<?php
+													}
 												}
 
 											} else {
@@ -957,15 +1020,35 @@ function fun_set_solr_options() {
 											$field_types_opt = $solr_options['cust_fields'];
 											$disabled        = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											if ( count( $keys ) > 0 ) {
-												foreach ( $keys as $key ) {
-													?>
+												// sort custom fields
+												asort( $keys );
 
-													<input type='checkbox' name='cust_fields'
-													       value='<?php echo $key . "_str" ?>'
-														<?php echo $disabled; ?>
-														<?php if ( strpos( $field_types_opt, $key . "_str" ) !== false ) { ?> checked <?php } ?>> <?php echo $key ?>
-													<br>
-													<?php
+												// Show selected first
+												foreach ( $keys as $key ) {
+													if ( strpos( $field_types_opt, $key . "_str" ) !== false ) {
+														?>
+
+														<input type='checkbox' name='cust_fields'
+														       value='<?php echo $key . "_str" ?>'
+															<?php echo $disabled; ?>
+															   checked> <?php echo $key ?>
+														<br>
+														<?php
+													}
+												}
+
+												// Show unselected 2nd
+												foreach ( $keys as $key ) {
+													if ( strpos( $field_types_opt, $key . "_str" ) === false ) {
+														?>
+
+														<input type='checkbox' name='cust_fields'
+														       value='<?php echo $key . "_str" ?>'
+															<?php echo $disabled; ?>
+														> <?php echo $key ?>
+														<br>
+														<?php
+													}
 												}
 
 											} else {
@@ -1023,6 +1106,7 @@ function fun_set_solr_options() {
 					$built_in       = array(
 						WpSolrSchema::_FIELD_NAME_CONTENT,
 						WpSolrSchema::_FIELD_NAME_TITLE,
+						WpSolrSchema::_FIELD_NAME_COMMENTS,
 						WpSolrSchema::_FIELD_NAME_TYPE,
 						WpSolrSchema::_FIELD_NAME_AUTHOR,
 						WpSolrSchema::_FIELD_NAME_CATEGORIES,

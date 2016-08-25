@@ -145,16 +145,19 @@
      <copyField source="categories" dest="text"/>
      <copyField source="content" dest="text"/>
      <copyField source="permalink" dest="text"/>
-     
+     <copyField source="comments" dest="text"/>
+
      <copyField source="title" dest="spell"/>
      <copyField source="tags" dest="spell"/>
      <copyField source="categories" dest="spell"/>
      <copyField source="content" dest="spell"/>
+     <copyField source="comments" dest="spell"/>
 
      <copyField source="title" dest="autocomplete"/>
      <copyField source="tags" dest="autocomplete"/>
      <copyField source="categories" dest="autocomplete"/>
      <copyField source="content" dest="autocomplete"/>
+     <copyField source="comments" dest="autocomplete"/>
 
      <copyField source="tags" dest="tagssrch"/>
      <copyField source="categories" dest="categoriessrch"/>

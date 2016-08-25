@@ -627,14 +627,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$content = ucfirst( trim( $content ) );
 			$content .= '...';
 
-			//if ( $cont_no == 1 ) {
-			if ( false ) {
-				$msg .= "<div class='p_content'>$image_fragment $content - <a href='$url'>Content match</a></div>";
-			} else {
-				$msg .= "<div class='p_content'>$image_fragment $content</div>";
-			}
-			if ( $comm_no == 1 ) {
-				$msg .= "<div class='p_comment'>" . $comments . "-<a href='$url'>Comment match</a></div>";
+			$msg .= "<div class='p_content'>$image_fragment $content</div>";
+			if ( $comm_no === 1 ) {
+				$comment_link_title = OptionLocalization::get_term( $localization_options, 'results_row_comment_link_title' );
+				$msg .= "<div class='p_comment'>$comments<a href='$url'>$comment_link_title</a></div>";
 			}
 
 			// Groups bloc - Bottom right

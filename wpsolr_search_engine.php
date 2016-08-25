@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 13.0
+ * Version: 13.1
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -11,7 +11,7 @@
 // Constants
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
-define( 'WPSOLR_PLUGIN_VERSION', '13.0' );
+define( 'WPSOLR_PLUGIN_VERSION', '13.1' );
 
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
@@ -83,11 +83,14 @@ if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	add_action( 'edit_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
 
-	/*
-	add_action( 'comment_post', 'add_remove_comment_to_solr_index', 11, 1 );
-	add_action( 'delete_comment', 'add_remove_comment_to_solr_index', 11, 1 );
-	add_action( 'trash_comment', 'add_remove_comment_to_solr_index', 11, 1 );
-	*/
+
+	if ( WPSOLR_Global::getOption()->get_index_are_comments_indexed() ) {
+		// new comment
+		add_action( 'comment_post', 'add_remove_comment_to_solr_index', 11, 1 );
+
+		// approved, unaproved, trashed, untrashed, spammed, unspammed
+		add_action( 'wp_set_comment_status', 'add_remove_comment_to_solr_index', 11, 1 );
+	}
 }
 
 /**
@@ -348,21 +351,21 @@ function wpsolr_after_setup_theme() {
 function my_enqueue() {
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_prevent_loading_front_end_css() ) {
-		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
-		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );
+		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );
 	}
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_galaxy_slave() ) {
 		// In this mode, suggestions do not work, as suggestions cannot be filtered by site.
-		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), 'wpsolr_12.6', true );
+		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 	}
 
 	// Url utilities to manipulate the url parameters
-	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), false, true );
+	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'autocomplete', plugins_url( 'js/autocomplete_solr.js', __FILE__ ), array(
 		'solr_auto_js1',
 		'urljs'
-	), 'wpsolr_12.7', true );
+	), WPSOLR_PLUGIN_VERSION, true );
 	wp_localize_script( 'autocomplete', 'wp_localize_script_autocomplete',
 		array(
 			'ajax_url'                     => admin_url( 'admin-ajax.php' ),
@@ -375,7 +378,9 @@ function my_enqueue() {
 			'SEARCH_PARAMETER_PAGE'        => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
 			'SORT_CODE_BY_RELEVANCY_DESC'  => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
 			'wpsolr_autocomplete_selector' => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector()
-		) );
+		),
+		WPSOLR_PLUGIN_VERSION
+	);
 
 	/*
 	 * Infinite scroll: load javascript if option is set.
@@ -384,7 +389,7 @@ function my_enqueue() {
 		// Get localization options
 		$localization_options = OptionLocalization::get_options();
 
-		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), 'wpsolr_12.5', true );
+		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 
 		wp_enqueue_script( 'infinitescroll' );
 
@@ -396,7 +401,9 @@ function my_enqueue() {
 				'loadimage'          => plugins_url( '/images/infinitescroll.gif', __FILE__ ),
 				'loadingtext'        => OptionLocalization::get_term( $localization_options, 'infinitescroll_loading' ),
 				'SEARCH_PARAMETER_Q' => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
-			) );
+			),
+			WPSOLR_PLUGIN_VERSION
+		);
 	}
 }
 
