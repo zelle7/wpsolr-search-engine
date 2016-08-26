@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 13.1
+Current Version: 13.2
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6
 
-Stable tag: 13.1
+Stable tag: 13.2
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -100,6 +100,11 @@ Installation procedure for Apache Solr: see FAQ section.
 43. 43) Front: Search in ACF repeater fields, and filter ACF repeater fields with facets.
 
 == Changelog ==
+
+= 13.2 =
+* Fix empty results when filtering with a facet containing a double quote
+* Fix empty results when searching with a keyword containing a double quote
+* Fix ajax search box not showing double quotes
 
 = 13.1 =
 * Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from http://wpsolr.com/releases/#1.0, install on your Solr index, and reload the Solr index (or restart Solr).

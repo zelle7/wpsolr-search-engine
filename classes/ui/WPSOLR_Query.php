@@ -139,6 +139,8 @@ class WPSOLR_Query extends WP_Query {
 
 		// Let WP extract parameters
 		$this->parse_query();
+		$q = &$this->query_vars;
+		$this->parse_search($q);
 
 		// Copy WP standard query to WPSOLR query
 		$this->set_wpsolr_query( $this->query[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] );

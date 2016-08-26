@@ -830,6 +830,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				$filter_query_field_name  = strtolower( $filter_query_field_array[0] );
 				$filter_query_field_value = isset( $filter_query_field_array[1] ) ? $filter_query_field_array[1] : '';
 
+				// Escape Solr special caracters
+				$filter_query_field_value = $this->escape_solr_special_catacters( $filter_query_field_value );
 
 				if ( ! empty( $filter_query_field_name ) && ! empty( $filter_query_field_value ) ) {
 
@@ -848,6 +850,35 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Escape Solr special caracters
+	 *
+	 * @param string $string_to_escape String to escape
+	 *
+	 * @return mixed
+	 */
+	function escape_solr_special_catacters( $string_to_escape ) {
+
+		$result = $string_to_escape;
+
+		// Special characters and their escape characters. Add more in the array if necessary.
+		$special_characters = array(
+			'"' => '\"', // The double quote sends a nasty syntax error in Solr 5/6
+		);
+
+		// Caracters never found in any string to escape
+		$unique_caracter = 'WPSOLR_MARK_THIS_CARACTERS';
+
+		foreach ( $special_characters as $special_character => $special_character_escaped ) {
+
+			$result = str_replace( $special_character_escaped, $unique_caracter, $string_to_escape ); // do not escape already escaped characters: replace them by a unique character
+			$result = str_replace( $special_character, $special_character_escaped, $result ); // Here it is: escape special character
+			$result = str_replace( $unique_caracter, $special_character_escaped, $result ); // Replace back already escaped characters
+		}
+
+		return $result;
 	}
 
 	/**
@@ -984,6 +1015,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 		$this->is_query_wildcard = ( empty( $keywords ) || ( '*' === $keywords ) );
+
+		// Escape Solr special caracters
+		$keywords = $this->escape_solr_special_catacters( $keywords );
 
 		$solarium_query->setQuery( $query_field_name . ( ! $this->is_query_wildcard ? $keywords : '*' ) );
 	}

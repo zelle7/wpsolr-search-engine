@@ -216,14 +216,6 @@ $license_manager = new OptionLicenses();
 									trial subscription.
 								</h4>
 
-								<h3>Instructions:</h3>
-								Click on the button to be redirected to your order page.
-								After completion of your order, you will receive an email with a link to your account.
-								Signin, and copy the license activation code (Licence # column of the subscription) above to activate your pack.
-								See documentation here: <a
-									href="http://www.gotosolr.com/en/solr-documentation/license-activations"
-									target="__new1">http://www.gotosolr.com/en/solr-documentation/license-activations</a>
-
 								<h3>With your pack, you will be able to:</h3>
 								<ol>
 									<?php foreach ( $license_manager->get_license_features( $license_type ) as $feature ) { ?>
@@ -232,6 +224,14 @@ $license_manager = new OptionLicenses();
 										</li>
 									<?php } ?>
 								</ol>
+
+								<h3>Instructions:</h3>
+								Click on the button to be redirected to your order page.
+								After completion of your order, you will receive an email with a link to your account.
+								Signin, and copy the license activation code (Licence # column of the subscription) above to activate your pack.
+								See documentation here: <a
+									href="http://www.gotosolr.com/en/solr-documentation/license-activations"
+									target="__new1">http://www.gotosolr.com/en/solr-documentation/license-activations</a>
 
 								<h3>Chat</h3>
 								If you are quite, but not completely, convinced, let's have a chat at <a

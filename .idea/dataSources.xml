@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2196745220">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="MySQL - dev-wpsolr-search-engine@vvv.dev" uuid="768cc5b7-5b10-4a20-9b4c-0270030bc27c">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>

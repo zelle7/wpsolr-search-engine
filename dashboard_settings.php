@@ -1624,7 +1624,7 @@ function fun_set_solr_options() {
 		$subtabs = array(
 			'extension_woocommerce_opt'         => 'WooCommerce',
 			'extension_acf_opt'                 => 'ACF',
-			'extension_types_opt'               => 'Types',
+			'extension_types_opt'               => 'Toolset Types',
 			'extension_wpml_opt'                => 'WPML',
 			'extension_polylang_opt'            => 'Polylang',
 			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
