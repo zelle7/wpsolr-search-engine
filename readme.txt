@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 13.2
+Current Version: 13.3
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6
 
-Stable tag: 13.2
+Stable tag: 13.3
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -100,6 +100,9 @@ Installation procedure for Apache Solr: see FAQ section.
 43. 43) Front: Search in ACF repeater fields, and filter ACF repeater fields with facets.
 
 == Changelog ==
+
+= 13.3 =
+* Removed wpml-config.xml from plugin directory. It provoked an error with the strict XML parser introduced by Polylang 2 versions.
 
 = 13.2 =
 * Fix empty results when filtering with a facet containing a double quote

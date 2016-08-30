@@ -222,7 +222,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Replace facet names with their ACF label',
 					'Decode ACF field values before indexing a post',
 					'Index ACF field files content inside the post',
-					'Manage ACF repeaters'
+					'Group ACF repeater rows under one single facet field (requires ACF Pro 5.0.0)'
 				)
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(
