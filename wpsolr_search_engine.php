@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: WPSOLR
- * Description: Search from one to thousands of sites with Solr
- * Version: 10.8
+ * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
+ * Version: 13.3
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -11,6 +11,7 @@
 // Constants
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
+define( 'WPSOLR_PLUGIN_VERSION', '13.2' );
 
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
@@ -38,11 +39,18 @@ add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
 add_action( 'wp_enqueue_scripts', 'my_enqueue' );
 
-
 // Register WpSolr widgets when current theme's search is used.
 if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
 	require_once 'classes/ui/widget/WPSOLR_Widget.php';
 	WPSOLR_Widget::Autoload();
+}
+
+if ( is_admin() ) {
+	/*
+	 * Register metabox
+	 */
+	require_once 'classes/metabox/wpsolr-metabox.php';
+	WPSOLR_Metabox::register();
 }
 
 /*
@@ -72,14 +80,42 @@ if ( WPSOLR_Global::getOption()->get_index_is_real_time() ) {
 	// Index as soon as a save is performed.
 	add_action( 'save_post', 'add_remove_document_to_solr_index', 11, 3 );
 	add_action( 'add_attachment', 'add_attachment_to_solr_index', 10, 3 );
+	add_action( 'edit_attachment', 'add_attachment_to_solr_index', 10, 3 );
 	add_action( 'delete_attachment', 'delete_attachment_to_solr_index', 10, 3 );
+
+
+	if ( WPSOLR_Global::getOption()->get_index_are_comments_indexed() ) {
+		// new comment
+		add_action( 'comment_post', 'add_remove_comment_to_solr_index', 11, 1 );
+
+		// approved, unaproved, trashed, untrashed, spammed, unspammed
+		add_action( 'wp_set_comment_status', 'add_remove_comment_to_solr_index', 11, 1 );
+	}
 }
 
-/*
+/**
+ * Reindex a post when one of it's comment is updated.
+ *
+ * @param $comment_id
+ */
+function add_remove_comment_to_solr_index( $comment_id ) {
+
+	$comment = get_comment( $comment_id );
+
+	if ( ! empty( $comment ) ) {
+
+		add_remove_document_to_solr_index( $comment->comment_post_ID, get_post( $comment->comment_post_ID ) );
+	}
+}
+
+/**
  * Add/remove document to/from Solr index when status changes to/from published
  * We have to use action 'save_post', as it is used by other plugins to trigger meta boxes save
+ *
+ * @param $post_id
+ * @param $post
  */
-function add_remove_document_to_solr_index( $post_id, $post, $update ) {
+function add_remove_document_to_solr_index( $post_id, $post ) {
 
 	// If this is just a revision, don't go on.
 	if ( wp_is_post_revision( $post_id ) ) {
@@ -87,29 +123,36 @@ function add_remove_document_to_solr_index( $post_id, $post, $update ) {
 	}
 
 	// If this is just a new post opened in editor, don't go on.
-	if ( 'auto-draft' == $post->post_status ) {
+	if ( 'auto-draft' === $post->post_status ) {
 		return;
 	}
 
+	// Delete previous message first
+	delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
+
 	try {
-		if ( 'publish' == $post->post_status ) {
+		if ( 'publish' === $post->post_status ) {
 			// post published, add/update it from Solr index
 
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
-			$solr->index_data( 1, $post );
+			$results = $solr->index_data( 1, $post );
 
-			// Display confirmation in admin
-			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Post/page indexed in Solr' );
+			// Display confirmation in admin, if one doc at least has been indexed
+			if ( ! empty( $results ) && ! empty( $results['nb_results'] ) ) {
+
+				set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s updated in index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
+			}
 
 		} else {
+
 			// post unpublished, remove it from Solr index
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
 
 			$solr->delete_document( $post );
 
 			// Display confirmation in admin
-			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Post/Page deleted from Solr' );
+			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', sprintf( '%s removed from index \'%s\'', ucfirst( $post->post_type ), $solr->index['index_name'] ) );
 		}
 
 	} catch ( Exception $e ) {
@@ -127,9 +170,13 @@ function add_attachment_to_solr_index( $attachment_id ) {
 	try {
 		$solr = WPSolrIndexSolrClient::create();
 
-		$solr->index_data( 1, get_post( $attachment_id ) );
+		$results = $solr->index_data( 1, get_post( $attachment_id ) );
 
-		set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Attachment added to Solr' );
+		// Display confirmation in admin, if one doc at least has been indexed
+		if ( ! empty( $results ) && ! empty( $results['nb_results'] ) ) {
+
+			set_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice', 'Media file uploaded to Solr' );
+		}
 
 	} catch ( Exception $e ) {
 
@@ -263,7 +310,7 @@ function solr_search_form() {
 		$form .= '
        <div class="ui-widget search-box">
  	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="' . WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q . '" id="search_que" class="search-field sfl1" autocomplete="off"/>
+        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="' . WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q . '" id="search_que" class="' . WPSOLR_Option::OPTION_SEARCH_SUGGEST_CLASS_DEFAULT . ' sfl1" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
         <div style="clear:both"></div>
         </div>
@@ -276,8 +323,8 @@ function solr_search_form() {
 
 }
 
-add_action( 'plugins_loaded', 'my_plugins_loaded' );
-function my_plugins_loaded() {
+add_action( 'after_setup_theme', 'wpsolr_after_setup_theme' ); // Some plugins are loaded with the theme, like ACF. We need to wait till then.
+function wpsolr_after_setup_theme() {
 
 	// Load active extensions
 	WpSolrExtensions::load();
@@ -289,38 +336,51 @@ function my_plugins_loaded() {
 	 * You can find our template file in this plugin's /languages/wpsolr.pot file
 	 */
 	load_plugin_textdomain( 'wpsolr', false, false );
+
+	/**
+	 * Load dynamic string translations
+	 */
+	if ( is_admin() ) {
+
+		// Load all string translations for all data managed by all extensions
+		WpSolrExtensions::extract_strings_to_translate_for_all_extensions();
+	}
+
 }
 
 function my_enqueue() {
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_prevent_loading_front_end_css() ) {
-		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
-		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );
+		wp_enqueue_style( 'solr_frontend', plugins_url( 'css/style.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );
 	}
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_galaxy_slave() ) {
 		// In this mode, suggestions do not work, as suggestions cannot be filtered by site.
-		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), 'wpsolr_10.5', true );
+		wp_enqueue_script( 'solr_auto_js1', plugins_url( 'js/bootstrap-typeahead.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 	}
 
 	// Url utilities to manipulate the url parameters
-	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), false, true );
+	wp_enqueue_script( 'urljs', plugins_url( 'bower_components/jsurl/url.min.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'autocomplete', plugins_url( 'js/autocomplete_solr.js', __FILE__ ), array(
 		'solr_auto_js1',
 		'urljs'
-	), false, true );
+	), WPSOLR_PLUGIN_VERSION, true );
 	wp_localize_script( 'autocomplete', 'wp_localize_script_autocomplete',
 		array(
-			'ajax_url'                    => admin_url( 'admin-ajax.php' ),
-			'is_show_url_parameters'      => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
-			'is_url_redirect'             => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
-			'SEARCH_PARAMETER_SEARCH'     => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
-			'SEARCH_PARAMETER_Q'          => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
-			'SEARCH_PARAMETER_FQ'         => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
-			'SEARCH_PARAMETER_SORT'       => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
-			'SEARCH_PARAMETER_PAGE'       => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
-			'SORT_CODE_BY_RELEVANCY_DESC' => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
-		) );
+			'ajax_url'                     => admin_url( 'admin-ajax.php' ),
+			'is_show_url_parameters'       => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
+			'is_url_redirect'              => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
+			'SEARCH_PARAMETER_SEARCH'      => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
+			'SEARCH_PARAMETER_Q'           => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
+			'SEARCH_PARAMETER_FQ'          => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
+			'SEARCH_PARAMETER_SORT'        => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
+			'SEARCH_PARAMETER_PAGE'        => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
+			'SORT_CODE_BY_RELEVANCY_DESC'  => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
+			'wpsolr_autocomplete_selector' => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector()
+		),
+		WPSOLR_PLUGIN_VERSION
+	);
 
 	/*
 	 * Infinite scroll: load javascript if option is set.
@@ -329,7 +389,7 @@ function my_enqueue() {
 		// Get localization options
 		$localization_options = OptionLocalization::get_options();
 
-		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+		wp_register_script( 'infinitescroll', plugins_url( '/js/jquery.infinitescroll.js', __FILE__ ), array( 'jquery' ), WPSOLR_PLUGIN_VERSION, true );
 
 		wp_enqueue_script( 'infinitescroll' );
 
@@ -341,7 +401,9 @@ function my_enqueue() {
 				'loadimage'          => plugins_url( '/images/infinitescroll.gif', __FILE__ ),
 				'loadingtext'        => OptionLocalization::get_term( $localization_options, 'infinitescroll_loading' ),
 				'SEARCH_PARAMETER_Q' => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
-			) );
+			),
+			WPSOLR_PLUGIN_VERSION
+		);
 	}
 }
 
@@ -357,3 +419,4 @@ function wpsolr_activate() {
 }
 
 register_activation_hook( __FILE__, 'wpsolr_activate' );
+

@@ -225,8 +225,10 @@ jQuery(document).ready(function () {
     /**
      * Search form is triggered
      */
-    jQuery(document).on('focus', '.search-field', function () {
+    jQuery(document).on('focus', wp_localize_script_autocomplete.wpsolr_autocomplete_selector, function () {
         var wdm_action = jQuery('#path_to_fold').val();
+
+        var mythis = this;
 
         jQuery(this).typeahead({
             ajax: {
@@ -236,7 +238,7 @@ jQuery(document).ready(function () {
                 loadingClass: "loading-circle",
                 preDispatch: function (query) {
 
-                    jQuery('.search-field').addClass('loading_sugg');
+                    jQuery(mythis).addClass('loading_sugg');
 
                     return {
                         action: wdm_action,
@@ -245,7 +247,7 @@ jQuery(document).ready(function () {
                     }
                 },
                 preProcess: function (data) {
-                    jQuery('.search-field').removeClass('loading_sugg');
+                    jQuery(mythis).removeClass('loading_sugg');
                     return data;
                 }
             }
@@ -286,7 +288,7 @@ jQuery(document).ready(function () {
             // Get facets state
             state = get_ui_facets_state();
         }
-        
+
         //alert(JSON.stringify(state));
 
         // Ajax call on the current selection

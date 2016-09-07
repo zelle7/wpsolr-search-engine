@@ -12,6 +12,8 @@ require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
  */
 class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
+	protected $is_query_wildcard;
+
 	protected $solarium_results;
 
 	protected $solarium_query;
@@ -108,13 +110,60 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 
 	/**
-	 * Get suggestions from Solr suggester.
+	 * Get suggestions from Solr (keywords or posts).
 	 *
 	 * @param string $query Keywords to suggest from
 	 *
 	 * @return array
 	 */
 	public function get_suggestions( $query ) {
+
+		$results = array();
+
+		switch ( WPSOLR_Global::getOption()->get_search_suggest_content_type() ) {
+
+			case WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS:
+				$results = $this->get_suggestions_posts( $query );
+				break;
+
+			case WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS:
+				$results = $this->get_suggestions_keywords( $query );
+				break;
+
+			default:
+				break;
+		}
+
+		return $results;
+	}
+
+
+	/**
+	 * Get suggestions from Solr search.
+	 *
+	 * @param string $query Keywords to suggest from
+	 *
+	 * @return array
+	 */
+	public function get_suggestions_posts( $query ) {
+
+		$wpsolr_query = WPSOLR_Global::getQuery();
+		$wpsolr_query->set_wpsolr_query( $query );
+
+		$results = WPSOLR_Global::getSolrClient()->display_results( $wpsolr_query );
+
+		return array_slice( $results[3], 0, 5 );
+	}
+
+
+	/**
+	 * Get suggestions from Solr suggester.
+	 *
+	 * @param string $query Keywords to suggest from
+	 *
+	 * @return array
+	 */
+	public function get_suggestions_keywords( $query ) {
 
 		$results = array();
 
@@ -504,9 +553,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			$url = $this->get_post_url( $document, $post_id );
 
-			$highlightedDoc = $highlighting->getResult( $document->id );
-			$cont_no        = 0;
 			$comm_no        = 0;
+			$highlightedDoc = $highlighting ? $highlighting->getResult( $document->id ) : null;
 			if ( $highlightedDoc ) {
 
 				foreach ( $highlightedDoc as $field => $highlight ) {
@@ -579,14 +627,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			$content = ucfirst( trim( $content ) );
 			$content .= '...';
 
-			//if ( $cont_no == 1 ) {
-			if ( false ) {
-				$msg .= "<div class='p_content'>$image_fragment $content - <a href='$url'>Content match</a></div>";
-			} else {
-				$msg .= "<div class='p_content'>$image_fragment $content</div>";
-			}
-			if ( $comm_no == 1 ) {
-				$msg .= "<div class='p_comment'>" . $comments . "-<a href='$url'>Comment match</a></div>";
+			$msg .= "<div class='p_content'>$image_fragment $content</div>";
+			if ( $comm_no === 1 ) {
+				$comment_link_title = OptionLocalization::get_term( $localization_options, 'results_row_comment_link_title' );
+				$msg .= "<div class='p_comment'>$comments<a href='$url'>$comment_link_title</a></div>";
 			}
 
 			// Groups bloc - Bottom right
@@ -711,6 +755,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		$highlighting_parameters
 	) {
 
+		if ( $this->is_query_wildcard ) {
+			// Wilcard queries does not need highlighting.
+			return;
+		}
+
 		// Field names
 		$field_names = isset( $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ] )
 			? $highlighting_parameters[ self::PARAMETER_HIGHLIGHTING_FIELD_NAMES ]
@@ -781,6 +830,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				$filter_query_field_name  = strtolower( $filter_query_field_array[0] );
 				$filter_query_field_value = isset( $filter_query_field_array[1] ) ? $filter_query_field_array[1] : '';
 
+				// Escape Solr special caracters
+				$filter_query_field_value = $this->escape_solr_special_catacters( $filter_query_field_value );
 
 				if ( ! empty( $filter_query_field_name ) && ! empty( $filter_query_field_value ) ) {
 
@@ -799,6 +850,35 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Escape Solr special caracters
+	 *
+	 * @param string $string_to_escape String to escape
+	 *
+	 * @return mixed
+	 */
+	function escape_solr_special_catacters( $string_to_escape ) {
+
+		$result = $string_to_escape;
+
+		// Special characters and their escape characters. Add more in the array if necessary.
+		$special_characters = array(
+			'"' => '\"', // The double quote sends a nasty syntax error in Solr 5/6
+		);
+
+		// Caracters never found in any string to escape
+		$unique_caracter = 'WPSOLR_MARK_THIS_CARACTERS';
+
+		foreach ( $special_characters as $special_character => $special_character_escaped ) {
+
+			$result = str_replace( $special_character_escaped, $unique_caracter, $string_to_escape ); // do not escape already escaped characters: replace them by a unique character
+			$result = str_replace( $special_character, $special_character_escaped, $result ); // Here it is: escape special character
+			$result = str_replace( $unique_caracter, $special_character_escaped, $result ); // Replace back already escaped characters
+		}
+
+		return $result;
 	}
 
 	/**
@@ -862,6 +942,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
 				WpSolrSchema::_FIELD_NAME_COMMENTS,
 				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+				WpSolrSchema::_FIELD_NAME_DISPLAY_MODIFIED,
 				'*' . WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
 				WpSolrSchema::_FIELD_NAME_AUTHOR,
 				'*' . WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR,
@@ -933,7 +1014,12 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 		}
 
-		$solarium_query->setQuery( $query_field_name . ! empty( $keywords ) ? $keywords : '*' );
+		$this->is_query_wildcard = ( empty( $keywords ) || ( '*' === $keywords ) );
+
+		// Escape Solr special caracters
+		$keywords = $this->escape_solr_special_catacters( $keywords );
+
+		$solarium_query->setQuery( $query_field_name . ( ! $this->is_query_wildcard ? $keywords : '*' ) );
 	}
 
 
@@ -1127,7 +1213,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			return get_posts( array(
 				'numberposts' => count( $posts_ids ),
-				'post_type'   => 'any',
+				'post_type'   => WPSOLR_Global::getOption()->get_option_index_post_types(),
 				'post_status' => 'any',
 				'post__in'    => $posts_ids,
 				'orderby'     => 'post__in',

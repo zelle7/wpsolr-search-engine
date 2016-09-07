@@ -4,8 +4,19 @@
     width: 100%
 }
 
+a.wpsolr_premium_class {
+    float: none;
+    margin-right: 5px;
+    padding: 0px;
+}
+
 a.wpsolr_premium_class.nav-tab span {
     margin-left: 5px;
+    font-size: 11px;
+}
+
+a.wpsolr_premium_class.nav-tab  {
+    background-color: #fff6a6;
 }
 
 .numberCircle {
@@ -26,14 +37,6 @@ a.wpsolr_premium_class.nav-tab span {
 
 .wdm-wrap {
     margin: 10px 20px 0 2px;
-}
-
-.page_title {
-    background-color: #F49537;
-    color: #fff;
-    border-left: 4px solid #C15F03;
-    padding: 5px 15px;
-    margin-bottom: 15px;
 }
 
 .solr_error {
@@ -155,9 +158,11 @@ a.wpsolr_premium_class.nav-tab span {
 
 .wpsolr_license_popup .wdm_note {
     font-style: italic;
+    font-weight: bold;
+    font-size: large;
     color: #f8f8f8;
     margin: 20px;
-    background: #fe59fc;
+    background: #e668fe;
     padding: 15px;
     border-left: 4px solid #0a5374;
 }

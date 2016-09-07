@@ -63,11 +63,12 @@ class WPSOLR_UI_Facets {
 		$facet_id = strtolower( str_replace( ' ', '_', $facet['id'] ) );
 		foreach ( $items as $item ) {
 
+
 			$item_name     = $item['value'];
 			$item_value     = $item['value'];
+			$item_localized_name = ! empty( $item['value_localized'] ) ? $item['value_localized'] : $item['value'];
 			$item_count    = $item['count'];
 			$item_selected = isset( $item['selected'] ) ? $item['selected'] : false;
-
 			// Check if one facet item is selected (once only).
 			if ( $item_selected && ! $is_facet_selected ) {
 				$is_facet_selected = true;
@@ -78,6 +79,7 @@ class WPSOLR_UI_Facets {
 				$item_name = get_post_type_object($item_name)->labels->singular_name;
 			}
 			$html .= '<li>';
+
 			$html .= "<div class='select_opt $facet_class' id='$facet_id:$item_value'>"
 			         . ( empty( $item['items'] ) ? sprintf( $facet_element, $item_name, $item_count ) : $item_name ) // only show count on leaf items (else count is false)
 			         . "</div>";

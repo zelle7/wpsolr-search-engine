@@ -223,6 +223,12 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_ITEM_IS_GALAXY_MASTER = 'is_galaxy_master';
 	const OPTION_SEARCH_ITEM_IS_GALAXY_SLAVE = 'is_galaxy_slave';
 	const OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES = 'is_fuzzy_matches';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE = 'suggest_content_type';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS = 'suggest_content_type_keywords';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_POSTS = 'suggest_content_type_posts';
+	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE = 'suggest_content_type_none';
+	const OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR = 'suggest_jquery_selector';
+	const OPTION_SEARCH_SUGGEST_CLASS_DEFAULT = 'search-field';
 
 	/**
 	 * Get search options array
@@ -369,6 +375,36 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_ITEM_IS_FUZZY_MATCHES ) );
 	}
 
+	/**
+	 * Search suggestions content
+	 * @return string
+	 */
+	public function get_search_suggest_content_type() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_SUGGEST_CONTENT_TYPE, self::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_KEYWORDS );
+	}
+
+	/**
+	 * Search suggestions jquery selector
+	 * @return string
+	 */
+	public function get_search_suggest_jquery_selector() {
+
+		$result = $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR, '' );
+
+		$default_selector = '.' . self::OPTION_SEARCH_SUGGEST_CLASS_DEFAULT;
+
+		if ( empty( $result ) ) {
+
+			$result = $default_selector;
+
+		} else {
+
+			$result = $default_selector . ',' . $result;
+		}
+
+		return $result;
+	}
+
 	/***************************************************************************************************************
 	 *
 	 * Installation
@@ -384,6 +420,8 @@ class WPSOLR_Option {
 	const OPTION_FACET = 'wdm_solr_facet_data';
 	const OPTION_FACET_FACETS = 'facets';
 	const OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH = 'facets_show_hierarchy';
+	const OPTION_FACET_FACETS_LABEL = 'facets_label';
+	const OPTION_FACET_FACETS_ITEMS_LABEL = 'facets_item_label';
 
 	/**
 	 * Get facet options array
@@ -410,6 +448,24 @@ class WPSOLR_Option {
 		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_TO_SHOW_AS_HIERARCH, array() );
 	}
 
+	/**
+	 * Facets labels
+	 *
+	 * @return array Facets names
+	 */
+	public function get_facets_labels() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_LABEL, array() );
+	}
+
+	/**
+	 * Facets items labels
+	 *
+	 * @return array Facets items names
+	 */
+	public function get_facets_items_labels() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_FACET, self::OPTION_FACET_FACETS_ITEMS_LABEL, array() );
+	}
+
 	/***************************************************************************************************************
 	 *
 	 * Indexing option and items
@@ -418,6 +474,8 @@ class WPSOLR_Option {
 	const OPTION_INDEX = 'wdm_solr_form_data';
 	const OPTION_INDEX_ARE_COMMENTS_INDEXED = 'comments';
 	const OPTION_INDEX_IS_REAL_TIME = 'is_real_time';
+	const OPTION_INDEX_POST_TYPES = 'p_types';
+	const OPTION_INDEX_ATTACHMENT_TYPES = 'attachment_types';
 
 	/**
 	 * Get indexing options array
@@ -450,6 +508,21 @@ class WPSOLR_Option {
 	public function get_option_is_installed() {
 
 		return get_option( self::OPTION_INSTALLATION, false );
+	}
+
+	/**
+	 * @return array Post types
+	 */
+	public function get_option_index_post_types() {
+		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_POST_TYPES, '' ) );
+	}
+
+
+	/**
+	 * @return array Post types
+	 */
+	public function get_option_index_attachment_types() {
+		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_ATTACHMENT_TYPES, '' ) );
 	}
 
 	/***************************************************************************************************************
@@ -527,5 +600,64 @@ class WPSOLR_Option {
 	public function get_search_fields_is_active() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH_FIELDS, self::OPTION_SEARCH_FIELDS_IS_ACTIVE ) );
 	}
+
+
+	/*
+	 * Domains used in multi-language string plugins to store dynamic wpsolr translations
+	 */
+	const TRANSLATION_DOMAIN_FACET_LABEL = 'wpsolr facet label'; // Do not change
+
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Embed any document
+	 *
+	 **************************************************************************************************************/
+	const OPTION_EMBED_ANY_DOCUMENT = 'wdm_solr_extension_embed_any_document_data';
+	const OPTION_EMBED_ANY_DOCUMENT_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
+
+	/**
+	 * Is search embedded documents options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_embed_any_document_is_do_embed_documents() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_EMBED_ANY_DOCUMENT, self::OPTION_EMBED_ANY_DOCUMENT_IS_EMBED_DOCUMENTS ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Pdf Embedder
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PDF_EMBEDDER = 'wdm_solr_extension_pdf_embedder_data';
+	const OPTION_PDF_EMBEDDER_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
+
+	/**
+	 * Is search embedded documents options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_pdf_embedder_is_do_embed_documents() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PDF_EMBEDDER, self::OPTION_PDF_EMBEDDER_IS_EMBED_DOCUMENTS ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Google Doc Embedder
+	 *
+	 **************************************************************************************************************/
+	const OPTION_GOOGLE_DOC_EMBEDDER = 'wdm_solr_extension_google_doc_embedder_data';
+	const OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS = 'is_do_embed_documents';
+
+	/**
+	 * Is search embedded documents options active ?
+	 *
+	 * @return boolean
+	 */
+	public function get_google_doc_embedder_is_do_embed_documents() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GOOGLE_DOC_EMBEDDER, self::OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS ) );
+	}
+
 
 }

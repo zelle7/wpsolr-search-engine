@@ -69,11 +69,23 @@ class WpSolrExtensions {
 	// Option: licenses
 	const OPTION_LICENSES = 'Licenses';
 
+	// Extension: bbpress
+	const EXTENSION_BBPRESS = 'bbpress';
+
+	// Extension: Embed Any Document
+	const EXTENSION_EMBED_ANY_DOCUMENT = 'embed any document';
+
+	// Extension: Pdf Embedder
+	const EXTENSION_PDF_EMBEDDER = 'pdf embedder';
+
+	// Extension: Google Doc Embedder
+	const EXTENSION_GOOGLE_DOC_EMBEDDER = 'google doc embedder';
+
 	/*
 	 * Extensions configuration
 	 */
 	private static $extensions_array = array(
-		self::OPTION_INDEXES              =>
+		self::OPTION_INDEXES                =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionIndexes',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'OptionIndexes',
@@ -85,7 +97,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::OPTION_LOCALIZATION         =>
+		self::OPTION_LOCALIZATION           =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionLocalization',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'OptionLocalization',
@@ -97,7 +109,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_GROUPS            =>
+		self::EXTENSION_GROUPS              =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginGroups',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'Groups_WordPress',
@@ -109,7 +121,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_S2MEMBER          =>
+		self::EXTENSION_S2MEMBER            =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginS2Member',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'c_ws_plugin__s2member_utils_s2o',
@@ -121,7 +133,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_WPML              =>
+		self::EXTENSION_WPML                =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginWpml',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'SitePress',
@@ -133,7 +145,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_POLYLANG          =>
+		self::EXTENSION_POLYLANG            =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginPolylang',
 				self::_CONFIG_PLUGIN_FUNCTION_NAME              => 'pll_get_post',
@@ -145,7 +157,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_QTRANSLATEX       =>
+		self::EXTENSION_QTRANSLATEX         =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginQTranslateX',
 				self::_CONFIG_PLUGIN_CONSTANT_NAME              => 'QTRANSLATE_FILE',
@@ -157,7 +169,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::OPTION_MANAGED_SOLR_SERVERS =>
+		self::OPTION_MANAGED_SOLR_SERVERS   =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionManagedSolrServers',
 				self::_CONFIG_PLUGIN_FUNCTION_NAME              => 'OptionManagedSolrServers',
@@ -169,7 +181,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_WOOCOMMERCE       =>
+		self::EXTENSION_WOOCOMMERCE         =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginWooCommerce',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'WooCommerce',
@@ -181,7 +193,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_ACF               =>
+		self::EXTENSION_ACF                 =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginAcf',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'acf',
@@ -193,7 +205,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::EXTENSION_TYPES             =>
+		self::EXTENSION_TYPES               =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginTypes',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'WPCF_Field',
@@ -205,7 +217,7 @@ class WpSolrExtensions {
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			),
-		self::OPTION_LICENSES             =>
+		self::OPTION_LICENSES               =>
 			array(
 				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionLicenses',
 				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'OptionLicenses',
@@ -214,6 +226,54 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'licenses/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_licenses',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_BBPRESS             =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginBbPress',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'bbPress',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'bbpress/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'bbpress/plugin-bbpress.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'bbpress/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_bbpress_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_EMBED_ANY_DOCUMENT  =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginEmbedAnyDocument',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'Awsm_embed',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'embed-any-document/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'embed-any-document/plugin-embed-any-document.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'embed-any-document/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_embed_any_document_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_PDF_EMBEDDER        =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginPdfEmbedder',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'pdfemb_basic_pdf_embedder',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'pdf-embedder/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'pdf-embedder/plugin-pdf-embedder.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'pdf-embedder/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_pdf_embedder_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_GOOGLE_DOC_EMBEDDER =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginGoogleDocEmbedder',
+				self::_CONFIG_PLUGIN_CONSTANT_NAME              => 'GDE_PLUGIN_DIR',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'google-doc-embedder/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'google-doc-embedder/plugin-google-doc-embedder.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'google-doc-embedder/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_google_doc_embedder_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)
@@ -576,4 +636,58 @@ class WpSolrExtensions {
 
 		return $form_data;
 	}
+
+	/**
+	 * Get the dynamic strings to translate among the group data of all extensions translatable.
+	 *
+	 * @return array Translations
+	 */
+	public static function extract_strings_to_translate_for_all_extensions() {
+
+		$translations = array();
+
+		// Translate facet labels
+		$labels = WPSOLR_Global::getOption()->get_facets_labels();
+		if ( is_array( $labels ) && ! empty( $labels ) ) {
+			foreach ( $labels as $facet_name => $facet_label ) {
+				if ( ! empty( $facet_label ) ) {
+					$translation           = array();
+					$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
+					$translation['name']   = $facet_name;
+					$translation['text']   = $facet_label;
+
+					array_push( $translations, $translation );
+				}
+			}
+		}
+
+		// Translate facet items labels
+		$labels = WPSOLR_Global::getOption()->get_facets_items_labels();
+		if ( is_array( $labels ) && ! empty( $labels ) ) {
+			foreach ( $labels as $facet_name => $facet_items_labels ) {
+				foreach ( $facet_items_labels as $facet_item_name => $facet_item_label ) {
+					if ( ! empty( $facet_item_label ) ) {
+						$translation           = array();
+						$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL;
+						$translation['name']   = $facet_item_name;
+						$translation['text']   = $facet_item_label;
+
+						array_push( $translations, $translation );
+					}
+				}
+			}
+		}
+
+		if ( count( $translations ) > 0 ) {
+
+			// Translate
+			do_action( WpSolrFilters::ACTION_TRANSLATION_REGISTER_STRINGS,
+				array(
+					'translations' => $translations
+				)
+			);
+		}
+
+	}
+
 }

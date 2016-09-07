@@ -64,4 +64,16 @@ class WpSolrFilters {
 	// Filter a sort option
 	const WPSOLR_FILTER_SORT = 'wpsolr_filter_sort';
 
+	// Action to add string translations to WPML/Polylang
+	const ACTION_TRANSLATION_REGISTER_STRINGS = 'wpsolr_action_translation_register_strings';
+
+	// Get a translated string from WPML/Polylang
+	const WPSOLR_FILTER_TRANSLATION_STRING = 'wpsolr_filter_translation_string';
+
+	// Get attachments that will be added to the body of the indexed post
+	const WPSOLR_FILTER_GET_POST_ATTACHMENTS = 'wpsolr_filter_get_post_attachments';
+
+	// Filter custom fields to be indexed
+	const WPSOLR_FILTER_INDEX_CUSTOM_FIELDS = 'wpsolr_filter_index_custom_fields';
+
 }

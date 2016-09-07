@@ -3,251 +3,55 @@ to pull changes from github origin
 git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
 
 === Search from one to thousands of sites with Solr - WPSOLR ===
+=======
+=== Search for WordPress, WooCommerce, bbPress, that never gets stuck - WPSOLR ===
+
 
 
 === Universal search with ACF, WooCommerce, WPML, Polylang - WPSOLR ===
 
 Contributors: wpsolr
 
-Current Version: 10.8
+Current Version: 13.3
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: search, Solr in WordPress, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
-Tested up to: 4.5.2
+Tested up to: 4.6
 
-Stable tag: 10.8
+Stable tag: 13.3
 
-Standalone or multisites search with Apache Solr. Hundreds of features. Scalable.
+Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
 
-= Premium/Consulting =
+You definitely need wpsolr search if you agree with one of:
 
-[Premium features](http://wpsolr.com/pricing/ "premium features"), grouped in packs, are described here.
+- My current search page, my instant (live) product suggestions, are so slow that my visitors are leaving without buying anything, without subscribing to anything
 
-If you have specific needs, we also provide development services. Contact us at our http://wpsolr.com/ chatbox.
+- I have too many posts, products, visitors, comments, and I cannot afford hundred of dollars on external search hosted services
 
-= Plugin demo video =
-[youtube https://www.youtube.com/watch?v=Di2QExcliCo&hd=1]
+- Most of my data is stored in pdf files, word files, excel files. I need to search these formats too.
 
-= Why another search plugin for WP / WooCommerce / Coupons / Affiliate feeds ? =
-Each blog/store owner is (should) be aware that search is probaly the mot important feature for their visitors.
-Because potential visitors/customers have to find the right post/product among your blog/catalog, before even starting the order funnel.
+- My customers are international, they speak different languages. My search should be multilingual also.
 
-Therefore, your search must be relevant, and fast.
+- I want a modern search with tons of features. Ajax, facets, partial match search, fuzzy match search.
 
-1) Fast
+- I want to filter my woocommerce search results with any taxonomies, custom fields, attributes, or variations.
 
-If your search is not fast, I mean below a second, your visitor will leave because he knows there are other websites and does not want to spend too much time on each one.
-On the contrary, if a visitor finds quicky the product he looks for, he has achieved the first step to complete an order.
-But traditional search gets slower and slower the more products/attributes/variants you get in your store.
+- I have several sites, unrelated, but I want to give my visitors a single search page combining all their content
 
-Fortunatly, WPSOLR is powered by the world's most used search engine, Apache Solr. Apache Solr is built from the ground to perform under a large quantity of information (many millions) and simulatneous searches.
-
-2) Relevant
-
-A search must return results, and only relevant results.
-To do so, search should be performed on all the informations available on your products: pdfs, attributes, variants, description, excerpt, shortcodes ...
-And, search should be able to perform some automatic corrections (Did you mean ?), or suggestions.
-
-WPSOLR provides many configurations settings, and can be extended with many more Apache Solr tunings.
-
-= Search server =
-- Test the plugin with a free Solr index ready-to-use included.
-- OR install and setup your own FREE [Solr server](http://lucene.apache.org/solr/ "Apache Solr").
-- OR if you lack the skills, buy an optional ready-to-use [Solr hosting cloud subscription](http://www.gotosolr.com/en/on-demand-solr-pricing/ "Solr hosting subscription").
-[youtube https://www.youtube.com/watch?v=USJiu7HRhTQ&hd=1]
-
-= Portfolio videos =
-e-commerce, non-ajax, multi-filters, website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=YCh9OqXJ3Gw&hd=1]
-
-e-commerce, ajax, multi-filters, website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=5ibXwouAPHM&hd=1]
-
-Multi-language, multi-filters, website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=Cby0rJTSLt4&hd=1]
-
-US website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=xOXQoKsWGMg&hd=1]
-
-Spanish website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=nlwFGKhEZWg&hd=1]
-
-Swiss website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=50h5M4T5CR4&hd=1]
-
-German website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=6Ij3sf0yyzw&hd=1]
-
-Turkish website front-end using WPSOLR:
-[youtube https://www.youtube.com/watch?v=S0JvK6oyX0w&hd=1]
-
-= Features =
-- Solr Indexes options
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-25.png?r= "Free Solr index"): Get a free instant cloud Solr index ready for testing
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-26.png?r= "Configure several Solr index"): Create one or several Solr indexes
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-27.png?r= "Create local and cloud Solr indexes"): Create local or cloud Solr indexes
-  - Get status of Solr indexes
-  - Support https secure protocol
-  - Support Basic Http authentication
-  - Solr config files delivered (schema.xml, config.xml)
-  - Solr 4.x and 5.x supported
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"), [Screenshot POLYLANG](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "WPML integration"): (Premium feature) Multi-language supported in the most flexible way: one index by language
-  - Tune hundreds of Solr parameters by updating our config files and reloading your index
-- Display search results options
-  - Search form and search page results generated from the options selected (no coding needed)
-  - Use css and js to customize display of search form and search page (see website examples below)
-  - Ajax search, to display results fast.
-  - Option to display Ajax search parameters in url. Back/Forward browser buttons are compatible with Ajax search
-  - (Premium feature) Replace WordPress default search form automatically (no change required in your code)
-  - (Premium feature) Choose Infinite scroll pagination or standard pagination
-  - Do not automatically trigger the search, when a user clicks on the autocomplete list
-  - (Premium feature) Display suggestions (Did you mean?) when no results are found
-  - Choose number of results displayed by page
-  - Choose number of items displayed by filters
-  - Choose maximum size of each snippet text in results
-- Indexing options
-  - Choose to index post excerpt or not
-  - Choose to expand shortcodes of post content before indexing
-  - Choose post types, including (Premium feature) custom post types, to be indexed
-  - (Premium feature) Choose attachement types to be indexed
-  - (Premium feature) Choose custom taxonomies to be indexed
-  - (Premium feature) Choose custom fields to be indexed
-  - Choose to index comments or not
-  - List of item ids excluded from indexing
-- filters options
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-7.png "Solr filters"): Choose which indexed items are going to be used as filters (filters)
-  - Drag and drop filters as you like them to be displayed
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-24.png "Solr filters multi-selection"): Multi-selection of filters
-  - (Premium feature) Display filter hierarchies
-- Sort options
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-15.png "Solr sort"): Choose which items are going to be used as sort
-  - Drag and drop sort items as you like them to be displayed
-- Localization options
-  - [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-16.png "Solr localization"): You can change every bit of text displayed in the search page/form
-  - (Premium feature) You can use our/your translation files (.po, .mo) in a multi-language website
-- Integration with other plugins
-  - (Premium feature) Integration with WooCommerce
-  - (Premium feature) Integration with Advanced Custom Fields
-  - (Premium feature) Integration with Types
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): (Premium feature) Integration with WPML
-  - [Screenshot WPML](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): (Premium feature) Integration with Polylang
-  - (Premium feature) Integration with Groups
-  - (Premium feature) Integration with s2Member
-  - Contact us in the forum if you need another plugin integration
-- Indexing Batch options
-  - Can index one or several Solr indexes
-  - Batch indexing by lot to boost performance. Lot size can be changed.
-  - Real-time indexing as soon as a post/attachement is updated
-  - Option to empty a Solr index
-  - Option to synchronize a Solr index (index remaining data)
-  - (Premium feature) Option to fully synchronize a Solr index (index all data from start)
-  - (Premium feature) Option to debug SQL queries
-
-= Some websites using WPSOLR, with filters, suggestions, and did you mean features =
-- Search "thinktank" at http://www.avenir-suisse.ch
-- Search "båtar" at http://batunionen.se/ (results found in attached pdf files)
-- Search "educación" at http://www.gaceta.unam.mx/
-- Search "constructor" at http://boplex.com/ (> 100 000 posts searchable on this site)
-- Search "app" at http://healthitlink.com/ (> 80 000 apps searchable on this site)
-- Search "education" at http://www.nmc.org/
-- Search "renewable" at http://www.sunverge.com/
-- Search "restaurant" at https://digitalltag.de/
-- Contact us in the forum should your website be seen here!
-
-= Front-end translations =
-- French (fr_FR) by WPSOLR.
-- Deutch (nl_NL) by matthijs.
-
-= I don't have an Apache Solr server, how can I test WPSOLR search ? =
-We provide a free anonymous Apache Solr index for 2 hours, pre-configured with WPSOLR schema.xml. You can test WPSOLR, without the burden of installing Apache Solr. After that, the index is automatically deleted, unless you buy a plan to extend it.
-
-= About us =
-WPSOLR is backed by professionals. We are committed to develop and support new features for a long time.
-
-= Need support ? =
-- We deliver free bug and suggestions support with the community forum.
-- We deliver professional Zendesk support, and an assistance to setup WPSOLR, with a <a href="http://www.gotosolr.com/en" target="_blank">Gotosolr subscription</a>.
-
-= How fast is WPSOLR ? =
-Searches should be under 500ms, whatever the number of posts you have.
-
-= Is there any size limit ? =
-WPSOLR can manage virtually any number of posts. The only constraint is the time to index all your posts the first time. We have users with hundreds of thousands, even millions, of posts.
-
-= 1 million documents search =
-Review on a 1 million documents search : <a href="https://wordpress.org/support/topic/awesome-plugin-1526" target="_blank">"Have used it to index over 1 million data in a custom WP application and the results have been fantastic"</a>.
-
-= Our plugin website =
-<a href="http://www.wpsolr.com" target="_blank">http://www.wpsolr.com</a>
-
-= Our Solr hosting website =
-If you do not want to host your own Solr server: <a href="http://www.gotosolr.com/en" target="_blank">http://www.gotosolr.com</a>
-
-= Multi-language live search demo with WPML (POLYLANG supported too) =
-Visit <a href='http://www.gotosolr.com/en/search-wpsolr/?wpsolr_q=solr'>English/French WPML search page demo</a>.
-
-= Super fast live suggestions 500ms =
-Try on words like « solr », « cassandra », « security », « indexes », « search ».
-
-= Super fast filters 500ms =
-Notice the filters on the left side with their nice clicked Ajax display, the terms highlighting in the results snippets, the « order by » drop-down list.
-
-= Did you mean =
-To test the « did you mean » (suggestions on misspelled words), you can search on « soler » (suggested as « solr »), or « casandra » (suggested as « cassandra »).
-
-= Compatibility =
-Compatible with Apache Solr up to Solr 5.2
-
-= Tuning =
-Tune your search page and results with WPSOLR admin panels.
-
-Tune even more your search with hundreds of parameters, just by tweaking the standard Apache Solr files, solrconfig.xml and schema.xml.
-
-Search in multi-language content, with language specific stemming, stopwords, synonyms,
-
-Boost your search with multi-media content (pdf, .xls, .doc), filters, autocompletion, suggestions, and optional hosting.
-
-= Why Apache Solr ? =
-Standard WP search is performed by SQL queries directly on the database. So do most of search plugins.
-But SQL is awfully greedy in computer resources, especially when it comes to table joins and wild cards (select * where field like ‘%keyword%’), which are both heavily used by search.
-And SQL can’t keep well with natural language: synonyms, language specific plurals, stop-words, …
-
-Fortunately, performance and relevance are features built specifically in full-text search engines.
-Using a search engine, you’ll be able to deliver more accurate search to your visitors, for far less computer resources, which means better for cheaper.
-
-The purpose of this plugin is to help you setup your dear Wordpress search to your own Apache Solr server, or to a hosted Apache server.
-Apache Solr is the World leading Open source full-text Search Engine. No question on that.
-
-And now, with this plugin, you can get it for free. So, fasten your seat belt, and enjoy the trip.
+- My bbPress search cannot handle thousands, hundreds of thousands of topics and replies.
 
 
-= Features =
+If not, there are plenty of great search plugins out there to help you.
 
-1. Benefit from Apache Solr for faster, better search results.
-2. Incremental indexing: only new or updated posts are indexed. Perfect for tens of thousands of posts.
-3. Real-time indexing: as soon as a post is published/unpublished, it is indexed/de-indexed. No outdated results are displayed.
-3. Search in post attachements: pdf, .doc, .xls ...
-4. Text-analysis to break down search phrases, to search entire phrase or individual words.
-5. Advanced filtered search on fields such as tags, categories, author, and page type and custom fields.
-6. Highlighted search words in the text.
-7. Autocomplete suggestions, correct spelling mistakes
-8. Provide a "Did you mean?" query suggestion.
-9. Sorting based on time and number of comments.
-10. Configuration options allow you to select pages to ignore.
-11. Host Solr remotely using gotosolr.
-12. Solr configuration made easy.
-13. Multi-language search is supported with WPML and POLYLANG.
-
-For more details visit <a href='http://wpsolr.com'>wpsolr.com</a>
-
+But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
 
 
 == Installation ==
@@ -291,8 +95,123 @@ Installation procedure for Apache Solr: see FAQ section.
 28. 28) Admin: show categories and custom taxonomies hierarchy.
 29. 29) Admin: stop real-time indexing.
 30. 30) Admin: Add boosts to any searched field.
+31. 31) Admin: Change facets labels.
+32. 32) Admin: Translate facets labels with WPML or POLYLANG string modules.
+33. 33) Admin: Metabox.
+34. 34) Admin: Metabox selection to index and search embedded files defined with an ACF field of type file ID or file object.
+35. 35) Admin: Search in Embed Any Document post content.
+36. 36) Admin: Search in Pdf Embedder post content.
+37. 37) Admin: Search in Google Doc Embedder post content.
+38. 38) Admin: Ajax product suggestions.
+39. 39) ACF: Create ACF repeater fields.
+40. 40) Admin: Index ACF repeater fields.
+41. 41) Admin: Select ACF repeater fields as facets.
+42. 42) Admin: Create a post with ACF repeater fields.
+43. 43) Front: Search in ACF repeater fields, and filter ACF repeater fields with facets.
 
 == Changelog ==
+
+= 13.3 =
+* Removed wpml-config.xml from plugin directory. It provoked an error with the strict XML parser introduced by Polylang 2 versions.
+
+= 13.2 =
+* Fix empty results when filtering with a facet containing a double quote
+* Fix empty results when searching with a keyword containing a double quote
+* Fix ajax search box not showing double quotes
+
+= 13.1 =
+* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from http://wpsolr.com/releases/#1.0, install on your Solr index, and reload the Solr index (or restart Solr).
+* Comments/Replies are indexed in real-time.
+* Comments/Replies are searchable, autocompleted, and spellchecked.
+* Comments/Replies fields and terms can be boosted.
+* Reorder selected/Unselected options in screen "indexed data".
+* WARNING: if you want to activate comments/replies indexing/searching, this will require you to re-index all your documents containing comments/replies. It can take a while if you have a large amount of documents in your WP database.
+
+= 13.0 =
+* (ACF Pack) Index and search, with facets, ACF repeater fields. Do not index empty ACF fields.
+* [Screenshot: ACF: Create ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-39.png "ACF: Create ACF repeater fields")
+* [Screenshot: Admin: Index ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-40.png "Admin: Index ACF repeater fields")
+* [Screenshot: Admin: Select ACF repeater fields as facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-41.png "Admin: Select ACF repeater fields as facets")
+* [Screenshot: Admin: Create a post with ACF repeater fields](https://s.w.org/plugins/wpsolr-search-engine/screenshot-42.png "Admin: Create a post with ACF repeater fields")
+* [Screenshot: Front: Search in ACF repeater fields, and filter ACF repeater fields with facets](https://s.w.org/plugins/wpsolr-search-engine/screenshot-43.png "Front: Search in ACF repeater fields, and filter ACF repeater fields with facets")
+* Do not show keywords highlighting with empty keywords.
+* Extensions now detect plugins loaded by the active theme (for instance, ACF can do that).
+
+= 12.9 =
+* Compatibility with Wordpress 4.6.
+* You need to upgrade to this version before upgrading to Wordpress 4.6
+* Remove dependency to http library http://requests.ryanmccue.info/ in conflict with the version newly delivered with Wordpress 4.6.
+
+= 12.8 =
+* Fix pages content not indexed
+* Fix metabox warning when a page is saved and indexed in real-time
+
+= 12.7 =
+* You can now attach suggestions list to any search form in your own theme, by setting a jQuery selector.
+
+= 12.6 =
+* Add Ajax product suggestions to search form. You now have the choice between products or keywords suggestions.
+* [Screenshot: Ajax product suggestions](https://s.w.org/plugins/wpsolr-search-engine/screenshot-38.png "Ajax product suggestions")
+
+= 12.5 =
+* Fix Ajax InfiniteScroll pagination javascript.
+
+= 12.4 =
+* Add a video explainer.
+
+= 12.3 =
+* (Google Doc Embedder Pack) New pack integrating with plugin Google Doc Embedder. Documents embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded pdf).
+* [Screenshot: Search in Google Doc Embedder post content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-37.png "Search in Google Doc Embedder post content")
+
+= 12.2 =
+* (Pdf Embedder Pack) New pack integrating with plugin Pdf Embedder. Pdfs embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded pdf).
+* [Screenshot: Search in Pdf Embedder post content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-36.png "Search in Pdf Embedder post content")
+
+= 12.1 =
+* (Embed Any Document Pack) New pack integrating with plugin Embed Any Document. Documents embedded with the plugin will be indexed and searched, within their post content (the post is returned by the search, not the embedded document).
+* [Screenshot: Search in Embed Any Document post content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-35.png "Search in Embed Any Document post content")
+
+= 12.0 =
+* (ACF Pack) Add checkbox to wpsolr metabox. When a post contains an ACF field of type "file" (File Object, File ID, File URL), the file content is added to the post body (indexed and searched).
+* [Screenshot: Metabox selection to index and search embedded files defined with an ACF field of type file](https://s.w.org/plugins/wpsolr-search-engine/screenshot-34.png "Metabox selection to index and search embedded files defined with an ACF field of type file ")
+
+= 11.9 =
+* Add a metabox to all post types.
+* [Screenshot: Add checkbox indexing/not indexing in the metabox](https://s.w.org/plugins/wpsolr-search-engine/screenshot-33.png "Enable/disable indexing in the metabox")
+
+= 11.8 =
+* Show index name in admin notice when a post is saved/deleted. Usefull to check that the current post is indexed in it's language related Solr index, with WPML or Polylang.
+
+= 11.7 =
+* (ACF Pack) Decode multi-valued ACF fields before sending to Solr index.
+* WARNING: this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+
+= 11.6 =
+* Add a feedback link in admin pages footer. Tell us what you do not like, what is missing, or why not what you love.
+
+= 11.5 =
+* (bbPress pack) The new bbPress integration replaces the bbPress search in forums / topics / replies, with the Solr search, while keeping your bbPress theme.
+You can now easily and quickly search in millions of topics and replies.
+
+= 11.4 =
+* Index attachments when they are updated.
+
+= 11.3 =
+* Remove a php warning message on admin pages.
+
+= 11.2 =
+* (WooCommerce pack) Fix error when indexing also non-product types.
+
+= 11.1 =
+* (Premium pack) Manage post type facets labels ('post', 'page', 'product' ...), including their translations with WPML/POLYLANG string modules.
+
+= 11.0 =
+* Add a 7 days trial for all packs (Premium, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF).
+
+= 10.9 =
+* (Premium pack) Manage facets labels, including their translations with WPML/POLYLANG string modules.
+[Screenshot: add facets labels](https://s.w.org/plugins/wpsolr-search-engine/screenshot-31.png "Add facets labels")
+[Screenshot: translate facets labels with WPML/POLYLANG string modules](https://s.w.org/plugins/wpsolr-search-engine/screenshot-32.png "translate facets labels with WPML/POLYLANG string modules")
 
 = 10.8 =
 * (Premium pack) Add boost values to certain fields to favor results matching certain values. [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-30.png?r=1453376 "Add boost query to any searched field")
@@ -460,7 +379,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * Custom fields beginning with "_" can be indexed/searched/autocompleted.
 
 = 6.0 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): fully support multi-language search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-18.png "POLYLANG integration"): fully support multilingual search form and search results with the plugin POLYLANG, by mapping one Solr index by language.
 
 = 5.9 =
 * Fix a bug when configuring several Solr indexes.
@@ -504,7 +423,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 * Fix error while updating the Solr index when post/page are published or trashed.
 
 = 4.9 =
-* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multi-language search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
+* [Screenshot](https://s.w.org/plugins/wpsolr-search-engine/screenshot-17.png "WPML integration"): Fully support multilingual search form and search results with the plugin WPML (tested for WPML Multilingual CMS > 3.1.6).
 * Use .mo files to translate the search form and search results front-end texts.
 * Manage several Solr indexes.
 * The search page is now /search-wpsolr (to be sure it does not exist yet). Migrate your /search-results page content if you customized it.
@@ -525,7 +444,7 @@ Just activate the WooCommerce integration, and select your products attributes i
 - With gettext() standard .po/.mo files
 - With WPML string translation module
 * Translation files are not delivered, but /lang/wpsolr.pot can be used to generate the .po and .mo files, or WPSOLR sources can be parsed to generate a .pot file (with poedit free tool for instance).
-* Multi-language is not supported in Solr search, yet. Only the front-end texts can be multi-language.
+* Multi-language is not supported in Solr search, yet. Only the front-end texts can be multilingual.
 
 = 4.4 =
 * Fix several admin and front-end php notices
@@ -649,6 +568,10 @@ Just activate the WooCommerce integration, and select your products attributes i
 
 
 == Frequently Asked Questions ==
+
+= Is there a trial for the extra packs ? =
+
+Yes, we added a 7 days trial for all packs (Premium, bbPress, Woocommerce, WPML, Polylang, S2member, Groups, Types, ACF). Download wpsolr, then the trial instructions.
 
 = What is the installation procedure for Solr on Windows ? =
 

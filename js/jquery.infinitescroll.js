@@ -63,15 +63,15 @@ jQuery(document).scroll(function () {
 
         if (info.numberofelements > 1) {
 
-            var offset = jQuery("#pagination-flickr").offset();
             var scrollposition = jQuery('body').scrollTop();
-            var position = Math.round(offset.top);
+            var resultsHeight = jQuery(".results-by-facets").outerHeight();
+            var resultsPosition = jQuery(".results-by-facets").offset().top;
 
+            //console.log('scrollposition:' + scrollposition);
+            //console.log('resultsHeight:' + resultsHeight);
+            //console.log('resultsPosition:' + resultsPosition);
 
-            scrollpositionnew = scrollposition + 600;
-
-
-            if (scrollpositionnew >= position && info.curentpage <= info.numberofelements && info.inprogress == 'no') {
+            if ((resultsHeight - resultsPosition < scrollposition) && info.curentpage <= info.numberofelements && info.inprogress == 'no') {
 
                 info.inprogress = 'yes';
                 showloading(); // show loading bar

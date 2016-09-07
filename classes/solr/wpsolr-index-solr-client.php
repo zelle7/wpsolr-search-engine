@@ -1,6 +1,7 @@
 <?php
 
 require_once plugin_dir_path( __FILE__ ) . 'wpsolr-abstract-solr-client.php';
+require_once plugin_dir_path( __FILE__ ) . '../metabox/wpsolr-metabox.php';
 
 class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
@@ -48,6 +49,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		$this->index_indice    = $solr_index_indice;
+		$this->index           = $options_indexes->get_index( $solr_index_indice );
 		$this->solarium_client = new Solarium\Client( $config );
 
 	}
@@ -367,16 +369,26 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			for ( $idx = 0; $idx < $postcount; $idx ++ ) {
 				$postid = $ids_array[ $idx ]['ID'];
 
-				// If post is not on blacklist
-				if ( ! in_array( $postid, $ex_ids ) ) {
+				// If post is not on blacklist, and post is not marked as not indexed
+				if ( ! in_array( $postid, $ex_ids, true ) && ( ! WPSOLR_Metabox::get_metabox_is_do_not_index( $postid ) ) ) {
 					// If post is not an attachment
-					if ( $ids_array[ $idx ]['post_type'] != 'attachment' ) {
+					if ( $ids_array[ $idx ]['post_type'] !== 'attachment' ) {
 
 						// Count this post
 						$doc_count ++;
 
+						// Customize the attachment body, if attachments are linked to the current post
+						$post_attachments = apply_filters( WpSolrFilters::WPSOLR_FILTER_GET_POST_ATTACHMENTS, array(), $postid );
+
+						// Get the attachments body with a Solr Tika extract query
+						$attachment_body = '';
+						foreach ( $post_attachments as $post_attachment ) {
+							$attachment_body .= ( empty( $attachment_body ) ? '' : '. ' ) . self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, $post_attachment );
+						}
+
+
 						// Get the posts data
-						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ) );
+						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ), $attachment_body );
 
 						if ( $is_debug_indexing ) {
 							$this->add_debug_line( $debug_text, null, Array(
@@ -399,7 +411,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$doc_count ++;
 
 						// Get the attachments body with a Solr Tika extract query
-						$attachment_body = self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, get_post( $postid ) );
+						$attachment_body = self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, array( 'post_id' => $postid ) );
 
 						// Get the posts data
 						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ), $attachment_body );
@@ -427,7 +439,20 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 			// Send batch documents to Solr
-			$res_final = self::send_posts_or_attachments_to_solr_index( $updateQuery, $documents );
+			try {
+
+				$res_final = self::send_posts_or_attachments_to_solr_index( $updateQuery, $documents );
+
+			} catch ( Exception $e ) {
+
+				if ( $is_debug_indexing ) {
+					// Echo debug text now, else it will be hidden by the exception
+					echo $debug_text;
+				}
+
+				// Continue
+				throw $e;
+			}
 
 			// Solr error, or only $post to index: exit loop
 			if ( ( ! $res_final ) OR isset( $post ) ) {
@@ -492,24 +517,28 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	public
 	function create_solr_document_from_post_or_attachment(
-		$solarium_update_query, $post_to_index, $attachment_body = null
+		$solarium_update_query, $post_to_index, $attachment_body = ''
 	) {
 
 		$pid    = $post_to_index->ID;
 		$ptitle = $post_to_index->post_title;
-		if ( isset( $attachment_body ) ) {
+		if ( ! empty( $attachment_body ) ) {
 			// Post is an attachment: we get the document body from the function call
 			$pcontent = $attachment_body;
 		} else {
 			// Post is NOT an attachment: we get the document body from the post object
-			$pcontent = $post_to_index->post_content;
+			$pcontent = empty( $attachment_body ) ? $post_to_index->post_content : $post_to_index->post_content . '. ' . $attachment_body;
 		}
 
-		$pexcerpt         = $post_to_index->post_excerpt;
-		$pauth_info       = get_userdata( $post_to_index->post_author );
-		$pauthor          = isset( $pauth_info ) ? $pauth_info->display_name : '';
-		$pauthor_s        = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
-		$ptype            = $post_to_index->post_type;
+		$pexcerpt   = $post_to_index->post_excerpt;
+		$pauth_info = get_userdata( $post_to_index->post_author );
+		$pauthor    = isset( $pauth_info ) ? $pauth_info->display_name : '';
+		$pauthor_s  = isset( $pauth_info ) ? get_author_posts_url( $pauth_info->ID, $pauth_info->user_nicename ) : '';
+
+		// Get the current post language
+		$post_language = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_LANGUAGE, null, $post_to_index );
+		$ptype         = $post_to_index->post_type;
+
 		$pdate            = solr_format_date( $post_to_index->post_date_gmt );
 		$pmodified        = solr_format_date( $post_to_index->post_modified_gmt );
 		$pdisplaydate     = $post_to_index->post_date;
@@ -612,6 +641,14 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			// Excerpt can therefore be: searched, autocompleted, highlighted.
 			$pcontent .= self::CONTENT_SEPARATOR . $pexcerpt;
 		}
+
+		if ( ! empty( $pcomments ) ) {
+
+			// Index post comments, by adding it to the post content.
+			// Excerpt can therefore be: searched, autocompleted, highlighted.
+			//$pcontent .= self::CONTENT_SEPARATOR . implode( self::CONTENT_SEPARATOR, $pcomments );
+		}
+
 
 		$content_with_shortcodes_expanded_or_stripped = $pcontent;
 		if ( isset( $this->solr_indexing_options['is_shortcode_expanded'] ) && ( strpos( $pcontent, '[solr_search_shortcode]' ) === false ) ) {
@@ -763,12 +800,16 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						foreach ( $field as $field_value ) {
 							$field_value_stripped = strip_tags( $field_value );
 
-							array_push( $array_nm1, $field_value_stripped );
-							array_push( $array_nm2, $field_value_stripped );
+							// Only index the field if it has a value.
+							if ( ! empty( $field_value_stripped ) ) {
 
-							// Add current custom field values to custom fields search field
-							// $field being an array, we add each of it's element
-							array_push( $existing_custom_fields, $field_value_stripped );
+								array_push( $array_nm1, $field_value_stripped );
+								array_push( $array_nm2, $field_value_stripped );
+
+								// Add current custom field values to custom fields search field
+								// $field being an array, we add each of it's element
+								array_push( $existing_custom_fields, $field_value_stripped );
+							}
 						}
 
 						$solarium_document_for_update->$nm1 = $array_nm1;
@@ -788,7 +829,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	}
 
 	/**
-	 * @param $solarium_extract_query
+	 * @param Solarium\QueryType\Extract\Query $solarium_extract_query
 	 * @param $post
 	 *
 	 * @return string
@@ -796,12 +837,14 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	public
 	function extract_attachment_text_by_calling_solr_tika(
-		$solarium_extract_query, $post
+		$solarium_extract_query, $post_attachement
 	) {
 
 		try {
+			$post_attachement_file = ! empty( $post_attachement['post_id'] ) ? get_attached_file( $post_attachement['post_id'] ) : download_url( $post_attachement['url'] );
+
 			// Set URL to attachment
-			$solarium_extract_query->setFile( get_attached_file( $post->ID ) );
+			$solarium_extract_query->setFile( $post_attachement_file );
 			$doc1 = $solarium_extract_query->createDocument();
 			$solarium_extract_query->setDocument( $doc1 );
 			// We don't want to add the document to the solr index now
@@ -813,11 +856,20 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$attachment_text_extracted_from_tika = preg_replace( '/^.*?\<body\>(.*?)\<\/body\>.*$/i', '\1', $response );
 			$attachment_text_extracted_from_tika = str_replace( '\n', ' ', $attachment_text_extracted_from_tika );
 		} catch ( Exception $e ) {
-			throw new Exception( 'Error on attached file ' . $post->post_title . ' (ID: ' . $post->ID . ')' . ': ' . $e->getMessage(), $e->getCode() );
+			if ( ! empty( $post_attachement['post_id'] ) ) {
+
+				$post = get_post( $post_attachement['post_id'] );
+
+				throw new Exception( 'Error on attached file ' . $post->post_title . ' (ID: ' . $post->ID . ')' . ': ' . $e->getMessage(), $e->getCode() );
+
+			} else {
+
+				throw new Exception( 'Error on attached file ' . $post_attachement['url'] . ': ' . $e->getMessage(), $e->getCode() );
+			}
 		}
 
 		// Last chance to customize the tika extracted attachment body
-		$attachment_text_extracted_from_tika = apply_filters( WpSolrFilters::WPSOLR_FILTER_ATTACHMENT_TEXT_EXTRACTED_BY_APACHE_TIKA, $attachment_text_extracted_from_tika, $solarium_extract_query, $post );
+		$attachment_text_extracted_from_tika = apply_filters( WpSolrFilters::WPSOLR_FILTER_ATTACHMENT_TEXT_EXTRACTED_BY_APACHE_TIKA, $attachment_text_extracted_from_tika, $solarium_extract_query, $post_attachement );
 
 		return $attachment_text_extracted_from_tika;
 	}
@@ -885,4 +937,5 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 	}
+
 }

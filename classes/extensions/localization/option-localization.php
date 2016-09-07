@@ -67,6 +67,7 @@ class OptionLocalization extends WpSolrExtensions {
 				'results_row_in_category'                                 => _x( ', in %s', 'Result row information box: in category', 'wpsolr' ),
 				'results_row_on_date'                                     => _x( ', on %s', 'Result row information box: on date', 'wpsolr' ),
 				'results_row_number_comments'                             => _x( ', %d comments', 'Result row information box: number of comments', 'wpsolr' ),
+				'results_row_comment_link_title'                          => _x( '-Comment match', 'Result row comment box: comment link title', 'wpsolr' ),
 				'infinitescroll_loading'                                  => _x( 'Loading ...', 'Text displayed while infinite scroll is loading next page of results', 'wpsolr' ),
 			)
 		);
@@ -119,10 +120,11 @@ class OptionLocalization extends WpSolrExtensions {
 			'Result Row information box' =>
 				array(
 					self::KEY_SECTION_TERMS => array(
-						'results_row_by_author'       => array( 'Author of the result row' ),
-						'results_row_in_category'     => array( 'Category of the result row' ),
-						'results_row_on_date'         => array( 'Date of the result row' ),
-						'results_row_number_comments' => array( 'Number of comments of the result row' ),
+						'results_row_by_author'          => array( 'Author of the result row' ),
+						'results_row_in_category'        => array( 'Category of the result row' ),
+						'results_row_on_date'            => array( 'Date of the result row' ),
+						'results_row_number_comments'    => array( 'Number of comments of the result row' ),
+						'results_row_comment_link_title' => array( 'Comment link title' ),
 					)
 				),
 			'Infinite Scroll'            =>

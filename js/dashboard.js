@@ -1,9 +1,54 @@
-// Timout handler on the indexing process
-var timeoutHandler;
+// Timout handler on the indexing timeoutHandlerIsCleared;
 var timeoutHandlerIsCleared = false;
 
 jQuery(document).ready(function () {
 
+    /*
+     // Instance the tour
+     var tour = new Tour({
+     name: 'tour5',
+     steps: [
+     {
+     element: "#1wpbody",
+     title: "Quick Tour of WPSOLR",
+     content: "WPSOLR is so powerfull that it can be overwhelming, compared to classic search solutions. <br/><br/>This tour will show you it's most important concepts and features.",
+     orphan: true
+     },
+     {
+     element: "#wpsolr_tour_button_start",
+     title: "Stop and resume the Tour",
+     content: "Stop the Tour, and resume anytime with this button.",
+     backdrop: false,
+     backdropPadding: 0,
+     },
+     {
+     element: ".wpsolr-tour-navigation-tabs",
+     title: "Navigation tabs",
+     content: "Four tabs, it's just what you need to control wpsolr.",
+     backdrop: true,
+     backdropPadding: 10,
+     },
+     {
+     element: ".wpsolr-tour-navigation-tabs",
+     title: "Navigation tabs",
+     content: "Four tabs, it's just what you need to control wpsolr.",
+     backdrop: true,
+     backdropPadding: 10,
+     }
+     ]
+     });
+
+     // Initialize the tour
+     tour.init();
+
+     // Start the tour
+     tour.start();
+
+     // Restart the tour
+     jQuery('#wpsolr_tour_button_start').click(function (e) {
+     tour.start(true);
+     });
+     */
 
     // Simulate a combobox with checkboxes, when it's class is like 'wpsolr_checkbox_mono_someidhere'
     jQuery('[class^="wpsolr_checkbox_mono"]').change(function () {

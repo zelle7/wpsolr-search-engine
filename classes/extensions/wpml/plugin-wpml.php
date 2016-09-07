@@ -72,6 +72,17 @@ class PluginWpml extends WpSolrExtensions {
 			'filter_get_post_language',
 		), 10, 2 );
 
+
+		add_action( WpSolrFilters::ACTION_TRANSLATION_REGISTER_STRINGS, array(
+			$this,
+			'register_translation_strings',
+		), 10, 1 );
+
+		add_filter( WpSolrFilters::WPSOLR_FILTER_TRANSLATION_STRING, array(
+			$this,
+			'get_translation_string',
+		), 10, 2 );
+
 	}
 
 
@@ -399,4 +410,32 @@ class PluginWpml extends WpSolrExtensions {
 
 		throw new Exception( sprintf( "WPSOLR %s extension is activated, but current language '%s' has no search Solr index.", static::_PLUGIN_NAME_IN_MESSAGES, $current_language_code ) );
 	}
+
+	/**
+	 * Register translation strings to translatable strings
+	 *
+	 * @param $parameters ["translations" => [ ["domain" => "wpsolr facel label", "name" => "categories", "text" => "my categories"]
+	 */
+	function register_translation_strings( $parameters ) {
+
+		foreach ( $parameters['translations'] as $text_to_add ) {
+
+			do_action( 'wpml_register_single_string', $text_to_add['domain'], $text_to_add['name'], $text_to_add['text'] );
+		}
+
+		return;
+	}
+
+	/**
+	 * Add translation strings to translatable strings
+	 *
+	 * @param array $parameter ["domain" => "wpsolr facel label", "name" => "categories", "text" => "my categories"]
+	 */
+	function get_translation_string( $string, $parameter ) {
+
+		$result = apply_filters( 'wpml_translate_single_string', $parameter['text'], $parameter['domain'], $parameter['name'], ! empty( $parameter['language'] ) ? $parameter['language'] : null );
+
+		return $result;
+	}
+
 }

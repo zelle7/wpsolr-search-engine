@@ -15,7 +15,7 @@ $options          = get_option( $extension_options_name, array(
 ) );
 $is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::EXTENSION_TYPES );
 
-$plugin_name    = "Types";
+$plugin_name    = "Toolset Types";
 $plugin_link    = "https://wordpress.org/plugins/types/";
 $plugin_version = "(>=  1.8.10)";
 

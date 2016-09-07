@@ -60,7 +60,7 @@ class PluginTypes extends WpSolrExtensions {
 
 		$result = $custom_field_name;
 
-		if ( ! isset( $this->_options['display_types_label_on_facet'] ) || ! ( self::CONST_TYPES_FIELD_PREFIX == substr( $custom_field_name, 0, strlen( self::CONST_TYPES_FIELD_PREFIX ) ) ) ) {
+		if ( ! isset( $this->_options['display_types_label_on_facet'] ) || ! ( self::CONST_TYPES_FIELD_PREFIX === substr( $custom_field_name, 0, strlen( self::CONST_TYPES_FIELD_PREFIX ) ) ) ) {
 			// No need to replace custom field name by types field label
 			return $result;
 		}

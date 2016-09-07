@@ -15,6 +15,9 @@ class WPSolrAbstractSolrClient {
 	// Indice of the Solr index configuration in admin options
 	protected $index_indice;
 
+	// Index
+	public $index;
+
 
 	// Array of active extension objects
 	protected $wpsolr_extensions;
@@ -30,7 +33,7 @@ class WPSolrAbstractSolrClient {
 
 	// Galaxy slave filter value
 	protected $galaxy_slave_filter_value;
-
+	
 	/**
 	 * Execute a solarium query. Retry 2 times if an error occurs.
 	 *
@@ -98,5 +101,5 @@ class WPSolrAbstractSolrClient {
 
 		return $result;
 	}
-
+	
 }
