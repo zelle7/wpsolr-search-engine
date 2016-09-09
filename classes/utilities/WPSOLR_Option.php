@@ -659,5 +659,21 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GOOGLE_DOC_EMBEDDER, self::OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS ) );
 	}
 
+	/***************************************************************************************************************
+	 *
+	 * Plugin TablePress
+	 *
+	 **************************************************************************************************************/
+	const OPTION_TABLEPRESS = 'wdm_solr_extension_tablepress_data';
+	const OPTION_TABLEPRESS_IS_INDEX_SHORTCODES = 'is_index_shortcodes';
+
+	/**
+	 * Index TablePress shortcodes ?
+	 *
+	 * @return boolean
+	 */
+	public function get_tablepress_is_index_shortcodes() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_TABLEPRESS, self::OPTION_TABLEPRESS_IS_INDEX_SHORTCODES ) );
+	}
 
 }

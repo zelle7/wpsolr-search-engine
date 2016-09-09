@@ -81,6 +81,9 @@ class WpSolrExtensions {
 	// Extension: Google Doc Embedder
 	const EXTENSION_GOOGLE_DOC_EMBEDDER = 'google doc embedder';
 
+	// Extension: TablePress
+	const EXTENSION_TABLEPRESS = 'tablepress';
+
 	/*
 	 * Extensions configuration
 	 */
@@ -274,6 +277,18 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'google-doc-embedder/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_google_doc_embedder_data',
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
+				)
+			),
+		self::EXTENSION_TABLEPRESS          =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'PluginTablePress',
+				self::_CONFIG_PLUGIN_CLASS_NAME                 => 'TablePress',
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'tablepress/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'tablepress/plugin-tablepress.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'tablepress/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_tablepress_data',
 					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
 				)
 			)

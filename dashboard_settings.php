@@ -155,6 +155,7 @@ function wpsolr_admin_init() {
 	register_setting( 'extension_embed_any_document_opt', WPSOLR_Option::OPTION_EMBED_ANY_DOCUMENT );
 	register_setting( 'extension_pdf_embedder_opt', WPSOLR_Option::OPTION_PDF_EMBEDDER );
 	register_setting( 'extension_google_doc_embedder_opt', WPSOLR_Option::OPTION_GOOGLE_DOC_EMBEDDER );
+	register_setting( 'extension_tablepress_opt', WPSOLR_Option::OPTION_TABLEPRESS );
 
 }
 
@@ -1629,12 +1630,13 @@ function fun_set_solr_options() {
 			'extension_polylang_opt'            => 'Polylang',
 			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
 			/* 'extension_qtranslatex_opt' => 'qTranslate X', */
+			'extension_tablepress_opt'          => 'TablePress',
 			'extension_groups_opt'              => 'Groups',
 			'extension_s2member_opt'            => 's2Member',
 			'extension_bbpress_opt'             => 'bbPress',
 			'extension_embed_any_document_opt'  => 'Embed Any Document',
 			'extension_pdf_embedder_opt'        => 'PDF Embedder',
-			'extension_google_doc_embedder_opt' => 'Google Doc Embedder'
+			'extension_google_doc_embedder_opt' => 'Google Doc Embedder',
 		);
 
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -1686,6 +1688,10 @@ function fun_set_solr_options() {
 
 			case 'extension_google_doc_embedder_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_GOOGLE_DOC_EMBEDDER );
+				break;
+
+			case 'extension_tablepress_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_TABLEPRESS );
 				break;
 		}
 
