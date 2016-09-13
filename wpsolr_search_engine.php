@@ -2,16 +2,20 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 13.5
+ * Version: 13.6
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
  */
 
-// Constants
+// Definitions
+define( 'WPSOLR_PLUGIN_VERSION', '13.6' );
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
-define( 'WPSOLR_PLUGIN_VERSION', '13.5' );
+
+// Constants
+const WPSOLR_AJAX_AUTO_COMPLETE_ACTION    = 'wdm_return_solr_rows';
+const WPSOLR_AUTO_COMPLETE_NONCE_SELECTOR = 'wpsolr_autocomplete_nonce';
 
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
@@ -293,7 +297,7 @@ function solr_search_form() {
 		// Get localization options
 		$localization_options = OptionLocalization::get_options();
 
-		$wdm_typehead_request_handler = 'wdm_return_solr_rows';
+		$wdm_typehead_request_handler = WPSOLR_AJAX_AUTO_COMPLETE_ACTION;
 
 		$get_page_info = WPSolrSearchSolrClient::get_search_page();
 		$ajax_nonce    = wp_create_nonce( "nonce_for_autocomplete" );
@@ -370,16 +374,18 @@ function my_enqueue() {
 	), WPSOLR_PLUGIN_VERSION, true );
 	wp_localize_script( 'autocomplete', 'wp_localize_script_autocomplete',
 		array(
-			'ajax_url'                     => admin_url( 'admin-ajax.php' ),
-			'is_show_url_parameters'       => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
-			'is_url_redirect'              => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
-			'SEARCH_PARAMETER_SEARCH'      => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
-			'SEARCH_PARAMETER_Q'           => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
-			'SEARCH_PARAMETER_FQ'          => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
-			'SEARCH_PARAMETER_SORT'        => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
-			'SEARCH_PARAMETER_PAGE'        => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
-			'SORT_CODE_BY_RELEVANCY_DESC'  => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
-			'wpsolr_autocomplete_selector' => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector()
+			'ajax_url'                           => admin_url( 'admin-ajax.php' ),
+			'is_show_url_parameters'             => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
+			'is_url_redirect'                    => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
+			'SEARCH_PARAMETER_SEARCH'            => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
+			'SEARCH_PARAMETER_Q'                 => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
+			'SEARCH_PARAMETER_FQ'                => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
+			'SEARCH_PARAMETER_SORT'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
+			'SEARCH_PARAMETER_PAGE'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
+			'SORT_CODE_BY_RELEVANCY_DESC'        => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
+			'wpsolr_autocomplete_selector'       => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector(),
+			'wpsolr_autocomplete_action'         => WPSOLR_AJAX_AUTO_COMPLETE_ACTION,
+			'wpsolr_autocomplete_nonce_selector' => ( '#' . WPSOLR_AUTO_COMPLETE_NONCE_SELECTOR ),
 		),
 		WPSOLR_PLUGIN_VERSION
 	);
@@ -407,6 +413,23 @@ function my_enqueue() {
 			WPSOLR_PLUGIN_VERSION
 		);
 	}
+}
+
+/*
+ *  Add hidden fields in footer containing the nonce for auto suggestions on non-wpsolr search boxes
+ */
+if ( WPSOLR_Option::OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE !== WPSOLR_Global::getOption()->get_search_suggest_content_type() ) {
+	function wpsolr_footer() {
+		?>
+
+		<!-- wpsolr - ajax auto completion nonce -->
+		<input type="hidden" id="<?php echo esc_attr( WPSOLR_AUTO_COMPLETE_NONCE_SELECTOR ); ?>"
+		       value="<?php echo esc_attr( wp_create_nonce( 'nonce_for_autocomplete' ) ); ?>">
+
+		<?php
+	}
+
+	add_action( 'wp_footer', 'wpsolr_footer' );
 }
 
 function wpsolr_activate() {
