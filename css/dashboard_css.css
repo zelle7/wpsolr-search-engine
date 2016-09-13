@@ -1,3 +1,8 @@
+.wp-admin .wdm_row select {
+    font-size: 13px;
+    height: 20px;
+}
+
 .wpsolr_premium_block_class {
     float: left;
     padding-bottom: 15px;
@@ -15,7 +20,7 @@ a.wpsolr_premium_class.nav-tab span {
     font-size: 11px;
 }
 
-a.wpsolr_premium_class.nav-tab  {
+a.wpsolr_premium_class.nav-tab {
     background-color: #fff6a6;
 }
 

@@ -191,7 +191,7 @@ class OptionLocalization extends WpSolrExtensions {
 	/**
 	 * Get terms of a presentation section
 	 *
-	 * @param $section Section
+	 * @param array $section Section
 	 *
 	 * @return array Terms of the section
 	 */
@@ -207,8 +207,8 @@ class OptionLocalization extends WpSolrExtensions {
 	 * Get a localized term.
 	 * If it does not exist, send the term code instead.
 	 *
-	 * @param $option Options
-	 * @param $term_code A term code
+	 * @param array $option
+	 * @param string $term_code A term code
 	 *
 	 * @return string Term
 	 */

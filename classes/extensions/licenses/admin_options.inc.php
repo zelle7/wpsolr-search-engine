@@ -128,8 +128,8 @@ $license_manager = new OptionLicenses();
 					class='head_div'><?php echo $license[ OptionLicenses::FIELD_LICENSE_TITLE ]; ?></h4>
 				<div class="wdm_note">
 					<?php echo $license_manager->get_license_is_activated( $license_type ) ?
-						sprintf( 'This feature is already activated with the %s Extension', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] )
-						: sprintf( 'This feature requires the %s Extension', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] );
+						sprintf( 'This feature is already activated with the %s Pack', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] )
+						: sprintf( 'This feature requires the %s Pack', $license[ OptionLicenses::FIELD_LICENSE_TITLE ] );
 					?>
 					<br/>
 				</div>
@@ -137,13 +137,7 @@ $license_manager = new OptionLicenses();
 				<hr/>
 				<div class="wdm_row">
 					<div class='col_left'>
-						Your
-						license# <?php echo $license_manager->get_license_is_activated( $license_type ) ? 'is already activated' : 'is not yet activated.'; ?>
-						<p>
-							<a href="http://www.gotosolr.com/en/solr-documentation/license-activations" target="__new1">
-								Where is my license# ?
-							</a>
-						</p>
+						<?php echo sprintf( 'Your %s Pack license %s', $license[ OptionLicenses::FIELD_LICENSE_TITLE ], $license_manager->get_license_is_activated( $license_type ) ? 'is already activated' : 'is not yet activated.' ); ?>
 					</div>
 					<div class='col_right'>
 
@@ -170,7 +164,7 @@ $license_manager = new OptionLicenses();
 
 								<input id="<?php echo OptionLicenses::AJAX_DEACTIVATE_LICENCE; ?>" type="button"
 								       class="button-primary wdm-save wpsolr_license_submit"
-								       value="Deactivate"/>
+								       value="Deactivate this license to activate another website"/>
 
 							<?php } ?>
 
@@ -185,12 +179,29 @@ $license_manager = new OptionLicenses();
 
 						<span class="error-message"></span>
 
+						<?php if ( ! $license_manager->get_license_is_activated( $license_type ) ) { ?>
+							Questions/Answers:
+							<ol>
+								<li><a href="http://www.gotosolr.com/en/solr-documentation/license-activations"
+								       target="__new1">
+										I bought a WPSOLR subscription, but cannot find my license#
+									</a>
+								</li>
+								<li><a href="http://www.gotosolr.com/en/solr-documentation/wpsolr-licenses-upgrade/"
+								       target="__new2">
+										I want to add the <?php echo $license[ OptionLicenses::FIELD_LICENSE_TITLE ]; ?>
+										pack to
+										my WPSOLR subscription
+									</a>
+								</li>
+							</ol>
+						<?php } ?>
 
 					</div>
 					<div class="clear"></div>
 				</div>
 
-				<?php if ( !$license_manager->get_license_is_activated( $license_type ) ) { ?>
+				<?php if ( ! $license_manager->get_license_is_activated( $license_type ) ) { ?>
 					<hr/>
 					<div class="wdm_row">
 						<div class='col_left'>

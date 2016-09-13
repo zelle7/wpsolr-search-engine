@@ -641,7 +641,7 @@ class WpSolrExtensions {
 				}
 			}
 
-			$is_error = $is_error || ( '' != $error );
+			$is_error = $is_error || ( '' !== $error );
 
 			$form_data[ $key ] = array( 'value' => $value, 'error' => $error );
 		}
@@ -693,12 +693,27 @@ class WpSolrExtensions {
 			}
 		}
 
+		// Translate sort labels
+		$labels = WPSOLR_Global::getOption()->get_sortby_items_labels();
+		if ( is_array( $labels ) && ! empty( $labels ) ) {
+			foreach ( $labels as $facet_name => $facet_label ) {
+				if ( ! empty( $facet_label ) ) {
+					$translation           = array();
+					$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_SORT_LABEL;
+					$translation['name']   = $facet_name;
+					$translation['text']   = $facet_label;
+
+					array_push( $translations, $translation );
+				}
+			}
+		}
+
 		if ( count( $translations ) > 0 ) {
 
 			// Translate
 			do_action( WpSolrFilters::ACTION_TRANSLATION_REGISTER_STRINGS,
 				array(
-					'translations' => $translations
+					'translations' => $translations,
 				)
 			);
 		}
