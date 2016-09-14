@@ -12,7 +12,7 @@ git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
 
 Contributors: wpsolr
 
-Current Version: 13.5
+Current Version: 13.6
 
 Author: wpsolr
 
@@ -22,9 +22,9 @@ Tags: search, TablePress search, Solr in WordPress, wordpress search, bbPress se
 
 Requires at least: 3.7.1
 
-Tested up to: 4.6
+Tested up to: 4.6.1
 
-Stable tag: 13.5
+Stable tag: 13.6
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -111,16 +111,22 @@ Installation procedure for Apache Solr: see FAQ section.
 44. 44) Front: TablePress: index and search TablePress tables content.
 45. 45) Admin: WooCommerce sort on price, sku, ...
 46. 46) Front: WooCommerce sort on price, sku, ...
+47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
 
+= 13.6 =
+* Fix autocompletion to work with any theme's search boxes.
+* Fix a syntax error for PHP <= 5.3
+
 = 13.5 =
-* WooCommerce: sort on price, sku, ... any field you want
+* WooCommerce: sort on price, sku, ... any field you want.
 In previous wpsolr versions, only a handful of hard-coded fields could be used as a sort criteria.
 Now, all indexed custom fields field are sortable, including price and product attributes in WooCommerce stores.
+* [Screenshot: Admin: Give sortable custom fields a Solr type](https://s.w.org/plugins/wpsolr-search-engine/screenshot-47.png "Admin: Give sortable custom fields a Solr type")
 * [Screenshot: Admin: WooCommerce sort on price, sku, ...](https://s.w.org/plugins/wpsolr-search-engine/screenshot-45.png "Admin: WooCommerce sort on price, sku, ...")
 * [Screenshot: Front: WooCommerce sort on price, sku, ...](https://s.w.org/plugins/wpsolr-search-engine/screenshot-46.png "Front: WooCommerce sort on price, sku, ...")
-* Indexed fields can be given a Solr type
+* Indexed fields can be given a Solr type.
 Fields can be given a Solr type (short string, numeric integer, numeric floating point). In Solr, only those field types are sortable, or can be used as range facets.
 * New wpsolr sort widget, which you can add anywhere in your search page templates.
 * WARNING: if you want to activate the new Solr type features, this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.

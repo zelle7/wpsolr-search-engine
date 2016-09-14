@@ -34,6 +34,6 @@ function wdm_return_solr_rows() {
 	die();
 }
 
-add_action( 'wp_ajax_wdm_return_solr_rows', 'wdm_return_solr_rows' );
-add_action( 'wp_ajax_nopriv_wdm_return_solr_rows', 'wdm_return_solr_rows' );
+add_action( 'wp_ajax_' . WPSOLR_AJAX_AUTO_COMPLETE_ACTION, WPSOLR_AJAX_AUTO_COMPLETE_ACTION );
+add_action( 'wp_ajax_nopriv_' . WPSOLR_AJAX_AUTO_COMPLETE_ACTION, WPSOLR_AJAX_AUTO_COMPLETE_ACTION );
 

@@ -603,14 +603,14 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div
-										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search forms', true, true ); ?></div>
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search boxes', true, true ); ?></div>
 									<div class='col_right'>
 										<input type='text'
 										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR; ?>]'
-										       placeholder=".search_form1, #search_form2"
+										       placeholder=".search_box1, #search_box2, input.text_edit"
 											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ); ?>
 											   value="<?php echo( ! empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] ) ? $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR ] : '' ); ?>">
-										Enter a jQuery selector for your search forms.
+										Enter a jQuery selector for your search boxes.
 									</div>
 									<div class="clear"></div>
 								</div>

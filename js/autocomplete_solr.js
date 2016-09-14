@@ -225,8 +225,15 @@ jQuery(document).ready(function () {
     /**
      * Search form is triggered
      */
-    jQuery(document).on('focus', wp_localize_script_autocomplete.wpsolr_autocomplete_selector, function () {
-        var wdm_action = jQuery('#path_to_fold').val();
+    jQuery(wp_localize_script_autocomplete.wpsolr_autocomplete_selector).off(); // Deactivate other events of theme
+    jQuery(wp_localize_script_autocomplete.wpsolr_autocomplete_selector).prop('autocomplete', 'off'); // Prevent browser autocomplete
+
+    jQuery(document).on('focus', wp_localize_script_autocomplete.wpsolr_autocomplete_selector, function (event) {
+
+        event.preventDefault();
+
+        var wp_ajax_action = wp_localize_script_autocomplete.wpsolr_autocomplete_action;
+        var wp_ajax_nonce = jQuery(wp_localize_script_autocomplete.wpsolr_autocomplete_nonce_selector).val();
 
         var mythis = this;
 
@@ -241,9 +248,9 @@ jQuery(document).ready(function () {
                     jQuery(mythis).addClass('loading_sugg');
 
                     return {
-                        action: wdm_action,
+                        action: wp_ajax_action,
                         word: query,
-                        security: jQuery('#ajax_nonce').val()
+                        security: wp_ajax_nonce
                     }
                 },
                 preProcess: function (data) {

@@ -32,7 +32,7 @@ class WpSolrSchema {
 			'sortable' => true,
 		),
 		self::_SOLR_DYNAMIC_TYPE_FLOAT   => array(
-			'label'    => 'Floating point number',
+			'label'    => 'Floating point number, sortable',
 			'sortable' => true,
 		),
 		/*

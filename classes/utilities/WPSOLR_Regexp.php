@@ -1,7 +1,6 @@
 <?php
 
 
-
 /**
  * Common Regexp expressions used in WPSOLR.
  *
@@ -26,10 +25,10 @@ class WPSOLR_Regexp {
 		preg_match_all( '/[^|\s]+/', $text, $matches );
 
 		// Trim results
-		$results_with_some_empty_key = ! empty( $matches[0] ) ? array_map( 'trim', $matches[0] ) : [];
+		$results_with_some_empty_key = ! empty( $matches[0] ) ? array_map( 'trim', $matches[0] ) : array();
 
 		// Remove empty array rows (it happens), prevent duplicates.
-		$results = [];
+		$results = array();
 		foreach ( $results_with_some_empty_key as $result ) {
 			if ( ! empty( $result ) ) {
 				array_push( $results, $result );
