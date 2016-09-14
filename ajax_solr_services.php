@@ -3,6 +3,7 @@
 include( WPSOLR_PLUGIN_DIR . '/classes/solr/wpsolr-index-solr-client.php' );
 include( WPSOLR_PLUGIN_DIR . '/classes/solr/wpsolr-search-solr-client.php' );
 include( WPSOLR_PLUGIN_DIR . '/classes/ui/WPSOLR_Data_facets.php' );
+include( WPSOLR_PLUGIN_DIR . '/classes/ui/WPSOLR_Data_Sort.php' );
 
 // Load localization class
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LOCALIZATION, true );
@@ -41,8 +42,7 @@ function fun_search_indexed_data() {
 	echo $form = '
         <div class="ui-widget">
 	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
-
-	<input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . esc_attr(WPSOLR_Global::getQuery()->get_wpsolr_query()) . '" name="search" id="search_que" class="' . WPSOLR_Option::OPTION_SEARCH_SUGGEST_CLASS_DEFAULT . ' sfl2" autocomplete="off"/>
+        <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . esc_attr( WPSOLR_Global::getQuery()->get_wpsolr_query() ) . '" name="search" id="search_que" class="' . WPSOLR_Option::OPTION_SEARCH_SUGGEST_CLASS_DEFAULT . ' sfl2" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
 
 	<input type="hidden" value="' . WPSOLR_Global::getOption()->get_search_after_autocomplete_block_submit() . '" id="is_after_autocomplete_block_submit">
@@ -73,27 +73,15 @@ function fun_search_indexed_data() {
 			echo '<div class="wdm_resultContainer">
                     <div class="wdm_list">';
 
-			// Display the sort list
-			$selected_sort_values = WPSOLR_Global::getOption()->get_sortby_items_as_array();
-			if ( isset( $selected_sort_values ) && ( $selected_sort_values != '' ) ) {
-
-				$term        = OptionLocalization::get_term( $localization_options, 'sort_header' );
-				$sort_select = "<label class='wdm_label'>$term</label><select class='select_field'>";
-
-				// Add options
-				$sort_options = WPSolrSearchSolrClient::get_sort_options();
-				foreach ( $selected_sort_values as $sort_code ) {
-
-					$sort_label = OptionLocalization::get_term( $localization_options, $sort_code );
-
-					$selected = ( $sort_code === WPSOLR_Global::getQuery()->get_wpsolr_sort() ) ? 'selected' : '';
-					$sort_select .= "<option value='$sort_code' $selected>$sort_label</option>";
-				}
-
-				$sort_select .= "</select>";
-
-				echo '<div>' . $sort_select . '</div>';
-			}
+			// Display sort list UI
+			echo WPSOLR_UI_Sort::build(
+				WPSOLR_Data_Sort::get_data(
+					WPSOLR_Global::getOption()->get_sortby_items_as_array(),
+					WPSOLR_Global::getOption()->get_sortby_items_labels(),
+					WPSOLR_Global::getQuery()->get_wpsolr_sort(),
+					$localization_options
+				)
+			);
 
 
 			// Display facets UI
@@ -142,7 +130,8 @@ function fun_search_indexed_data() {
 			echo '</div>';
 			echo '</div><div style="clear:both;"></div>';
 		}
-	} catch ( Exception $e ) {
+	} catch
+	( Exception $e ) {
 
 		echo sprintf( 'The search could not be performed. An error occured while trying to connect to the Apache Solr server. <br/><br/>%s<br/>', $e->getMessage() );
 	}

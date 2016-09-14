@@ -100,7 +100,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solarium_config ) {
 
-		$this->init_galaxy();
+		$this->init();
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
@@ -292,16 +292,17 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 * Get all sort by options available
 	 *
 	 * @param string $sort_code_to_retrieve
+	 * @param array $sort_options
 	 *
 	 * @return array
 	 */
 	public static function get_sort_option_from_code( $sort_code_to_retrieve, $sort_options = null ) {
 
-		if ( $sort_options == null ) {
+		if ( null === $sort_options ) {
 			$sort_options = self::get_sort_options();
 		}
 
-		if ( $sort_code_to_retrieve != null ) {
+		if ( null !== $sort_code_to_retrieve ) {
 			foreach ( $sort_options as $sort ) {
 
 				if ( $sort['code'] === $sort_code_to_retrieve ) {
@@ -311,7 +312,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 
-		return null;
+		return array();
 	}
 
 	/**
@@ -506,10 +507,15 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		if ( count( $facets_to_display ) ) {
 			foreach ( $facets_to_display as $facet ) {
 
-				$fact      = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
+				$fact = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
+
+				// _price_str => _price_f
+				// title => title
+				$fact = $this->replace_field_name_extension( $fact );
+
 				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
 
-				foreach ( $facet_res as $value => $count ) {
+				foreach ( ! empty( $facet_res ) ? $facet_res : array() as $value => $count ) {
 					$output[ $facet ][] = array( 'value' => $value, 'count' => $count );
 				}
 
@@ -727,7 +733,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 			// Only display facets that contain data
 			$facetSet->setMinCount( $min_count );
 
-			foreach ( $field_names as $facet ) {
+			foreach ( $field_names as $facet_with_str_extension ) {
+
+				$facet = $this->replace_field_name_extension( $facet_with_str_extension );
 
 				$fact = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
 
@@ -837,6 +845,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 					$filter_query_field_name = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, $filter_query_field_name );
 
+					// _price_str => _price_f
+					// title => title
+					$filter_query_field_name = $this->replace_field_name_extension( $filter_query_field_name );
+
 					$fac_fd = "$filter_query_field_name";
 
 					// In case the facet contains white space, we enclose it with "".
@@ -911,14 +923,66 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				break;
 
 			case self::SORT_CODE_BY_RELEVANCY_DESC:
-			default:
 				// None is relevancy by default
 				break;
 
+			default:
+				// A custom field
+
+				// Get field name without _asc or _desc ('price_str_asc' => 'price_str')
+				$sort_field_without_order = $this->get_field_without_sort_order_ending( $sort_field_name );
+
+				if ( $this->get_is_field_sortable( $sort_field_without_order ) ) {
+					// extract asc or desc ('price_str_asc' => 'asc')
+					$sort_field_order = WPSOLR_Regexp::extract_last_separator( $sort_field_name, '_' );
+
+					switch ( $sort_field_order ) {
+
+						case $solarium_query::SORT_DESC:
+						case $solarium_query::SORT_ASC:
+							$solarium_query->addSort( $this->replace_field_name_extension( $sort_field_without_order ), $sort_field_order );
+							break;
+					}
+				}
+
+				break;
 		}
 
 		// Let a chance to add custom sort options
 		$solarium_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_SORT, $solarium_query, $sort_field_name );
+	}
+
+	/**
+	 * Get field without ending '_asc' or '_desc' ('price_str_asc' => 'price_str', 'price_str_desc' => 'price_str')
+	 *
+	 * @param string $field_name_with_order Field name (like 'price_str_asc')
+	 *
+	 * @return string
+	 */
+	public function get_field_without_sort_order_ending( $field_name_with_order ) {
+
+		$result = $field_name_with_order;
+		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . Query::SORT_ASC );
+		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . Query::SORT_DESC );
+
+		return $result;
+	}
+
+
+	/**
+	 * Is a field sortable ?
+	 *
+	 * @param string $field_name Field name (like 'price_str')
+	 *
+	 * @return bool
+	 */
+	public function get_is_field_sortable( $field_name ) {
+
+		return ( ! empty( $this->custom_field_properties[ $field_name ] )
+		         && ! empty( $this->custom_field_properties[ $field_name ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+		         && WpSolrSchema::get_solr_dynamic_entension_id_is_sortable( $this->custom_field_properties[ $field_name ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+		);
+
 	}
 
 	/**
@@ -1028,7 +1092,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string
 	 */
-	private function get_query_fields() {
+	private
+	function get_query_fields() {
 
 		$option_search_fields_boosts = WPSOLR_Global::getOption()->get_search_fields_boosts();
 
@@ -1065,7 +1130,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string
 	 */
-	private function get_query_boosts_fields() {
+	private
+	function get_query_boosts_fields() {
 
 		$option_search_fields_terms_boosts = WPSOLR_Global::getOption()->get_search_fields_terms_boosts();
 
@@ -1107,7 +1173,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return bool
 	 */
-	private function is_facet_to_show_as_a_hierarchy( $facet_name ) {
+	private
+	function is_facet_to_show_as_a_hierarchy(
+		$facet_name
+	) {
 
 		$facets_to_show_as_a_hierarchy = WPSOLR_Global::getOption()->get_facets_to_show_as_hierarchy();
 
@@ -1121,7 +1190,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string Facet name with hierarch or not
 	 */
-	private function get_facet_hierarchy_name( $hierarchy_field_name, $facet_name ) {
+	private
+	function get_facet_hierarchy_name(
+		$hierarchy_field_name, $facet_name
+	) {
 
 		$facet_name   = strtolower( str_replace( ' ', '_', $facet_name ) );
 		$is_hierarchy = $this->is_facet_to_show_as_a_hierarchy( $facet_name );
@@ -1145,7 +1217,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return array|false
 	 */
-	private function get_post_thumbnail( $document, $post_id ) {
+	private
+	function get_post_thumbnail(
+		$document, $post_id
+	) {
 
 		if ( $this->is_galaxy_master ) {
 
@@ -1169,7 +1244,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string
 	 */
-	private function get_post_url( $document, $post_id ) {
+	private
+	function get_post_url(
+		$document, $post_id
+	) {
 
 		if ( $this->is_galaxy_master ) {
 
@@ -1192,7 +1270,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return WP_Post[]
 	 */
-	public function get_posts_from_pids() {
+	public
+	function get_posts_from_pids() {
 
 		if ( $this->solarium_results->getNumFound() === 0 ) {
 			return array();

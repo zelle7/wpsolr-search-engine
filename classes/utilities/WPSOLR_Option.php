@@ -154,6 +154,7 @@ class WPSOLR_Option {
 	const OPTION_SORTBY = 'wdm_solr_sortby_data';
 	const OPTION_SORTBY_ITEM_DEFAULT = 'sort_default';
 	const OPTION_SORTBY_ITEM_ITEMS = 'sort';
+	const OPTION_SORTBY_ITEM_LABELS = 'sort_labels';
 
 
 	/**
@@ -186,6 +187,14 @@ class WPSOLR_Option {
 	 */
 	public function get_sortby_items_as_array() {
 		return $this->explode( $this->get_sortby_items() );
+	}
+
+	/**
+	 * Array of sort items labels
+	 * @return string[] Sort items labels
+	 */
+	public function get_sortby_items_labels() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_SORTBY, self::OPTION_SORTBY_ITEM_LABELS, array() );
 	}
 
 	public function get_option_installation() {
@@ -476,6 +485,12 @@ class WPSOLR_Option {
 	const OPTION_INDEX_IS_REAL_TIME = 'is_real_time';
 	const OPTION_INDEX_POST_TYPES = 'p_types';
 	const OPTION_INDEX_ATTACHMENT_TYPES = 'attachment_types';
+	const OPTION_INDEX_CUSTOM_FIELD_PROPERTIES = 'custom_field_properties'; // array
+	const OPTION_INDEX_CUSTOM_FIELDS = 'cust_fields'; // array
+	const OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE = 'solr_dynamic_type'; // string
+	const OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION = 'conversion_error_action'; // string
+	const OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR = 'conversion_error_action_throw_error';
+	const OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD = 'conversion_error_action_ignore_field';
 
 	/**
 	 * Get indexing options array
@@ -523,6 +538,40 @@ class WPSOLR_Option {
 	 */
 	public function get_option_index_attachment_types() {
 		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_ATTACHMENT_TYPES, '' ) );
+	}
+
+	/**
+	 * @return array Active custom fields
+	 */
+	public function get_option_index_custom_fields() {
+		return $this->explode( $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_CUSTOM_FIELDS, '' ) );
+	}
+
+	/**
+	 * @return array Array of field's properties
+	 */
+	public function get_option_index_custom_field_properties() {
+		$custom_field_properties = $this->get_option_value( __FUNCTION__, self::OPTION_INDEX, self::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, array() );
+
+		// Filter $custom_field_properties with only active custom fields
+		$has_been_filtered    = false;
+		$active_custom_fields = $this->get_option_index_custom_fields();
+		foreach ( $custom_field_properties as $custom_field_name => $custom_field_property ) {
+
+			if ( ! in_array( $custom_field_name, $active_custom_fields, true ) ) {
+				unset( $custom_field_properties[ $custom_field_name ] );
+				$has_been_filtered = true;
+			}
+		}
+
+		if ( $has_been_filtered ) {
+			// Save the filtered properties to prevent filtering again and again
+			$option                                               = get_option( self::OPTION_INDEX, array() );
+			$option[ self::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES ] = $custom_field_properties;
+			update_option( self::OPTION_INDEX, $option );
+		}
+
+		return $custom_field_properties;
 	}
 
 	/***************************************************************************************************************
@@ -606,6 +655,7 @@ class WPSOLR_Option {
 	 * Domains used in multi-language string plugins to store dynamic wpsolr translations
 	 */
 	const TRANSLATION_DOMAIN_FACET_LABEL = 'wpsolr facet label'; // Do not change
+	const TRANSLATION_DOMAIN_SORT_LABEL = 'wpsolr sort label'; // Do not change
 
 
 	/***************************************************************************************************************
@@ -657,6 +707,23 @@ class WPSOLR_Option {
 	 */
 	public function get_google_doc_embedder_is_do_embed_documents() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GOOGLE_DOC_EMBEDDER, self::OPTION_GOOGLE_DOC_EMBEDDER_IS_EMBED_DOCUMENTS ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin TablePress
+	 *
+	 **************************************************************************************************************/
+	const OPTION_TABLEPRESS = 'wdm_solr_extension_tablepress_data';
+	const OPTION_TABLEPRESS_IS_INDEX_SHORTCODES = 'is_index_shortcodes';
+
+	/**
+	 * Index TablePress shortcodes ?
+	 *
+	 * @return boolean
+	 */
+	public function get_tablepress_is_index_shortcodes() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_TABLEPRESS, self::OPTION_TABLEPRESS_IS_INDEX_SHORTCODES ) );
 	}
 
 

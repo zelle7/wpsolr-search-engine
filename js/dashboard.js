@@ -584,13 +584,15 @@ jQuery(document).ready(function () {
     jQuery('.plus_icon_sort').click(function () {
         jQuery(this).parent().addClass('sort_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'block');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery('.minus_icon_sort').click(function () {
         jQuery(this).parent().removeClass('sort_selected');
         jQuery(this).hide();
-        jQuery(this).siblings().css('display', 'inline');
+        jQuery(this).parent().find('.wdm_row').find('*').css('display', 'none');
+        jQuery(this).siblings('img').css('display', 'inline');
     })
 
     jQuery("#sortable_sort").sortable(

@@ -155,6 +155,7 @@ function wpsolr_admin_init() {
 	register_setting( 'extension_embed_any_document_opt', WPSOLR_Option::OPTION_EMBED_ANY_DOCUMENT );
 	register_setting( 'extension_pdf_embedder_opt', WPSOLR_Option::OPTION_PDF_EMBEDDER );
 	register_setting( 'extension_google_doc_embedder_opt', WPSOLR_Option::OPTION_GOOGLE_DOC_EMBEDDER );
+	register_setting( 'extension_tablepress_opt', WPSOLR_Option::OPTION_TABLEPRESS );
 
 }
 
@@ -910,50 +911,6 @@ function fun_set_solr_options() {
 
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attachment types to be indexed', true ); ?>
-									</div>
-									<div class='col_right'>
-										<input type='hidden' name='wdm_solr_form_data[attachment_types]'
-										       id='attachment_types'>
-										<?php
-										$attachment_types_opt = $solr_options['attachment_types'];
-										$disabled             = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
-										// sort attachments
-										asort( $allowed_attachments_types );
-
-										// Selected first
-										foreach ( $allowed_attachments_types as $type ) {
-											if ( strpos( $attachment_types_opt, $type ) !== false ) {
-												?>
-												<input type='checkbox' name='attachment_types'
-												       value='<?php echo $type ?>'
-													<?php echo $disabled; ?>
-													   checked> <?php echo $type ?>
-												<br>
-												<?php
-											}
-										}
-
-										// Unselected 2nd
-										foreach ( $allowed_attachments_types as $type ) {
-											if ( strpos( $attachment_types_opt, $type ) === false ) {
-												?>
-												<input type='checkbox' name='attachment_types'
-												       value='<?php echo $type ?>'
-													<?php echo $disabled; ?>
-												> <?php echo $type ?>
-												<br>
-												<?php
-											}
-										}
-
-										?>
-									</div>
-									<div class="clear"></div>
-								</div>
-
-								<div class="wdm_row">
-									<div class='col_left'>
 										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Custom taxonomies to be indexed', true ); ?>
 									</div>
 									<div class='col_right'>
@@ -1017,8 +974,9 @@ function fun_set_solr_options() {
 
 										<div class='cust_fields'><!--new div class given-->
 											<?php
-											$field_types_opt = $solr_options['cust_fields'];
-											$disabled        = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+											$field_types_opt         = $solr_options['cust_fields'];
+											$custom_field_properties = WPSOLR_Global::getOption()->get_option_index_custom_field_properties();
+											$disabled                = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 											if ( count( $keys ) > 0 ) {
 												// sort custom fields
 												asort( $keys );
@@ -1026,13 +984,57 @@ function fun_set_solr_options() {
 												// Show selected first
 												foreach ( $keys as $key ) {
 													if ( strpos( $field_types_opt, $key . "_str" ) !== false ) {
+														$is_indexed_custom_field = true;
 														?>
 
-														<input type='checkbox' name='cust_fields'
-														       value='<?php echo $key . "_str" ?>'
-															<?php echo $disabled; ?>
-															   checked> <?php echo $key ?>
-														<br>
+														<div>
+															<input type='checkbox' name='cust_fields'
+															       value='<?php echo $key . "_str" ?>'
+																<?php echo $disabled; ?>
+																   checked>
+															<select
+																<?php
+																$field_solr_type = ! empty( $custom_field_properties[ $key . "_str" ] ) && ! empty( $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+																	? $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
+																	: WpSolrSchema::get_solr_dynamic_entension_id_by_default();
+																if ( $disabled ) {
+																	echo ' disabled ';
+																}
+																?>
+																name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . "_str", WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ); ?>">
+																<?php
+																foreach ( WpSolrSchema::get_solr_dynamic_entensions() as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
+																	echo sprintf( '<option value="%s" %s>%s</option>', $solr_dynamic_type_id, selected( $field_solr_type, $solr_dynamic_type_id, false ), WpSolrSchema::get_solr_dynamic_entension_label( $solr_dynamic_type_array ) );
+																}
+																?>
+															</select>
+
+															<select
+																<?php
+																$field_action_id = ! empty( $custom_field_properties[ $key . "_str" ] ) && ! empty( $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
+																	? $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
+																	: WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD;
+																if ( $disabled ) {
+																	echo ' disabled ';
+																}
+																?>
+																name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . "_str", WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ); ?>">
+																<?php
+																foreach (
+																	array(
+																		WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD => 'Use empty value if conversion error',
+																		WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR  => 'Stop indexing at first conversion error',
+																	) as $action_id => $action_text
+																) {
+																	echo sprintf( '<option value="%s" %s>%s</option>', $action_id, selected( $field_action_id, $action_id, false ), $action_text );
+																}
+																?>
+															</select>
+
+															<?php echo $key ?>
+
+														</div>
+
 														<?php
 													}
 												}
@@ -1056,6 +1058,50 @@ function fun_set_solr_options() {
 											}
 											?>
 										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<div class="wdm_row">
+									<div class='col_left'>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attachment types to be indexed', true ); ?>
+									</div>
+									<div class='col_right'>
+										<input type='hidden' name='wdm_solr_form_data[attachment_types]'
+										       id='attachment_types'>
+										<?php
+										$attachment_types_opt = $solr_options['attachment_types'];
+										$disabled             = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
+										// sort attachments
+										asort( $allowed_attachments_types );
+
+										// Selected first
+										foreach ( $allowed_attachments_types as $type ) {
+											if ( strpos( $attachment_types_opt, $type ) !== false ) {
+												?>
+												<input type='checkbox' name='attachment_types'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+													   checked> <?php echo $type ?>
+												<br>
+												<?php
+											}
+										}
+
+										// Unselected 2nd
+										foreach ( $allowed_attachments_types as $type ) {
+											if ( strpos( $attachment_types_opt, $type ) === false ) {
+												?>
+												<input type='checkbox' name='attachment_types'
+												       value='<?php echo $type ?>'
+													<?php echo $disabled; ?>
+												> <?php echo $type ?>
+												<br>
+												<?php
+											}
+										}
+
+										?>
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -1154,7 +1200,7 @@ function fun_set_solr_options() {
 											<?php
 											if ( $selected_values != '' ) {
 												foreach ( $selected_array as $selected_val ) {
-													if ( $selected_val != '' ) {
+													if ( $selected_val !== '' ) {
 														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
 															$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
 														} else {
@@ -1503,13 +1549,37 @@ function fun_set_solr_options() {
 
 					$built_in = WPSolrSearchSolrClient::get_sort_options();
 
+					$custom_fields_sortable = array();
+					foreach ( WPSOLR_Global::getOption()->get_option_index_custom_field_properties() as $custom_field_name => $custom_field_property ) {
+
+						// Only sortable extension types can be sorted
+						if ( WpSolrSchema::get_solr_dynamic_entension_id_is_sortable( $custom_field_property[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] ) ) {
+
+							// Add asc and desc for each sortable field
+							foreach (
+								array(
+									array( \Solarium\QueryType\Select\Query\Query::SORT_ASC, 'ascending' ),
+									array( \Solarium\QueryType\Select\Query\Query::SORT_DESC, 'descending' )
+								) as $sort_order
+							) {
+								$custom_fields_sortable[] = array(
+									'code'  => sprintf( '%s_%s', $custom_field_name, $sort_order[0] ),
+									'label' => sprintf( '%s %s', str_replace( '_str', '', $custom_field_name ), $sort_order[1] )
+								);
+							}
+						}
+
+					}
+
+					$built_in = array_merge( $built_in, $custom_fields_sortable );
 					?>
 					<div id="solr-sort-options" class="wdm-vertical-tabs-content">
 						<form action="options.php" method="POST" id='sort_settings_form'>
 							<?php
 							settings_fields( 'solr_sort_options' );
-							$selected_sort_value = WPSOLR_Global::getOption()->get_sortby_items();
-							$selected_array      = WPSOLR_Global::getOption()->get_sortby_items_as_array();
+							$selected_sort_value    = WPSOLR_Global::getOption()->get_sortby_items();
+							$selected_array         = WPSOLR_Global::getOption()->get_sortby_items_as_array();
+							$selected_sortby_labels = WPSOLR_Global::getOption()->get_sortby_items_labels();
 							?>
 							<div class='wrapper'>
 								<h4 class='head_div'>Sort Options</h4>
@@ -1554,33 +1624,71 @@ function fun_set_solr_options() {
 
 										<ul id="sortable_sort" class="wdm_ul connectedSortable_sort">
 											<?php
-											if ( $selected_sort_value != '' ) {
-												foreach ( $selected_array as $sort_code ) {
-													if ( $sort_code != '' ) {
-														$sort     = WPSolrSearchSolrClient::get_sort_option_from_code( $sort_code, null );
-														$dis_text = is_array( $sort ) ? $sort['label'] : $sort_code;
-
-														echo "<li id='$sort_code' class='ui-state-default facets sort_selected'>$dis_text
-                                                                                                    <img src='$img_path'  class='plus_icon_sort' style='display:none'>
-                                                                                                <img src='$minus_path' class='minus_icon_sort' style='display:inline' title='Click to Remove the Sort'></li>";
-													}
-												}
-											}
 											foreach ( $built_in as $built ) {
-												if ( $built != '' ) {
-													$buil_fac = $built['code'];
-													$dis_text = $built['label'];
+											if ( $built != '' ) {
+											$sort_code = $built['code'];
+											$dis_text  = $built['label'];
 
-													if ( ! in_array( $buil_fac, $selected_array ) ) {
+											if ( in_array( $sort_code, $selected_array ) ) {
 
-														echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
+											?>
+											<li id='<?php echo $sort_code; ?>'
+											    class='ui-state-default facets sort_selected'>
+															<span
+																style="float:left;width: 300px;"><?php echo $dis_text; ?></span>
+												<img src='<?php echo $img_path; ?>'
+												     class='minus_icon_sort'
+												     style='display:none'>
+												<img src='<?php echo $minus_path ?>'
+												     class='minus_icon_sort'
+												     style='display:inline'
+												     title='Click to Remove the sort item'>
+												<br/>
+
+												<div class="wdm_row" style="top-margin:5px;">
+													<div class='col_left'>
+														<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, sprintf( '%s label', ucfirst( $dis_text ) ), true ); ?>
+													</div>
+													<?php
+													$sortby_label = ! empty( $selected_sortby_labels[ $sort_code ] ) ? $selected_sortby_labels[ $sort_code ] : '';
+													?>
+													<div class='col_right'>
+														<input type='text'
+														       name='wdm_solr_sortby_data[<?php echo WPSOLR_Option::OPTION_SORTBY_ITEM_LABELS; ?>][<?php echo $sort_code; ?>]'
+														       value='<?php echo esc_attr( $sortby_label ); ?>'
+															<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ); ?>
+														/>
+														<p>
+															Will be shown on the front-end (and
+															translated in WPML/POLYLANG string modules).
+															Leave empty if you wish to use the current
+															facet
+															name "<?php echo $dis_text; ?>".
+														</p>
+
+													</div>
+													<div class="clear"></div>
+												</div>
+
+												<?php
+												}
+												}
+												}
+												foreach ( $built_in as $built ) {
+													if ( $built != '' ) {
+														$buil_fac = $built['code'];
+														$dis_text = $built['label'];
+
+														if ( ! in_array( $buil_fac, $selected_array ) ) {
+
+															echo "<li id='$buil_fac' class='ui-state-default facets'>$dis_text
                                                                                                     <img src='$img_path'  class='plus_icon_sort' style='display:inline' title='Click to Add the Sort'>
                                                                                                 <img src='$minus_path' class='minus_icon_sort' style='display:none'></li>";
+														}
 													}
 												}
-											}
-											?>
-
+												?>
+											</li>
 
 										</ul>
 									</div>
@@ -1629,12 +1737,13 @@ function fun_set_solr_options() {
 			'extension_polylang_opt'            => 'Polylang',
 			// It seems impossible to map qTranslate X structure (1 post/many languages) in WPSOLR's (1 post/1 language)
 			/* 'extension_qtranslatex_opt' => 'qTranslate X', */
+			'extension_tablepress_opt'          => 'TablePress',
 			'extension_groups_opt'              => 'Groups',
 			'extension_s2member_opt'            => 's2Member',
 			'extension_bbpress_opt'             => 'bbPress',
 			'extension_embed_any_document_opt'  => 'Embed Any Document',
 			'extension_pdf_embedder_opt'        => 'PDF Embedder',
-			'extension_google_doc_embedder_opt' => 'Google Doc Embedder'
+			'extension_google_doc_embedder_opt' => 'Google Doc Embedder',
 		);
 
 		$subtab = wpsolr_admin_sub_tabs( $subtabs );
@@ -1686,6 +1795,10 @@ function fun_set_solr_options() {
 
 			case 'extension_google_doc_embedder_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_GOOGLE_DOC_EMBEDDER );
+				break;
+
+			case 'extension_tablepress_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_TABLEPRESS );
 				break;
 		}
 

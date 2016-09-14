@@ -10,6 +10,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	const TABLE_POSTS = 'posts';
 	const CONTENT_SEPARATOR = ' ';
 
+	const ERROR_SANITIZED_MESSAGE = 'Value %s of field "%s" of post->ID=%s ("%s") is not of type "%s". Check out field\'s definition in WPSOLR data settings (tab 2.2) .';
+
 	protected $solr_indexing_options;
 
 	/**
@@ -34,7 +36,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 	public function __construct( $solr_index_indice = null, $language_code = null ) {
 
-		$this->init_galaxy();
+		$this->init();
 
 		$path = plugin_dir_path( __FILE__ ) . '../../vendor/autoload.php';
 		require_once $path;
@@ -692,7 +694,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		$taxonomies = (array) get_taxonomies( array( '_builtin' => false ), 'names' );
 		foreach ( $taxonomies as $parent ) {
-			if ( in_array( $parent, $newTax ) ) {
+			if ( in_array( $parent, $newTax, true ) ) {
 				$terms = get_the_terms( $post_to_index->ID, $parent );
 				if ( (array) $terms === $terms ) {
 					$parent    = strtolower( str_replace( ' ', '_', $parent ) );
@@ -771,44 +773,46 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	function set_custom_fields( $solarium_document_for_update, $post ) {
 
-		$custom                    = $this->solr_indexing_options['cust_fields'];
-		$custom_fields_values_list = array();
-		$aCustom                   = explode( ',', $custom );
-		if ( count( $aCustom ) > 0 ) {
-			if ( count( $custom_fields = get_post_custom( $post->ID ) ) ) {
+		$custom_fields = explode( ',', $this->solr_indexing_options['cust_fields'] );
+
+		if ( count( $custom_fields ) > 0 ) {
+			if ( count( $post_custom_fields = get_post_custom( $post->ID ) ) ) {
 
 				// Apply filters on custom fields
-				$custom_fields = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, $custom_fields, $post->ID );
+				$post_custom_fields = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, $post_custom_fields, $post->ID );
 
 				$existing_custom_fields = isset( $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ] )
 					? $solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_CUSTOM_FIELDS ]
 					: array();
-				foreach ( (array) $aCustom as $field_name ) {
-					if ( substr( $field_name, ( strlen( $field_name ) - 4 ), strlen( $field_name ) ) == "_str" ) {
-						$field_name = substr( $field_name, 0, ( strlen( $field_name ) - 4 ) );
-					}
-					if ( isset( $custom_fields[ $field_name ] ) ) {
-						$field = (array) $custom_fields[ $field_name ];
+
+				foreach ( (array) $custom_fields as $field_name_with_str_ending ) {
+
+					$field_name = $this->get_field_without_str_ending( $field_name_with_str_ending );
+
+					if ( isset( $post_custom_fields[ $field_name ] ) ) {
+						$field = (array) $post_custom_fields[ $field_name ];
 
 						$field_name = strtolower( str_replace( ' ', '_', $field_name ) );
 
 						// Add custom field array of values
-						$nm1       = $field_name . '_str';
+						//$nm1       = $field_name . '_str';
+						$nm1       = $this->replace_field_name_extension( $field_name_with_str_ending );
 						$nm2       = $field_name . '_srch';
 						$array_nm1 = array();
 						$array_nm2 = array();
 						foreach ( $field as $field_value ) {
-							$field_value_stripped = strip_tags( $field_value );
+
+							$field_value_sanitized = $this->get_sanitized_value( $post, $field_name_with_str_ending, $field_value );
 
 							// Only index the field if it has a value.
-							if ( ! empty( $field_value_stripped ) ) {
+							if ( ! empty( $field_value_sanitized ) ) {
 
-								array_push( $array_nm1, $field_value_stripped );
-								array_push( $array_nm2, $field_value_stripped );
+								array_push( $array_nm1, $field_value_sanitized );
+								array_push( $array_nm2, $field_value_sanitized );
 
 								// Add current custom field values to custom fields search field
 								// $field being an array, we add each of it's element
-								array_push( $existing_custom_fields, $field_value_stripped );
+								array_push( $existing_custom_fields, $field_value_sanitized );
 							}
 						}
 
@@ -825,6 +829,138 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Sanitize any value, based on it's Solr extension type
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 *
+	 * @return mixed
+	 */
+	public function get_sanitized_value( $post, $field_name, $value ) {
+
+		$field_type = $this->get_custom_field_dynamic_type( $field_name );
+
+		try {
+			switch ( $field_type ) {
+
+				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_FLOAT:
+					$result = $this->get_sanitized_float_value( $post, $field_name, $value, $field_type );
+					break;
+
+				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_INTEGER:
+					$result = $this->get_sanitized_integer_value( $post, $field_name, $value, $field_type );
+					break;
+
+				default:
+					$result = strip_tags( $value );
+					break;
+			}
+		} catch ( Exception $e ) {
+
+			$result                        = '';
+			$field_error_conversion_action = $this->get_custom_field_error_conversion_action( $field_name );
+
+			if ( WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR === $field_error_conversion_action ) {
+				// Throw error if this field is configured to do that.
+				throw $e;
+			}
+		}
+
+		return $result;
+
+	}
+
+	/**
+	 * Sanitize a float value
+	 * Try to convert it to a float, else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return float
+	 * @throws Exception
+	 */
+	public
+	function get_sanitized_float_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_numeric( $value ) ) {
+			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		if ( ! is_int( 0 + $value ) && ! is_float( 0 + $value ) ) {
+			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		return floatval( $value );
+	}
+
+	/**
+	 * Sanitize an integer value
+	 * Try to convert it to an integer, else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return int
+	 */
+	public
+	function get_sanitized_integer_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_numeric( $value ) ) {
+			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		if ( ! is_int( 0 + $value ) ) {
+			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		return intval( $value );
+	}
+
+	/**
+	 * @param \WP_Post $post
+	 * @param string $field_name
+	 * @param $value
+	 * @param string $field_type
+	 *
+	 * @throws \Exception
+	 */
+	protected
+	function throw_sanitized_error(
+		$post, $field_name, $value, $field_type
+	) {
+
+		throw new \Exception(
+			sprintf(
+				self::ERROR_SANITIZED_MESSAGE,
+				$value,
+				$this->get_field_without_str_ending( $field_name ),
+				empty( $post ) ? 'unknown' : $post->ID,
+				empty( $post ) ? 'unknown' : $post->post_title,
+				WpSolrSchema::get_solr_dynamic_entension_id_label( $field_type )
+			)
+		);
 
 	}
 
@@ -902,7 +1038,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return array|false
 	 */
-	private function index_post_thumbnails( $solarium_document_for_update, $post_id ) {
+	private
+	function index_post_thumbnails(
+		$solarium_document_for_update, $post_id
+	) {
 
 		if ( $this->is_in_galaxy ) {
 
@@ -924,7 +1063,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return array|false
 	 */
-	private function index_post_url( $solarium_document_for_update, $post_id ) {
+	private
+	function index_post_url(
+		$solarium_document_for_update, $post_id
+	) {
 
 		if ( $this->is_in_galaxy ) {
 

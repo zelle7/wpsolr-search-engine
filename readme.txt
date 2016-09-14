@@ -12,19 +12,19 @@ git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
 
 Contributors: wpsolr
 
-Current Version: 13.3
+Current Version: 13.5
 
 Author: wpsolr
 
 Author URI: http://www.wpsolr.com/
 
-Tags: search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
+Tags: search, TablePress search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
 Requires at least: 3.7.1
 
 Tested up to: 4.6
 
-Stable tag: 13.3
+Stable tag: 13.5
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -108,8 +108,26 @@ Installation procedure for Apache Solr: see FAQ section.
 41. 41) Admin: Select ACF repeater fields as facets.
 42. 42) Admin: Create a post with ACF repeater fields.
 43. 43) Front: Search in ACF repeater fields, and filter ACF repeater fields with facets.
+44. 44) Front: TablePress: index and search TablePress tables content.
+45. 45) Admin: WooCommerce sort on price, sku, ...
+46. 46) Front: WooCommerce sort on price, sku, ...
 
 == Changelog ==
+
+= 13.5 =
+* WooCommerce: sort on price, sku, ... any field you want
+In previous wpsolr versions, only a handful of hard-coded fields could be used as a sort criteria.
+Now, all indexed custom fields field are sortable, including price and product attributes in WooCommerce stores.
+* [Screenshot: Admin: WooCommerce sort on price, sku, ...](https://s.w.org/plugins/wpsolr-search-engine/screenshot-45.png "Admin: WooCommerce sort on price, sku, ...")
+* [Screenshot: Front: WooCommerce sort on price, sku, ...](https://s.w.org/plugins/wpsolr-search-engine/screenshot-46.png "Front: WooCommerce sort on price, sku, ...")
+* Indexed fields can be given a Solr type
+Fields can be given a Solr type (short string, numeric integer, numeric floating point). In Solr, only those field types are sortable, or can be used as range facets.
+* New wpsolr sort widget, which you can add anywhere in your search page templates.
+* WARNING: if you want to activate the new Solr type features, this will require you to re-index all your documents. It can take a while if you have a large amount of documents in your WP database.
+
+= 13.4 =
+* Add new TablePress pack to index and search TablePress tables content in posts. Shortcodes content is formatted to remove html.
+* [Screenshot: TablePress: index and search TablePress tables content](https://s.w.org/plugins/wpsolr-search-engine/screenshot-44.png?r=1492819 "TablePress: index and search TablePress tables content")
 
 = 13.3 =
 * Removed wpml-config.xml from plugin directory. It provoked an error with the strict XML parser introduced by Polylang 2 versions.

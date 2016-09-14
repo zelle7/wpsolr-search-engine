@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 13.3
+ * Version: 13.5
  * Author: wpsolr
  * Plugin URI: http://www.wpsolr.com
  * License: GPL2
@@ -11,7 +11,7 @@
 // Constants
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
-define( 'WPSOLR_PLUGIN_VERSION', '13.2' );
+define( 'WPSOLR_PLUGIN_VERSION', '13.5' );
 
 // Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
@@ -28,6 +28,8 @@ require_once 'classes/solr/wpsolr-search-solr-client.php';
 require_once 'classes/utilities/WPSOLR_Global.php';
 /* UI Facets */
 require_once 'classes/ui/WPSOLR_UI_Facets.php';
+/* UI Sort list */
+require_once 'classes/ui/WPSOLR_UI_Sort.php';
 
 /* Register Solr settings from dashboard
  * Add menu page in dashboard - Solr settings

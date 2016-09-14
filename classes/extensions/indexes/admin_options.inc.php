@@ -353,19 +353,21 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 				<div class="submit">
 					<input name="check_solr_status" id='check_index_status' type="button"
 					       class="button-primary wdm-save"
-					       value="Check Solr Status, then Save this configuration"/> <span><img
-							src='<?php echo plugins_url( '../../../images/gif-load_cir.gif', __FILE__ ) ?>'
-							style='height:18px;width:18px;margin-top: 10px;display: none'
-							class='img-load'>
+					       value="Check Solr Status, then Save this configuration"/>
+					<span>
+						<img src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/gif-load_cir.gif'; ?>'
+						     style='height:18px;width:18px;margin-top: 10px;display: none'
+						     class='img-load'>
 
                                              <img
-	                                             src='<?php echo plugins_url( '../../../images/success.png', __FILE__ ) ?>'
+	                                             src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/success.png'; ?>'
 	                                             style='height:18px;width:18px;margin-top: 10px;display: none'
 	                                             class='img-succ'/>
                                                 <img
-	                                                src='<?php echo plugins_url( '../../../images/warning.png', __FILE__ ) ?>'
+	                                                src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/warning.png'; ?>'
 	                                                style='height:18px;width:18px;margin-top: 10px;display: none'
-	                                                class='img-err'/></span>
+	                                                class='img-err'/>
+					</span>
 				</div>
 
 				<?php if ( ! $is_new_index ) { ?>
