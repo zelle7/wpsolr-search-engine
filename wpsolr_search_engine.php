@@ -133,7 +133,7 @@ function add_remove_document_to_solr_index( $post_id, $post ) {
 	delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
 
 	try {
-		if ( 'publish' === $post->post_status ) {
+		if ( 'publish' === $post->post_status && !WPSOLR_Metabox::get_metabox_is_do_not_index($post_id)) {
 			// post published, add/update it from Solr index
 
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
