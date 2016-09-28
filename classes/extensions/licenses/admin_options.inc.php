@@ -187,7 +187,7 @@ $license_manager = new OptionLicenses();
 										I bought a WPSOLR subscription, but cannot find my license#
 									</a>
 								</li>
-								<li><a href="http://www.gotosolr.com/en/solr-documentation/wpsolr-licenses-upgrade/"
+								<li><a href="https://www.wpsolr.com/knowledgebase/how-to-upgrade-my-subscription/"
 								       target="__new2">
 										I want to add the <?php echo $license[ OptionLicenses::FIELD_LICENSE_TITLE ]; ?>
 										pack to
@@ -219,7 +219,7 @@ $license_manager = new OptionLicenses();
 
 								<h4 class="solr_error" style="font-size: 12px">
 									See our packs <a
-										href="http://www.wpsolr.com/pricing"
+										href="https://www.wpsolr.com/pricing"
 										target="__new1">pricing and features</a>.<br/>
 									This will give you 7 days to test the 'Premium Pack'.
 									<br/>
@@ -241,12 +241,12 @@ $license_manager = new OptionLicenses();
 								After completion of your order, you will receive an email with a link to your account.
 								Signin, and copy the license activation code (Licence # column of the subscription) above to activate your pack.
 								See documentation here: <a
-									href="http://www.gotosolr.com/en/solr-documentation/license-activations"
-									target="__new1">http://www.gotosolr.com/en/solr-documentation/license-activations</a>
+									href="https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/"
+									target="__new1">https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/</a>
 
 								<h3>Chat</h3>
 								If you are quite, but not completely, convinced, let's have a chat at <a
-									href="http://www.wpsolr.com"
+									href="https://www.wpsolr.com"
 									target="__new1">wpsolr.com chat box</a>.
 								<br/> We also deliver custom developments, if your project needs extra care.
 

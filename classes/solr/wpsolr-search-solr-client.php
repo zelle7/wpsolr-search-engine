@@ -197,7 +197,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	static function get_search_page() {
 
 		// Let other plugins (POLYLANG, ...) modify the search page slug
-		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, WPSOLR_Global::getOption()->get_search_ajax_search_page_slug() );
 
 		// Search page is found by it's path (hard-coded).
 		$search_page = get_page_by_path( $search_page_slug );
@@ -229,7 +229,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	static function create_default_search_page() {
 
 		// Let other plugins (POLYLANG, ...) modify the search page slug
-		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, WPSOLR_Global::getOption()->get_search_ajax_search_page_slug() );
 
 		$_search_page = array(
 			'post_type'      => 'page',

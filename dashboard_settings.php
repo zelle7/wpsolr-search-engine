@@ -17,7 +17,7 @@ function wpsolr_admin_footer_text( $footer_text ) {
 
 			$footer_version = sprintf( 'Activated packs: %s.', implode( ', ', $licenses ) );
 		}
-		$footer_version .= ' See <a href="http://www.wpsolr.com/pricing" target="__new">other packs</a>.';
+		$footer_version .= ' See <a href="https://www.wpsolr.com/pricing" target="__new">other packs</a>.';
 
 		$footer_text = $footer_version . '<br/>' . $footer_text;
 	}
@@ -317,13 +317,13 @@ function fun_set_solr_options() {
 				want
 				to host it yourself).
 			</li>
-			<li>3. <a href="http://www.wpsolr.com/installation-guide/" target="_blank">Create a Solr index</a>, or
+			<li>3. <a href="https://www.wpsolr.com/guide-category/installation-guide/" target="_blank">Create a Solr index</a>, or
 				<a
-					href="http://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
+					href="https://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
 			</li>
-			<li>4. <a href="http://wpsolr.com/user-guide/" target="_blank">Configure WPSOLR with your own Solr
+			<li>4. <a href="https://www.wpsolr.com/guide-category/user-guide/" target="_blank">Configure WPSOLR with your own Solr
 					index</a>,
-				<a href="http://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR
+				<a href="https://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR
 					with
 					Gotosolr</a></li>
 		</ul>
@@ -525,6 +525,23 @@ function fun_set_solr_options() {
 									</div>
 									<div class="clear"></div>
 								</div>
+
+								<div class="wdm_row">
+									<div
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Ajax search page slug', true, true ); ?></div>
+									<div class='col_right'>
+										<input type='text'
+										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG; ?>]'
+										       placeholder="<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;?>"
+											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ); ?>
+											   value="<?php echo( ! empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG ] ) ? $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG ] : '' ); ?>">
+										<br/>Enter a slug for the search page containing the shortcode for the Ajax search results, [solr_search_shortcode].
+										<br/>By default, if empty, '<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;?>' will be used.
+										<br/>This slug will be used as the target url in the WPSOLR Ajax search box form.
+									</div>
+									<div class="clear"></div>
+								</div>
+
 								<div class="wdm_row">
 									<div class='col_left'>Do not load WPSOLR front-end css.<br/>You can then use
 										your

@@ -201,7 +201,7 @@ class PluginPolylang extends PluginWpml {
 
 		// POLYLANG cannot accept 2 pages with the same slug.
 		// So, add the language to the slug.
-		return WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG . "-" . $this->get_current_language_code();
+		return $slug . "-" . $this->get_current_language_code();
 	}
 
 	/**

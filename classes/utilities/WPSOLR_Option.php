@@ -238,6 +238,7 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE = 'suggest_content_type_none';
 	const OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR = 'suggest_jquery_selector';
 	const OPTION_SEARCH_SUGGEST_CLASS_DEFAULT = 'search-field';
+	const OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG = 'ajax-search-slug';
 
 	/**
 	 * Get search options array
@@ -412,6 +413,16 @@ class WPSOLR_Option {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Ajax search page slug
+	 * @return string
+	 */
+	public function get_search_ajax_search_page_slug() {
+		$result = $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG, WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG );
+
+		return ! empty( $result ) ? $result : WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;
 	}
 
 	/***************************************************************************************************************

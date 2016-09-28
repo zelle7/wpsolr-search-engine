@@ -2,11 +2,11 @@
 
 Contributors: wpsolr
 
-Current Version: 13.6
+Current Version: 13.7
 
 Author: wpsolr
 
-Author URI: http://www.wpsolr.com/
+Author URI: https://www.wpsolr.com/
 
 Tags: search, TablePress search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 13.6
+Stable tag: 13.7
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -41,7 +41,7 @@ You definitely need wpsolr search if you agree with one of:
 
 If not, there are plenty of great search plugins out there to help you.
 
-But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
+But, if you're really ready to unleash the beast, visit <a href='https://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
 
 
 == Installation ==
@@ -104,6 +104,9 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 13.7 =
+* (Premium pack) Add an option to set the ajax search page slug. Default remains 'search-wpsolr'.
 
 = 13.6 =
 * Fix autocompletion to work with any theme's search boxes.
@@ -641,7 +644,7 @@ If you can manage to install Solr (or to buy a hosting Solr service), WPSOLR can
 * Tweak your search in many many ways with Solr solrconfig.cml and schema.xml files (language analysers, stopwords, synonyms, stemmers ...)
 
 = Do you offer a premium version ? =
-Yes. Check out our <a href="http://wpsolr.com/pricing">Premium Packs</a>.
+Yes. Check out our <a href="https://wpsolr.com/pricing">Premium Packs</a>.
 
 = Can you search in several sites and show results on one site ? =
 Yes, there is a (Premium) multisites option in wpsolr.
