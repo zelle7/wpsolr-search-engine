@@ -317,11 +317,13 @@ function fun_set_solr_options() {
 				want
 				to host it yourself).
 			</li>
-			<li>3. <a href="https://www.wpsolr.com/guide-category/installation-guide/" target="_blank">Create a Solr index</a>, or
+			<li>3. <a href="https://www.wpsolr.com/guide-category/installation-guide/" target="_blank">Create a Solr
+					index</a>, or
 				<a
 					href="https://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
 			</li>
-			<li>4. <a href="https://www.wpsolr.com/guide-category/user-guide/" target="_blank">Configure WPSOLR with your own Solr
+			<li>4. <a href="https://www.wpsolr.com/guide-category/user-guide/" target="_blank">Configure WPSOLR with
+					your own Solr
 					index</a>,
 				<a href="https://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR
 					with
@@ -532,12 +534,15 @@ function fun_set_solr_options() {
 									<div class='col_right'>
 										<input type='text'
 										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG; ?>]'
-										       placeholder="<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;?>"
+										       placeholder="<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG; ?>"
 											<?php echo $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE, true ); ?>
 											   value="<?php echo( ! empty( $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG ] ) ? $solr_res_options[ WPSOLR_Option::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG ] : '' ); ?>">
-										<br/>Enter a slug for the search page containing the shortcode for the Ajax search results, [solr_search_shortcode].
-										<br/>By default, if empty, '<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;?>' will be used.
-										<br/>This slug will be used as the target url in the WPSOLR Ajax search box form.
+										<br/>Enter a slug for the search page containing the shortcode for the Ajax
+										search results, [solr_search_shortcode].
+										<br/>By default, if empty,
+										'<?php echo WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG; ?>' will be used.
+										<br/>This slug will be used as the target url in the WPSOLR Ajax search box
+										form.
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -1848,7 +1853,8 @@ function fun_set_solr_options() {
 
 			try {
 				$solr                             = WPSolrIndexSolrClient::create( $current_index_indice );
-				$count_nb_documents_to_be_indexed = $solr->count_nb_documents_to_be_indexed();
+				$count_nb_documents_to_be_indexed = $solr->get_count_nb_documents_to_be_indexed();
+				$count_blacklisted_ids            = $solr->get_count_blacklisted_ids();
 			} catch ( Exception $e ) {
 				echo '<b>An error occured while trying to connect to the Solr server:</b> <br>' . htmlentities( $e->getMessage() );
 
@@ -1894,7 +1900,15 @@ function fun_set_solr_options() {
 										// Reset value so it's not displayed next time this page is displayed.
 										//$solr->update_count_documents_indexed_last_operation();
 										?>
-									</b> document(s) remain to be indexed
+									</b> document(s) remain to be indexed. Click on the button "synchronize" to index them.
+								</div>
+							<?php endif ?>
+							<?php if ( $count_blacklisted_ids > 0 ): ?>
+								<div><b>
+										<?php
+										echo $count_blacklisted_ids;
+										?>
+									</b> document(s) will not be indexed, from the 2.2 exclusion list, or from the wpsolr metabox "do not search"
 								</div>
 							<?php endif ?>
 						</div>

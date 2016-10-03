@@ -355,16 +355,16 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 					       class="button-primary wdm-save"
 					       value="Check Solr Status, then Save this configuration"/>
 					<span>
-						<img src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/gif-load_cir.gif'; ?>'
+						<img src='<?php echo WPSOLR_DEFINE_PLUGIN_DIR_URL . '/images/gif-load_cir.gif'; ?>'
 						     style='height:18px;width:18px;margin-top: 10px;display: none'
 						     class='img-load'>
 
                                              <img
-	                                             src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/success.png'; ?>'
+	                                             src='<?php echo WPSOLR_DEFINE_PLUGIN_DIR_URL . '/images/success.png'; ?>'
 	                                             style='height:18px;width:18px;margin-top: 10px;display: none'
 	                                             class='img-succ'/>
                                                 <img
-	                                                src='<?php echo WPSOLRC_DEFINE_PLUGIN_DIR_URL . '/images/warning.png'; ?>'
+	                                                src='<?php echo WPSOLR_DEFINE_PLUGIN_DIR_URL . '/images/warning.png'; ?>'
 	                                                style='height:18px;width:18px;margin-top: 10px;display: none'
 	                                                class='img-err'/>
 					</span>
