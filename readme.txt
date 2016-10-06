@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 13.8
+Current Version: 13.9
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 13.8
+Stable tag: 13.9
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -104,6 +104,9 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 13.9 =
+* Fix the real-time indexing.
 
 = 13.8 =
 * Better and faster management of posts excluded from the index, either from the 2.2 ids exclusion list or the wpsolr metabox "Do not search".

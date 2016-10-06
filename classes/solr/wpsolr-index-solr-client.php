@@ -270,7 +270,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		if ( isset( $post ) ) {
 			// Add condition on the $post
 
-			$query_where_stmt = ' ID = %d AND ( $query_where_stmt ) ';
+			$query_where_stmt = " ID = %d AND ( $query_where_stmt ) ";
 		} elseif ( $is_only_exclude_ids ) {
 			// No condition on the date for $is_only_exclude_ids
 
