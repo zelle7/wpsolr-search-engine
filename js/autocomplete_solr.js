@@ -342,5 +342,82 @@ jQuery(document).ready(function () {
     });
 
 
+    /**
+     * Add geolocation user agreement to selectors
+     */
+    jQuery(wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_SEARCH_BOX_JQUERY_SELECTOR).each(function (index) {
+
+        jQuery(this).closest('form').append(wp_localize_script_autocomplete.WPSOLR_FILTER_ADD_GEO_USER_AGREEMENT_CHECKBOX_TO_AJAX_SEARCH_FORM);
+    });
+
+    /**
+     * Manage geolocation
+     */
+    jQuery('form').on('submit', function (event) {
+
+        //event.preventDefault();
+
+        var me = jQuery(this);
+
+        if (jQuery(this).find(wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_SEARCH_BOX_JQUERY_SELECTOR).length) {
+            // The submitted form contains an element linked to the geolocation by a jQuery selector
+
+            var nb_user_agreement_checkboxes = jQuery(this).find(wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR).length;
+            var user_agreement_first_checkbox_value = jQuery(this).find(wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR).filter(':checked').first().val();
+
+            /**
+             * We want to force the checkbox value to 'n' when unchecked (normally, it's value disappears from the form).
+             * Else, no way to have a 3-state url value: absent/checked/unchecked. The url absent state can be then translated to checked or unchecked.
+             */
+            var current_checkbox = jQuery(this).find(wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR).first();
+            if (!current_checkbox.prop('checked')) {
+                me.append(jQuery("<input />").attr("type", "hidden").attr("name", current_checkbox.prop("name")).val(wp_localize_script_autocomplete.PARAMETER_VALUE_NO));
+            } else {
+                current_checkbox.val(wp_localize_script_autocomplete.PARAMETER_VALUE_YES);
+            }
+
+            console.log('wpsolr geolocation selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_SEARCH_BOX_JQUERY_SELECTOR);
+            console.log('wpsolr geolocation user agreement selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR);
+            console.log('wpsolr nb of geolocation user agreement checkboxes: ' + nb_user_agreement_checkboxes);
+            console.log('wpsolr first geolocation user agreement checkbox value: ' + user_agreement_first_checkbox_value);
+
+            if ((0 === nb_user_agreement_checkboxes) || (undefined !== user_agreement_first_checkbox_value)) {
+                // The form does not contain a field requiring to not use geolocation (a checkbox unchecked)
+
+                if (navigator.geolocation) {
+
+                    // Stop the submit happening while the geo code executes asynchronously
+                    event.preventDefault();
+
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+
+                            // Add coordinates to the form
+                            me.append(jQuery("<input />").attr("type", "hidden").attr("name", wp_localize_script_autocomplete.SEARCH_PARAMETER_LATITUDE).val(position.coords.latitude));
+                            me.append(jQuery("<input />").attr("type", "hidden").attr("name", wp_localize_script_autocomplete.SEARCH_PARAMETER_LONGITUDE).val(position.coords.longitude));
+
+                            // Finally, submit
+                            me.unbind('submit').submit();
+
+                        },
+                        function (error) {
+
+                            console.log('wpsolr: geolocation error: ' + error.code);
+
+                            // Finally, submit
+                            me.unbind('submit').submit();
+                        }
+                    );
+
+                } else {
+
+                    console.log('wpsolr: geolocation not supported by browser.');
+                }
+            }
+
+        }
+
+    });
+
 })
 ;

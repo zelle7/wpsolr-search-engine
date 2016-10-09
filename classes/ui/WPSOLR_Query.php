@@ -14,6 +14,9 @@ class WPSOLR_Query extends WP_Query {
 	protected $wpsolr_filter_query;
 	protected $wpsolr_paged;
 	protected $wpsolr_sort;
+	protected $wpsolr_latitude;
+	protected $wpsolr_longitude;
+	protected $wpsolr_is_geo;
 
 
 	/**
@@ -47,7 +50,7 @@ class WPSOLR_Query extends WP_Query {
 		$this->set_wpsolr_query( '' );
 		$this->set_filter_query_fields( array() );
 		$this->set_wpsolr_paged( '0' );
-		$this->set_wpsolr_sort( WPSOLR_Global::getOption()->get_sortby_default() );
+		$this->set_wpsolr_sort( '' );
 	}
 
 	/**
@@ -116,6 +119,11 @@ class WPSOLR_Query extends WP_Query {
 	 * @return string
 	 */
 	public function get_wpsolr_sort() {
+
+		if ( empty( $this->wpsolr_sort ) ) {
+			$this->wpsolr_sort = apply_filters( WpSolrFilters::WPSOLR_FILTER_DEFAULT_SORT, WPSOLR_Global::getOption()->get_sortby_default(), $this );
+		}
+
 		return $this->wpsolr_sort;
 	}
 
@@ -126,6 +134,49 @@ class WPSOLR_Query extends WP_Query {
 		$this->wpsolr_sort = $wpsolr_sort;
 	}
 
+	/**
+	 * @param string $wpsolr_sort
+	 */
+	public function set_wpsolr_latitude( $wpsolr_latitude ) {
+		$this->wpsolr_latitude = $wpsolr_latitude;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_wpsolr_latitude() {
+		return $this->wpsolr_latitude;
+	}
+
+	/**
+	 * @param string $wpsolr_sort
+	 */
+	public function set_wpsolr_longitude( $wpsolr_longitude ) {
+		$this->wpsolr_longitude = $wpsolr_longitude;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_wpsolr_longitude() {
+		return $this->wpsolr_longitude;
+	}
+
+
+	/**
+	 * @param boolean $is_geo
+	 *
+	 */
+	public function set_wpsolr_is_geo( $is_geo ) {
+		$this->wpsolr_is_geo = $is_geo;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function get_wpsolr_is_geo() {
+		return $this->wpsolr_is_geo;
+	}
 
 	/**************************************************************************
 	 *
@@ -140,7 +191,7 @@ class WPSOLR_Query extends WP_Query {
 		// Let WP extract parameters
 		$this->parse_query();
 		$q = &$this->query_vars;
-		$this->parse_search($q);
+		$this->parse_search( $q );
 
 		// Copy WP standard query to WPSOLR query
 		$this->set_wpsolr_query( $this->query[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] );
@@ -177,6 +228,9 @@ class WPSOLR_Query extends WP_Query {
 			// Prevent error later in WP code
 			$this->query_vars['name'] = '';
 		}
+
+		// Action for updating post before getting back to the theme's search page.
+		do_action( WpSolrFilters::WPSOLR_ACTION_POST_RESULT, $this, $this->resultSet );
 
 		return $this->posts;
 	}

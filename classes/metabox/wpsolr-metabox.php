@@ -70,12 +70,11 @@ class WPSOLR_Metabox {
 	 * @return string
 	 */
 	public function action_add_meta_boxes_callback( $post ) {
+		global $license_manager;
 
 		if ( ! $this->get_is_show_meta_box( $post ) ) {
 			return;
 		}
-
-		$license_manager = new OptionLicenses();
 
 		wp_nonce_field( basename( __FILE__ ), self::METABOX_NONCE_ID );
 		$post_meta = get_post_meta( $post->ID );

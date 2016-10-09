@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 13.9
+ * Version: 14.0
  * Author: wpsolr
  * Plugin URI: https://www.wpsolr.com
  * License: GPL2
  */
 
 // Definitions
-define( 'WPSOLR_PLUGIN_VERSION', '13.9' );
+define( 'WPSOLR_PLUGIN_VERSION', '14.0' );
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
 define( 'WPSOLR_DEFINE_PLUGIN_DIR_URL', substr_replace( plugin_dir_url( __FILE__ ), '', - 1 ), false );
@@ -24,6 +24,9 @@ require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 require_once 'ajax_solr_services.php';
 require_once 'dashboard_settings.php';
 require_once 'autocomplete.php';
+
+/* Translations */
+require_once 'classes/utilities/WPSOLR_Translate.php';
 
 /* Include Solr clients */
 require_once 'classes/solr/wpsolr-index-solr-client.php';
@@ -53,6 +56,7 @@ if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template
 }
 
 if ( is_admin() ) {
+
 	/*
 	 * Register metabox
 	 */
@@ -314,15 +318,16 @@ function solr_search_form() {
 
 		$form .= '<input type="hidden" value="' . $ad_url . '" id="path_to_admin">';
 		$form .= '<input type="hidden" value="' . $search_que . '" id="search_opt">';
+
 		$form .= '
        <div class="ui-widget search-box">
  	<input type="hidden"  id="ajax_nonce" value="' . $ajax_nonce . '">
         <input type="text" placeholder="' . OptionLocalization::get_term( $localization_options, 'search_form_edit_placeholder' ) . '" value="' . $search_que . '" name="' . WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q . '" id="search_que" class="' . WPSOLR_Option::OPTION_SEARCH_SUGGEST_CLASS_DEFAULT . ' sfl1" autocomplete="off"/>
 	<input type="submit" value="' . OptionLocalization::get_term( $localization_options, 'search_form_button_label' ) . '" id="searchsubmit" style="position:relative;width:auto">
-        <div style="clear:both"></div>
-        </div>
-	</div>
-       </form>';
+		         <input type="hidden" value="' . WPSOLR_Global::getOption()->get_search_after_autocomplete_block_submit() . '" id="is_after_autocomplete_block_submit">'
+		         . apply_filters( WpSolrFilters::WPSOLR_FILTER_APPEND_FIELDS_TO_AJAX_SEARCH_FORM, '' )
+		         . '<div style="clear:both"></div></div></form>';
+
 	}
 
 	return $form;
@@ -374,19 +379,21 @@ function my_enqueue() {
 		'urljs'
 	), WPSOLR_PLUGIN_VERSION, true );
 	wp_localize_script( 'autocomplete', 'wp_localize_script_autocomplete',
-		array(
-			'ajax_url'                           => admin_url( 'admin-ajax.php' ),
-			'is_show_url_parameters'             => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
-			'is_url_redirect'                    => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
-			'SEARCH_PARAMETER_SEARCH'            => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
-			'SEARCH_PARAMETER_Q'                 => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
-			'SEARCH_PARAMETER_FQ'                => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
-			'SEARCH_PARAMETER_SORT'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
-			'SEARCH_PARAMETER_PAGE'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
-			'SORT_CODE_BY_RELEVANCY_DESC'        => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
-			'wpsolr_autocomplete_selector'       => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector(),
-			'wpsolr_autocomplete_action'         => WPSOLR_AJAX_AUTO_COMPLETE_ACTION,
-			'wpsolr_autocomplete_nonce_selector' => ( '#' . WPSOLR_AUTO_COMPLETE_NONCE_SELECTOR ),
+		apply_filters( WpSolrFilters::WPSOLR_FILTER_JAVASCRIPT_FRONT_LOCALIZED_PARAMETERS,
+			array(
+				'ajax_url'                           => admin_url( 'admin-ajax.php' ),
+				'is_show_url_parameters'             => WPSOLR_Global::getOption()->get_search_is_ajax_with_url_parameters(),
+				'is_url_redirect'                    => WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template(),
+				'SEARCH_PARAMETER_SEARCH'            => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SEARCH,
+				'SEARCH_PARAMETER_Q'                 => WPSOLR_Query_Parameters::SEARCH_PARAMETER_Q,
+				'SEARCH_PARAMETER_FQ'                => WPSOLR_Query_Parameters::SEARCH_PARAMETER_FQ,
+				'SEARCH_PARAMETER_SORT'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT,
+				'SEARCH_PARAMETER_PAGE'              => WPSOLR_Query_Parameters::SEARCH_PARAMETER_PAGE,
+				'SORT_CODE_BY_RELEVANCY_DESC'        => WPSolrSearchSolrClient::SORT_CODE_BY_RELEVANCY_DESC,
+				'wpsolr_autocomplete_selector'       => WPSOLR_Global::getOption()->get_search_suggest_jquery_selector(),
+				'wpsolr_autocomplete_action'         => WPSOLR_AJAX_AUTO_COMPLETE_ACTION,
+				'wpsolr_autocomplete_nonce_selector' => ( '#' . WPSOLR_AUTO_COMPLETE_NONCE_SELECTOR ),
+			)
 		),
 		WPSOLR_PLUGIN_VERSION
 	);

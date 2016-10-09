@@ -1,4 +1,7 @@
 <?php
+
+require_once WPSOLR_PLUGIN_DIR . '/classes/utilities/WPSOLR_Help.php';
+
 /**
  * Action to replace the admin footer text
  * @return string
@@ -156,6 +159,8 @@ function wpsolr_admin_init() {
 	register_setting( 'extension_pdf_embedder_opt', WPSOLR_Option::OPTION_PDF_EMBEDDER );
 	register_setting( 'extension_google_doc_embedder_opt', WPSOLR_Option::OPTION_GOOGLE_DOC_EMBEDDER );
 	register_setting( 'extension_tablepress_opt', WPSOLR_Option::OPTION_TABLEPRESS );
+	register_setting( 'extension_geolocation_opt', WPSOLR_Option::OPTION_GEOLOCATION );
+
 
 }
 
@@ -302,13 +307,15 @@ function fun_set_solr_options() {
 	switch ( $tab ) {
 	case 'solr_presentation' :
 		?>
-		<h2>See our little <a href="http://www.gotosolr.com/en/search-wpsolr/" target="_blank">demo (WPSOLR, Ajax,
-				Infinite scroll pagination, WPML, Products suggestions, attachments)</a>. Try "solr", "cluster",
-			....
+		<h2>See our little <a href="https://www.wpsolr.com/?s=" target="_blank">documentation search</a>, which uses our
+			plugin
 		</h2>
 		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
 
 		<ul>
+			<li>0. Read our <a href="https://www.wpsolr.com/?s=dummy" target="_blank">general introductions to Apache
+					Solr</a>.
+			</li>
 			<li>1. Download <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>. WPSOLR
 				replaces
 				the slow WP SQL search by the mighty Solr search.
@@ -440,6 +447,7 @@ function fun_set_solr_options() {
 								<div class="wdm_row">
 									<div class='col_left'>
 										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'This search is part of a network search', true, true ); ?>
+										<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_MULTI_SITE ); ?>
 									</div>
 									<div class='col_right'>
 										<select
@@ -483,7 +491,8 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div class='col_left'>
-										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Search theme', true ); ?>
+										<?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Search template', true ); ?>
+										<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_SEARCH_TEMPLATE ); ?>
 									</div>
 									<div class='col_right'>
 										<select name="wdm_solr_res_data[search_method]">
@@ -491,7 +500,7 @@ function fun_set_solr_options() {
 											$options = array(
 												array(
 													'code'     => 'use_current_theme_search_template',
-													'label'    => 'Use my current theme search templates (no keyword autocompletion, no \'Did you mean\', no filters, no sort)',
+													'label'    => 'Use my current theme search template (no ajax, no \'Did you mean\', widget facets, widget sort)',
 													'disabled' => $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE ),
 												),
 												array(
@@ -625,7 +634,9 @@ function fun_set_solr_options() {
 								</div>
 								<div class="wdm_row">
 									<div
-										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search boxes', true, true ); ?></div>
+										class='col_left'><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_CORE, 'Attach the suggestions list to your own search boxes', true, true ); ?>
+										<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_JQUERY_SELECTOR ); ?>
+									</div>
 									<div class='col_right'>
 										<input type='text'
 										       name='wdm_solr_res_data[<?php echo WPSOLR_Option::OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR; ?>]'
@@ -946,11 +957,11 @@ function fun_set_solr_options() {
 
 												// Selected first
 												foreach ( $taxonomies as $type ) {
-													if ( strpos( $tax_types_opt, $type . "_str" ) !== false ) {
+													if ( strpos( $tax_types_opt, $type . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) !== false ) {
 														?>
 
 														<input type='checkbox' name='taxon'
-														       value='<?php echo $type . "_str" ?>'
+														       value='<?php echo $type . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ?>'
 															<?php echo $disabled; ?>
 															   checked
 														> <?php echo $type ?> <br>
@@ -960,11 +971,11 @@ function fun_set_solr_options() {
 
 												// Unselected 2nd
 												foreach ( $taxonomies as $type ) {
-													if ( strpos( $tax_types_opt, $type . "_str" ) === false ) {
+													if ( strpos( $tax_types_opt, $type . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) === false ) {
 														?>
 
 														<input type='checkbox' name='taxon'
-														       value='<?php echo $type . "_str" ?>'
+														       value='<?php echo $type . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ?>'
 															<?php echo $disabled; ?>
 														> <?php echo $type ?> <br>
 														<?php
@@ -1005,55 +1016,59 @@ function fun_set_solr_options() {
 
 												// Show selected first
 												foreach ( $keys as $key ) {
-													if ( strpos( $field_types_opt, $key . "_str" ) !== false ) {
+													if ( strpos( $field_types_opt, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) !== false ) {
 														$is_indexed_custom_field = true;
 														?>
 
-														<div>
+														<div class="wpsolr_custom_field_selected">
 															<input type='checkbox' name='cust_fields'
-															       value='<?php echo $key . "_str" ?>'
+															       value='<?php echo $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ?>'
 																<?php echo $disabled; ?>
 																   checked>
-															<select
-																<?php
-																$field_solr_type = ! empty( $custom_field_properties[ $key . "_str" ] ) && ! empty( $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
-																	? $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
-																	: WpSolrSchema::get_solr_dynamic_entension_id_by_default();
-																if ( $disabled ) {
-																	echo ' disabled ';
-																}
-																?>
-																name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . "_str", WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ); ?>">
-																<?php
-																foreach ( WpSolrSchema::get_solr_dynamic_entensions() as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
-																	echo sprintf( '<option value="%s" %s>%s</option>', $solr_dynamic_type_id, selected( $field_solr_type, $solr_dynamic_type_id, false ), WpSolrSchema::get_solr_dynamic_entension_label( $solr_dynamic_type_array ) );
-																}
-																?>
-															</select>
 
-															<select
-																<?php
-																$field_action_id = ! empty( $custom_field_properties[ $key . "_str" ] ) && ! empty( $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
-																	? $custom_field_properties[ $key . "_str" ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
-																	: WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD;
-																if ( $disabled ) {
-																	echo ' disabled ';
-																}
-																?>
-																name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . "_str", WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ); ?>">
-																<?php
-																foreach (
-																	array(
-																		WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD => 'Use empty value if conversion error',
-																		WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR  => 'Stop indexing at first conversion error',
-																	) as $action_id => $action_text
-																) {
-																	echo sprintf( '<option value="%s" %s>%s</option>', $action_id, selected( $field_action_id, $action_id, false ), $action_text );
-																}
-																?>
-															</select>
+															<b><?php echo $key ?></b>
 
-															<?php echo $key ?>
+															<br/>
+															<div style="margin-left:30px;">
+																<select
+																	<?php
+																	$field_solr_type = ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ] ) && ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+																		? $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
+																		: WpSolrSchema::get_solr_dynamic_entension_id_by_default();
+																	if ( $disabled ) {
+																		echo ' disabled ';
+																	}
+																	?>
+																	name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ); ?>">
+																	<?php
+																	foreach ( WpSolrSchema::get_solr_dynamic_entensions() as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
+																		echo sprintf( '<option value="%s" %s %s>%s</option>', $solr_dynamic_type_id, selected( $field_solr_type, $solr_dynamic_type_id, false ), $solr_dynamic_type_array['disabled'], WpSolrSchema::get_solr_dynamic_entension_label( $solr_dynamic_type_array ) );
+																	}
+																	?>
+																</select>
+
+																<select
+																	<?php
+																	$field_action_id = ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ] ) && ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
+																		? $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
+																		: WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD;
+																	if ( $disabled ) {
+																		echo ' disabled ';
+																	}
+																	?>
+																	name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ); ?>">
+																	<?php
+																	foreach (
+																		array(
+																			WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD => 'Use empty value if conversion error',
+																			WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR  => 'Stop indexing at first conversion error',
+																		) as $action_id => $action_text
+																	) {
+																		echo sprintf( '<option value="%s" %s>%s</option>', $action_id, selected( $field_action_id, $action_id, false ), $action_text );
+																	}
+																	?>
+																</select>
+															</div>
 
 														</div>
 
@@ -1063,11 +1078,11 @@ function fun_set_solr_options() {
 
 												// Show unselected 2nd
 												foreach ( $keys as $key ) {
-													if ( strpos( $field_types_opt, $key . "_str" ) === false ) {
+													if ( strpos( $field_types_opt, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) === false ) {
 														?>
 
 														<input type='checkbox' name='cust_fields'
-														       value='<?php echo $key . "_str" ?>'
+														       value='<?php echo $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ?>'
 															<?php echo $disabled; ?>
 														> <?php echo $key ?>
 														<br>
@@ -1223,7 +1238,7 @@ function fun_set_solr_options() {
 											if ( $selected_values != '' ) {
 												foreach ( $selected_array as $selected_val ) {
 													if ( $selected_val !== '' ) {
-														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
+														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) {
 															$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
 														} else {
 															$dis_text = $selected_val;
@@ -1310,7 +1325,7 @@ function fun_set_solr_options() {
 											foreach ( $built_in as $built_fac ) {
 												if ( $built_fac != '' ) {
 													$buil_fac = strtolower( $built_fac );
-													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == "_str" ) {
+													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) {
 														$dis_text = substr( $buil_fac, 0, ( strlen( $buil_fac ) - 4 ) );
 													} else {
 														$dis_text = $buil_fac;
@@ -1414,7 +1429,7 @@ function fun_set_solr_options() {
 												$disabled = $license_manager->get_license_enable_html_code( OptionLicenses::LICENSE_PACKAGE_CORE );
 												foreach ( $selected_array as $selected_val ) {
 													if ( $selected_val != '' ) {
-														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == "_str" ) {
+														if ( substr( $selected_val, ( strlen( $selected_val ) - 4 ), strlen( $selected_val ) ) == WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) {
 															$dis_text = substr( $selected_val, 0, ( strlen( $selected_val ) - 4 ) );
 														} else {
 															$dis_text = $selected_val;
@@ -1527,7 +1542,7 @@ function fun_set_solr_options() {
 											foreach ( $built_in as $built_fac ) {
 												if ( $built_fac != '' ) {
 													$buil_fac = strtolower( $built_fac );
-													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == "_str" ) {
+													if ( substr( $buil_fac, ( strlen( $buil_fac ) - 4 ), strlen( $buil_fac ) ) == WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ) {
 														$dis_text = substr( $buil_fac, 0, ( strlen( $buil_fac ) - 4 ) );
 													} else {
 														$dis_text = $buil_fac;
@@ -1569,31 +1584,7 @@ function fun_set_solr_options() {
 					$img_path = plugins_url( 'images/plus.png', __FILE__ );
 					$minus_path  = plugins_url( 'images/minus.png', __FILE__ );
 
-					$built_in = WPSolrSearchSolrClient::get_sort_options();
-
-					$custom_fields_sortable = array();
-					foreach ( WPSOLR_Global::getOption()->get_option_index_custom_field_properties() as $custom_field_name => $custom_field_property ) {
-
-						// Only sortable extension types can be sorted
-						if ( WpSolrSchema::get_solr_dynamic_entension_id_is_sortable( $custom_field_property[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] ) ) {
-
-							// Add asc and desc for each sortable field
-							foreach (
-								array(
-									array( \Solarium\QueryType\Select\Query\Query::SORT_ASC, 'ascending' ),
-									array( \Solarium\QueryType\Select\Query\Query::SORT_DESC, 'descending' )
-								) as $sort_order
-							) {
-								$custom_fields_sortable[] = array(
-									'code'  => sprintf( '%s_%s', $custom_field_name, $sort_order[0] ),
-									'label' => sprintf( '%s %s', str_replace( '_str', '', $custom_field_name ), $sort_order[1] )
-								);
-							}
-						}
-
-					}
-
-					$built_in = array_merge( $built_in, $custom_fields_sortable );
+					$built_in = WpSolrSchema::get_sort_fields();
 					?>
 					<div id="solr-sort-options" class="wdm-vertical-tabs-content">
 						<form action="options.php" method="POST" id='sort_settings_form'>
@@ -1627,7 +1618,7 @@ function fun_set_solr_options() {
 									<div class='col_left'>Default when no sort is selected by the user</div>
 									<div class='col_right'>
 										<select name="wdm_solr_sortby_data[sort_default]">
-											<?php foreach ( $built_in as $sort ) {
+											<?php foreach ( apply_filters( WpSolrFilters::WPSOLR_FILTER_DEFAULT_SORT_FIELDS, $built_in ) as $sort ) {
 												$selected = WPSOLR_Global::getOption()->get_sortby_default() == $sort['code'] ? 'selected' : '';
 												?>
 												<option
@@ -1752,6 +1743,7 @@ function fun_set_solr_options() {
 		<?php
 
 		$subtabs = array(
+			'extension_geolocation_opt'         => 'Geolocation',
 			'extension_woocommerce_opt'         => 'WooCommerce',
 			'extension_acf_opt'                 => 'ACF',
 			'extension_types_opt'               => 'Toolset Types',
@@ -1821,6 +1813,10 @@ function fun_set_solr_options() {
 
 			case 'extension_tablepress_opt':
 				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::EXTENSION_TABLEPRESS );
+				break;
+
+			case 'extension_geolocation_opt':
+				WpSolrExtensions::require_once_wpsolr_extension_admin_options( WpSolrExtensions::OPTION_GEOLOCATION );
 				break;
 		}
 
@@ -1900,7 +1896,8 @@ function fun_set_solr_options() {
 										// Reset value so it's not displayed next time this page is displayed.
 										//$solr->update_count_documents_indexed_last_operation();
 										?>
-									</b> document(s) remain to be indexed. Click on the button "synchronize" to index them.
+									</b> document(s) remain to be indexed. Click on the button "synchronize" to index
+									them.
 								</div>
 							<?php endif ?>
 							<?php if ( $count_blacklisted_ids > 0 ): ?>
@@ -1908,7 +1905,8 @@ function fun_set_solr_options() {
 										<?php
 										echo $count_blacklisted_ids;
 										?>
-									</b> document(s) will not be indexed, from the 2.2 exclusion list, or from the wpsolr metabox "do not search"
+									</b> document(s) will not be indexed, from the 2.2 exclusion list, or from the
+									wpsolr metabox "do not search"
 								</div>
 							<?php endif ?>
 						</div>
@@ -2026,7 +2024,7 @@ function wpsolr_admin_tabs( $current = 'solr_indexes' ) {
 			! isset( $default_search_solr_index )
 				? $are_there_indexes ? "<span class='text_error'>No index selected</span>" : ''
 				: $option_indexes->get_index_name( $default_search_solr_index ) );
-		$tabs['solr_plugins']    = '3. Define which plugins to work with';
+		$tabs['solr_plugins']    = '3. Buy extension packs';
 		$tabs['solr_operations'] = '4. Send your data';
 		//$tabs['wpsolr_licenses'] = '5. AddOns';
 	}

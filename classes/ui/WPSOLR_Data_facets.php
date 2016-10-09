@@ -35,61 +35,44 @@ class WPSOLR_Data_Facets {
 
 					$facet_with_no_blank_id = strtolower( str_replace( ' ', '_', $facet_to_display_id ) );
 
-					// Remove the ending "_str"
-					$facet_to_display_id_without_str = preg_replace( '/_str$/', '', $facet_to_display_id );
-
-					// Give plugins a chance to change the facet name (ACF).
-					$facet_to_display_name = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME, $facet_to_display_id_without_str );
-
-					if ( $facet_to_display_name === $facet_to_display_id_without_str ) {
-						// Facet label not changed by filter
-
-						if ( ! empty( $facets_labels[ $facet_to_display_id ] ) ) {
-							// Facet label is defined in options
-							$facet_to_display_name = $facets_labels[ $facet_to_display_id ];
-
-							// Give plugins a chance to change the facet name (WPML, POLYLANG).
-							$facet_to_display_name = apply_filters( WpSolrFilters::WPSOLR_FILTER_TRANSLATION_STRING, $facet_to_display_name,
-								array(
-									'domain' => WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL,
-									'name'   => $facet_to_display_id,
-									'text'   => $facet_to_display_name
-								) );
-
-						} else {
-							// Try to make a decent label from the facet raw id
-							$facet_to_display_name = str_replace( '_', ' ', $facet_to_display_name );
-							$facet_to_display_name = ucfirst( $facet_to_display_name );
-						}
-					}
+					$facet_to_display_name = WPSOLR_Translate::translate_field_custom_field(
+						WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL,
+						$facet_to_display_id,
+						! empty( $facets_labels[ $facet_to_display_id ] ) ? $facets_labels[ $facet_to_display_id ] : ''
+					);
 
 					$facet          = array();
 					$facet['items'] = array();
 					$facet['id']    = $facet_to_display_id;
 					$facet['name']  = $facet_to_display_name;
 
-					$items_hierachy = array();
-					self::buildHierarchies( $items_hierachy, $facet_to_display_id, $facets_in_results[ $facet_to_display_id ],
-						! empty( $facets_selected[ $facet_with_no_blank_id ] ) ? $facets_selected[ $facet_with_no_blank_id ] : array() );
+					$items_hierarchy = array();
+					self::build_hierarchies(
+						$items_hierarchy,
+						$facet_to_display_id,
+						$facets_in_results[ $facet_to_display_id ],
+						! empty( $facets_selected[ $facet_with_no_blank_id ] ) ? $facets_selected[ $facet_with_no_blank_id ] : array()
+					);
 
-					foreach ( $items_hierachy as $facet_in_results ) {
+					foreach ( $items_hierarchy as $facet_in_results ) {
 
-						array_push( $facet['items'], array(
-							'value'           => $facet_in_results['value'],
-							'value_localized' => ! empty( $facet_in_results['value_localized'] ) ? $facet_in_results['value_localized'] : $facet_in_results['value'],
-							'count'           => $facet_in_results['count'],
-							'items'           => $facet_in_results['items'],
-							'selected'        => $facet_in_results['selected']
-						) );
+						array_push(
+							$facet['items'],
+							array(
+								'value'           => $facet_in_results['value'],
+								'value_localized' => ! empty( $facet_in_results['value_localized'] ) ? $facet_in_results['value_localized'] : $facet_in_results['value'],
+								'count'           => $facet_in_results['count'],
+								'items'           => $facet_in_results['items'],
+								'selected'        => $facet_in_results['selected'],
+							)
+						);
 
 					}
 
 					// Add current facet to results
 					array_push( $results, $facet );
 				}
-
 			}
-
 		}
 
 		return $results;
@@ -101,9 +84,11 @@ class WPSOLR_Data_Facets {
 	 * Recursive
 	 *
 	 * @param $results
+	 * @param $facet_to_display_id
 	 * @param $items
+	 * @param $facets_selected
 	 */
-	public static function buildHierarchies( &$results, $facet_to_display_id, $items, $facets_selected ) {
+	public static function build_hierarchies( &$results, $facet_to_display_id, $items, $facets_selected ) {
 
 		$result = array();
 		foreach ( $items as $item ) {
@@ -112,11 +97,12 @@ class WPSOLR_Data_Facets {
 			$item_top_level_name      = array_shift( $item_hierarcy_item_names );
 
 			if ( empty( $result[ $item_top_level_name ] ) ) {
+
 				$result[ $item_top_level_name ]          = array(
 					'value'           => $item_top_level_name,
 					'value_localized' => ( WpSolrSchema::_FIELD_NAME_TYPE === $facet_to_display_id ) ? self::get_field_value_localization( $facet_to_display_id, $item_top_level_name, null ) : $item_top_level_name,
 					'count'           => $item['count'],
-					'selected'        => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) )
+					'selected'        => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) ),
 				);
 				$result[ $item_top_level_name ]['items'] = array();
 			}
@@ -127,12 +113,11 @@ class WPSOLR_Data_Facets {
 					array(
 						'value'    => implode( WpSolrSchema::FACET_HIERARCHY_SEPARATOR, $item_hierarcy_item_names ),
 						'count'    => $item['count'],
-						'selected' => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) )
+						'selected' => isset( $facets_selected ) && ( in_array( $item_top_level_name, $facets_selected, true ) ),
 					)
 				);
 			}
 		}
-
 
 		foreach ( $result as $top_name => $sub_items ) {
 
@@ -141,12 +126,12 @@ class WPSOLR_Data_Facets {
 				'value_localized' => ! empty( $sub_items['value_localized'] ) ? $sub_items['value_localized'] : $sub_items['value'],
 				'count'           => $sub_items['count'],
 				'selected'        => $sub_items['selected'],
-				'items'           => array()
+				'items'           => array(),
 			);
 
 			if ( ! empty( $sub_items['items'] ) ) {
 
-				self::buildHierarchies( $level['items'], $facet_to_display_id, $sub_items['items'], $facets_selected );
+				self::build_hierarchies( $level['items'], $facet_to_display_id, $sub_items['items'], $facets_selected );
 			}
 
 			// Calculate the count by summing children count
@@ -170,6 +155,7 @@ class WPSOLR_Data_Facets {
 	 *
 	 * @param $field_name
 	 * @param $field_value
+	 * @param $language
 	 *
 	 * @return mixed
 	 */
@@ -192,18 +178,19 @@ class WPSOLR_Data_Facets {
 						'domain'   => WPSOLR_Option::TRANSLATION_DOMAIN_FACET_LABEL,
 						'name'     => $field_value,
 						'text'     => $field_value,
-						'language' => $language
-					) );
+						'language' => $language,
+					)
+				);
 			}
 
 			if ( $value === $field_value ) {
 				// No translation for this value, try to get the localization instead.
+
 				$value = ! empty( self::$fields_items_labels[ $field_name ][ $field_value ] ) ? self::$fields_items_labels[ $field_name ][ $field_value ] : $field_value;
 			}
-
 		}
 
 		return $value;
 	}
-
 }
+

@@ -1,3 +1,20 @@
+.wpsolr_results_geo_distance {
+    display: block;
+}
+
+.wpsolr_is_geo_checkbox {
+    display: inline-block;
+}
+
+.wpsolr_is_geo_checkbox input[type="checkbox"] {
+    margin-right: 3px;
+}
+
+#searchsubmit {
+    display: inline-block;
+    height: 45px;
+}
+
 .wpsolr_facet_title {
     margin-top: 10px;
 }
@@ -172,7 +189,6 @@
 }
 
 .p_content {
-    float: left;
     padding-top: 4px;
     text-align: justify;
 }
@@ -202,7 +218,7 @@
     display: block;
     float: left;
     height: 32px !important;
-    width: 150px !important;
+    width: 50% !important;
     margin-left: 5px !important;
 }
 

@@ -116,41 +116,6 @@ class WPSolrAbstractSolrClient {
 		return $result;
 	}
 
-	/**
-	 * Get custom field properties
-	 *
-	 * @param string $field_name Field name (like 'price_str')
-	 *
-	 * @return array
-	 */
-	public function get_custom_field_properties( $field_name ) {
-
-		// Get the properties of custom fields
-		$custom_fields_properties = WPSOLR_Global::getOption()->get_option_index_custom_field_properties();
-
-		$result = ( ! empty( $custom_fields_properties[ $field_name ] ) ? $custom_fields_properties[ $field_name ] : array() );
-
-		return $result;
-	}
-
-	/**
-	 * Get custom field type
-	 *
-	 * @param string $field_name Field name (like 'price_str')
-	 *
-	 * @return string
-	 */
-	public function get_custom_field_dynamic_type( $field_name ) {
-
-		// Get the properties of this field
-		$custom_field_properties = $this->get_custom_field_properties( $field_name );
-
-		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
-			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
-			: '' );
-
-		return $result;
-	}
 
 	/**
 	 * Get custom field error conversion action
@@ -162,7 +127,7 @@ class WPSolrAbstractSolrClient {
 	public function get_custom_field_error_conversion_action( $field_name ) {
 
 		// Get the properties of this field
-		$custom_field_properties = $this->get_custom_field_properties( $field_name );
+		$custom_field_properties = WpSolrSchema::get_custom_field_properties( $field_name );
 
 		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
 			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
@@ -171,59 +136,9 @@ class WPSolrAbstractSolrClient {
 		return $result;
 	}
 
-	/**
-	 * For compatibility reasons with previous versions (13.5), all custom fields are ending with _str.
-	 * In field name, replace _str by a dynamic type
-	 * ('price_str', '_f') => 'price_f'
-	 *
-	 * @param string $field_name Field name, like 'price_str', or 'title'
-	 *
-	 * @return string
-	 */
-	public function replace_field_name_extension( $field_name ) {
-
-		$solr_dynamic_type_id = $this->get_custom_field_dynamic_type( $field_name );
-
-		$result = ! empty( $solr_dynamic_type_id )
-			? str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, $solr_dynamic_type_id, $field_name )
-			: $field_name;
-
-		return $result;
-	}
 
 	/**
-	 * For compatibility reasons with previous versions (13.5), all custom fields are ending with _str.
-	 * In field name, replace dynamic type by a _str
-	 * 'price_f' => 'price_str'
-	 * 'title' => 'title'
-	 *
-	 * @param string $field_name Field name, like 'price_str', or 'title'
-	 *
-	 * @return string
-	 */
-	public function replace_field_name_extension_back( $field_name ) {
-
-		$extension = WpSolrSchema::EXTENSION_SEPARATOR . WPSOLR_Regexp::extract_last_separator( $field_name, WpSolrSchema::EXTENSION_SEPARATOR );
-
-		if ( ( WpSolrSchema::EXTENSION_SEPARATOR === $extension ) || ( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
-			// No extension, nothing to do: title, content ... remain the same
-			// color_str ... remain the same
-			return $field_name;
-		}
-
-		if ( ! array_key_exists( $extension, WpSolrSchema::get_solr_dynamic_entensions() ) ) {
-			// Extension is unknown, do nothing
-			// price_def
-			return $field_name;
-		}
-
-
-		return $field_name . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
-
-	}
-
-	/**
-	 * Get field without ending '_str'  ('price_str' => 'price', 'title' => 'title')
+	 * Get field without ending WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING  ('price_str' => 'price', 'title' => 'title')
 	 *
 	 * @param string $field_name_with_str_ending Field name (like 'price_str')
 	 *

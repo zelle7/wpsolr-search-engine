@@ -600,7 +600,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 		foreach ( $aTaxo as $a ) {
 
-			if ( "_str" === substr( $a, ( strlen( $a ) - 4 ), strlen( $a ) ) ) {
+			if ( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING === substr( $a, ( strlen( $a ) - 4 ), strlen( $a ) ) ) {
 				$a = substr( $a, 0, ( strlen( $a ) - 4 ) );
 			}
 
@@ -721,8 +721,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 				$terms = get_the_terms( $post_to_index->ID, $parent );
 				if ( (array) $terms === $terms ) {
 					$parent    = strtolower( str_replace( ' ', '_', $parent ) );
-					$nm1       = $parent . '_str';
-					$nm2       = $parent . '_srch';
+					$nm1       = $parent . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+					$nm2       = $parent . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1;
 					$nm1_array = array();
 
 					$taxonomy_non_flat_hierarchies = array();
@@ -818,9 +818,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$field_name = strtolower( str_replace( ' ', '_', $field_name ) );
 
 						// Add custom field array of values
-						//$nm1       = $field_name . '_str';
-						$nm1       = $this->replace_field_name_extension( $field_name_with_str_ending );
-						$nm2       = $field_name . '_srch';
+						//$nm1       = $field_name . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+						$nm1       = WpSolrSchema::replace_field_name_extension( $field_name_with_str_ending );
+						$nm2       = $field_name . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1;
 						$array_nm1 = array();
 						$array_nm2 = array();
 						foreach ( $field as $field_value ) {
@@ -866,7 +866,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 */
 	public function get_sanitized_value( $post, $field_name, $value ) {
 
-		$field_type = $this->get_custom_field_dynamic_type( $field_name );
+		$field_type = WpSolrSchema::get_custom_field_dynamic_type( $field_name );
 
 		try {
 			switch ( $field_type ) {
@@ -877,6 +877,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_INTEGER:
 					$result = $this->get_sanitized_integer_value( $post, $field_name, $value, $field_type );
+					break;
+
+				case OptionGeoLocation::_SOLR_DYNAMIC_TYPE_LATITUDE_LONGITUDE:
+					$result = $this->get_sanitized_latitude_longitude_value( $post, $field_name, $value, $field_type );
 					break;
 
 				default:
@@ -929,6 +933,32 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		return floatval( $value );
 	}
+
+	/**
+	 * Sanitize a longitude,latitude location value
+	 * Try to convert it to a double,double else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return float
+	 * @throws Exception
+	 */
+	public
+	function get_sanitized_latitude_longitude_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+
+		return $value;
+	}
+
 
 	/**
 	 * Sanitize an integer value

@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 13.9
+Current Version: 14.0
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 13.9
+Stable tag: 14.0
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -105,8 +105,21 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 14.0 =
+* New Geolocation search pack:
+* <a href="https://www.wpsolr.com/?s=" target="_blank">Geolocation search demo</a>
+* WARNING: New schema.xml files with Geolocation type definitions. Download from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files, install on your Solr index, and reload the Solr index (or restart Solr).
+* Work with latitude and longitude locations (like a product's store coordinates)
+* A location is simply a custom field containing a string "latitude,longitude"
+* Can manage multi-locations configurations (a product with several stores)
+* Automatic gathering of visitor's location
+* Sort results by distance from the visitor's location
+* Show distance(s) from the visitor's location to results' locations
+* Add a user agreement checkbox to the search form(s)
+* Work with Ajax theme or your theme's search template
+
 = 13.9 =
-* Fix the real-time indexing.
+* Fix of real-time indexing.
 
 = 13.8 =
 * Better and faster management of posts excluded from the index, either from the 2.2 ids exclusion list or the wpsolr metabox "Do not search".
@@ -143,7 +156,7 @@ Fields can be given a Solr type (short string, numeric integer, numeric floating
 * Fix ajax search box not showing double quotes
 
 = 13.1 =
-* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from http://wpsolr.com/releases/#1.0, install on your Solr index, and reload the Solr index (or restart Solr).
+* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files, install on your Solr index, and reload the Solr index (or restart Solr).
 * Comments/Replies are indexed in real-time.
 * Comments/Replies are searchable, autocompleted, and spellchecked.
 * Comments/Replies fields and terms can be boosted.
@@ -618,7 +631,7 @@ wget http://archive.apache.org/dist/lucene/solr/6.1.0/solr-6.1.0.tgz
 tar xvf solr-6.1.0.tgz
 solr-6.1.0/bin/solr start
 solr-6.1.0/bin/solr create -c wpsolr-6.1.0
-(download solr 5.xx config files from http://wpsolr.com/releases/#1.0)
+(download solr 5.xx config files from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files)
 cp solrconfig.xml schema.xml solr-6.1.0/server/solr/wpsolr-6.1.0/conf/
 (reload index with solr admin UI)
 (configure a new index in wpsolr admin UI:
@@ -693,7 +706,7 @@ Please refer to our detailed <a href='http://wpsolr.com/installation-guide/'>Ins
 
 = What version of Solr does the WPSOLR Search Engine plugin need? =
 
-WPSOLR Search Engine plugin is <a href="http://wpsolr.com/releases/#1.0"> compatible with the following Solr versions</a>. But if you were going with a new installation, we would recommend installing Solr version 3.6.x or above.
+WPSOLR Search Engine plugin is <a href="https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files"> compatible with the following Solr versions</a>. But if you were going with a new installation, we would recommend installing Solr version 3.6.x or above.
 
 
 = Does WPSOLR Search Engine Plugin work with any version of WordPress? =

@@ -1,4 +1,5 @@
 <?php
+use Solarium\QueryType\Select\Query\Query;
 
 /**
  * Manage schema.xml definitions
@@ -9,6 +10,7 @@ class WpSolrSchema {
 
 	// Solr dynamic types extensions
 	const _SOLR_DYNAMIC_TYPE_STRING = '_str';
+	const _SOLR_DYNAMIC_TYPE_STRING1 = '_srch';
 	const _SOLR_DYNAMIC_TYPE_S = '_s';
 	const _SOLR_DYNAMIC_TYPE_INTEGER = '_i';
 	const _SOLR_DYNAMIC_TYPE_INTEGER_LONG = '_l';
@@ -17,46 +19,8 @@ class WpSolrSchema {
 	const _SOLR_DYNAMIC_TYPE_DATE = '_dt';
 	const _SOLR_DYNAMIC_TYPE_CUSTOM_FIELD = 'custom_field';
 
-	// List of Solr dynamic types extensions
-	public static $SOLR_DYNAMIC_TYPE_EXTENSIONS = array(
-		self::_SOLR_DYNAMIC_TYPE_STRING  => array(
-			'label'    => 'Text, not sortable, multivalued',
-			'sortable' => false,
-		),
-		self::_SOLR_DYNAMIC_TYPE_S       => array(
-			'label'    => 'Text, sortable',
-			'sortable' => true,
-		),
-		self::_SOLR_DYNAMIC_TYPE_INTEGER => array(
-			'label'    => 'Integer number, sortable',
-			'sortable' => true,
-		),
-		self::_SOLR_DYNAMIC_TYPE_FLOAT   => array(
-			'label'    => 'Floating point number, sortable',
-			'sortable' => true,
-		),
-		/*
-		self::_SOLR_DYNAMIC_TYPE_DATE    => array(
-			'label'    => 'Date, sortable',
-			'sortable' => true,
-		),
-		*/
-		/*
-		self::_SOLR_DYNAMIC_TYPE_INTEGER_LONG => array('label' => 'Big integer, sortable','sortable' => false,),
-		self::_SOLR_DYNAMIC_TYPE_FLOAT        => array(
-			'label'    => 'Floating point number, sortable',
-			'sortable' => false,
-		),
-		self::_SOLR_DYNAMIC_TYPE_FLOAT_DOUBLE => array(
-			'label'    => 'Double float',
-			'sortable' => true,
-		),
-		self::_SOLR_DYNAMIC_TYPE_CUSTOM_FIELD => array(
-			'label'    => 'Field defined in schema.xml',
-			'sortable' => true,
-		),
-		*/
-	);
+	// @property array List of Solr dynamic types extensions
+	protected static $solr_dynamic_types;
 
 	// Field queried by default. Necessary to get highlighting right.
 	const _FIELD_NAME_DEFAULT_QUERY = 'text';
@@ -116,7 +80,56 @@ class WpSolrSchema {
 	 * @return array
 	 */
 	public static function get_solr_dynamic_entensions() {
-		return self::$SOLR_DYNAMIC_TYPE_EXTENSIONS;
+
+		if ( empty( self::$solr_dynamic_types ) ) {
+			// cache
+
+			self::$solr_dynamic_types = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLR_FIELD_TYPES, array(
+				self::_SOLR_DYNAMIC_TYPE_STRING  => array(
+					'label'    => 'Text, not sortable, multivalued',
+					'sortable' => false,
+					'disabled' => '',
+				),
+				self::_SOLR_DYNAMIC_TYPE_S       => array(
+					'label'    => 'Text, sortable',
+					'sortable' => true,
+					'disabled' => '',
+				),
+				self::_SOLR_DYNAMIC_TYPE_INTEGER => array(
+					'label'    => 'Integer number, sortable',
+					'sortable' => true,
+					'disabled' => '',
+				),
+				self::_SOLR_DYNAMIC_TYPE_FLOAT   => array(
+					'label'    => 'Floating point number, sortable',
+					'sortable' => true,
+					'disabled' => '',
+				),
+				/*
+				self::_SOLR_DYNAMIC_TYPE_DATE    => array(
+					'label'    => 'Date, sortable',
+					'sortable' => true,
+				),
+				*/
+				/*
+				self::_SOLR_DYNAMIC_TYPE_INTEGER_LONG => array('label' => 'Big integer, sortable','sortable' => false,),
+				self::_SOLR_DYNAMIC_TYPE_FLOAT        => array(
+					'label'    => 'Floating point number, sortable',
+					'sortable' => false,
+				),
+				self::_SOLR_DYNAMIC_TYPE_FLOAT_DOUBLE => array(
+					'label'    => 'Double float',
+					'sortable' => true,
+				),
+				self::_SOLR_DYNAMIC_TYPE_CUSTOM_FIELD => array(
+					'label'    => 'Field defined in schema.xml',
+					'sortable' => true,
+				),
+				*/
+			) );
+		}
+
+		return self::$solr_dynamic_types;
 	}
 
 	/**
@@ -161,7 +174,10 @@ class WpSolrSchema {
 	 * @return array
 	 */
 	public static function get_solr_dynamic_entension( $solr_dynamic_type_id ) {
-		return ( ! empty( self::$SOLR_DYNAMIC_TYPE_EXTENSIONS[ $solr_dynamic_type_id ] ) ? self::$SOLR_DYNAMIC_TYPE_EXTENSIONS[ $solr_dynamic_type_id ] : array() );
+
+		$extensions = self::get_solr_dynamic_entensions();
+
+		return ( ! empty( $extensions[ $solr_dynamic_type_id ] ) ? $extensions[ $solr_dynamic_type_id ] : array() );
 	}
 
 	/**
@@ -192,4 +208,166 @@ class WpSolrSchema {
 		return self::get_solr_dynamic_entension_label( $extension );
 	}
 
+	/**
+	 * Get a custom field solr type
+	 *
+	 * @param string $field_name Field name (like 'price_str')
+	 *
+	 * @return string Field Type
+	 */
+	public static function get_custom_field_solr_type(
+		$field_name
+	) {
+
+		$custom_fields = WPSOLR_Global::getOption()->get_option_index_custom_field_properties();
+
+		if ( ! empty( $custom_fields[ $field_name ] )
+		     && ! empty( $custom_fields[ $field_name ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+		) {
+			return $custom_fields[ $field_name ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ];
+		}
+
+		// Default if type not found
+		return WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+	}
+
+	/**
+	 * Get field without ending '_asc' or '_desc' ('price_str_asc' => 'price_str', 'price_str_desc' => 'price_str')
+	 *
+	 * @param string $field_name_with_order Field name (like 'price_str_asc')
+	 *
+	 * @return string
+	 */
+	public static function get_field_without_sort_order_ending(
+		$field_name_with_order
+	) {
+
+		$result = $field_name_with_order;
+		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . \Solarium\QueryType\Select\Query\Query::SORT_ASC );
+		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . \Solarium\QueryType\Select\Query\Query::SORT_DESC );
+
+		return $result;
+	}
+
+	/**
+	 * Get custom field properties
+	 *
+	 * @param string $field_name Field name (like 'price_str')
+	 *
+	 * @return array
+	 */
+	public static function get_custom_field_properties( $field_name ) {
+
+		// Get the properties of custom fields
+		$custom_fields_properties = WPSOLR_Global::getOption()->get_option_index_custom_field_properties();
+
+		$result = ( ! empty( $custom_fields_properties[ $field_name ] ) ? $custom_fields_properties[ $field_name ] : array() );
+
+		return $result;
+	}
+
+	/**
+	 * Get custom field type
+	 *
+	 * @param string $field_name Field name (like 'price_str')
+	 *
+	 * @return string
+	 */
+	public static function get_custom_field_dynamic_type( $field_name ) {
+
+		// Get the properties of this field
+		$custom_field_properties = WpSolrSchema::get_custom_field_properties( $field_name );
+
+		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
+			: '' );
+
+		return $result;
+	}
+
+	/**
+	 * For compatibility reasons with previous versions (13.5), all custom fields are ending with _str.
+	 * In field name, replace _str by a dynamic type
+	 * ('price_str', '_f') => 'price_f'
+	 *
+	 * @param string $field_name Field name, like 'price_str', or 'title'
+	 *
+	 * @return string
+	 */
+	public static function replace_field_name_extension( $field_name ) {
+
+		$solr_dynamic_type_id = WpSolrSchema::get_custom_field_dynamic_type( $field_name );
+
+		$result = ! empty( $solr_dynamic_type_id )
+			? str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, $solr_dynamic_type_id, $field_name )
+			: $field_name;
+
+		return $result;
+	}
+
+	/**
+	 * In field name, replace dynamic type by an extension type
+	 * 'price_f, '_str' => 'price_str'
+	 * 'title', '_str' => 'title'
+	 * 'field1_str', '_str' => 'field1_str'
+	 *
+	 * @param string $field_name Field name, like 'price_str', or 'title'
+	 * @param string $field_type_extension Solt type extension, lile '_str'
+	 *
+	 * @return string
+	 */
+	public static function replace_field_name_extension_with( $field_name, $field_type_extension ) {
+
+		$extension = WpSolrSchema::EXTENSION_SEPARATOR . WPSOLR_Regexp::extract_last_separator( $field_name, WpSolrSchema::EXTENSION_SEPARATOR );
+
+		if ( ( WpSolrSchema::EXTENSION_SEPARATOR === $extension ) || ( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
+			// No extension, nothing to do: title, content ... remain the same
+			// color_str ... remain the same
+			return $field_name;
+		}
+
+		if ( ! array_key_exists( $extension, WpSolrSchema::get_solr_dynamic_entensions() ) ) {
+			// Extension is unknown, do nothing
+			// price_def
+			return $field_name;
+		}
+
+		return WPSOLR_Regexp::remove_string_at_the_end( $field_name, $extension ) . $field_type_extension;
+	}
+
+
+	/**
+	 * Get all sort fields ready to be put in a drop-down list
+	 *
+	 * @return array
+	 */
+	public static function get_sort_fields() {
+
+		$result = WPSolrSearchSolrClient::get_sort_options();
+
+		$custom_fields_sortable = array();
+		foreach ( WPSOLR_Global::getOption()->get_option_index_custom_field_properties() as $custom_field_name => $custom_field_property ) {
+
+			// Only sortable extension types can be sorted
+			if ( WpSolrSchema::get_solr_dynamic_entension_id_is_sortable( $custom_field_property[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] ) ) {
+
+				// Add asc and desc for each sortable field
+				foreach (
+					array(
+						array( Query::SORT_ASC, 'ascending' ),
+						array( Query::SORT_DESC, 'descending' ),
+					) as $sort_order
+				) {
+					$custom_fields_sortable[] = array(
+						'code'  => sprintf( '%s_%s', $custom_field_name, $sort_order[0] ),
+						'label' => sprintf( '%s %s', str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, '', $custom_field_name ), $sort_order[1] ),
+					);
+				}
+			}
+		}
+
+		$result = array_merge( $result, $custom_fields_sortable );
+
+		return $result;
+	}
 }

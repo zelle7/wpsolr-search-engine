@@ -76,4 +76,33 @@ class WpSolrFilters {
 	// Filter custom fields to be indexed
 	const WPSOLR_FILTER_INDEX_CUSTOM_FIELDS = 'wpsolr_filter_index_custom_fields';
 
+	// Filter to add additional fields to the Ajax search form
+	const WPSOLR_FILTER_APPEND_FIELDS_TO_AJAX_SEARCH_FORM = 'wpsolr_filter_append_fields_to_ajax_search_form';
+
+	// Action for url parameters
+	const WPSOLR_ACTION_URL_PARAMETERS = 'wpsolr_filter_url_parameters';
+
+	// Filter for front javascript localized parameters
+	const WPSOLR_FILTER_JAVASCRIPT_FRONT_LOCALIZED_PARAMETERS = 'wpsolr_filter_javascript_front_localized_parameters';
+
+	// Filter fields returned by Solr
+	const WPSOLR_FILTER_FIELDS = 'wpsolr_filter_fields';
+
+	// Filter to add Solr field types
+	const WPSOLR_FILTER_SOLR_FIELD_TYPES = 'wpsolr_filter_solr_field_types';
+
+	// Filter to change fields shown in the default sort list
+	const WPSOLR_FILTER_DEFAULT_SORT_FIELDS = 'wpsolr_filter_default_sort_fields';
+
+	// Filter sort items to be shown in the drop-down list (front-end)
+	const WPSOLR_FILTER_SORT_FIELDS = 'wpsolr_filter_sort_fields';
+
+	// Filter the default sort item
+	const WPSOLR_FILTER_DEFAULT_SORT = 'wpsolr_filter_default_sort';
+
+	// Filter to append custom html to each ajax results snippet
+	const WPSOLR_FILTER_SOLR_RESULTS_APPEND_CUSTOM_HTML = 'wpsolr_filter_solr_results_append_custom_html';
+
+	// Action for updating post before getting back to the theme's search page.
+	const WPSOLR_ACTION_POST_RESULT = 'wpsolr_action_posts_results';
 }

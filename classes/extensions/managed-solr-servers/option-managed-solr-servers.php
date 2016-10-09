@@ -85,8 +85,8 @@ class OptionManagedSolrServer extends WpSolrExtensions {
 			return (object) array(
 				'status' => (object) array(
 					'state'   => 'ERROR',
-					'message' => $response->get_error_message()
-				)
+					'message' => $response->get_error_message(),
+				),
 			);
 		}
 

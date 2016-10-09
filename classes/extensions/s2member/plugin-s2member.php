@@ -192,8 +192,8 @@ class PluginS2Member extends WpSolrExtensions {
 	 */
 	public function filter_custom_fields( $custom_fields, $post_id ) {
 
-		// Remove the '_str' at the end of the custom field
-		$custom_field_name = str_replace( '_str', '', self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES );
+		// Remove the WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING at the end of the custom field
+		$custom_field_name = str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, '', self::CUSTOM_FIELD_NAME_STORING_POST_CAPABILITIES );
 
 		if ( $custom_fields && count( $custom_fields ) > 0 ) {
 

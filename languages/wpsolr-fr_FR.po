@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Apache Solr search by WPSOLR\n"
-"POT-Creation-Date: 2016-08-25 11:44+0200\n"
-"PO-Revision-Date: 2016-08-25 11:45+0200\n"
+"POT-Creation-Date: 2016-10-05 21:55+0200\n"
+"PO-Revision-Date: 2016-10-05 21:55+0200\n"
 "Last-Translator: Patrice Bourgougnon <patrice.bourgougnon@eostis.com>\n"
 "Language-Team: Patrice Bourgougnon <patrice.bourgougnon@eostis.com>\n"
 "Language: fr\n"
@@ -140,16 +140,21 @@ msgctxt "Text displayed while infinite scroll is loading next page of results"
 msgid "Loading ..."
 msgstr "Chargement en cours…"
 
+#: classes/extensions/localization/option-localization.php:72
+msgctxt "Geolocation, ask user"
+msgid "Use my current location"
+msgstr "Utiliser ma position actuelle"
+
 #. Author of the plugin/theme
-#: classes/metabox/wpsolr-metabox.php:46
+#: classes/metabox/wpsolr-metabox.php:51
 msgid "wpsolr"
 msgstr ""
 
-#: classes/metabox/wpsolr-metabox.php:96
+#: classes/metabox/wpsolr-metabox.php:101
 msgid "Do not search"
 msgstr ""
 
-#: classes/metabox/wpsolr-metabox.php:110
+#: classes/metabox/wpsolr-metabox.php:115
 msgctxt "wpsolr"
 msgid "Search in ACF fields file content"
 msgstr ""
@@ -162,12 +167,20 @@ msgstr ""
 msgid "Display Solr Facets"
 msgstr ""
 
+#: classes/ui/widget/WPSOLR_Widget_Sort.php:14
+msgid "WPSOLR Sort list"
+msgstr ""
+
+#: classes/ui/widget/WPSOLR_Widget_Sort.php:15
+msgid "Display Solr drop-down sort list"
+msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "WPSOLR"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://www.wpsolr.com"
+msgid "https://www.wpsolr.com"
 msgstr ""
 
 #. Description of the plugin/theme

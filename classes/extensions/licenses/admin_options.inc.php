@@ -11,7 +11,6 @@ WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LICENS
 $option_name = OptionLicenses::get_option_name( WpSolrExtensions::OPTION_LICENSES );
 
 // Options object
-$license_manager = new OptionLicenses();
 
 ?>
 

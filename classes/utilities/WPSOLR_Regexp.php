@@ -53,9 +53,8 @@ class WPSOLR_Regexp {
 
 		preg_match( sprintf( '/[_]+[^_]*$/', $separator ), $text, $matches );
 
-		return ! empty( $matches ) ? substr( $matches[0], strlen( $separator ) ) : '';
+		return ! empty( $matches ) ? substr( $matches[0], strlen( $separator ) ) : $text;
 	}
-
 
 	/**
 	 * Remove $text_to_remove at the end of $text
