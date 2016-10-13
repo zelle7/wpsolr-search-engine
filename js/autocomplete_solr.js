@@ -376,10 +376,10 @@ jQuery(document).ready(function () {
                 current_checkbox.val(wp_localize_script_autocomplete.PARAMETER_VALUE_YES);
             }
 
-            console.log('wpsolr geolocation selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_SEARCH_BOX_JQUERY_SELECTOR);
-            console.log('wpsolr geolocation user agreement selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR);
-            console.log('wpsolr nb of geolocation user agreement checkboxes: ' + nb_user_agreement_checkboxes);
-            console.log('wpsolr first geolocation user agreement checkbox value: ' + user_agreement_first_checkbox_value);
+            //console.log('wpsolr geolocation selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_SEARCH_BOX_JQUERY_SELECTOR);
+            //console.log('wpsolr geolocation user agreement selectors: ' + wp_localize_script_autocomplete.WPSOLR_FILTER_GEOLOCATION_USER_AGREEMENT_JQUERY_SELECTOR);
+            //console.log('wpsolr nb of geolocation user agreement checkboxes: ' + nb_user_agreement_checkboxes);
+            //console.log('wpsolr first geolocation user agreement checkbox value: ' + user_agreement_first_checkbox_value);
 
             if ((0 === nb_user_agreement_checkboxes) || (undefined !== user_agreement_first_checkbox_value)) {
                 // The form does not contain a field requiring to not use geolocation (a checkbox unchecked)

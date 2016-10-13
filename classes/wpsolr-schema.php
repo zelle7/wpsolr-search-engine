@@ -19,6 +19,9 @@ class WpSolrSchema {
 	const _SOLR_DYNAMIC_TYPE_DATE = '_dt';
 	const _SOLR_DYNAMIC_TYPE_CUSTOM_FIELD = 'custom_field';
 
+	// Conversion error message
+	const ERROR_SANITIZED_MESSAGE = 'Value %s of field "%s" of post->ID=%s ("%s") is not of type "%s". Check out field\'s definition in WPSOLR data settings (tab 2.2) .';
+
 	// @property array List of Solr dynamic types extensions
 	protected static $solr_dynamic_types;
 
@@ -65,12 +68,12 @@ class WpSolrSchema {
 	// Definition translated fields when multi-languages plugins are activated
 	public static $multi_language_fields = array(
 		array(
-			'field_name'      => WpSolrSchema::_FIELD_NAME_TITLE,
-			'field_extension' => WpSolrSchema::_DYNAMIC_TYPE_POSTFIX_TEXT,
+			'field_name'      => self::_FIELD_NAME_TITLE,
+			'field_extension' => self::_DYNAMIC_TYPE_POSTFIX_TEXT,
 		),
 		array(
-			'field_name'      => WpSolrSchema::_FIELD_NAME_CONTENT,
-			'field_extension' => WpSolrSchema::_DYNAMIC_TYPE_POSTFIX_TEXT,
+			'field_name'      => self::_FIELD_NAME_CONTENT,
+			'field_extension' => self::_DYNAMIC_TYPE_POSTFIX_TEXT,
 		),
 	);
 
@@ -228,7 +231,7 @@ class WpSolrSchema {
 		}
 
 		// Default if type not found
-		return WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+		return self::_SOLR_DYNAMIC_TYPE_STRING;
 	}
 
 	/**
@@ -276,7 +279,7 @@ class WpSolrSchema {
 	public static function get_custom_field_dynamic_type( $field_name ) {
 
 		// Get the properties of this field
-		$custom_field_properties = WpSolrSchema::get_custom_field_properties( $field_name );
+		$custom_field_properties = self::get_custom_field_properties( $field_name );
 
 		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
 			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
@@ -296,10 +299,10 @@ class WpSolrSchema {
 	 */
 	public static function replace_field_name_extension( $field_name ) {
 
-		$solr_dynamic_type_id = WpSolrSchema::get_custom_field_dynamic_type( $field_name );
+		$solr_dynamic_type_id = self::get_custom_field_dynamic_type( $field_name );
 
 		$result = ! empty( $solr_dynamic_type_id )
-			? str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, $solr_dynamic_type_id, $field_name )
+			? str_replace( self::_SOLR_DYNAMIC_TYPE_STRING, $solr_dynamic_type_id, $field_name )
 			: $field_name;
 
 		return $result;
@@ -318,15 +321,15 @@ class WpSolrSchema {
 	 */
 	public static function replace_field_name_extension_with( $field_name, $field_type_extension ) {
 
-		$extension = WpSolrSchema::EXTENSION_SEPARATOR . WPSOLR_Regexp::extract_last_separator( $field_name, WpSolrSchema::EXTENSION_SEPARATOR );
+		$extension = self::EXTENSION_SEPARATOR . WPSOLR_Regexp::extract_last_separator( $field_name, self::EXTENSION_SEPARATOR );
 
-		if ( ( WpSolrSchema::EXTENSION_SEPARATOR === $extension ) || ( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
+		if ( ( self::EXTENSION_SEPARATOR === $extension ) || ( self::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
 			// No extension, nothing to do: title, content ... remain the same
 			// color_str ... remain the same
 			return $field_name;
 		}
 
-		if ( ! array_key_exists( $extension, WpSolrSchema::get_solr_dynamic_entensions() ) ) {
+		if ( ! array_key_exists( $extension, self::get_solr_dynamic_entensions() ) ) {
 			// Extension is unknown, do nothing
 			// price_def
 			return $field_name;
@@ -349,7 +352,7 @@ class WpSolrSchema {
 		foreach ( WPSOLR_Global::getOption()->get_option_index_custom_field_properties() as $custom_field_name => $custom_field_property ) {
 
 			// Only sortable extension types can be sorted
-			if ( WpSolrSchema::get_solr_dynamic_entension_id_is_sortable( $custom_field_property[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] ) ) {
+			if ( self::get_solr_dynamic_entension_id_is_sortable( $custom_field_property[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] ) ) {
 
 				// Add asc and desc for each sortable field
 				foreach (
@@ -360,7 +363,7 @@ class WpSolrSchema {
 				) {
 					$custom_fields_sortable[] = array(
 						'code'  => sprintf( '%s_%s', $custom_field_name, $sort_order[0] ),
-						'label' => sprintf( '%s %s', str_replace( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, '', $custom_field_name ), $sort_order[1] ),
+						'label' => sprintf( '%s %s', str_replace( self::_SOLR_DYNAMIC_TYPE_STRING, '', $custom_field_name ), $sort_order[1] ),
 					);
 				}
 			}
@@ -369,5 +372,180 @@ class WpSolrSchema {
 		$result = array_merge( $result, $custom_fields_sortable );
 
 		return $result;
+	}
+
+	/**
+	 * Get field without ending self::_SOLR_DYNAMIC_TYPE_STRING  ('price_str' => 'price', 'title' => 'title')
+	 *
+	 * @param string $field_name_with_str_ending Field name (like 'price_str')
+	 *
+	 * @return string
+	 */
+	public static function get_field_without_str_ending( $field_name_with_str_ending ) {
+
+		$result = WPSOLR_Regexp::remove_string_at_the_end( $field_name_with_str_ending, self::_SOLR_DYNAMIC_TYPE_STRING );
+
+		return $result;
+	}
+
+	/**
+	 * @param \WP_Post $post
+	 * @param string $field_name
+	 * @param $value
+	 * @param string $field_type
+	 *
+	 * @throws Exception
+	 */
+	public static
+	function throw_sanitized_error(
+		$post, $field_name, $value, $field_type
+	) {
+
+		throw new \Exception(
+			sprintf(
+				self::ERROR_SANITIZED_MESSAGE,
+				$value,
+				self::get_field_without_str_ending( $field_name ),
+				empty( $post ) ? 'unknown' : $post->ID,
+				empty( $post ) ? 'unknown' : $post->post_title,
+				self::get_solr_dynamic_entension_id_label( $field_type )
+			)
+		);
+
+	}
+
+	/**
+	 * Sanitize a float value
+	 * Try to convert it to a float, else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return float
+	 */
+	public static
+	function get_sanitized_float_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_numeric( $value ) ) {
+			self::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		if ( ! is_int( 0 + $value ) && ! is_float( 0 + $value ) ) {
+			self::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		return floatval( $value );
+	}
+
+	/**
+	 * Sanitize an integer value
+	 * Try to convert it to an integer, else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return int
+	 */
+	public static
+	function get_sanitized_integer_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_numeric( $value ) ) {
+			self::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		if ( ! is_int( 0 + $value ) ) {
+			self::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		return intval( $value );
+	}
+
+	/**
+	 * Get custom field error conversion action
+	 *
+	 * @param string $field_name Field name (like 'price_str')
+	 *
+	 * @return string
+	 */
+	public static function get_custom_field_error_conversion_action( $field_name ) {
+
+		// Get the properties of this field
+		$custom_field_properties = self::get_custom_field_properties( $field_name );
+
+		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
+			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
+			: WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD );
+
+		return $result;
+	}
+
+	/**
+	 * Sanitize any value, based on it's Solr extension type
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public static function get_sanitized_value( $post, $field_name, $value ) {
+
+		$field_type = WpSolrSchema::get_custom_field_dynamic_type( $field_name );
+
+		try {
+
+			// Let a chance to sanitize the field
+			$result = apply_filters( WpSolrFilters::WPSOLR_FILTER_INDEX_SANITIZE_FIELD, null,
+				$post, $field_name, $value, $field_type
+			);
+
+			if ( null === $result ) {
+				// Field not sanitized yet: do it now.
+
+				switch ( $field_type ) {
+
+					case WpSolrSchema::_SOLR_DYNAMIC_TYPE_FLOAT:
+						$result = WpSolrSchema::get_sanitized_float_value( $post, $field_name, $value, $field_type );
+						break;
+
+					case WpSolrSchema::_SOLR_DYNAMIC_TYPE_INTEGER:
+						$result = WpSolrSchema::get_sanitized_integer_value( $post, $field_name, $value, $field_type );
+						break;
+
+					default:
+						$result = strip_tags( $value );
+						break;
+				}
+			}
+		} catch ( Exception $e ) {
+
+			$result                        = '';
+			$field_error_conversion_action = WpSolrSchema::get_custom_field_error_conversion_action( $field_name );
+
+			if ( WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR === $field_error_conversion_action ) {
+				// Throw error if this field is configured to do that.
+				throw $e;
+			}
+		}
+
+		return $result;
+
 	}
 }

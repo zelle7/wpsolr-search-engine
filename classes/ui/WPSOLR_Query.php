@@ -230,7 +230,7 @@ class WPSOLR_Query extends WP_Query {
 		}
 
 		// Action for updating post before getting back to the theme's search page.
-		do_action( WpSolrFilters::WPSOLR_ACTION_POST_RESULT, $this, $this->resultSet );
+		do_action( WpSolrFilters::WPSOLR_ACTION_POSTS_RESULTS, $this, $this->resultSet );
 
 		return $this->posts;
 	}

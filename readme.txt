@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 14.0
+Current Version: 14.1
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 14.0
+Stable tag: 14.1
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -104,6 +104,10 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 14.1 =
+* Sanitize geolocation fields during indexing.
+* Fix intermittent http 500 error.
 
 = 14.0 =
 * New Geolocation search pack:

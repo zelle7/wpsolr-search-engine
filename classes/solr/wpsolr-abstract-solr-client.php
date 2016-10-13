@@ -115,40 +115,4 @@ class WPSolrAbstractSolrClient {
 
 		return $result;
 	}
-
-
-	/**
-	 * Get custom field error conversion action
-	 *
-	 * @param string $field_name Field name (like 'price_str')
-	 *
-	 * @return string
-	 */
-	public function get_custom_field_error_conversion_action( $field_name ) {
-
-		// Get the properties of this field
-		$custom_field_properties = WpSolrSchema::get_custom_field_properties( $field_name );
-
-		$result = ( ! empty( $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ] )
-			? $custom_field_properties[ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION ]
-			: WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_IGNORE_FIELD );
-
-		return $result;
-	}
-
-
-	/**
-	 * Get field without ending WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING  ('price_str' => 'price', 'title' => 'title')
-	 *
-	 * @param string $field_name_with_str_ending Field name (like 'price_str')
-	 *
-	 * @return string
-	 */
-	public function get_field_without_str_ending( $field_name_with_str_ending ) {
-
-		$result = WPSOLR_Regexp::remove_string_at_the_end( $field_name_with_str_ending, WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING );
-
-		return $result;
-	}
-
 }

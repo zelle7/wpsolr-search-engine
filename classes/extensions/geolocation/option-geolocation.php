@@ -107,10 +107,62 @@ TAG;
 			'wpsolr_filter_solr_results_append_custom_html',
 		), 10, 3 );
 
-		add_action( WpSolrFilters::WPSOLR_ACTION_POST_RESULT, array(
+		add_action( WpSolrFilters::WPSOLR_ACTION_POSTS_RESULTS, array(
 			$this,
 			'wpsolr_action_posts_results',
 		), 10, 2 );
+
+		add_action( WpSolrFilters::WPSOLR_FILTER_INDEX_SANITIZE_FIELD, array(
+			$this,
+			'wpsolr_filter_index_sanitize_field',
+		), 10, 5 );
+	}
+
+	/**
+	 * Sanitize a longitude,latitude location value
+	 * Try to convert it to a double,double else throw an exception.
+	 *
+	 * @param $default_value Null
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return float
+	 */
+	public static
+	function wpsolr_filter_index_sanitize_field(
+		$default_value, $post, $field_name, $value, $field_type
+	) {
+
+		if ( self::_SOLR_DYNAMIC_TYPE_LATITUDE_LONGITUDE === $field_type ) {
+
+			if ( empty( $value ) ) {
+				return $value;
+			}
+
+			$lat_long_array = explode( ',', $value );
+			if ( 2 === count( $lat_long_array ) ) {
+				// Comma separated string: ok
+
+				$latitude  = WpSolrSchema::get_sanitized_float_value( $post, $field_name, $lat_long_array[0], $field_type );
+				$latitude  = floatval( $latitude );
+				$longitude = WpSolrSchema::get_sanitized_float_value( $post, $field_name, $lat_long_array[1], $field_type );
+				$longitude = floatval( $longitude );
+				if ( ( - 90 <= $latitude ) && ( $latitude <= 90 ) && ( - 180 <= $longitude ) && ( $longitude <= 180 ) ) {
+					// Latitude is a float between -90° and +90°
+					// Longitude is a float between -180° and +180°
+					return $value;
+				}
+			}
+
+
+			// wrong format. Send error.
+			WpSolrSchema::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		// Type is not a geolocation: continue.
+		return null;
 	}
 
 	/**

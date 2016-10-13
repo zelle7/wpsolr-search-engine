@@ -10,8 +10,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	const TABLE_POSTS = 'posts';
 	const CONTENT_SEPARATOR = ' ';
 
-	const ERROR_SANITIZED_MESSAGE = 'Value %s of field "%s" of post->ID=%s ("%s") is not of type "%s". Check out field\'s definition in WPSOLR data settings (tab 2.2) .';
-
 	protected $solr_indexing_options;
 
 	/**
@@ -810,7 +808,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 				foreach ( (array) $custom_fields as $field_name_with_str_ending ) {
 
-					$field_name = $this->get_field_without_str_ending( $field_name_with_str_ending );
+					$field_name = WpSolrSchema::get_field_without_str_ending( $field_name_with_str_ending );
 
 					if ( isset( $post_custom_fields[ $field_name ] ) ) {
 						$field = (array) $post_custom_fields[ $field_name ];
@@ -825,7 +823,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$array_nm2 = array();
 						foreach ( $field as $field_value ) {
 
-							$field_value_sanitized = $this->get_sanitized_value( $post, $field_name_with_str_ending, $field_value );
+							$field_value_sanitized = WpSolrSchema::get_sanitized_value( $post, $field_name_with_str_ending, $field_value );
 
 							// Only index the field if it has a value.
 							if ( ! empty( $field_value_sanitized ) ) {
@@ -852,168 +850,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 		}
-
-	}
-
-	/**
-	 * Sanitize any value, based on it's Solr extension type
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 *
-	 * @return mixed
-	 */
-	public function get_sanitized_value( $post, $field_name, $value ) {
-
-		$field_type = WpSolrSchema::get_custom_field_dynamic_type( $field_name );
-
-		try {
-			switch ( $field_type ) {
-
-				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_FLOAT:
-					$result = $this->get_sanitized_float_value( $post, $field_name, $value, $field_type );
-					break;
-
-				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_INTEGER:
-					$result = $this->get_sanitized_integer_value( $post, $field_name, $value, $field_type );
-					break;
-
-				case OptionGeoLocation::_SOLR_DYNAMIC_TYPE_LATITUDE_LONGITUDE:
-					$result = $this->get_sanitized_latitude_longitude_value( $post, $field_name, $value, $field_type );
-					break;
-
-				default:
-					$result = strip_tags( $value );
-					break;
-			}
-		} catch ( Exception $e ) {
-
-			$result                        = '';
-			$field_error_conversion_action = $this->get_custom_field_error_conversion_action( $field_name );
-
-			if ( WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR === $field_error_conversion_action ) {
-				// Throw error if this field is configured to do that.
-				throw $e;
-			}
-		}
-
-		return $result;
-
-	}
-
-	/**
-	 * Sanitize a float value
-	 * Try to convert it to a float, else throw an exception.
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 * @param string $field_type
-	 *
-	 * @return float
-	 * @throws Exception
-	 */
-	public
-	function get_sanitized_float_value(
-		$post, $field_name, $value, $field_type
-	) {
-
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-		if ( ! is_numeric( $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		if ( ! is_int( 0 + $value ) && ! is_float( 0 + $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		return floatval( $value );
-	}
-
-	/**
-	 * Sanitize a longitude,latitude location value
-	 * Try to convert it to a double,double else throw an exception.
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 * @param string $field_type
-	 *
-	 * @return float
-	 * @throws Exception
-	 */
-	public
-	function get_sanitized_latitude_longitude_value(
-		$post, $field_name, $value, $field_type
-	) {
-
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-
-		return $value;
-	}
-
-
-	/**
-	 * Sanitize an integer value
-	 * Try to convert it to an integer, else throw an exception.
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 * @param string $field_type
-	 *
-	 * @return int
-	 */
-	public
-	function get_sanitized_integer_value(
-		$post, $field_name, $value, $field_type
-	) {
-
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-		if ( ! is_numeric( $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		if ( ! is_int( 0 + $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		return intval( $value );
-	}
-
-	/**
-	 * @param \WP_Post $post
-	 * @param string $field_name
-	 * @param $value
-	 * @param string $field_type
-	 *
-	 * @throws \Exception
-	 */
-	protected
-	function throw_sanitized_error(
-		$post, $field_name, $value, $field_type
-	) {
-
-		throw new \Exception(
-			sprintf(
-				self::ERROR_SANITIZED_MESSAGE,
-				$value,
-				$this->get_field_without_str_ending( $field_name ),
-				empty( $post ) ? 'unknown' : $post->ID,
-				empty( $post ) ? 'unknown' : $post->post_title,
-				WpSolrSchema::get_solr_dynamic_entension_id_label( $field_type )
-			)
-		);
 
 	}
 
