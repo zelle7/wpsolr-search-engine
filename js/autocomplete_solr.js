@@ -389,8 +389,24 @@ jQuery(document).ready(function () {
                     // Stop the submit happening while the geo code executes asynchronously
                     event.preventDefault();
 
+                    // Add a css class to the submit buttons while collecting the location
+                    me.addClass("wpsolr_geo_loading");
+                    // Remove the class automatically, to prevent it staying forever if the visitor denies geolocation.
+                    var wpsolr_geo_loading_timeout = window.setTimeout(
+                        function () {
+                            me.removeClass("wpsolr_geo_loading");
+                        }
+                        ,
+                        10000
+                    );
+
                     navigator.geolocation.getCurrentPosition(
                         function (position) {
+
+                            // Stop wpsolr_geo_loading_timeout
+                            window.clearTimeout(wpsolr_geo_loading_timeout);
+                            // Add a css class to the submit buttons while collecting the location
+                            me.addClass("wpsolr_geo_loading");
 
                             // Add coordinates to the form
                             me.append(jQuery("<input />").attr("type", "hidden").attr("name", wp_localize_script_autocomplete.SEARCH_PARAMETER_LATITUDE).val(position.coords.latitude));
@@ -403,6 +419,11 @@ jQuery(document).ready(function () {
                         function (error) {
 
                             console.log('wpsolr: geolocation error: ' + error.code);
+
+                            // Stop wpsolr_geo_loading_timeout
+                            window.clearTimeout(wpsolr_geo_loading_timeout);
+                            // Add a css class to the submit buttons while collecting the location
+                            me.addClass("wpsolr_geo_loading");
 
                             // Finally, submit
                             me.unbind('submit').submit();

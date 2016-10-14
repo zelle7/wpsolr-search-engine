@@ -33,6 +33,7 @@ class WpSolrFilters {
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY = 'solarium_query_object';
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS = 'keywords';
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER = 'user';
+	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY = 'wpsolr_query';
 
 	// Customize the search page url
 	const WPSOLR_FILTER_SEARCH_PAGE_URL = 'wpsolr_filter_search_page_url';

@@ -381,6 +381,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		// Action to change the solarium query
 		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
 			array(
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY   => $wpsolr_query,
 				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $solarium_query,
 				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $wpsolr_query->get_wpsolr_query(),
 				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
@@ -650,7 +651,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			}
 
-			$append_custom_html = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_APPEND_CUSTOM_HTML, get_current_user_id(), $document, $wpsolr_query );
+			$append_custom_html = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_APPEND_CUSTOM_HTML, '', get_current_user_id(), $document, $wpsolr_query );
 			if ( isset( $append_custom_html ) ) {
 				$msg .= $append_custom_html;
 			}

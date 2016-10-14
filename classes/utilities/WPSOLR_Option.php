@@ -754,6 +754,7 @@ class WPSOLR_Option {
 	const OPTION_GEOLOCATION_USER_AGREEMENT_LABEL = 'geo_user_agreement_label';
 	const OPTION_GEOLOCATION_DEFAULT_SORT = 'geo_default_sort';
 	const OPTION_GEOLOCATION_RESULT_DISTANCE_LABEL = 'geo_result_distance_label';
+	const OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES = 'geo_is_filter_empty_coordinates';
 
 	/**
 	 * Get geolocation options array
@@ -817,5 +818,13 @@ class WPSOLR_Option {
 	 */
 	public function get_option_geolocation_result_distance_label() {
 		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_RESULT_DISTANCE_LABEL, '' );
+	}
+
+	/**
+	 * Remove empty coordinates from results ?
+	 * @return boolean
+	 */
+	public function get_option_geolocation_is_filter_results_with_empty_coordinates() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES ) );
 	}
 }

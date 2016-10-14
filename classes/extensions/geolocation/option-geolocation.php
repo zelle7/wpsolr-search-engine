@@ -105,7 +105,7 @@ TAG;
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_APPEND_CUSTOM_HTML, array(
 			$this,
 			'wpsolr_filter_solr_results_append_custom_html',
-		), 10, 3 );
+		), 10, 4 );
 
 		add_action( WpSolrFilters::WPSOLR_ACTION_POSTS_RESULTS, array(
 			$this,
@@ -116,6 +116,51 @@ TAG;
 			$this,
 			'wpsolr_filter_index_sanitize_field',
 		), 10, 5 );
+
+		add_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY, array(
+			$this,
+			'wpsolr_action_solarium_query',
+		), 10, 1 );
+	}
+
+	/**
+	 *
+	 * Add a filter to remove empty coordinates from results.
+	 *
+	 * @param $parameters array
+	 *
+	 * @throws Exception
+	 */
+	public function wpsolr_action_solarium_query( $parameters ) {
+
+		// @var WPSOLR_Query $wpsolr_query
+		$wpsolr_query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY ];
+
+		if ( $this->get_is_geolocation( $wpsolr_query ) ) {
+
+			if ( WPSOLR_Global::getOption()->get_option_geolocation_is_filter_results_with_empty_coordinates() ) {
+
+				$solarium_query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY ];
+
+				foreach ( WPSOLR_Global::getOption()->get_option_index_custom_fields() as $custom_field_name ) {
+
+					if ( self::_SOLR_DYNAMIC_TYPE_LATITUDE_LONGITUDE === WpSolrSchema::get_custom_field_solr_type( $custom_field_name ) ) {
+						// Found a geolocation field: exclude results without a value in that field
+
+						/**
+						 * Exclude all documents without geolocation
+						 * For that we use a trick: all fields are clone in field_SOLR_DYNAMIC_TYPE_STRING1
+						 */
+						$solarium_query->addFilterQuery(
+							array(
+								'key'   => sprintf( 'geo_exclude_empty_%s', $custom_field_name ),
+								'query' => sprintf( '%s:*', WpSolrSchema::replace_field_name_extension_with( $custom_field_name, WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1, true ) ),
+							)
+						);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -125,7 +170,7 @@ TAG;
 	 * @param $default_value Null
 	 * @param WP_Post $post
 	 * @param string $field_name
-	 * @param string $value
+	 * @param mixed $value
 	 * @param string $field_type
 	 *
 	 * @return float
@@ -224,13 +269,14 @@ TAG;
 	/**
 	 * Generate geolocation distance html to append to results
 	 *
+	 * @param $default_html
 	 * @param $user_id
 	 * @param Document $document
 	 * @param WPSOLR_Query $wpsolr_query
 	 *
 	 * @return array *
 	 */
-	public function wpsolr_filter_solr_results_append_custom_html( $user_id, Document $document, WPSOLR_Query $wpsolr_query ) {
+	public function wpsolr_filter_solr_results_append_custom_html( $default_html, $user_id, Document $document, WPSOLR_Query $wpsolr_query ) {
 
 		$result = '';
 
@@ -382,17 +428,6 @@ TAG;
 							'query' => sprintf( '%s:[-90,-180 TO 90,180]', $sort_field_name ),
 						)
 					);*/
-
-					/**
-					 * Exclude all documents without geolocation
-					 * For that we use a trick: all fields are clone in field_SOLR_DYNAMIC_TYPE_STRING1
-					 */
-					$solarium_query->addFilterQuery(
-						array(
-							'key'   => 'geo_exclude_empty',
-							'query' => sprintf( '%s:*', WpSolrSchema::replace_field_name_extension_with( $sort_field_name, WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1 ) ),
-						)
-					);
 
 				}
 			}

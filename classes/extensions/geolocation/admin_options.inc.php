@@ -115,6 +115,8 @@ $is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::OPTION
 						collect
 						the visitor localization precisely when the search is submitted from the
 						search box(es).
+
+						Also, the submitted form is added the css class "wpsolr_geo_loading" while the browser is retrieving the visitor location. You can use this class to show some loading icon for instance.
 					</p>
 
 				</div>
@@ -156,6 +158,25 @@ $is_plugin_active = WpSolrExtensions::is_plugin_active( WpSolrExtensions::OPTION
 					<p>
 						Text of the checkbox. Will be shown on the front-end (and translated in WPML/POLYLANG string
 						modules if not empty. Else will show the localization translation).
+					</p>
+
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="wdm_row">
+				<div class='col_left'>
+					Filter out results with no coordinates
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_GEOLOCATION ); ?>
+				</div>
+				<div class='col_right'>
+					<input type='checkbox'
+					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES; ?>]'
+					       value='1'
+						<?php checked( '1', isset( $options[ WPSOLR_Option::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES ] ) ? $options[ WPSOLR_Option::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES ] : '?' ); ?>>
+
+					<p>
+						If some of your post types does not contain geolocation coordinates, this option will filter them out from the results. It prevents showing messy wrong distances of 1000s of kilometers.
 					</p>
 
 				</div>

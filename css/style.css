@@ -1,3 +1,7 @@
+.wpsolr_geo_loading input[type="submit"] {
+    opacity: 0.5;
+}
+
 .wpsolr_results_geo_distance {
     display: block;
 }

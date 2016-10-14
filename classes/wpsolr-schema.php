@@ -319,20 +319,22 @@ class WpSolrSchema {
 	 *
 	 * @return string
 	 */
-	public static function replace_field_name_extension_with( $field_name, $field_type_extension ) {
+	public static function replace_field_name_extension_with( $field_name, $field_type_extension, $is_forced = false ) {
 
 		$extension = self::EXTENSION_SEPARATOR . WPSOLR_Regexp::extract_last_separator( $field_name, self::EXTENSION_SEPARATOR );
 
-		if ( ( self::EXTENSION_SEPARATOR === $extension ) || ( self::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
-			// No extension, nothing to do: title, content ... remain the same
-			// color_str ... remain the same
-			return $field_name;
-		}
+		if ( ! $is_forced ) {
+			if ( ( self::EXTENSION_SEPARATOR === $extension ) || ( self::_SOLR_DYNAMIC_TYPE_STRING === $extension ) ) {
+				// No extension, nothing to do: title, content ... remain the same
+				// color_str ... remain the same
+				return $field_name;
+			}
 
-		if ( ! array_key_exists( $extension, self::get_solr_dynamic_entensions() ) ) {
-			// Extension is unknown, do nothing
-			// price_def
-			return $field_name;
+			if ( ! array_key_exists( $extension, self::get_solr_dynamic_entensions() ) ) {
+				// Extension is unknown, do nothing
+				// price_def
+				return $field_name;
+			}
 		}
 
 		return WPSOLR_Regexp::remove_string_at_the_end( $field_name, $extension ) . $field_type_extension;
