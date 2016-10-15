@@ -210,46 +210,49 @@ $option_name = OptionLicenses::get_option_name( WpSolrExtensions::OPTION_LICENSE
 
 							<?php foreach ( $license_manager->get_license_orders_urls( $license_type ) as $license_orders_url ) { ?>
 
-								<input name="gotosolr_plan_yearly_trial"
-								       type="button" class="button-primary"
-								       value="<?php echo sprintf( $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_BUTTON_LABEL ], $license[ OptionLicenses::FIELD_LICENSE_TITLE ] ); ?>"
-								       onclick="window.open('<?php echo $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_LINK ]; ?>', '__blank');"
-								/>
-
-								<h4 class="solr_error" style="font-size: 12px">
-									See our packs <a
-										href="https://www.wpsolr.com/pricing"
-										target="__new1">pricing and features</a>.<br/>
-									This will give you 7 days to test the 'Premium Pack'.
-									<br/>
-									Contact us if you need other packs to test with your trial. We will add them to your
-									trial subscription.
-								</h4>
-
-								<h3>With your pack, you will be able to:</h3>
-								<ol>
-									<?php foreach ( $license_manager->get_license_features( $license_type ) as $feature ) { ?>
-										<li>
-											<?php echo $feature; ?>
-										</li>
-									<?php } ?>
-								</ol>
-
-								<h3>Instructions:</h3>
-								Click on the button to be redirected to your order page.
-								After completion of your order, you will receive an email with a link to your account.
-								Signin, and copy the license activation code (Licence # column of the subscription) above to activate your pack.
-								See documentation here: <a
-									href="https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/"
-									target="__new1">https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/</a>
-
-								<h3>Chat</h3>
-								If you are quite, but not completely, convinced, let's have a chat at <a
-									href="https://www.wpsolr.com"
-									target="__new1">wpsolr.com chat box</a>.
-								<br/> We also deliver custom developments, if your project needs extra care.
+								<p>
+									<input name="gotosolr_plan_yearly_trial"
+									       type="button" class="button-primary"
+									       value="<?php echo sprintf( $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_BUTTON_LABEL ], $license[ OptionLicenses::FIELD_LICENSE_TITLE ] ); ?>"
+									       onclick="window.open('<?php echo $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_LINK ]; ?>', '__blank');"
+									/>
+								</p>
 
 							<?php } ?>
+
+							<h4 class="solr_error" style="font-size: 12px">
+								See our packs <a
+									href="https://www.wpsolr.com/pricing"
+									target="__new1">pricing and features</a>.<br/>
+								This will give you 7 days to test the packs you chose.
+								<br/>
+								Contact us if you need other packs to test with your Premium Pack trial. We will add them to your
+								trial subscription.
+							</h4>
+
+							<h3>With your pack, you will be able to:</h3>
+							<ol>
+								<?php foreach ( $license_manager->get_license_features( $license_type ) as $feature ) { ?>
+									<li>
+										<?php echo $feature; ?>
+									</li>
+								<?php } ?>
+							</ol>
+
+							<h3>Instructions:</h3>
+							Click on the button to be redirected to your order page.
+							After completion of your order, you will receive an email with a link to your account.
+							Signin, and copy the license activation code (Licence # column of the subscription) above to
+							activate your pack.
+							See documentation here: <a
+								href="https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/"
+								target="__new1">https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/</a>
+
+							<h3>Chat</h3>
+							If you are quite, but not completely, convinced, let's have a chat at <a
+								href="https://www.wpsolr.com"
+								target="__new1">wpsolr.com chat box</a>.
+							<br/> We also deliver custom developments, if your project needs extra care.
 
 						</div>
 						<div class="clear"></div>

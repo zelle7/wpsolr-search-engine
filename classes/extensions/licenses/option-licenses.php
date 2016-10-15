@@ -39,7 +39,6 @@ class OptionLicenses extends WpSolrExtensions {
 	const FIELD_ORDER_URL_BUTTON_LABEL = 'order_url_button_label';
 	const FIELD_ORDER_URL_TEXT = 'order_url_text';
 	const FIELD_ORDER_URL_LINK = 'order_url_link';
-	const FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT = '7 days free trial';
 	const FIELD_FEATURES = 'features';
 	const FIELD_LICENSE_TITLE = 'LICENSE_TITLE';
 	const FIELD_LICENSE_MATCHING_REFERENCE = 'matching_license_reference';
@@ -54,7 +53,10 @@ class OptionLicenses extends WpSolrExtensions {
 	private $_options;
 
 	// Order link
-	const ORDER_LINK_URL = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
+	const FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE = '7 days free trial (Premium pack only)';
+	const ORDER_LINK_URL_BESPOKE = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
+	const FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED = '7 days free trial (All packs included)';
+	const ORDER_LINK_URL_ALL_INCLUDED = 'https://secure.avangate.com/order/trial.php?PRODS=4699867&QTY=1&PAY_TYPE=CCVISAMC&PRICES4699867[EUR]=0&TPERIOD=7&PHASH=fe0b336dbb4e61f9acc564925ed34622';
 
 	// Features
 	const FEATURE_ZENDESK_SUPPORT = 'Get support via Zendesk <br/>(Apache Solr setup/installation not supported)';
@@ -165,9 +167,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => '',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -195,9 +197,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'WooCommerce Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -214,9 +216,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'ACF Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -234,9 +236,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Types Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -251,9 +253,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'WPML Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -270,9 +272,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Polylang Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -289,9 +291,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Groups Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -306,9 +308,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 's2Member Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -323,9 +325,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'bbPress Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -340,9 +342,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Embed Any Document Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -357,9 +359,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Pdf Embedder Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -374,9 +376,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Google Doc Embedder Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -391,9 +393,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'TablePress Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -409,9 +411,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Geolocation Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL,
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -491,7 +493,21 @@ class OptionLicenses extends WpSolrExtensions {
 	) {
 		$license_types = $this->get_license_types();
 
-		return $license_types[ $license_type ][ self::FIELD_ORDERS_URLS ];
+		//return $license_types[ $license_type ][ self::FIELD_ORDERS_URLS ];
+
+		return array(
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_ALL_INCLUDED,
+			),
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
+			),
+		);
+
 	}
 
 	/**
@@ -571,8 +587,25 @@ class OptionLicenses extends WpSolrExtensions {
 			);
 			self::set_option_data( self::OPTION_LICENSES, $licenses );
 
-		}
+		} else {
 
+			$response_object = $managed_solr_server->call_rest_activate_license( self::get_license_api_url(), 'wpsolr_package_multi', $subscription_number );
+
+			if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+
+				// Save the license type activation
+				$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
+				foreach ( self::get_license_types() as $license_package => $license_definition ) {
+
+					$licenses[ $license_package ] = array(
+						self::FIELD_IS_ACTIVATED                => true,
+						self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $subscription_number,
+						self::FIELD_LICENSE_ACTIVATION_UUID     => OptionManagedSolrServer::get_response_result( $response_object, 'uuid' ),
+					);
+				}
+				self::set_option_data( self::OPTION_LICENSES, $licenses );
+			}
+		}
 
 		// Return the whole object
 		echo json_encode( $response_object );
@@ -616,16 +649,17 @@ class OptionLicenses extends WpSolrExtensions {
 
 		}
 
-		// Alway remove the activation, else we're stuck forever
-		if ( isset( $licenses[ $license_package ] ) ) {
+		// Always remove the activation, else we're stuck forever
+		$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
+		foreach ( $licenses as $license_package_installed => $license ) {
 
-			// Remove the license type activation
-			$licenses                     = self::get_option_data( self::OPTION_LICENSES, array() );
-			$licenses[ $license_package ] = array(
-				self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $licenses[ $license_package ][ self::FIELD_LICENSE_SUBSCRIPTION_NUMBER ],
-			);
-			self::set_option_data( self::OPTION_LICENSES, $licenses );
+			if ( $license_activation_uuid === $license[ self::FIELD_LICENSE_ACTIVATION_UUID ] ) {
+				$licenses[ $license_package_installed ] = array(
+					self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $licenses[ $license_package ][ self::FIELD_LICENSE_SUBSCRIPTION_NUMBER ],
+				);
+			}
 		}
+		self::set_option_data( self::OPTION_LICENSES, $licenses );
 
 		// Return the whole object
 		echo json_encode( $response_object );
@@ -672,7 +706,12 @@ class OptionLicenses extends WpSolrExtensions {
 
 				// Remove the license type activation
 				$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
-				unset( $licenses[ $license_package ][ self::FIELD_NEEDS_VERIFICATION ] );
+				foreach ( $licenses as $license_package_installed => $license ) {
+
+					if ( $license_activation_uuid === $license[ self::FIELD_LICENSE_ACTIVATION_UUID ] ) {
+						unset( $licenses[ $license_package_installed ][ self::FIELD_NEEDS_VERIFICATION ] );
+					}
+				}
 				self::set_option_data( self::OPTION_LICENSES, $licenses );
 			}
 
