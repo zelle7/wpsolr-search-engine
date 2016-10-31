@@ -67,7 +67,7 @@ class OptionLicenses extends WpSolrExtensions {
 	 */
 	function __construct() {
 		$this->_options     = self::get_option_data( self::OPTION_LICENSES, array() );
-		$this->is_installed = WPSOLR_Global::getOption()->get_option_is_installed();
+		$this->is_installed = true;
 	}
 
 

@@ -24,8 +24,9 @@ class PluginAcf extends WpSolrExtensions {
 	const ACF_TYPE_REPEATER = 'repeater';
 	const ACF_TYPE_FILE = 'file';
 	const ACF_TYPE_FILE_ID = 'id';
-	const ACF_TYPE_FILE_OBJECT = 'object';
+	const ACF_TYPE_FILE_OBJECT = 'array';
 	const ACF_TYPE_FILE_URL = 'url';
+	const ACF_TYPE_FLEXIBLE_CONTENT = 'flexible_content';
 
 	/**
 	 * Factory
@@ -115,21 +116,16 @@ class PluginAcf extends WpSolrExtensions {
 	 */
 	function get_index_custom_fields( $custom_fields ) {
 
-		if ( ! function_exists( 'acf_get_field' ) ) {
-			throw new Exception( 'Your ACF plugin does not include the function \'acf_get_field\', we cannot format here the repeater fields. Perhaps an old ACF version ? (ACF Pro from 5.0.0 should be fine)' );
-		}
-
 		if ( ! isset( $custom_fields ) ) {
 			$custom_fields = array();
 		}
 
-		$results = array();
-
 		$fields = $this->get_acf_fields();
 
+		$results = array();
 		foreach ( $custom_fields as $custom_field_name ) {
 
-			$is_field_discarded = false;
+			$do_not_include = false;
 
 			if ( isset( $fields[ self::FIELD_PREFIX . $custom_field_name ] ) || isset( $fields[ $custom_field_name ] ) ) {
 
@@ -138,36 +134,49 @@ class PluginAcf extends WpSolrExtensions {
 
 				if ( $field ) {
 
-					if ( self::ACF_TYPE_REPEATER === $field['type'] ) {
+					switch ( $field['type'] ) {
 
-						// This field is a repeater container: do not keep it.
-						$is_field_discarded = true;
+						case self::ACF_TYPE_REPEATER:
+						case self::ACF_TYPE_FLEXIBLE_CONTENT:
+							// This field is a container: do not use it as custom field.
+							$do_not_include = true;
+							break;
 
-					} else {
+						case self::ACF_TYPE_FILE:
+							// This field is a file: do not use it as custom field. Used in attachments.
+							$do_not_include = true;
+							break;
 
-						$parent_field = acf_get_field( $field['parent'] );
+						default:
 
-						if ( $parent_field ) {
+							/**
+							 * Get the canonical form of a repeated field name, eventually.
+							 * Examples:
+							 * _xxxxx_0_field => field
+							 * __xxxxx_0__field => field
+							 * xxxxx_0_field => field
+							 * _xxxxx_10_field => field
+							 * _xxxxx_yy_field => _xxxxx_yy_field
+							 * xxxxx_yy_field => xxxxx_yy_field
+							 * field => field
+							 */
+							$repeated_field_name = preg_replace( '/(.*)_(\d*)_(.*)/', '$3', $custom_field_name );
 
-							if ( self::ACF_TYPE_REPEATER === $parent_field['type'] ) {
-
-								$is_field_discarded = true;
-
-								if ( ( self::ACF_TYPE_REPEATER === $parent_field['type'] ) && ! in_array( $field['name'], $results, true ) ) {
-									array_push( $results, $field['name'] );
-								}
-
+							if ( ! in_array( $repeated_field_name, $results, true ) ) {
+								// Add the non repeated field name, or the repeated field canonical name.
+								array_push( $results, $repeated_field_name );
 							}
-						}
-					}
 
+							$do_not_include = true;
+							break;
+					}
 				}
 			}
 
-			if ( ! $is_field_discarded ) {
+			if ( ! $do_not_include && ! in_array( $custom_field_name, $results, true ) ) {
+				// Add the non repeated field name, or the non ACF field name.
 				array_push( $results, $custom_field_name );
 			}
-
 
 		}
 
@@ -206,7 +215,9 @@ class PluginAcf extends WpSolrExtensions {
 
 
 	/**
-	 * Decode acf multi-values before indexing
+	 * Decode acf values before indexing.
+	 * Get all field values, recursively in containers if necessary, which are not containers, and not files.
+	 * Files are treated in attachments code.
 	 *
 	 * @param $custom_fields
 	 * @param $post_id
@@ -222,40 +233,40 @@ class PluginAcf extends WpSolrExtensions {
 			$custom_fields = array();
 		}
 
-		$fields = $this->get_acf_fields();
+		// Get post ACF field objects
+		$fields_set = array();
+		$this->get_fields_all_levels(
+			$fields_set,
+			get_field_objects( $post_id ),
+			array(), // We want All files
+			array(
+				self::ACF_TYPE_FILE, // But we don't want files. They are dealt with attachments.
+			)
+		);
 
-		foreach ( $custom_fields as $custom_field_name => $custom_field_value ) {
 
-			if ( isset( $fields[ self::FIELD_PREFIX . $custom_field_name ] ) ) {
+		if ( $fields_set ) {
 
-				$field_key = $fields[ self::FIELD_PREFIX . $custom_field_name ];
-				$field     = get_field_object( $field_key, $post_id );
+			foreach ( $fields_set as $field_name => $fields ) {
 
-				// Index only non-empty fields
-				if ( ! empty( $field ) && ! empty( $field['value'] ) ) {
+				foreach ( $fields as $field ) {
 
-					switch ( $field['type'] ) {
+					if ( ! empty( $field['value'] ) ) {
 
-						case self::ACF_TYPE_REPEATER:
-							foreach ( $field['value'] as $values ) {
+						switch ( $field['type'] ) {
+							default:
+								// Same treatments for all types, yet.
 
-								foreach ( $values as $repeated_field_name => $repeated_field_value ) {
-
-									if ( empty( $custom_fields[ $repeated_field_name ] ) ) {
-										$custom_fields[ $repeated_field_name ] = array();
-									}
-
-									array_push( $custom_fields[ $repeated_field_name ], $repeated_field_value );
+								if ( is_array( $field['value'] ) ) {
+									// If value is an array (multi-select), flaten it. ['value1'], ['2' => 'value2']] => ['value1', 'value2']
+									$custom_fields[ $field['name'] ] = $field['value'];
+								} else {
+									$custom_fields[ $field['name'] ][] = $field['value'];
 								}
-							}
-							break;
 
-						default:
-							$custom_fields[ $custom_field_name ] = $field['value'];
-							break;
+								break;
+						}
 					}
-
-
 				}
 			}
 		}
@@ -281,37 +292,110 @@ class PluginAcf extends WpSolrExtensions {
 		}
 
 		// Get post ACF field objects
-		$fields = get_field_objects( $post_id );
+		$fields_set = array();
+		$this->get_fields_all_levels(
+			$fields_set,
+			get_field_objects( $post_id ),
+			array(
+				self::ACF_TYPE_FILE,
+			),
+			array()
+		);
 
-		if ( $fields ) {
+		if ( $fields_set ) {
 
-			foreach ( $fields as $field_name => $field ) {
+			foreach ( $fields_set as $field_name => $fields ) {
 
-				// Retrieve the post_id of the file
-				if ( ! empty( $field['value'] ) && ( self::ACF_TYPE_FILE === $field['type'] ) ) {
+				foreach ( $fields as $field ) {
 
-					switch ( $field['save_format'] ) {
-						case self::ACF_TYPE_FILE_ID:
-							array_push( $attachments, array( 'post_id' => $field['value'] ) );
-							break;
+					// Retrieve the post_id of the file
+					if ( ! empty( $field['value'] ) && ( self::ACF_TYPE_FILE === $field['type'] ) ) {
 
-						case self::ACF_TYPE_FILE_OBJECT:
-							array_push( $attachments, array( 'post_id' => $field['value']['id'] ) );
-							break;
 
-						case self::ACF_TYPE_FILE_URL:
-							array_push( $attachments, array( 'url' => $field['value'] ) );
-							break;
+						switch ( $field['return_format'] ) {
+							case self::ACF_TYPE_FILE_ID:
+								array_push( $attachments, array( 'post_id' => $field['value'] ) );
+								break;
 
-						default:
-							// Do nothing
-							break;
+							case self::ACF_TYPE_FILE_OBJECT:
+								array_push( $attachments, array( 'post_id' => $field['value']['id'] ) );
+								break;
+
+							case self::ACF_TYPE_FILE_URL:
+								array_push( $attachments, array( 'url' => $field['value'] ) );
+								break;
+
+							default:
+								// Do nothing
+								break;
+						}
 					}
 				}
 			}
-
 		}
 
 		return $attachments;
 	}
+
+
+	/**
+	 * Get subfields of fields recursively
+	 *
+	 * @return mixed
+	 */
+	public
+	function get_fields_all_levels(
+		&$all_fields, $fields, $field_types, $excluded_field_types
+	) {
+
+		foreach ( $fields as $field_name => $field ) {
+
+			if ( ! empty( $field['value'] ) ) {
+
+				switch ( $field['type'] ) {
+
+					case self::ACF_TYPE_FLEXIBLE_CONTENT:
+
+						// Extract sub_fields of each layout, then proceed on sub_fields
+						$field['sub_fields'] = array();
+						foreach ( $field['layouts'] as $layout ) {
+							foreach ( $layout['sub_fields'] as $sub_field ) {
+								$field['sub_fields'][] = $sub_field;
+							}
+						}
+
+					// No break here!!!
+					//break;
+
+					case self::ACF_TYPE_REPEATER:
+						foreach ( $field['sub_fields'] as $sub_field ) {
+
+							// Copy sub_field value(s)
+							foreach ( $field['value'] as $value ) {
+
+								if ( ! empty( $value[ $sub_field['name'] ] ) ) {
+									$sub_field['value'] = $value[ $sub_field['name'] ];
+
+									$this->get_fields_all_levels( $all_fields, array( $sub_field['name'] => $sub_field ), $field_types, $excluded_field_types );
+								}
+							}
+						}
+						break;
+
+
+					default:
+						// This is a non-recursive type, with value(s). Add it to results.
+						if (
+							( empty( $field_types ) || in_array( $field['type'], $field_types, true ) ) // Field type is in included types
+							&& ( empty( $excluded_field_types ) || ! in_array( $field['type'], $excluded_field_types, true ) ) // And field type is not in excluded types
+						) {
+							$all_fields[ $field['name'] ][] = $field;
+						}
+						break;
+				}
+			}
+		}
+	}
+
+
 }

@@ -532,7 +532,11 @@ class WpSolrSchema {
 						break;
 
 					default:
-						$result = strip_tags( $value );
+						$result = is_array( $value )
+							? array_map( function ( $val ) {
+								strip_tags( $val );
+							}, $value )
+							: strip_tags( $value );
 						break;
 				}
 			}
