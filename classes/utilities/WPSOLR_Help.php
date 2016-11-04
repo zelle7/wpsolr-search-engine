@@ -2,9 +2,9 @@
 
 
 /**
- * Show help on admin screens.
+ * Show help links on admin screens.
  *
- * Class WPSOLR_Regexp
+ * Class WPSOLR_Help
  */
 class WPSOLR_Help {
 
@@ -16,6 +16,9 @@ class WPSOLR_Help {
 	const HELP_MULTI_SITE = 2;
 	const HELP_SEARCH_TEMPLATE = 3;
 	const HELP_JQUERY_SELECTOR = 4;
+	const HELP_SEARCH_ORDERS = 5;
+	const HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS = 6;
+	const HELP_WOOCOMMERCE_REPLACE_SORT = 7;
 
 
 	/**

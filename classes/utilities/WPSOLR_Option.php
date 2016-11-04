@@ -835,6 +835,7 @@ class WPSOLR_Option {
 	 **************************************************************************************************************/
 	const OPTION_PLUGIN_WOOCOMMERCE = 'wdm_solr_extension_woocommerce_data';
 	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH = 'is_replace_admin_orders_search';
+	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS = 'is_replace_sort_items';
 
 	/**
 	 * Get all WooCommerce options
@@ -854,6 +855,15 @@ class WPSOLR_Option {
 	 */
 	public function get_option_plugin_woocommerce_is_replace_admin_orders_search() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ) );
+	}
+
+	/**
+	 * Replace the WooCommerce sort items ?
+	 *
+	 * @return bool
+	 */
+	public function get_option_plugin_woocommerce_is_replace_sort_items() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS ) );
 	}
 
 }

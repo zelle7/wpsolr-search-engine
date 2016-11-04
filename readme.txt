@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 14.5
+Current Version: 14.6
 
 Author: wpsolr
 
@@ -14,11 +14,13 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 14.5
+Stable tag: 14.6
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
+
+Get our last features on <a href="https://twitter.com/wpsolr">Twitter</a> and <a href="https://www.facebook.com/wpsolr">Facebook</a>.
 
 You definitely need wpsolr search if you agree with one of:
 
@@ -104,6 +106,10 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 14.6 =
+* (WooCommerce Pack) Choose to replace WooCommerce sort items with WPSOLR's. Now you can sort by anything: price, product attributes, product attribute variations, geolocation distance ... without losing performance.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-add-sort-items-default/">Documentation</a>
 
 = 14.5 =
 * (WooCommerce Pack) Choose to replace WooCommerce admin orders search with WPSOLR search.

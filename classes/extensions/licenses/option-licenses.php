@@ -208,6 +208,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Index product attributes/variations',
 					'Search in product attributes/variations',
 					'Create facets on product attributes/variations',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_SEARCH_ORDERS ) . 'Replace admin orders search with WPSOLR search',
 				),
 			),
 			self::LICENSE_PACKAGE_ACF                 => array(
@@ -228,6 +229,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Decode ACF field values before indexing a post',
 					'Index ACF field files content inside the post',
 					'Group ACF repeater rows under one single facet field (requires ACF Pro 5.0.0)',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS ) . 'Manage ACF Repeaters and Flexible Content Layouts',
 				),
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(

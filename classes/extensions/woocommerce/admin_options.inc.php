@@ -87,12 +87,27 @@ if ( $is_plugin_active ) {
 			<div class="wdm_row">
 				<div class='col_left'>
 					Replace WooCommerce orders search by WPSOLR's orders search.
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_SEARCH_ORDERS ); ?>
 				</div>
 				<div class='col_right'>
 					<input type='checkbox' <?php echo $is_plugin_active ? '' : 'readonly' ?>
 					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH; ?>]'
 					       value='is_extension_active'
 						<?php checked( 'is_extension_active', isset( $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ] ) ? $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ] : '' ); ?>>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="wdm_row">
+				<div class='col_left'>
+					Replace WooCommerce drop-down list content with WPSOLR's.
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_WOOCOMMERCE_REPLACE_SORT ); ?>
+				</div>
+				<div class='col_right'>
+					<input type='checkbox' <?php echo $is_plugin_active ? '' : 'readonly' ?>
+					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS; ?>]'
+					       value='is_extension_active'
+						<?php checked( 'is_extension_active', isset( $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS ] ) ? $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS ] : '' ); ?>>
 				</div>
 				<div class="clear"></div>
 			</div>

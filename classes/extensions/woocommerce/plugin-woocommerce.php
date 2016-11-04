@@ -21,6 +21,9 @@ class PluginWooCommerce extends WpSolrExtensions {
 	const FIELD_POST_DATE_DT = 'post_date_dt';
 	const FIELD_ORDER_TOTAL_F = '_order_total_f';
 
+	// WooCommerce url parameter 'orderby'
+	const WOOCOMERCE_URL_PARAMETER_SORT_BY = 'orderby';
+
 	/**
 	 * Helper instance.
 	 *
@@ -55,6 +58,21 @@ class PluginWooCommerce extends WpSolrExtensions {
 			$this,
 			'add_fields_to_document_for_update',
 		), 10, 4 );
+
+		add_action( WpSolrFilters::WPSOLR_ACTION_URL_PARAMETERS, array(
+			$this,
+			'wpsolr_filter_url_parameters',
+		), 10, 2 );
+
+		// Customize the WooCOmmerce sort list-box
+		add_filter( 'woocommerce_default_catalog_orderby_options', array(
+			$this,
+			'custom_woocommerce_catalog_orderby',
+		), 10 );
+		add_filter( 'woocommerce_catalog_orderby', array(
+			$this,
+			'custom_woocommerce_catalog_orderby',
+		), 10 );
 	}
 
 	/*
@@ -293,6 +311,64 @@ class PluginWooCommerce extends WpSolrExtensions {
 		}
 
 		return $solarium_document_for_update;
+	}
+
+	/**
+	 * Replace WooCommerce sort list with WPSOLR sort list
+	 *
+	 * @param array $sortby
+	 *
+	 * @return array
+	 */
+	function custom_woocommerce_catalog_orderby( $sortby ) {
+
+		if ( ! WPSOLR_Global::getOption()->get_option_plugin_woocommerce_is_replace_sort_items() ) {
+			// Use standard WooCommerce sort items.
+			return $sortby;
+		}
+
+		$results = array();
+
+		// Retrieve WPSOLR sort fields, with their translations.
+		$sorts = WPSOLR_Data_Sort::get_data(
+			WPSOLR_Global::getOption()->get_sortby_items_as_array(),
+			WPSOLR_Global::getOption()->get_sortby_items_labels(),
+			WPSOLR_Global::getQuery()->get_wpsolr_sort(),
+			OptionLocalization::get_options()
+		);
+
+		if ( ! empty( $sorts ) && ! empty( $sorts['items'] ) ) {
+			foreach ( $sorts['items'] as $sort_item ) {
+				$results[ $sort_item['id'] ] = $sort_item['name'];
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Map WooCommerce url orderby parameters with  WPSOLR's
+	 *
+	 * @param WPSOLR_Query $wpsolr_query
+	 * @param array $url_parameters
+	 *
+	 */
+	public
+	function wpsolr_filter_url_parameters(
+		WPSOLR_Query $wpsolr_query, $url_parameters
+	) {
+
+		if ( WPSOLR_Global::getOption()->get_option_plugin_woocommerce_is_replace_sort_items() ) {
+			// Get WooCommerce order by value from url, or use the default one set in settings->products->display.
+
+			$order_by_value = isset( $url_parameters[ self::WOOCOMERCE_URL_PARAMETER_SORT_BY ] )
+				? wc_clean( $url_parameters[ self::WOOCOMERCE_URL_PARAMETER_SORT_BY ] )
+				: apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+
+			if ( ! empty( $order_by_value ) ) {
+				$wpsolr_query->set_wpsolr_sort( $order_by_value );
+			}
+		}
 	}
 
 }

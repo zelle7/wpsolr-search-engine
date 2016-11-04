@@ -64,12 +64,15 @@ if ( $is_plugin_active ) {
 				<?php endif; ?>
 			</div>
 			<div class="wdm_row">
-				<div class='col_left'>Use the <a
+				<div class='col_left'>
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS ); ?>
+
+					Use the <a
 						href="<?php echo $plugin_link; ?>"
 						target="_blank"><?php echo $plugin_name; ?> <?php echo $plugin_version; ?>
 						plugin</a>
-					to filter search results.
-					<br/>Think of re-indexing all your data if <a
+					to format repeaters and flexible content layouts.
+					<br/><br/>Think of re-indexing all your data if <a
 						href="<?php echo $plugin_link; ?>" target="_blank"><?php echo $plugin_name; ?>
 						plugin</a> was installed after WPSOLR.
 				</div>
