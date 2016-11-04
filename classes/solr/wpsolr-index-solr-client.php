@@ -250,7 +250,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		if ( isset( $where_p ) ) {
-			$query_where_stmt = "post_status='publish' AND ( $where_p )";
+			$index_post_statuses = implode( ',', apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_STATUSES_TO_INDEX, array( 'publish' ) ) );
+			$index_post_statuses = str_replace( ',', "','", $index_post_statuses );
+			$query_where_stmt    = "post_status IN ('$index_post_statuses') AND ( $where_p )";
 			if ( isset( $where_a ) ) {
 				$query_where_stmt = "( $query_where_stmt ) OR ( $where_a )";
 			}
@@ -654,9 +656,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_BLOG_NAME_STR ] = $this->galaxy_slave_filter_value;
 		}
 
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $this->generate_unique_post_id( $pid );
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]       = $this->generate_unique_post_id( $pid );
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]      = $pid;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ]    = $ptitle;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_STATUS_S ] = $post_to_index->post_status;
 
 		if ( isset( $this->solr_indexing_options['p_excerpt'] ) && ( ! empty( $pexcerpt ) ) ) {
 

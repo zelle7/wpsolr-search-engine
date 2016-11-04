@@ -348,6 +348,11 @@ class PluginAcf extends WpSolrExtensions {
 		&$all_fields, $fields, $field_types, $excluded_field_types
 	) {
 
+		if ( empty( $fields ) ) {
+			// Nothing to do.
+			return;
+		}
+
 		foreach ( $fields as $field_name => $field ) {
 
 			if ( ! empty( $field['value'] ) ) {

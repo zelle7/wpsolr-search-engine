@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 14.4
+Current Version: 14.5
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 14.4
+Stable tag: 14.5
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -105,11 +105,16 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 14.5 =
+* (WooCommerce Pack) Choose to replace WooCommerce admin orders search with WPSOLR search.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-replace-woocommerce-orders-search-wpsolr-search/">Documentation</a>
+
 = 14.4 =
 * (ACF Pack) Manage repeaters data, and flexible content layouts.
 Those recursive fields are indexed and searched at any level, files included.
 For instance, when a flexible layout contains a files repeater, all files bodies are extracted and inserted in the post content before indexing.
 Also, custom fields of any levels can be used as facets.
+<a href="https://www.wpsolr.com/knowledgebase/acf-pack-managed-repeaters-data-flexible-content-layouts/">Documentation</a>
 
 = 14.3 =
 * New plan including all packs.

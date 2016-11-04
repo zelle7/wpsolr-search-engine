@@ -155,4 +155,17 @@ class WpSolrFilters {
 	 * Sanitize a field content before indexing.
 	 **/
 	const WPSOLR_FILTER_INDEX_SANITIZE_FIELD = '';
+
+	/**
+	 * @link ????
+	 * Array of post statuses which can be indexed. Default is array('published').
+	 **/
+	const WPSOLR_FILTER_POST_STATUSES_TO_INDEX = 'wpsolr_filter_post_statuses_to_index';
+
+
+	/**
+	 * @link ????
+	 * Replace the WP query by a WPSOLR query ?.
+	 **/
+	const WPSOLR_FILTER_IS_REPLACE_BY_WPSOLR_QUERY = 'wpsolr_filter_is_replace_by_wpsolr_query';
 }

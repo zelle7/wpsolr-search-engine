@@ -34,6 +34,7 @@ class WpSolrSchema {
 	const _FIELD_NAME_ID = 'id';
 	const _FIELD_NAME_PID = 'PID';
 	const _FIELD_NAME_TITLE = 'title';
+	const _FIELD_NAME_STATUS_S = 'post_status_s'; // post status, sortable
 	const _FIELD_NAME_CONTENT = 'content';
 	const _FIELD_NAME_AUTHOR = 'author';
 	const _FIELD_NAME_AUTHOR_S = 'author_s';

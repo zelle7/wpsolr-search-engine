@@ -186,53 +186,67 @@ class WPSOLR_Query extends WP_Query {
 
 	function get_posts() {
 
-		//return parent::get_posts();
+		try {//return parent::get_posts();
 
-		// Let WP extract parameters
-		$this->parse_query();
-		$q = &$this->query_vars;
-		$this->parse_search( $q );
+			// Let WP extract parameters
+			$this->parse_query();
+			$q     = $this->query_vars;
+			$query = isset( $this->query[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] ) ? $this->query[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] : '';
+			if ( empty( $q[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] ) ) {
+				$q[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] = $query;
+			}
+			$this->parse_search( $q );
 
-		// Copy WP standard query to WPSOLR query
-		$this->set_wpsolr_query( $this->query[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_S ] );
+			// Copy WP standard query to WPSOLR query
+			$this->set_wpsolr_query( $query );
 
-		// Copy WP standard paged to WPSOLR paged
-		$this->set_wpsolr_paged( isset( $this->query_vars['paged'] ) ? $this->query_vars['paged'] : 1 );
+			// Copy WP standard paged to WPSOLR paged
+			$this->set_wpsolr_paged( isset( $this->query_vars['paged'] ) ? $this->query_vars['paged'] : 1 );
 
-		// $_GET['s'] is used internally by some themes
-		//$_GET['s'] = $query;
+			// $_GET['s'] is used internally by some themes
+			//$_GET['s'] = $query;
 
-		// Set variable 's', so that get_search_query() and other standard WP_Query methods still work with our own search parameter
-		//$this->set( 's', $query );
+			// Set variable 's', so that get_search_query() and other standard WP_Query methods still work with our own search parameter
+			//$this->set( 's', $query );
 
-		$this->solr_client = WPSOLR_Global::getSolrClient();
-		$this->resultSet   = $this->solr_client->execute_wpsolr_query( $this );
+			$this->solr_client = WPSOLR_Global::getSolrClient();
+			$this->resultSet   = $this->solr_client->execute_wpsolr_query( $this );
 
-		// Create posts from Solr PIDs
-		$posts_in_results = $this->solr_client->get_posts_from_pids();
+			// Create posts from Solr PIDs
+			$posts_in_results = $this->solr_client->get_posts_from_pids();
 
-		foreach ( $posts_in_results as $post ) {
-			$this->set_the_title( $post );
-			$this->set_the_excerpt( $post );
+			foreach ( $posts_in_results as $post ) {
+				$this->set_the_title( $post );
+				$this->set_the_excerpt( $post );
+			}
+
+			$this->posts       = $posts_in_results;
+			$this->post_count  = count( $this->posts );
+			$this->found_posts = $this->resultSet->getNumFound();
+
+			$this->posts_per_page = $this->get_nb_results_by_page();
+			$this->set( "posts_per_page", $this->posts_per_page );
+			$this->max_num_pages = ceil( $this->found_posts / $this->posts_per_page );
+
+			if ( ! isset( $this->query_vars['name'] ) ) {
+				// Prevent error later in WP code
+				$this->query_vars['name'] = '';
+			}
+
+			// Action for updating post before getting back to the theme's search page.
+			do_action( WpSolrFilters::WPSOLR_ACTION_POSTS_RESULTS, $this, $this->resultSet );
+
+			return $this->posts;
+
+		} catch ( Exception $e ) {
+			if ( is_admin() ) {
+				set_transient( get_current_user_id() . 'wpsolr_error_during_search', htmlentities( $e->getMessage() ) );
+			}
+
+			// Error: revert to standard WP search.
+			return parent::get_posts();
 		}
 
-		$this->posts       = $posts_in_results;
-		$this->post_count  = count( $this->posts );
-		$this->found_posts = $this->resultSet->getNumFound();
-
-		$this->posts_per_page = $this->get_nb_results_by_page();
-		$this->set( "posts_per_page", $this->posts_per_page );
-		$this->max_num_pages = ceil( $this->found_posts / $this->posts_per_page );
-
-		if ( ! isset( $this->query_vars['name'] ) ) {
-			// Prevent error later in WP code
-			$this->query_vars['name'] = '';
-		}
-
-		// Action for updating post before getting back to the theme's search page.
-		do_action( WpSolrFilters::WPSOLR_ACTION_POSTS_RESULTS, $this, $this->resultSet );
-
-		return $this->posts;
 	}
 
 	protected function get_highlighting_of_field( $field_name, $post_id ) {

@@ -3,6 +3,7 @@
 /**
  * Included file to display admin options
  */
+
 global $license_manager;
 
 WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::EXTENSION_WOOCOMMERCE, true );
@@ -63,6 +64,7 @@ if ( $is_plugin_active ) {
 					</p>
 				<?php endif; ?>
 			</div>
+
 			<div class="wdm_row">
 				<div class='col_left'>Use the <a
 						href="<?php echo $plugin_link; ?>"
@@ -82,10 +84,24 @@ if ( $is_plugin_active ) {
 				<div class="clear"></div>
 			</div>
 
+			<div class="wdm_row">
+				<div class='col_left'>
+					Replace WooCommerce orders search by WPSOLR's orders search.
+				</div>
+				<div class='col_right'>
+					<input type='checkbox' <?php echo $is_plugin_active ? '' : 'readonly' ?>
+					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH; ?>]'
+					       value='is_extension_active'
+						<?php checked( 'is_extension_active', isset( $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ] ) ? $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ] : '' ); ?>>
+				</div>
+				<div class="clear"></div>
+			</div>
+
 			<div class='wdm_row'>
 				<div class="submit">
 					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_WOOCOMMERCE ) ) { ?>
-						<div class="wpsolr_premium_block_class"><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_WOOCOMMERCE, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?></div>
+						<div
+							class="wpsolr_premium_block_class"><?php echo $license_manager->show_premium_link( OptionLicenses::LICENSE_PACKAGE_WOOCOMMERCE, OptionLicenses::TEXT_LICENSE_ACTIVATED, true ); ?></div>
 						<input <?php echo $is_plugin_active ? '' : 'disabled' ?>
 							name="save_selected_options_res_form"
 							id="save_selected_extension_groups_form" type="submit"

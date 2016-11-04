@@ -827,4 +827,33 @@ class WPSOLR_Option {
 	public function get_option_geolocation_is_filter_results_with_empty_coordinates() {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES ) );
 	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Woocommerce
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PLUGIN_WOOCOMMERCE = 'wdm_solr_extension_woocommerce_data';
+	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH = 'is_replace_admin_orders_search';
+
+	/**
+	 * Get all WooCommerce options
+	 *
+	 * @param array $default_value
+	 *
+	 * @return array
+	 */
+	public function get_option_plugin_woocommerce() {
+		return self::get_option( self::OPTION_PLUGIN_WOOCOMMERCE, array() );
+	}
+
+	/**
+	 * Replace the WooCommerce orders search ?
+	 *
+	 * @return bool
+	 */
+	public function get_option_plugin_woocommerce_is_replace_admin_orders_search() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ) );
+	}
+
 }

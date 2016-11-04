@@ -20,7 +20,12 @@ class WPSOLR_Global {
 
 	public static function action_wp_loaded() {
 
-		if ( WPSOLR_Query_Parameters::is_wp_search() && ! is_admin() && is_main_query() && WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search() && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
+		$is_replace_by_wpsolr_query = WPSOLR_Query_Parameters::is_wp_search() && ! is_admin() && is_main_query()
+		                              && WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search()
+		                              && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template();
+		$is_replace_by_wpsolr_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_IS_REPLACE_BY_WPSOLR_QUERY, $is_replace_by_wpsolr_query );
+
+		if ( $is_replace_by_wpsolr_query ) {
 
 			// Override global $wp_query with wpsolr_query
 			$GLOBALS['wp_the_query'] = WPSOLR_Global::getQuery();

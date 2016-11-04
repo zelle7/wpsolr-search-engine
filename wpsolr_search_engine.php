@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 14.4
+ * Version: 14.5
  * Author: wpsolr
  * Plugin URI: https://www.wpsolr.com
  * License: GPL2
  */
 
 // Definitions
-define( 'WPSOLR_PLUGIN_VERSION', '14.4' );
+define( 'WPSOLR_PLUGIN_VERSION', '14.5' );
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
 define( 'WPSOLR_DEFINE_PLUGIN_DIR_URL', substr_replace( plugin_dir_url( __FILE__ ), '', - 1 ), false );
@@ -83,6 +83,10 @@ function solr_post_save_admin_notice() {
 		echo "<div class=\"error wpsolr_admin_notice_error\"><p>(WPSOLR) $out</p></div>";
 	}
 
+	if ( $out = get_transient( get_current_user_id() . 'wpsolr_error_during_search' ) ) {
+		delete_transient( get_current_user_id() . 'wpsolr_error_during_search' );
+		echo "<div class=\"error wpsolr_admin_notice_error\"><p>(WPSOLR) Error while searching. WPSOLR search is not used, standard Wordpress search results are displayed instead.<br><br>$out</p></div>";
+	}
 }
 
 add_action( 'admin_notices', "solr_post_save_admin_notice" );
@@ -142,7 +146,9 @@ function add_remove_document_to_solr_index( $post_id, $post ) {
 	delete_transient( get_current_user_id() . 'updated_solr_post_save_admin_notice' );
 
 	try {
-		if ( 'publish' === $post->post_status ) {
+		$index_post_statuses = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_STATUSES_TO_INDEX, array( 'publish' ), $post );
+
+		if ( in_array( $post->post_status, $index_post_statuses, true ) ) {
 			// post published, add/update it from Solr index
 
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
