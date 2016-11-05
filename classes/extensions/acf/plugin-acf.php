@@ -27,6 +27,7 @@ class PluginAcf extends WpSolrExtensions {
 	const ACF_TYPE_FILE_OBJECT = 'array';
 	const ACF_TYPE_FILE_URL = 'url';
 	const ACF_TYPE_FLEXIBLE_CONTENT = 'flexible_content';
+	const ACF_TYPE_GOOGLE_MAP = 'google_map';
 
 	/**
 	 * Factory
@@ -52,23 +53,31 @@ class PluginAcf extends WpSolrExtensions {
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_INDEX_CUSTOM_FIELDS, array(
 			$this,
-			'get_index_custom_fields'
+			'get_index_custom_fields',
 		), 10, 1 );
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_FACET_NAME, array(
 			$this,
-			'get_field_label'
+			'get_field_label',
 		), 10, 1 );
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, array(
 			$this,
-			'filter_custom_fields'
+			'filter_custom_fields',
 		), 10, 2 );
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_GET_POST_ATTACHMENTS, array(
 			$this,
-			'filter_get_post_attachments'
+			'filter_get_post_attachments',
 		), 10, 2 );
+
+
+		if ( is_admin() ) {
+			add_action( 'acf/init', array(
+				$this,
+				'acf_google_map_init_pro',
+			), 10 );
+		}
 
 	}
 
@@ -254,8 +263,22 @@ class PluginAcf extends WpSolrExtensions {
 					if ( ! empty( $field['value'] ) ) {
 
 						switch ( $field['type'] ) {
+							case self::ACF_TYPE_GOOGLE_MAP:
+								/*
+								array (
+									'address' => 'some adress',
+									'lat' => '48.631077',
+									'lng' => '-10.1482240000000274',
+								)*/
+								// Convert to a lat,long format
+								if ( ! empty( $field['value']['lat'] ) && ! empty( $field['value']['lng'] ) ) {
+									$custom_fields[ $field['name'] ] = sprintf( OptionGeoLocation::FORMAT_LAT_LONG, $field['value']['lat'], $field['value']['lng'] );
+								}
+
+								break;
+
 							default:
-								// Same treatments for all types, yet.
+								// Same treatments for all other types.
 
 								if ( is_array( $field['value'] ) ) {
 									// If value is an array (multi-select), flaten it. ['value1'], ['2' => 'value2']] => ['value1', 'value2']
@@ -402,5 +425,21 @@ class PluginAcf extends WpSolrExtensions {
 		}
 	}
 
+	/**
+	 * Initialize ACF google map api for ACF PRO, if not already set by ACF before.
+	 *
+	 */
+	function acf_google_map_init_pro() {
+
+		$acf_api_key = acf_get_setting( 'google_api_key' );
+		if ( empty( $acf_api_key ) ) {
+
+			$wpsolr_api_key = WPSOLR_Global::getOption()->get_plugin_acf_google_map_api_key();
+
+			if ( ! empty( $wpsolr_api_key ) ) {
+				acf_update_setting( 'google_api_key', $wpsolr_api_key );
+			}
+		}
+	}
 
 }

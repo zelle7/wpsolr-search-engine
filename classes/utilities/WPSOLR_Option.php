@@ -866,4 +866,21 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS ) );
 	}
 
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Acf
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PLUGIN_ACF = 'wdm_solr_extension_acf_data';
+	const OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY = 'google_map_api_key';
+
+	/**
+	 * Get the google map api used by ACF for it's fields
+	 * @return string
+	 */
+	public function get_plugin_acf_google_map_api_key() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_ACF, self::OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY, '' );
+	}
+
 }

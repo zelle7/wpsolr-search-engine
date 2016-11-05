@@ -230,6 +230,7 @@ class OptionLicenses extends WpSolrExtensions {
 					'Index ACF field files content inside the post',
 					'Group ACF repeater rows under one single facet field (requires ACF Pro 5.0.0)',
 					WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS ) . 'Manage ACF Repeaters and Flexible Content Layouts',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_GOOGLE_MAP ) . 'Manage ACF Google Map fields (requires ACF Pro 5.0.0, and our Geolocation Pack )',
 				),
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(

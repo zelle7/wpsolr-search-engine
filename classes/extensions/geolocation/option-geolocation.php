@@ -46,6 +46,9 @@ TAG;
 	// Solr type for LatLong fields
 	const _SOLR_DYNAMIC_TYPE_LATITUDE_LONGITUDE = '_ll';
 
+	// Format lat,long
+	const FORMAT_LAT_LONG = '%s,%s';
+
 	/**
 	 * Constructor
 	 * Subscribe to actions/filters
