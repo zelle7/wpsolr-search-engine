@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WPSOLR
  * Description: Search for WordPress, WooCommerce, bbPress that never gets stuck - WPSOLR
- * Version: 14.7
+ * Version: 14.8
  * Author: wpsolr
  * Plugin URI: https://www.wpsolr.com
  * License: GPL2
  */
 
 // Definitions
-define( 'WPSOLR_PLUGIN_VERSION', '14.7' );
+define( 'WPSOLR_PLUGIN_VERSION', '14.8' );
 define( 'WPSOLR_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPSOLR_PLUGIN_FILE', __FILE__ );
 define( 'WPSOLR_DEFINE_PLUGIN_DIR_URL', substr_replace( plugin_dir_url( __FILE__ ), '', - 1 ), false );
@@ -47,7 +47,7 @@ require_once 'classes/ui/WPSOLR_UI_Sort.php';
 add_action( 'wp_head', 'check_default_options_and_function' );
 add_action( 'admin_menu', 'fun_add_solr_settings' );
 add_action( 'admin_init', 'wpsolr_admin_init' );
-add_action( 'wp_enqueue_scripts', 'my_enqueue' );
+add_action( 'wp_enqueue_scripts', 'wpsolr_enqueue_script' );
 
 // Register WpSolr widgets when current theme's search is used.
 if ( WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() ) {
@@ -366,7 +366,7 @@ function wpsolr_after_setup_theme() {
 
 }
 
-function my_enqueue() {
+function wpsolr_enqueue_script() {
 
 	if ( ! WPSOLR_Global::getOption()->get_search_is_prevent_loading_front_end_css() ) {
 		wp_enqueue_style( 'solr_auto_css', plugins_url( 'css/bootstrap.min.css', __FILE__ ), array(), WPSOLR_PLUGIN_VERSION );

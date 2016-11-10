@@ -22,6 +22,9 @@ class WpSolrSchema {
 	// Conversion error message
 	const ERROR_SANITIZED_MESSAGE = 'Value %s of field "%s" of post->ID=%s ("%s") is not of type "%s". Check out field\'s definition in WPSOLR data settings (tab 2.2) .';
 
+	// @var \Solarium\Core\Query\Helper $helper
+	private static $helper;
+
 	// @property array List of Solr dynamic types extensions
 	protected static $solr_dynamic_types;
 
@@ -90,31 +93,40 @@ class WpSolrSchema {
 
 			self::$solr_dynamic_types = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLR_FIELD_TYPES, array(
 				self::_SOLR_DYNAMIC_TYPE_STRING  => array(
-					'label'    => 'Text, not sortable, multivalued',
-					'sortable' => false,
-					'disabled' => '',
+					'label'      => 'Text, not sortable, multivalued',
+					'sortable'   => false,
+					'multivalue' => true,
+					'disabled'   => '',
+					'help_id'    => WPSOLR_Help::HELP_SCHEMA_TYPE_DATE,
 				),
 				self::_SOLR_DYNAMIC_TYPE_S       => array(
-					'label'    => 'Text, sortable',
-					'sortable' => true,
-					'disabled' => '',
+					'label'      => 'Text, sortable',
+					'sortable'   => true,
+					'multivalue' => false,
+					'disabled'   => '',
+					'help_id'    => WPSOLR_Help::HELP_SCHEMA_TYPE_DATE,
 				),
 				self::_SOLR_DYNAMIC_TYPE_INTEGER => array(
-					'label'    => 'Integer number, sortable',
-					'sortable' => true,
-					'disabled' => '',
+					'label'      => 'Integer number, sortable',
+					'sortable'   => true,
+					'multivalue' => false,
+					'disabled'   => '',
+					'help_id'    => WPSOLR_Help::HELP_SCHEMA_TYPE_DATE,
 				),
 				self::_SOLR_DYNAMIC_TYPE_FLOAT   => array(
-					'label'    => 'Floating point number, sortable',
-					'sortable' => true,
-					'disabled' => '',
+					'label'      => 'Floating point number, sortable',
+					'sortable'   => true,
+					'multivalue' => false,
+					'disabled'   => '',
+					'help_id'    => WPSOLR_Help::HELP_SCHEMA_TYPE_DATE,
 				),
-				/*
 				self::_SOLR_DYNAMIC_TYPE_DATE    => array(
-					'label'    => 'Date, sortable',
-					'sortable' => true,
+					'label'      => 'Date, sortable',
+					'sortable'   => true,
+					'multivalue' => false,
+					'disabled'   => '',
+					'help_id'    => WPSOLR_Help::HELP_SCHEMA_TYPE_DATE,
 				),
-				*/
 				/*
 				self::_SOLR_DYNAMIC_TYPE_INTEGER_LONG => array('label' => 'Big integer, sortable','sortable' => false,),
 				self::_SOLR_DYNAMIC_TYPE_FLOAT        => array(
@@ -449,6 +461,40 @@ class WpSolrSchema {
 	}
 
 	/**
+	 * Sanitize a date value
+	 * Try to convert it to a date, else throw an exception.
+	 *
+	 * @param WP_Post $post
+	 * @param string $field_name
+	 * @param string $value
+	 * @param string $field_type
+	 *
+	 * @return float
+	 */
+	public static
+	function get_sanitized_date_value(
+		$post, $field_name, $value, $field_type
+	) {
+
+		if ( empty( $value ) ) {
+			return $value;
+		}
+
+		// Try to format date to Solr date format
+		if ( ! self::$helper ) {
+			self::$helper = new \Solarium\Core\Query\Helper();
+		}
+		$result = self::$helper->formatDate( $value );
+
+		if ( false === $result ) {
+			self::throw_sanitized_error( $post, $field_name, $value, $field_type );
+		}
+
+		return $result;
+
+	}
+
+	/**
 	 * Sanitize an integer value
 	 * Try to convert it to an integer, else throw an exception.
 	 *
@@ -523,6 +569,10 @@ class WpSolrSchema {
 				// Field not sanitized yet: do it now.
 
 				switch ( $field_type ) {
+
+					case WpSolrSchema::_SOLR_DYNAMIC_TYPE_DATE:
+						$result = WpSolrSchema::get_sanitized_date_value( $post, $field_name, $value, $field_type );
+						break;
 
 					case WpSolrSchema::_SOLR_DYNAMIC_TYPE_FLOAT:
 						$result = WpSolrSchema::get_sanitized_float_value( $post, $field_name, $value, $field_type );

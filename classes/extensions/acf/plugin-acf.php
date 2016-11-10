@@ -256,6 +256,8 @@ class PluginAcf extends WpSolrExtensions {
 
 		if ( $fields_set ) {
 
+			$is_first = array();
+
 			foreach ( $fields_set as $field_name => $fields ) {
 
 				foreach ( $fields as $field ) {
@@ -280,12 +282,16 @@ class PluginAcf extends WpSolrExtensions {
 							default:
 								// Same treatments for all other types.
 
-								if ( is_array( $field['value'] ) ) {
-									// If value is an array (multi-select), flaten it. ['value1'], ['2' => 'value2']] => ['value1', 'value2']
-									$custom_fields[ $field['name'] ] = $field['value'];
-								} else {
-									$custom_fields[ $field['name'] ][] = $field['value'];
+
+								if ( ! isset( $is_first[ $field['name'] ] ) ) {
+									unset( $custom_fields[ $field['name'] ] );
 								}
+
+								foreach ( is_array( $field['value'] ) ? $field['value'] : array( $field['value'] ) as $field_value ) {
+									$custom_fields[ $field['name'] ][] = $field_value;
+								}
+
+								$is_first[ $field['name'] ] = false;
 
 								break;
 						}

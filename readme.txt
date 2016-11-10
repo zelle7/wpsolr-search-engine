@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 14.7
+Current Version: 14.8
 
 Author: wpsolr
 
@@ -14,13 +14,13 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 14.7
+Stable tag: 14.8
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
 
-Get our last features on <a href="https://twitter.com/wpsolr">Twitter</a> and <a href="https://www.facebook.com/wpsolr">Facebook</a>.
+Test WPSOLR features on <a href="https://www.wpsolr.com/?s=WOOCOMMERCE+OR+ACF+OR+BBPRESS+OR+WPML+OR+POLYLANG+OR+GROUPS+OR+s2MEMBER&post_type=&camp=3">our documentation search page</a>: live suggestions, facets with acf, geolocation.
 
 You definitely need wpsolr search if you agree with one of:
 
@@ -106,6 +106,10 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 14.8 =
+* New Solr type 'Date' available for all custom fields.
+* (ACF Pack) Fix some indexing multi-valued format error.
 
 = 14.7 =
 * (ACF Pack) Use ACF Google Map fields with the Geolocation pack.

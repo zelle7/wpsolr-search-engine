@@ -838,7 +838,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			if ( ! empty( $filter_query_field ) ) {
 
-				$filter_query_field_array = explode( ':', $filter_query_field );
+				$filter_query_field_array = explode( ':', $filter_query_field, 2 );
 
 				$filter_query_field_name  = strtolower( $filter_query_field_array[0] );
 				$filter_query_field_value = isset( $filter_query_field_array[1] ) ? $filter_query_field_array[1] : '';

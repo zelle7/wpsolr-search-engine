@@ -1032,6 +1032,7 @@ function fun_set_solr_options() {
 															<div style="margin-left:30px;">
 																<select
 																	<?php
+																	$solr_dynamic_types = WpSolrSchema::get_solr_dynamic_entensions() ;
 																	$field_solr_type = ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ] ) && ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
 																		? $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
 																		: WpSolrSchema::get_solr_dynamic_entension_id_by_default();
@@ -1041,11 +1042,18 @@ function fun_set_solr_options() {
 																	?>
 																	name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ); ?>">
 																	<?php
-																	foreach ( WpSolrSchema::get_solr_dynamic_entensions() as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
-																		echo sprintf( '<option value="%s" %s %s>%s</option>', $solr_dynamic_type_id, selected( $field_solr_type, $solr_dynamic_type_id, false ), $solr_dynamic_type_array['disabled'], WpSolrSchema::get_solr_dynamic_entension_label( $solr_dynamic_type_array ) );
+																	foreach ($solr_dynamic_types as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
+																		echo sprintf( '<option value="%s" %s %s>%s</option>',
+																			$solr_dynamic_type_id,
+																			selected( $field_solr_type, $solr_dynamic_type_id, false ),
+																			$solr_dynamic_type_array['disabled'],
+																			WpSolrSchema::get_solr_dynamic_entension_label( $solr_dynamic_type_array )
+																		);
 																	}
 																	?>
 																</select>
+
+																<?php //echo WPSOLR_Help::get_help( $solr_dynamic_types[ $field_solr_type ]['help_id'] ); ?>
 
 																<select
 																	<?php
