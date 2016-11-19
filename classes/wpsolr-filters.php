@@ -168,4 +168,10 @@ class WpSolrFilters {
 	 * Replace the WP query by a WPSOLR query ?.
 	 **/
 	const WPSOLR_FILTER_IS_REPLACE_BY_WPSOLR_QUERY = 'wpsolr_filter_is_replace_by_wpsolr_query';
+
+	/**
+	 * @link ????
+	 * Facets to display.
+	 **/
+	const WPSOLR_FILTER_FACETS_TO_DISPLAY = 'wpsolr_filter_facets_to_display';
 }

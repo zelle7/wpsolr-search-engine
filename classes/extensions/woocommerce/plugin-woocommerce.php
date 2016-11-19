@@ -14,6 +14,9 @@ class PluginWooCommerce extends WpSolrExtensions {
 	// Product types
 	const PRODUCT_TYPE_VARIABLE = 'variable';
 
+	// Product category field
+	const FIELD_PRODUCT_CAT_STR = 'product_cat_str';
+
 	// Post type of orders
 	const CONST_POST_TYPE_SHOP_ORDER = 'shop_order';
 
@@ -24,6 +27,12 @@ class PluginWooCommerce extends WpSolrExtensions {
 	// WooCommerce url parameter 'orderby'
 	const WOOCOMERCE_URL_PARAMETER_SORT_BY = 'orderby';
 
+	// Url product category pattern.
+	// Ex: /product-category/pcategory1 => pcategory1
+	// Ex: /product-category/pcategory1/ => pcategory1
+	// Ex: /anything/ => /anything/
+	const URL_PATTERN_PRODUCT_CATEGORY = '/\/product-category\/([^\/]+)[$|\/|?]*.*/';
+
 	/**
 	 * Helper instance.
 	 *
@@ -31,8 +40,19 @@ class PluginWooCommerce extends WpSolrExtensions {
 	 */
 	protected $helper;
 
+	/*
+	 * @var bool $is_replace_category_search
+	 */
+	protected $is_replace_category_search;
+
+	/*
+	 * @var string $product_category_name
+	 */
+	protected $product_category_name;
+
 
 	function __construct() {
+
 
 		add_filter( WpSolrFilters::WPSOLR_FILTER_POST_CUSTOM_FIELDS, array(
 			$this,
@@ -73,6 +93,12 @@ class PluginWooCommerce extends WpSolrExtensions {
 			$this,
 			'custom_woocommerce_catalog_orderby',
 		), 10 );
+
+		add_action( WpSolrFilters::WPSOLR_FILTER_FACETS_TO_DISPLAY, array(
+			$this,
+			'wpsolr_filter_facets_to_display',
+		), 10, 1 );
+
 	}
 
 	/*
@@ -117,6 +143,43 @@ class PluginWooCommerce extends WpSolrExtensions {
 		return wc_get_attribute_taxonomies();
 	}
 
+
+	public function get_is_category_search() {
+
+		if ( isset( $this->is_replace_category_search ) ) {
+			// Use cached value.
+			return $this->is_replace_category_search;
+		}
+
+		$this->is_replace_category_search = ( WPSOLR_Global::getOption()->get_option_plugin_woocommerce_is_replace_product_category_search() && $this->is_product_category_url() );
+
+		return $this->is_replace_category_search;
+	}
+
+	/**
+	 * Extract product category from url.
+	 * Must be done because is_product_category() does not work at this early stage.
+	 *
+	 * @return bool
+	 */
+	public function is_product_category_url() {
+
+		$product_category_slug = preg_replace( self::URL_PATTERN_PRODUCT_CATEGORY, '$1', $_SERVER['REQUEST_URI'] );
+
+		if ( $product_category_slug === $_SERVER['REQUEST_URI'] ) {
+			return false;
+		}
+
+		$product_category = get_term_by( 'slug', $product_category_slug, 'product_cat' );
+		if ( $product_category ) {
+			$this->product_category_name = $product_category->name;
+
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 *
 	 * Replace WP query by a WPSOLR query when the current WP Query is an order type query.
@@ -126,6 +189,15 @@ class PluginWooCommerce extends WpSolrExtensions {
 	 * @return bool
 	 */
 	public function wpsolr_filter_is_replace_by_wpsolr_query( $is_replace_by_wpsolr_query ) {
+		global $wp_query;
+
+		// A category page
+		if ( $this->get_is_category_search() && ! is_admin() && is_main_query()
+		     && WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search()
+		     && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template()
+		) {
+			return true;
+		}
 
 		if ( is_admin() && WPSOLR_Global::getOption()->get_option_plugin_woocommerce_is_replace_admin_orders_search() ) {
 
@@ -152,18 +224,20 @@ class PluginWooCommerce extends WpSolrExtensions {
 		$wpsolr_query   = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY ];
 		$solarium_query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY ];
 
+		// post_type url parameter
+		if ( ! empty( $wpsolr_query->query['post_type'] ) ) {
+
+			// @var Document $solarium_query
+			$solarium_query->addFilterQuery(
+				array(
+					'key'   => sprintf( 'woocommerce type:%s', $wpsolr_query->query['post_type'] ),
+					'query' => sprintf( 'type:%s', $wpsolr_query->query['post_type'] ),
+				)
+			);
+		}
+
 		if ( is_admin() && WPSOLR_Global::getOption()->get_option_plugin_woocommerce_is_replace_admin_orders_search() ) {
 			if ( ! empty( $wpsolr_query->query['post_type'] ) && ( self::CONST_POST_TYPE_SHOP_ORDER === $wpsolr_query->query['post_type'] ) ) {
-
-				//if ( WPSOLR_Global::getOption()->get_option_geolocation_is_filter_results_with_empty_coordinates() ) {
-
-				// @var Document $solarium_query
-				$solarium_query->addFilterQuery(
-					array(
-						'key'   => sprintf( 'type:%s', self::CONST_POST_TYPE_SHOP_ORDER ),
-						'query' => sprintf( 'type:%s', self::CONST_POST_TYPE_SHOP_ORDER ),
-					)
-				);
 
 				// sort by
 				$wpsolr_order_by_mapping_fields = array(
@@ -199,6 +273,18 @@ class PluginWooCommerce extends WpSolrExtensions {
 			);
 		}
 
+		// Add category filter on category pages
+		if ( $this->get_is_category_search() ) {
+
+			// @var Document $solarium_query
+			$solarium_query->addFilterQuery(
+				array(
+					'key'   => sprintf( 'woocommerce %s:"%s"', self::FIELD_PRODUCT_CAT_STR, $this->product_category_name ),
+					'query' => sprintf( '%s:"%s"', self::FIELD_PRODUCT_CAT_STR, $this->product_category_name ),
+				)
+			);
+
+		}
 
 	}
 
@@ -371,4 +457,23 @@ class PluginWooCommerce extends WpSolrExtensions {
 		}
 	}
 
+
+	/**
+	 * Remove product category of facets to display if we are on a category page.
+	 *
+	 * @param array $facets_to_display ['type', 'categories', 'product_cat_str']
+	 *
+	 * @return array
+	 */
+	public function wpsolr_filter_facets_to_display( array $facets_to_display ) {
+
+		if ( $this->get_is_category_search() ) {
+			$index = array_search( self::FIELD_PRODUCT_CAT_STR, $facets_to_display, true );
+			if ( $index ) {
+				unset( $facets_to_display[ $index ] );
+			}
+		}
+
+		return $facets_to_display;
+	}
 }

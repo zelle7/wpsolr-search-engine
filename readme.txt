@@ -2,7 +2,7 @@
 
 Contributors: wpsolr
 
-Current Version: 14.8
+Current Version: 14.9
 
 Author: wpsolr
 
@@ -14,7 +14,7 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 14.8
+Stable tag: 14.9
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
@@ -106,6 +106,10 @@ Installation procedure for Apache Solr: see FAQ section.
 47. 47) Admin: Give sortable custom fields a Solr type.
 
 == Changelog ==
+
+= 14.9 =
+* (WooCommerce Pack) New option to replace product categories queries with WPSOLR queries. The WPSOLR facets widget can now on product categories pages.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-replace-category-pages-wpsolr-search/">Documentation</a>
 
 = 14.8 =
 * New Solr type 'Date' available for all custom fields.

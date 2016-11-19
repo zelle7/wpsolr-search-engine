@@ -112,6 +112,20 @@ if ( $is_plugin_active ) {
 				<div class="clear"></div>
 			</div>
 
+			<div class="wdm_row">
+				<div class='col_left'>
+					Replace WooCommerce category search with WPSOLR's.
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_WOOCOMMERCE_REPLACE_CATEGORY_SEARCH ); ?>
+				</div>
+				<div class='col_right'>
+					<input type='checkbox' <?php echo $is_plugin_active ? '' : 'readonly' ?>
+					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_PRODUCT_CATEGORY_SEARCH; ?>]'
+					       value='is_extension_active'
+						<?php checked( 'is_extension_active', isset( $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_PRODUCT_CATEGORY_SEARCH ] ) ? $extension_options[ WPSOLR_Option::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_PRODUCT_CATEGORY_SEARCH ] : '' ); ?>>
+				</div>
+				<div class="clear"></div>
+			</div>
+
 			<div class='wdm_row'>
 				<div class="submit">
 					<?php if ( ! $license_manager->is_installed || $license_manager->get_license_is_activated( OptionLicenses::LICENSE_PACKAGE_WOOCOMMERCE ) ) { ?>
