@@ -34,6 +34,14 @@ class PluginWooCommerce extends WpSolrExtensions {
 	const URL_PATTERN_PRODUCT_CATEGORY = '/\/product-category\/([^\/]+)[$|\/|?]*.*/';
 
 	/**
+	 * Remove the top level of the category facet hierarchy on category pages.
+	 * top_cat =>
+	 * top_cat->current_cat =>
+	 * top_cat->current_cat->sub_cat => sub_cat
+	 */
+	const REGEX_SUB_CATEGORIES = '/.*%s->(.*)/';
+
+	/**
 	 * Helper instance.
 	 *
 	 * @var \Solarium\Core\Query\Helper Helper
@@ -49,6 +57,11 @@ class PluginWooCommerce extends WpSolrExtensions {
 	 * @var string $product_category_name
 	 */
 	protected $product_category_name;
+
+	/*
+	 * @var string $product_category_id
+	 */
+	protected $product_category_id;
 
 
 	function __construct() {
@@ -99,6 +112,10 @@ class PluginWooCommerce extends WpSolrExtensions {
 			'wpsolr_filter_facets_to_display',
 		), 10, 1 );
 
+		add_action( WpSolrFilters::WPSOLR_FILTER_FACETS_CONTENT_TO_DISPLAY, array(
+			$this,
+			'wpsolr_filter_facets_content_to_display',
+		), 10, 1 );
 	}
 
 	/*
@@ -173,6 +190,7 @@ class PluginWooCommerce extends WpSolrExtensions {
 		$product_category = get_term_by( 'slug', $product_category_slug, 'product_cat' );
 		if ( $product_category ) {
 			$this->product_category_name = $product_category->name;
+			$this->product_category_id   = $product_category->term_id;
 
 			return true;
 		}
@@ -223,6 +241,8 @@ class PluginWooCommerce extends WpSolrExtensions {
 		// @var WPSOLR_Query $wpsolr_query
 		$wpsolr_query   = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY ];
 		$solarium_query = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY ];
+		// @var WPSolrSearchSolrClient $solarium_client
+		$solarium_client = $parameters[ WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_CLIENT ];
 
 		// post_type url parameter
 		if ( ! empty( $wpsolr_query->query['post_type'] ) ) {
@@ -276,11 +296,13 @@ class PluginWooCommerce extends WpSolrExtensions {
 		// Add category filter on category pages
 		if ( $this->get_is_category_search() ) {
 
+			$filter_query_field_name = $solarium_client->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_NON_FLAT_HIERARCHY, self::FIELD_PRODUCT_CAT_STR );
+
 			// @var Document $solarium_query
 			$solarium_query->addFilterQuery(
 				array(
-					'key'   => sprintf( 'woocommerce %s:"%s"', self::FIELD_PRODUCT_CAT_STR, $this->product_category_name ),
-					'query' => sprintf( '%s:"%s"', self::FIELD_PRODUCT_CAT_STR, $this->product_category_name ),
+					'key'   => sprintf( 'woocommerce %s:"%s"', $filter_query_field_name, $this->product_category_name ),
+					'query' => sprintf( '%s:"%s"', $filter_query_field_name, $this->product_category_name ),
 				)
 			);
 
@@ -469,11 +491,51 @@ class PluginWooCommerce extends WpSolrExtensions {
 
 		if ( $this->get_is_category_search() ) {
 			$index = array_search( self::FIELD_PRODUCT_CAT_STR, $facets_to_display, true );
-			if ( $index ) {
-				unset( $facets_to_display[ $index ] );
+			if ( false !== $index ) {
+				//unset( $facets_to_display[ $index ] );
 			}
 		}
 
 		return $facets_to_display;
+	}
+
+	/**
+	 * Remove the top level of the category facet hierarchy on category pages.
+	 * top_cat =>
+	 * top_cat->current_cat =>
+	 * top_cat->current_cat->sub_cat => sub_cat
+	 *
+	 * @param array $facets_content
+	 *
+	 * @return array
+	 */
+	public function wpsolr_filter_facets_content_to_display( array $facets_content ) {
+
+		if ( empty( $facets_content ) ) {
+			return array();
+		}
+
+		if ( $this->get_is_category_search() && ! empty( $facets_content[ self::FIELD_PRODUCT_CAT_STR ] ) ) {
+
+			foreach ( $facets_content as $facet_name => &$facet_items ) {
+
+				if ( self::FIELD_PRODUCT_CAT_STR === $facet_name ) {
+
+					foreach ( $facet_items as $index => &$facet_item ) {
+						$value_without_top_level_hierarchy = preg_replace( sprintf( self::REGEX_SUB_CATEGORIES, preg_quote( $this->product_category_name, '/' ) ), '$1', $facet_item['value'] );
+
+						if ( $facet_item['value'] !== $value_without_top_level_hierarchy ) {
+
+							$facet_item['value'] = $value_without_top_level_hierarchy;
+						} else {
+
+							unset( $facet_items[ $index ] );
+						}
+					}
+				}
+			}
+		}
+
+		return $facets_content;
 	}
 }

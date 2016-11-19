@@ -29,6 +29,8 @@ class WPSOLR_Data_Facets {
 
 			$facets_labels = WPSOLR_Global::getOption()->get_facets_labels();
 
+			$facets_in_results = apply_filters( WpSolrFilters::WPSOLR_FILTER_FACETS_CONTENT_TO_DISPLAY, $facets_in_results );
+
 			foreach ( $facets_to_display as $facet_to_display_id ) {
 
 				if ( isset( $facets_in_results[ $facet_to_display_id ] ) && count( $facets_in_results[ $facet_to_display_id ] ) > 0 ) {

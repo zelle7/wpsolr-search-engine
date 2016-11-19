@@ -57,6 +57,8 @@ class OptionLicenses extends WpSolrExtensions {
 	const ORDER_LINK_URL_BESPOKE = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
 	const FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED = '7 days free trial (All packs included)';
 	const ORDER_LINK_URL_ALL_INCLUDED = 'https://secure.avangate.com/order/trial.php?PRODS=4699867&QTY=1&PAY_TYPE=CCVISAMC&PRICES4699867[EUR]=0&TPERIOD=7&PHASH=fe0b336dbb4e61f9acc564925ed34622';
+	const FIELD_ORDER_URL_BUTTON_LABEL_MANAGED = 'In a hurry ? We manage WPSOLR and Solr for you';
+	const ORDER_LINK_URL_MANAGED = 'https://secure.avangate.com/order/checkout.php?PRODS=4701516&QTY=1';
 
 	// Features
 	const FEATURE_ZENDESK_SUPPORT = 'Get support via Zendesk <br/>(Apache Solr setup/installation not supported)';
@@ -502,15 +504,30 @@ class OptionLicenses extends WpSolrExtensions {
 			array(
 				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED,
 				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-				self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_ALL_INCLUDED,
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_ALL_INCLUDED ),
 			),
 			array(
 				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-				self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_BESPOKE ),
+			),
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_MANAGED,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_MANAGED ),
 			),
 		);
 
+	}
+
+	/**
+	 * @param string $url
+	 *
+	 * @return string
+	 */
+	public function add_campaign_to_url( $url ) {
+
+		return sprintf( '%s%scamp=plugin_wpsolr&wpsolr_v=%s', $url, ( false === strpos( $url, '?' ) ) ? '?' : '&', WPSOLR_PLUGIN_VERSION );
 	}
 
 	/**

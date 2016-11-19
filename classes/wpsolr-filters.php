@@ -34,6 +34,7 @@ class WpSolrFilters {
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS = 'keywords';
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER = 'user';
 	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY = 'wpsolr_query';
+	const WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_CLIENT = 'solarium_client';
 
 	// Customize the search page url
 	const WPSOLR_FILTER_SEARCH_PAGE_URL = 'wpsolr_filter_search_page_url';
@@ -174,4 +175,10 @@ class WpSolrFilters {
 	 * Facets to display.
 	 **/
 	const WPSOLR_FILTER_FACETS_TO_DISPLAY = 'wpsolr_filter_facets_to_display';
+
+	/**
+	 * @link ????
+	 * Filter facets content to display.
+	 **/
+	const WPSOLR_FILTER_FACETS_CONTENT_TO_DISPLAY = 'wpsolr_filter_facets_content_to_display';
 }

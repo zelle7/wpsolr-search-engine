@@ -381,10 +381,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		// Action to change the solarium query
 		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
 			array(
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY   => $wpsolr_query,
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $solarium_query,
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $wpsolr_query->get_wpsolr_query(),
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY    => $wpsolr_query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY  => $solarium_query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS    => $wpsolr_query->get_wpsolr_query(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER     => wp_get_current_user(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_CLIENT => $this,
 			)
 		);
 
@@ -1191,7 +1192,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string Facet name with hierarch or not
 	 */
-	private
+	public
 	function get_facet_hierarchy_name(
 		$hierarchy_field_name, $facet_name
 	) {

@@ -9,7 +9,8 @@
 class WPSOLR_Help {
 
 	// Url of help
-	const _SEARCH_URL = '<a class="wpsolr-help" href="https://www.wpsolr.com/?s=&wpsolr_fq[]=wpsolr_feature_str:%s" target="_help"></a>';
+	const _SEARCH_URL = '<a class="wpsolr-help" href="%s" target="_help"></a>';
+	const _SEARCH_URL_HREF = 'https://www.wpsolr.com/?s=&wpsolr_fq[]=wpsolr_feature_str:%s';
 
 	// Help ids
 	const HELP_GEOLOCATION = 1;
@@ -32,8 +33,9 @@ class WPSOLR_Help {
 	 * @return string
 	 */
 	public static function get_help( $help_id ) {
+		global $license_manager;
 
-		$url = sprintf( self::_SEARCH_URL, $help_id );
+		$url = sprintf( self::_SEARCH_URL, $license_manager->add_campaign_to_url( sprintf( self::_SEARCH_URL_HREF, $help_id ) ) );
 
 		return $url;
 	}

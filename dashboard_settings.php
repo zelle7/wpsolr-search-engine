@@ -7,12 +7,14 @@ require_once WPSOLR_PLUGIN_DIR . '/classes/utilities/WPSOLR_Help.php';
  * @return string
  */
 function wpsolr_admin_footer_text( $footer_text ) {
+	global $license_manager;
+
 	$current_screen = get_current_screen();
 
 	// Display wpsolr footer only on wpsolr admin pages
 	if ( 'solr_settings' === $current_screen->parent_file ) {
 		$footer_text = 'If you like WPSOLR, thank you for letting others know with a <a href="https://wordpress.org/support/view/plugin-reviews/wpsolr-search-engine" target="__new">***** review</a>.';
-		$footer_text .= ' Else, we\'d like very much your feedbacks throught our <a href="http://www.wpsolr.com" target="__new">chat box</a> to improve the plugin.';
+		$footer_text .= ' Else, we\'d like very much your feedbacks throught our <a href="' . $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/' ) . '" target="__new">chat box</a> to improve the plugin.';
 
 		$footer_version = 'You are using the free plugin.';
 		$licenses       = OptionLicenses::get_activated_licenses_titles();
@@ -20,7 +22,7 @@ function wpsolr_admin_footer_text( $footer_text ) {
 
 			$footer_version = sprintf( 'Activated packs: %s.', implode( ', ', $licenses ) );
 		}
-		$footer_version .= ' See <a href="https://www.wpsolr.com/pricing" target="__new">other packs</a>.';
+		$footer_version .= ' See <a href="' . $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/pricing/' ) . '" target="__new">other packs</a>.';
 
 		$footer_text = $footer_version . '<br/>' . $footer_text;
 	}
@@ -307,32 +309,44 @@ function fun_set_solr_options() {
 	switch ( $tab ) {
 	case 'solr_presentation' :
 		?>
-		<h2>See our little <a href="https://www.wpsolr.com/?s=" target="_blank">documentation search</a>, which uses our
+		<h2>See our little <a
+				href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/?s=' ); ?>"
+				target="_blank">documentation search</a>, which uses our
 			plugin
 		</h2>
 		<h2>Walkthrough of the different steps to configure a search with wpsolr</h2>
 
 		<ul>
-			<li>0. Read our <a href="https://www.wpsolr.com/?s=dummy" target="_blank">general introductions to Apache
+			<li>0. Read our <a
+					href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/?s=dummy' ); ?>"
+					target="_blank">general introductions to Apache
 					Solr</a>.
 			</li>
 			<li>1. Download <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a>. WPSOLR
 				replaces
 				the slow WP SQL search by the mighty Solr search.
 			</li>
-			<li>2. Install <a href="http://wpsolr.com/installation-guide/" target="_blank">Apache Solr</a> (if you
+			<li>2. Install <a
+					href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/guide-category/installation-guide' ); ?>"
+					target="_blank">Apache Solr</a> (if you
 				want
 				to host it yourself).
 			</li>
-			<li>3. <a href="https://www.wpsolr.com/guide-category/installation-guide/" target="_blank">Create a Solr
+			<li>3. <a
+					href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/guide-category/installation-guide' ); ?>"
+					target="_blank">Create a Solr
 					index</a>, or
 				<a
-					href="https://www.gotosolr.com/en" target="_blank">host a Gotosolr index</a> to store your data.
+					href="<?php echo $license_manager->add_campaign_to_url( 'https://www.gotosolr.com/en' ); ?>"
+					target="_blank">host a Gotosolr index</a> to store your data.
 			</li>
-			<li>4. <a href="https://www.wpsolr.com/guide-category/user-guide/" target="_blank">Configure WPSOLR with
+			<li>4. <a
+					href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/guide-category/user-guide/' ); ?>"
+					target="_blank">Configure WPSOLR with
 					your own Solr
 					index</a>,
-				<a href="https://www.gotosolr.com/en/solr-tutorial-for-wordpress/" target="_blank">configure WPSOLR
+				<a href="<?php echo $license_manager->add_campaign_to_url( 'https://www.gotosolr.com/en/solr-tutorial-for-wordpress/' ); ?>"
+				   target="_blank">configure WPSOLR
 					with
 					Gotosolr</a></li>
 		</ul>
@@ -1032,8 +1046,8 @@ function fun_set_solr_options() {
 															<div style="margin-left:30px;">
 																<select
 																	<?php
-																	$solr_dynamic_types = WpSolrSchema::get_solr_dynamic_entensions() ;
-																	$field_solr_type = ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ] ) && ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
+																	$solr_dynamic_types = WpSolrSchema::get_solr_dynamic_entensions();
+																	$field_solr_type    = ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ] ) && ! empty( $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
 																		? $custom_field_properties[ $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ]
 																		: WpSolrSchema::get_solr_dynamic_entension_id_by_default();
 																	if ( $disabled ) {
@@ -1042,7 +1056,7 @@ function fun_set_solr_options() {
 																	?>
 																	name="<?php echo sprintf( '%s[%s][%s][%s]', 'wdm_solr_form_data', WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTIES, $key . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING, WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ); ?>">
 																	<?php
-																	foreach ($solr_dynamic_types as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
+																	foreach ( $solr_dynamic_types as $solr_dynamic_type_id => $solr_dynamic_type_array ) {
 																		echo sprintf( '<option value="%s" %s %s>%s</option>',
 																			$solr_dynamic_type_id,
 																			selected( $field_solr_type, $solr_dynamic_type_id, false ),

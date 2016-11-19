@@ -171,7 +171,7 @@ $form_data                             = WpSolrExtensions::extract_form_data( $i
 						<div class="wdm_note">
 
 							WPSOLR is compatible with the Solr versions listed at the following page: <a
-								href="https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files/" target="__wpsolr">Compatible Solr versions</a>.
+								href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files/' ); ?>" target="__wpsolr">Compatible Solr versions</a>.
 
 							Your first action must be to download the two configuration files (schema.xml,
 							solrconfig.xml) listed in the online release section, and upload them to your Solr instance.
