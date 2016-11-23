@@ -11,7 +11,6 @@ WpSolrExtensions::require_once_wpsolr_extension( WpSolrExtensions::OPTION_LICENS
 $option_name = OptionLicenses::get_option_name( WpSolrExtensions::OPTION_LICENSES );
 
 // Options object
-$license_manager = new OptionLicenses();
 
 ?>
 
@@ -182,13 +181,15 @@ $license_manager = new OptionLicenses();
 						<?php if ( ! $license_manager->get_license_is_activated( $license_type ) ) { ?>
 							Questions/Answers:
 							<ol>
-								<li><a href="http://www.gotosolr.com/en/solr-documentation/license-activations"
-								       target="__new1">
+								<li>
+									<a href="<?php echo $license_manager->add_campaign_to_url( 'http://www.gotosolr.com/en/solr-documentation/license-activations/' ); ?>"
+									   target="__new1">
 										I bought a WPSOLR subscription, but cannot find my license#
 									</a>
 								</li>
-								<li><a href="http://www.gotosolr.com/en/solr-documentation/wpsolr-licenses-upgrade/"
-								       target="__new2">
+								<li>
+									<a href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/knowledgebase/how-to-upgrade-my-subscription/' ); ?>"
+									   target="__new2">
 										I want to add the <?php echo $license[ OptionLicenses::FIELD_LICENSE_TITLE ]; ?>
 										pack to
 										my WPSOLR subscription
@@ -211,46 +212,45 @@ $license_manager = new OptionLicenses();
 
 							<?php foreach ( $license_manager->get_license_orders_urls( $license_type ) as $license_orders_url ) { ?>
 
-								<input name="gotosolr_plan_yearly_trial"
-								       type="button" class="button-primary"
-								       value="<?php echo sprintf( $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_BUTTON_LABEL ], $license[ OptionLicenses::FIELD_LICENSE_TITLE ] ); ?>"
-								       onclick="window.open('<?php echo $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_LINK ]; ?>', '__blank');"
-								/>
-
-								<h4 class="solr_error" style="font-size: 12px">
-									See our packs <a
-										href="http://www.wpsolr.com/pricing"
-										target="__new1">pricing and features</a>.<br/>
-									This will give you 7 days to test the 'Premium Pack'.
-									<br/>
-									Contact us if you need other packs to test with your trial. We will add them to your
-									trial subscription.
-								</h4>
-
-								<h3>With your pack, you will be able to:</h3>
-								<ol>
-									<?php foreach ( $license_manager->get_license_features( $license_type ) as $feature ) { ?>
-										<li>
-											<?php echo $feature; ?>
-										</li>
-									<?php } ?>
-								</ol>
-
-								<h3>Instructions:</h3>
-								Click on the button to be redirected to your order page.
-								After completion of your order, you will receive an email with a link to your account.
-								Signin, and copy the license activation code (Licence # column of the subscription) above to activate your pack.
-								See documentation here: <a
-									href="http://www.gotosolr.com/en/solr-documentation/license-activations"
-									target="__new1">http://www.gotosolr.com/en/solr-documentation/license-activations</a>
-
-								<h3>Chat</h3>
-								If you are quite, but not completely, convinced, let's have a chat at <a
-									href="http://www.wpsolr.com"
-									target="__new1">wpsolr.com chat box</a>.
-								<br/> We also deliver custom developments, if your project needs extra care.
+								<p>
+									<input name="gotosolr_plan_yearly_trial"
+									       type="button" class="button-primary"
+									       value="<?php echo sprintf( $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_BUTTON_LABEL ], $license[ OptionLicenses::FIELD_LICENSE_TITLE ] ); ?>"
+									       onclick="window.open('<?php echo $license_orders_url[ OptionLicenses::FIELD_ORDER_URL_LINK ]; ?>', '__blank');"
+									/>
+								</p>
 
 							<?php } ?>
+
+							<h4 class="solr_error" style="font-size: 14px">
+								<a
+									href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/pricing' ); ?>"
+									target="__new1">Packs pricing and features</a>
+							</h4>
+
+							<h3>With your pack, you will be able to:</h3>
+							<ol>
+								<?php foreach ( $license_manager->get_license_features( $license_type ) as $feature ) { ?>
+									<li>
+										<?php echo $feature; ?>
+									</li>
+								<?php } ?>
+							</ol>
+
+							<h3>Instructions:</h3>
+							Click on the button to be redirected to your order page.
+							After completion of your order, you will receive an email with a link to your account.
+							Signin, and copy the license activation code (Licence # column of the subscription) above to
+							activate your pack.
+							See documentation here: <a
+								href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/' ); ?>"
+								target="__new1">https://www.wpsolr.com/knowledgebase/how-to-activate-a-license-pack/</a>
+
+							<h3>Chat</h3>
+							If you are quite, but not completely, convinced, let's have a chat at <a
+								href="<?php echo $license_manager->add_campaign_to_url( 'https://www.wpsolr.com' ); ?>"
+								target="__new1">wpsolr.com chat box</a>.
+							<br/> We also deliver custom developments, if your project needs extra care.
 
 						</div>
 						<div class="clear"></div>

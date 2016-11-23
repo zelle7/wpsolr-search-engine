@@ -12,11 +12,11 @@ git remote add github git@github.com:eostis-sarl/wpsolr-search-engine.git
 
 Contributors: wpsolr
 
-Current Version: 13.6
+Current Version: 14.9
 
 Author: wpsolr
 
-Author URI: http://www.wpsolr.com/
+Author URI: https://www.wpsolr.com/
 
 Tags: search, TablePress search, Solr in WordPress, wordpress search, bbPress search, WooCommerce search, ACF search, coupon search, affiliate feed search, relevance, Solr search, fast search, wpsolr, apache solr, better search, site search, category search, search bar, comment search, filtering, relevant search, custom search, filters, page search, autocomplete, post search, online search, search, spell checking, search integration, did you mean, typeahead, search replacement, suggestions, search results, search by category, multi language, seo, lucene, solr, suggest, apache lucene
 
@@ -24,11 +24,13 @@ Requires at least: 3.7.1
 
 Tested up to: 4.6.1
 
-Stable tag: 13.6
+Stable tag: 14.9
 
 Search faster. When your Wordpress search fails, when your WooCommerce search or bbPress search gets stuck, you need a change of search technology.
 
 == Description ==
+
+Test WPSOLR features on <a href="https://www.wpsolr.com/?s=WOOCOMMERCE+OR+ACF+OR+BBPRESS+OR+WPML+OR+POLYLANG+OR+GROUPS+OR+s2MEMBER&post_type=&camp=3">our documentation search page</a>: live suggestions, facets with acf, geolocation.
 
 You definitely need wpsolr search if you agree with one of:
 
@@ -51,7 +53,7 @@ You definitely need wpsolr search if you agree with one of:
 
 If not, there are plenty of great search plugins out there to help you.
 
-But, if you're really ready to unleash the beast, visit <a href='http://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
+But, if you're really ready to unleash the beast, visit <a href='https://www.wpsolr.com?camp=2'>wpsolr.com</a>, ask us any question, or just download wpsolr search to give it a try.
 
 
 == Installation ==
@@ -115,6 +117,66 @@ Installation procedure for Apache Solr: see FAQ section.
 
 == Changelog ==
 
+= 14.9 =
+* (WooCommerce Pack) New option to replace product categories queries with WPSOLR queries. The WPSOLR facets widget can now on product categories pages.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-replace-category-pages-wpsolr-search/">Documentation</a>
+
+= 14.8 =
+* New Solr type 'Date' available for all custom fields.
+* (ACF Pack) Fix some indexing multi-valued format error.
+
+= 14.7 =
+* (ACF Pack) Use ACF Google Map fields with the Geolocation pack.
+<a href="https://www.wpsolr.com/knowledgebase/acf-pack-can-use-google-map-fields-wpsolr-geolocation-pack/">Documentation</a>
+
+= 14.6 =
+* (WooCommerce Pack) Choose to replace WooCommerce sort items with WPSOLR's. Now you can sort by anything: price, product attributes, product attribute variations, geolocation distance ... without losing performance.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-add-sort-items-default/">Documentation</a>
+
+= 14.5 =
+* (WooCommerce Pack) Choose to replace WooCommerce admin orders search with WPSOLR search.
+<a href="https://www.wpsolr.com/knowledgebase/woocommerce-pack-can-replace-woocommerce-orders-search-wpsolr-search/">Documentation</a>
+
+= 14.4 =
+* (ACF Pack) Manage repeaters data, and flexible content layouts.
+Those recursive fields are indexed and searched at any level, files included.
+For instance, when a flexible layout contains a files repeater, all files bodies are extracted and inserted in the post content before indexing.
+Also, custom fields of any levels can be used as facets.
+<a href="https://www.wpsolr.com/knowledgebase/acf-pack-managed-repeaters-data-flexible-content-layouts/">Documentation</a>
+
+= 14.3 =
+* New plan including all packs.
+
+= 14.2 =
+* (Geolocation pack) Add an option to filter out results without coordinates
+* (Geolocation pack) Add an option to show a loading icon while the browser is retrieving the visitor's location
+
+= 14.1 =
+* Sanitize geolocation fields during indexing.
+* Fix intermittent http 500 error.
+
+= 14.0 =
+* New Geolocation search pack:
+* <a href="https://www.wpsolr.com/?s=" target="_blank">Geolocation search demo</a>
+* WARNING: New schema.xml files with Geolocation type definitions. Download from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files, install on your Solr index, and reload the Solr index (or restart Solr).
+* Work with latitude and longitude locations (like a product's store coordinates)
+* A location is simply a custom field containing a string "latitude,longitude"
+* Can manage multi-locations configurations (a product with several stores)
+* Automatic gathering of visitor's location
+* Sort results by distance from the visitor's location
+* Show distance(s) from the visitor's location to results' locations
+* Add a user agreement checkbox to the search form(s)
+* Work with Ajax theme or your theme's search template
+
+= 13.9 =
+* Fix of real-time indexing.
+
+= 13.8 =
+* Better and faster management of posts excluded from the index, either from the 2.2 ids exclusion list or the wpsolr metabox "Do not search".
+
+= 13.7 =
+* (Premium pack) Add an option to set the ajax search page slug. Default remains 'search-wpsolr'.
+
 = 13.6 =
 * Fix autocompletion to work with any theme's search boxes.
 * Fix a syntax error for PHP <= 5.3
@@ -144,7 +206,7 @@ Fields can be given a Solr type (short string, numeric integer, numeric floating
 * Fix ajax search box not showing double quotes
 
 = 13.1 =
-* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from http://wpsolr.com/releases/#1.0, install on your Solr index, and reload the Solr index (or restart Solr).
+* Deliver new schema.xml files to fix comments/replies not indexed/searchable. Download from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files, install on your Solr index, and reload the Solr index (or restart Solr).
 * Comments/Replies are indexed in real-time.
 * Comments/Replies are searchable, autocompleted, and spellchecked.
 * Comments/Replies fields and terms can be boosted.
@@ -619,7 +681,7 @@ wget http://archive.apache.org/dist/lucene/solr/6.1.0/solr-6.1.0.tgz
 tar xvf solr-6.1.0.tgz
 solr-6.1.0/bin/solr start
 solr-6.1.0/bin/solr create -c wpsolr-6.1.0
-(download solr 5.xx config files from http://wpsolr.com/releases/#1.0)
+(download solr 5.xx config files from https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files)
 cp solrconfig.xml schema.xml solr-6.1.0/server/solr/wpsolr-6.1.0/conf/
 (reload index with solr admin UI)
 (configure a new index in wpsolr admin UI:
@@ -651,7 +713,7 @@ If you can manage to install Solr (or to buy a hosting Solr service), WPSOLR can
 * Tweak your search in many many ways with Solr solrconfig.cml and schema.xml files (language analysers, stopwords, synonyms, stemmers ...)
 
 = Do you offer a premium version ? =
-Yes. Check out our <a href="http://wpsolr.com/pricing">Premium Packs</a>.
+Yes. Check out our <a href="https://wpsolr.com/pricing">Premium Packs</a>.
 
 = Can you search in several sites and show results on one site ? =
 Yes, there is a (Premium) multisites option in wpsolr.
@@ -694,7 +756,7 @@ Please refer to our detailed <a href='http://wpsolr.com/installation-guide/'>Ins
 
 = What version of Solr does the WPSOLR Search Engine plugin need? =
 
-WPSOLR Search Engine plugin is <a href="http://wpsolr.com/releases/#1.0"> compatible with the following Solr versions</a>. But if you were going with a new installation, we would recommend installing Solr version 3.6.x or above.
+WPSOLR Search Engine plugin is <a href="https://www.wpsolr.com/kb/apache-solr/apache-solr-configuration-files"> compatible with the following Solr versions</a>. But if you were going with a new installation, we would recommend installing Solr version 3.6.x or above.
 
 
 = Does WPSOLR Search Engine Plugin work with any version of WordPress? =

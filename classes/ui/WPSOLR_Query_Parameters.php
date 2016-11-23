@@ -15,6 +15,11 @@ class WPSOLR_Query_Parameters {
 	const SEARCH_PARAMETER_FQ = 'wpsolr_fq';
 	const SEARCH_PARAMETER_PAGE = 'wpsolr_page';
 	const SEARCH_PARAMETER_SORT = 'wpsolr_sort';
+	const SEARCH_PARAMETER_LATITUDE = 'wpsolr_lat';
+	const SEARCH_PARAMETER_LONGITUDE = 'wpsolr_long';
+	const SEARCH_PARAMETER_GEO_USER_AGREEMENT = 'wpsolr_is_geo';
+	const PARAMETER_VALUE_YES = 'y';
+	const PARAMETER_VALUE_NO = 'n';
 
 	/**
 	 * Copy url parameters to query.
@@ -36,6 +41,20 @@ class WPSOLR_Query_Parameters {
 		if ( isset( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT ] ) ) {
 			$wpsolr_query->set_wpsolr_sort( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_SORT ] );
 		}
+
+		if ( isset( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_LATITUDE ] ) ) {
+			$wpsolr_query->set_wpsolr_latitude( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_LATITUDE ] );
+		}
+
+		if ( isset( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_LONGITUDE ] ) ) {
+			$wpsolr_query->set_wpsolr_longitude( $url_parameters[ WPSOLR_Query_Parameters::SEARCH_PARAMETER_LONGITUDE ] );
+		}
+
+		// Action to update the url parameters
+		do_action( WpSolrFilters::WPSOLR_ACTION_URL_PARAMETERS,
+			$wpsolr_query,
+			$url_parameters
+		);
 
 	}
 

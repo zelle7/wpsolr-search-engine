@@ -1,4 +1,5 @@
 // Timout handler on the indexing timeoutHandlerIsCleared;
+var timeoutHandler;
 var timeoutHandlerIsCleared = false;
 
 jQuery(document).ready(function () {

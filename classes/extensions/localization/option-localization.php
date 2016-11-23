@@ -69,6 +69,7 @@ class OptionLocalization extends WpSolrExtensions {
 				'results_row_number_comments'                             => _x( ', %d comments', 'Result row information box: number of comments', 'wpsolr' ),
 				'results_row_comment_link_title'                          => _x( '-Comment match', 'Result row comment box: comment link title', 'wpsolr' ),
 				'infinitescroll_loading'                                  => _x( 'Loading ...', 'Text displayed while infinite scroll is loading next page of results', 'wpsolr' ),
+				'geolocation_ask_user'                                    => _x( 'Use my current location', 'Geolocation, ask user', 'wpsolr' ),
 			)
 		);
 	}
@@ -87,7 +88,7 @@ class OptionLocalization extends WpSolrExtensions {
 					self::KEY_SECTION_TERMS => array(
 						'search_form_button_label'     => array( 'Search form button label' ),
 						'search_form_edit_placeholder' => array( 'Search edit placeholder' ),
-					)
+					),
 				),
 			'Sort list box'              =>
 				array(
@@ -98,7 +99,7 @@ class OptionLocalization extends WpSolrExtensions {
 						WPSolrSearchSolrClient::SORT_CODE_BY_DATE_DESC            => array( 'Sort list element' ),
 						WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_ASC  => array( 'Sort list element' ),
 						WPSolrSearchSolrClient::SORT_CODE_BY_NUMBER_COMMENTS_DESC => array( 'Sort list element' ),
-					)
+					),
 				),
 			'Facets box'                 =>
 				array(
@@ -107,7 +108,7 @@ class OptionLocalization extends WpSolrExtensions {
 						'facets_title'               => array( 'Facets list title' ),
 						'facets_element_all_results' => array( 'Facets list element all results' ),
 						'facets_element'             => array( 'Facets list element name with #results' ),
-					)
+					),
 				),
 			'Results Header box'         =>
 				array(
@@ -115,7 +116,7 @@ class OptionLocalization extends WpSolrExtensions {
 						'results_header_did_you_mean'       => array( 'Did you mean (automatic keyword spell correction)' ),
 						'results_header_pagination_numbers' => array( 'Pagination header on top of results' ),
 						'results_header_no_results_found'   => array( 'Message no results found' ),
-					)
+					),
 				),
 			'Result Row information box' =>
 				array(
@@ -125,15 +126,21 @@ class OptionLocalization extends WpSolrExtensions {
 						'results_row_on_date'            => array( 'Date of the result row' ),
 						'results_row_number_comments'    => array( 'Number of comments of the result row' ),
 						'results_row_comment_link_title' => array( 'Comment link title' ),
-					)
+					),
 				),
 			'Infinite Scroll'            =>
 				array(
 					self::KEY_SECTION_TERMS => array(
 						'infinitescroll_loading'                           => array( 'Text displayed while Infinite Scroll is loading the next page' ),
-						'infinitescroll_results_header_pagination_numbers' => array( 'Pagination header on top of results' )
-					)
-				)
+						'infinitescroll_results_header_pagination_numbers' => array( 'Pagination header on top of results' ),
+					),
+				),
+			'Geolocation'                =>
+				array(
+					self::KEY_SECTION_TERMS => array(
+						'geolocation_ask_user' => array( 'Text accompanying the checkbox asking user agreement to use his location' ),
+					),
+				),
 		);
 	}
 

@@ -1,5 +1,6 @@
 <?php
 
+require_once WPSOLR_PLUGIN_DIR . '/classes/utilities/WPSOLR_Global.php';
 
 /**
  * Class OptionLicenses
@@ -27,6 +28,7 @@ class OptionLicenses extends WpSolrExtensions {
 	const LICENSE_PACKAGE_PDF_EMBEDDER = 'LICENSE_PACKAGE_PDF_EMBEDDER';
 	const LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER = 'LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER';
 	const LICENSE_PACKAGE_TABLEPRESS = 'LICENSE_PACKAGE_TABLEPRESS';
+	const LICENSE_PACKAGE_GEOLOCATION = 'LICENSE_PACKAGE_GEOLOCATION';
 
 	// License type fields
 	const FIELD_LICENSE_SUBSCRIPTION_NUMBER = 'license_subscription_number';
@@ -37,7 +39,6 @@ class OptionLicenses extends WpSolrExtensions {
 	const FIELD_ORDER_URL_BUTTON_LABEL = 'order_url_button_label';
 	const FIELD_ORDER_URL_TEXT = 'order_url_text';
 	const FIELD_ORDER_URL_LINK = 'order_url_link';
-	const FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT = '7 days free trial';
 	const FIELD_FEATURES = 'features';
 	const FIELD_LICENSE_TITLE = 'LICENSE_TITLE';
 	const FIELD_LICENSE_MATCHING_REFERENCE = 'matching_license_reference';
@@ -52,7 +53,12 @@ class OptionLicenses extends WpSolrExtensions {
 	private $_options;
 
 	// Order link
-	const ORDER_LINK_URL = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
+	const FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE = '7 days free trial (Premium pack only)';
+	const ORDER_LINK_URL_BESPOKE = 'https://secure.avangate.com/order/trial.php?PRODS=4687291&QTY=1&PRICES4687291[EUR]=0&TPERIOD=7&PHASH=af1373521d3efd46f8db12dfde45c91d';
+	const FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED = '7 days free trial (All packs included)';
+	const ORDER_LINK_URL_ALL_INCLUDED = 'https://secure.avangate.com/order/trial.php?PRODS=4699867&QTY=1&PAY_TYPE=CCVISAMC&PRICES4699867[EUR]=0&TPERIOD=7&PHASH=fe0b336dbb4e61f9acc564925ed34622';
+	const FIELD_ORDER_URL_BUTTON_LABEL_MANAGED = 'In a hurry ? We manage WPSOLR and Solr for you';
+	const ORDER_LINK_URL_MANAGED = 'https://secure.avangate.com/order/checkout.php?PRODS=4701516&QTY=1';
 
 	// Features
 	const FEATURE_ZENDESK_SUPPORT = 'Get support via Zendesk <br/>(Apache Solr setup/installation not supported)';
@@ -63,7 +69,7 @@ class OptionLicenses extends WpSolrExtensions {
 	 */
 	function __construct() {
 		$this->_options     = self::get_option_data( self::OPTION_LICENSES, array() );
-		$this->is_installed = WPSOLR_Global::getOption()->get_option_is_installed();
+		$this->is_installed = true;
 	}
 
 
@@ -163,9 +169,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => '',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -184,8 +190,8 @@ class OptionLicenses extends WpSolrExtensions {
 					'Localize (translate) the front search page with your .po files',
 					'Display debug infos during indexing',
 					'Reindex all your data in-place',
-					'Deactivate real-time indexing to load huge external datafeeds'
-				)
+					'Deactivate real-time indexing to load huge external datafeeds',
+				),
 			),
 			self::LICENSE_PACKAGE_WOOCOMMERCE         => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_woocommerce',
@@ -193,9 +199,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'WooCommerce Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -203,8 +209,9 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Index product attributes/variations',
 					'Search in product attributes/variations',
-					'Create facets on product attributes/variations'
-				)
+					'Create facets on product attributes/variations',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_SEARCH_ORDERS ) . 'Replace admin orders search with WPSOLR search',
+				),
 			),
 			self::LICENSE_PACKAGE_ACF                 => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_acf',
@@ -212,9 +219,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'ACF Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -223,8 +230,10 @@ class OptionLicenses extends WpSolrExtensions {
 					'Replace facet names with their ACF label',
 					'Decode ACF field values before indexing a post',
 					'Index ACF field files content inside the post',
-					'Group ACF repeater rows under one single facet field (requires ACF Pro 5.0.0)'
-				)
+					'Group ACF repeater rows under one single facet field (requires ACF Pro 5.0.0)',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS ) . 'Manage ACF Repeaters and Flexible Content Layouts',
+					WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_GOOGLE_MAP ) . 'Manage ACF Google Map fields (requires ACF Pro 5.0.0, and our Geolocation Pack )',
+				),
 			),
 			self::LICENSE_PACKAGE_TYPES               => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_types',
@@ -232,16 +241,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Types Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
-					'Replace facet names with their Types label'
-				)
+					'Replace facet names with their Types label',
+				),
 			),
 			self::LICENSE_PACKAGE_WPML                => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_wpml',
@@ -249,9 +258,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'WPML Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -259,8 +268,8 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'User can associate WPML languages to their own Solr index',
 					'Indexing process send each data to it\'s language related Solr index',
-					'Search results are displayed in each WPML languages'
-				)
+					'Search results are displayed in each WPML languages',
+				),
 			),
 			self::LICENSE_PACKAGE_POLYLANG            => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_polylang',
@@ -268,9 +277,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Polylang Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -278,8 +287,8 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'User can associate Polylang languages to their own Solr index',
 					'Indexing process send each data to it\'s language related Solr index',
-					'Search results are displayed in each Polylang languages'
-				)
+					'Search results are displayed in each Polylang languages',
+				),
 			),
 			self::LICENSE_PACKAGE_GROUPS              => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_groups',
@@ -287,16 +296,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Groups Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Results are indexed and filtered with Groups user\'s groups/capabilities',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_S2MEMBER            => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_s2member',
@@ -304,16 +313,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 's2Member Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Results are indexed and filtered with s2Member user\'s levels/capabilities capabilities',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_BBPRESS             => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_bbpress',
@@ -321,16 +330,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'bbPress Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Benefit from the Solr search features (speed, relevancy, partial match, fuzzy match ...), while keeping your current bbPress theme.',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_EMBED_ANY_DOCUMENT  => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_embed_any_document',
@@ -338,16 +347,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Embed Any Document Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Automatically index and search embedded documents with the plugin shortcode.',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_PDF_EMBEDDER        => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_pdf_embedder',
@@ -355,16 +364,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Pdf Embedder Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Automatically index and search embedded pdfs with the plugin shortcode.',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_GOOGLE_DOC_EMBEDDER => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_google_doc_embedder',
@@ -372,16 +381,16 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'Google Doc Embedder Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
 					self::FEATURE_ZENDESK_SUPPORT,
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Automatically index and search embedded documents with the plugin shortcode.',
-				)
+				),
 			),
 			self::LICENSE_PACKAGE_TABLEPRESS          => array(
 				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_tablepress',
@@ -389,9 +398,9 @@ class OptionLicenses extends WpSolrExtensions {
 				self::FIELD_DESCRIPTION                => 'TablePress Extension description',
 				self::FIELD_ORDERS_URLS                => array(
 					array(
-						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_DEFAULT,
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
 						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
-						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
 					),
 				),
 				self::FIELD_FEATURES                   => array(
@@ -399,8 +408,31 @@ class OptionLicenses extends WpSolrExtensions {
 					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
 					'Index TablePress shortcodes content',
 					'Format TablePress shortcodes content to remove html tags, before indexing',
-				)
-			)
+				),
+			),
+			self::LICENSE_PACKAGE_GEOLOCATION         => array(
+				self::FIELD_LICENSE_MATCHING_REFERENCE => 'wpsolr_package_geolocation',
+				self::FIELD_LICENSE_TITLE              => 'Geolocation',
+				self::FIELD_DESCRIPTION                => 'Geolocation Extension description',
+				self::FIELD_ORDERS_URLS                => array(
+					array(
+						self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
+						self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+						self::FIELD_ORDER_URL_LINK         => self::ORDER_LINK_URL_BESPOKE,
+					),
+				),
+				self::FIELD_FEATURES                   => array(
+					self::FEATURE_ZENDESK_SUPPORT,
+					self::FEATURE_FREE_UPGRADE_ONE_YEAR,
+					'Work with latitude and longitude locations (a product\'s store coordinates)',
+					'A location is simply a custom field containing a string "latitude,longitude"',
+					'Can manage multi-locations configurations (a product with several stores)',
+					'Automatic gathering of visitor\'s location',
+					'Sort results by distance from the visitor\'s location',
+					'Add distance(s) from the visitor\'s location to results\' locations',
+					//'Filter results by distance from the visitor\'s location',
+				),
+			),
 		);
 
 	}
@@ -428,12 +460,15 @@ class OptionLicenses extends WpSolrExtensions {
 		} else {
 
 			$img_url = plugins_url( 'images/warning.png', WPSOLR_PLUGIN_FILE );
-
+			$text_to_show .= '<p>(Feature-limited version, click to activate)</p>';
 		}
 
-		$result = sprintf( '<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class" >' .
-		                   '<img src="%s" class="wpsolr_premium_text_class" style="display:inline"><span>%s</span></a>',
-			$license_type, $img_url, $text_to_show );
+		$result = sprintf(
+			'<a href="#TB_inline?width=800&height=700&inlineId=%s" class="thickbox wpsolr_premium_class" ><img src="%s" class="wpsolr_premium_text_class" style="display:inline"><span>%s</span></a>',
+			$license_type,
+			$img_url,
+			$text_to_show
+		);
 
 		return $result;
 	}
@@ -442,6 +477,8 @@ class OptionLicenses extends WpSolrExtensions {
 	 * Output a disable html code if not licensed
 	 *
 	 * @param $license_type
+	 *
+	 * @param bool $is_new_feature
 	 *
 	 * @return string
 	 */
@@ -461,7 +498,36 @@ class OptionLicenses extends WpSolrExtensions {
 	) {
 		$license_types = $this->get_license_types();
 
-		return $license_types[ $license_type ][ self::FIELD_ORDERS_URLS ];
+		//return $license_types[ $license_type ][ self::FIELD_ORDERS_URLS ];
+
+		return array(
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_ALL_INCLUDED,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_ALL_INCLUDED ),
+			),
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_BESPOKE,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_BESPOKE ),
+			),
+			array(
+				self::FIELD_ORDER_URL_BUTTON_LABEL => self::FIELD_ORDER_URL_BUTTON_LABEL_MANAGED,
+				self::FIELD_ORDER_URL_TEXT         => 'Order a pack now',
+				self::FIELD_ORDER_URL_LINK         => $this->add_campaign_to_url( self::ORDER_LINK_URL_MANAGED ),
+			),
+		);
+
+	}
+
+	/**
+	 * @param string $url
+	 *
+	 * @return string
+	 */
+	public function add_campaign_to_url( $url ) {
+
+		return sprintf( '%s%scamp=plugin_wpsolr&wpsolr_v=%s', $url, ( false === strpos( $url, '?' ) ) ? '?' : '&', WPSOLR_PLUGIN_VERSION );
 	}
 
 	/**
@@ -541,8 +607,25 @@ class OptionLicenses extends WpSolrExtensions {
 			);
 			self::set_option_data( self::OPTION_LICENSES, $licenses );
 
-		}
+		} else {
 
+			$response_object = $managed_solr_server->call_rest_activate_license( self::get_license_api_url(), 'wpsolr_package_multi', $subscription_number );
+
+			if ( isset( $response_object ) && OptionManagedSolrServer::is_response_ok( $response_object ) ) {
+
+				// Save the license type activation
+				$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
+				foreach ( self::get_license_types() as $license_package => $license_definition ) {
+
+					$licenses[ $license_package ] = array(
+						self::FIELD_IS_ACTIVATED                => true,
+						self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $subscription_number,
+						self::FIELD_LICENSE_ACTIVATION_UUID     => OptionManagedSolrServer::get_response_result( $response_object, 'uuid' ),
+					);
+				}
+				self::set_option_data( self::OPTION_LICENSES, $licenses );
+			}
+		}
 
 		// Return the whole object
 		echo json_encode( $response_object );
@@ -586,16 +669,17 @@ class OptionLicenses extends WpSolrExtensions {
 
 		}
 
-		// Alway remove the activation, else we're stuck forever
-		if ( isset( $licenses[ $license_package ] ) ) {
+		// Always remove the activation, else we're stuck forever
+		$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
+		foreach ( $licenses as $license_package_installed => $license ) {
 
-			// Remove the license type activation
-			$licenses                     = self::get_option_data( self::OPTION_LICENSES, array() );
-			$licenses[ $license_package ] = array(
-				self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $licenses[ $license_package ][ self::FIELD_LICENSE_SUBSCRIPTION_NUMBER ],
-			);
-			self::set_option_data( self::OPTION_LICENSES, $licenses );
+			if ( $license_activation_uuid === $license[ self::FIELD_LICENSE_ACTIVATION_UUID ] ) {
+				$licenses[ $license_package_installed ] = array(
+					self::FIELD_LICENSE_SUBSCRIPTION_NUMBER => $licenses[ $license_package ][ self::FIELD_LICENSE_SUBSCRIPTION_NUMBER ],
+				);
+			}
 		}
+		self::set_option_data( self::OPTION_LICENSES, $licenses );
 
 		// Return the whole object
 		echo json_encode( $response_object );
@@ -642,7 +726,12 @@ class OptionLicenses extends WpSolrExtensions {
 
 				// Remove the license type activation
 				$licenses = self::get_option_data( self::OPTION_LICENSES, array() );
-				unset( $licenses[ $license_package ][ self::FIELD_NEEDS_VERIFICATION ] );
+				foreach ( $licenses as $license_package_installed => $license ) {
+
+					if ( $license_activation_uuid === $license[ self::FIELD_LICENSE_ACTIVATION_UUID ] ) {
+						unset( $licenses[ $license_package_installed ][ self::FIELD_NEEDS_VERIFICATION ] );
+					}
+				}
 				self::set_option_data( self::OPTION_LICENSES, $licenses );
 			}
 

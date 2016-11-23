@@ -5,6 +5,11 @@
  */
 class WPSOLR_Metabox {
 
+
+	// SQL statements
+	const TABLE_POST_METAS = 'postmeta';
+	const SQL_STATEMENT_BLACKLISTED_IDS = 'select post_id from {{REPLACE_TABLE_NAME}} where meta_key = %s AND meta_value = %s ';
+
 	// Fields stored in metabox
 	const METABOX_FIELD_IS_DO_NOT_INDEX = '_wpsolr-meta-is-do-not-index';
 	const METABOX_FIELD_IS_DO_INDEX_ACF_FIELD_FILES = '_wpsolr-meta-is-do-index-acf-field-files';
@@ -65,12 +70,11 @@ class WPSOLR_Metabox {
 	 * @return string
 	 */
 	public function action_add_meta_boxes_callback( $post ) {
+		global $license_manager;
 
 		if ( ! $this->get_is_show_meta_box( $post ) ) {
 			return;
 		}
-
-		$license_manager = new OptionLicenses();
 
 		wp_nonce_field( basename( __FILE__ ), self::METABOX_NONCE_ID );
 		$post_meta = get_post_meta( $post->ID );
@@ -259,6 +263,29 @@ class WPSOLR_Metabox {
 	public static function get_metabox_is_do_index_embed_any_document( $post_id ) {
 
 		return self::get_metabox_checkbox_value( self::METABOX_FIELD_IS_DO_INDEX_EMBED_ANY_DOCUMENT, $post_id );
+	}
+
+
+	static public function get_blacklisted_ids() {
+		global $wpdb;
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				str_replace( '{{REPLACE_TABLE_NAME}}', $wpdb->prefix . self::TABLE_POST_METAS, self::SQL_STATEMENT_BLACKLISTED_IDS ), self::METABOX_FIELD_IS_DO_NOT_INDEX, self::METABOX_CHECKBOX_YES
+			),
+			ARRAY_N
+		);
+
+		if ( empty( $rows ) ) {
+			return array();
+		}
+
+		$results = array();
+		foreach ( $rows as $key => $value ) {
+			$results[] = $value[0];
+		}
+
+		return $results;
 	}
 
 }

@@ -6,6 +6,10 @@
  */
 
 require_once plugin_dir_path( __FILE__ ) . '../wpsolr-schema.php';
+require_once WPSOLR_PLUGIN_DIR . '/classes/utilities/WPSOLR_Option.php';
+
+require_once WPSOLR_PLUGIN_DIR . '/classes/extensions/licenses/option-licenses.php';
+$license_manager = new OptionLicenses();
 
 class WpSolrExtensions {
 
@@ -18,6 +22,7 @@ class WpSolrExtensions {
 	const _CONFIG_PLUGIN_CLASS_NAME = 'config_plugin_class_name';
 	const _CONFIG_PLUGIN_FUNCTION_NAME = 'config_plugin_function_name';
 	const _CONFIG_PLUGIN_CONSTANT_NAME = 'config_plugin_constant_name';
+	const _CONFIG_PLUGIN_IS_AUTO_ACTIVE = 'config_plugin_is_auto_active';
 	const _CONFIG_EXTENSION_FILE_PATH = 'config_extension_file_path';
 	const _CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH = 'config_extension_admin_options_file_path';
 	const _CONFIG_OPTIONS = 'config_extension_options';
@@ -84,6 +89,9 @@ class WpSolrExtensions {
 	// Extension: TablePress
 	const EXTENSION_TABLEPRESS = 'tablepress';
 
+	// Extension Geolocation
+	const OPTION_GEOLOCATION = 'wpsolr_geolocation';
+
 	/*
 	 * Extensions configuration
 	 */
@@ -97,8 +105,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'indexes/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_solr_indexes',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::OPTION_LOCALIZATION           =>
 			array(
@@ -109,8 +117,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'localization/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_localization_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_GROUPS              =>
 			array(
@@ -121,8 +129,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'groups/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_groups_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_S2MEMBER            =>
 			array(
@@ -133,8 +141,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 's2member/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_s2member_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_WPML                =>
 			array(
@@ -145,8 +153,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'wpml/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_wpml_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_POLYLANG            =>
 			array(
@@ -157,8 +165,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'polylang/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_polylang_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_QTRANSLATEX         =>
 			array(
@@ -169,8 +177,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'qtranslate-x/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_qtranslatex_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::OPTION_MANAGED_SOLR_SERVERS   =>
 			array(
@@ -181,8 +189,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'managed-solr-servers/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_managed_solr_servers_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_WOOCOMMERCE         =>
 			array(
@@ -193,8 +201,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'woocommerce/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_woocommerce_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_ACF                 =>
 			array(
@@ -205,8 +213,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'acf/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_acf_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_TYPES               =>
 			array(
@@ -217,8 +225,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'types/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_types_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::OPTION_LICENSES               =>
 			array(
@@ -229,8 +237,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'licenses/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wpsolr_licenses',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_BBPRESS             =>
 			array(
@@ -241,8 +249,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'bbpress/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_bbpress_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_EMBED_ANY_DOCUMENT  =>
 			array(
@@ -253,8 +261,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'embed-any-document/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_embed_any_document_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_PDF_EMBEDDER        =>
 			array(
@@ -265,8 +273,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'pdf-embedder/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_pdf_embedder_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_GOOGLE_DOC_EMBEDDER =>
 			array(
@@ -277,8 +285,8 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'google-doc-embedder/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_google_doc_embedder_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
 			),
 		self::EXTENSION_TABLEPRESS          =>
 			array(
@@ -289,9 +297,21 @@ class WpSolrExtensions {
 				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'tablepress/admin_options.inc.php',
 				self::_CONFIG_OPTIONS                           => array(
 					self::_CONFIG_OPTIONS_DATA                 => 'wdm_solr_extension_tablepress_data',
-					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active'
-				)
-			)
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
+			),
+		self::OPTION_GEOLOCATION            =>
+			array(
+				self::_CONFIG_EXTENSION_CLASS_NAME              => 'OptionGeoLocation',
+				self::_CONFIG_PLUGIN_IS_AUTO_ACTIVE             => true,
+				self::_CONFIG_EXTENSION_DIRECTORY               => 'geolocation/',
+				self::_CONFIG_EXTENSION_FILE_PATH               => 'geolocation/option-geolocation.php',
+				self::_CONFIG_EXTENSION_ADMIN_OPTIONS_FILE_PATH => 'geolocation/admin_options.inc.php',
+				self::_CONFIG_OPTIONS                           => array(
+					self::_CONFIG_OPTIONS_DATA                 => WPSOLR_Option::OPTION_GEOLOCATION,
+					self::_CONFIG_OPTIONS_IS_ACTIVE_FIELD_NAME => 'is_extension_active',
+				),
+			),
 	);
 
 	/*
@@ -414,12 +434,19 @@ class WpSolrExtensions {
 		} else if ( isset( $extension_config_array[ self::_CONFIG_PLUGIN_CONSTANT_NAME ] ) ) {
 
 			return defined( $extension_config_array[ self::_CONFIG_PLUGIN_CONSTANT_NAME ] );
+
+		} else if ( isset( $extension_config_array[ self::_CONFIG_PLUGIN_IS_AUTO_ACTIVE ] ) ) {
+
+			return true;
 		}
 
 		return false;
 	}
 
-	public static function update_custom_field_capabilities( $custom_field_name ) {
+	public
+	static function update_custom_field_capabilities(
+		$custom_field_name
+	) {
 
 		// Get options contening custom fields
 		$array_wdm_solr_form_data = get_option( 'wdm_solr_form_data' );
@@ -456,7 +483,10 @@ class WpSolrExtensions {
 	 *
 	 * @return bool
 	 */
-	public static function is_extension_option_activate( $extension ) {
+	public
+	static function is_extension_option_activate(
+		$extension
+	) {
 
 		// Configuration array of $extension
 		$extension_config_array = self::$extensions_array[ $extension ];
@@ -508,7 +538,10 @@ class WpSolrExtensions {
 	 *
 	 * @return bool
 	 */
-	public static function require_once_wpsolr_extension( $extension, $is_admin = false ) {
+	public
+	static function require_once_wpsolr_extension(
+		$extension, $is_admin = false
+	) {
 
 		// Configuration array of $extension
 		$extension_config_array = self::$extensions_array[ $extension ];
@@ -551,7 +584,10 @@ class WpSolrExtensions {
 	 *
 	 * @return mixed
 	 */
-	public static function get_option_data( $extension, $default = false ) {
+	public
+	static function get_option_data(
+		$extension, $default = false
+	) {
 
 		return get_option( self::get_option_name( $extension ), $default );
 	}
@@ -564,7 +600,10 @@ class WpSolrExtensions {
 	 *
 	 * @return mixed
 	 */
-	public static function get_option_name( $extension ) {
+	public
+	static function get_option_name(
+		$extension
+	) {
 
 		return self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ];
 	}
@@ -577,7 +616,10 @@ class WpSolrExtensions {
 	 *
 	 * @return mixed
 	 */
-	public static function set_option_data( $extension, $option_value ) {
+	public
+	static function set_option_data(
+		$extension, $option_value
+	) {
 
 		return update_option( self::$extensions_array[ $extension ][ self::_CONFIG_OPTIONS ][ self::_CONFIG_OPTIONS_DATA ], $option_value );
 	}
@@ -592,7 +634,10 @@ class WpSolrExtensions {
 	 * @return string Template file path
 	 *
 	 */
-	public static function get_option_template_file( $extension, $template_file_name ) {
+	public
+	static function get_option_template_file(
+		$extension, $template_file_name
+	) {
 
 		return plugin_dir_path( __FILE__ ) . self::$extensions_array[ $extension ][ self::_CONFIG_EXTENSION_DIRECTORY ] . 'templates/' . $template_file_name;
 	}
@@ -607,7 +652,10 @@ class WpSolrExtensions {
 	 * @return string File path
 	 *
 	 */
-	public static function get_option_file( $extension, $file_name ) {
+	public
+	static function get_option_file(
+		$extension, $file_name
+	) {
 
 		return plugin_dir_path( __FILE__ ) . self::$extensions_array[ $extension ][ self::_CONFIG_EXTENSION_DIRECTORY ] . $file_name;
 	}
@@ -616,7 +664,10 @@ class WpSolrExtensions {
 	 * Templates methods
 	 */
 
-	public static function extract_form_data( $is_submit, $fields ) {
+	public
+	static function extract_form_data(
+		$is_submit, $fields
+	) {
 
 		$form_data = array();
 
@@ -657,7 +708,8 @@ class WpSolrExtensions {
 	 *
 	 * @return array Translations
 	 */
-	public static function extract_strings_to_translate_for_all_extensions() {
+	public
+	static function extract_strings_to_translate_for_all_extensions() {
 
 		$translations = array();
 
@@ -706,6 +758,17 @@ class WpSolrExtensions {
 					array_push( $translations, $translation );
 				}
 			}
+		}
+
+		// Translate geolocation labels
+		$label = WPSOLR_Global::getOption()->get_option_geolocation_user_aggreement_label();
+		if ( ! empty( $label ) ) {
+			$translation           = array();
+			$translation['domain'] = WPSOLR_Option::TRANSLATION_DOMAIN_GEOLOCATION_LABEL;
+			$translation['name']   = WPSOLR_Option::OPTION_GEOLOCATION_USER_AGREEMENT_LABEL;
+			$translation['text']   = $label;
+
+			array_push( $translations, $translation );
 		}
 
 		if ( count( $translations ) > 0 ) {

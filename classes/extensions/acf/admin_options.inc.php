@@ -64,12 +64,15 @@ if ( $is_plugin_active ) {
 				<?php endif; ?>
 			</div>
 			<div class="wdm_row">
-				<div class='col_left'>Use the <a
+				<div class='col_left'>
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_REPEATERS_AND_FLEXIBLE_CONTENT_LAYOUTS ); ?>
+
+					Use the <a
 						href="<?php echo $plugin_link; ?>"
 						target="_blank"><?php echo $plugin_name; ?> <?php echo $plugin_version; ?>
 						plugin</a>
-					to filter search results.
-					<br/>Think of re-indexing all your data if <a
+					to format repeaters and flexible content layouts.
+					<br/><br/>Think of re-indexing all your data if <a
 						href="<?php echo $plugin_link; ?>" target="_blank"><?php echo $plugin_name; ?>
 						plugin</a> was installed after WPSOLR.
 				</div>
@@ -83,13 +86,30 @@ if ( $is_plugin_active ) {
 			</div>
 
 			<div class="wdm_row">
-				<div class='col_left'>Replace custom field name by ACF custom field label on facets.
+				<div class='col_left'>
+					Replace custom field name by ACF custom field label on facets.
 				</div>
 				<div class='col_right'>
 					<input type='checkbox'
 					       name='<?php echo $extension_options_name; ?>[display_acf_label_on_facet]'
 					       value='display_acf_label_on_facet'
 						<?php checked( 'display_acf_label_on_facet', isset( $extension_options['display_acf_label_on_facet'] ) ? $extension_options['display_acf_label_on_facet'] : '' ); ?>>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+
+			<div class="wdm_row">
+				<div class='col_left'>
+					<?php echo WPSOLR_Help::get_help( WPSOLR_Help::HELP_ACF_GOOGLE_MAP ); ?>
+					Your Google Map API key, to use ACF Google Map fields with our Geolocation Pack
+				</div>
+				<div class='col_right'>
+					<input type='text'
+					       name='<?php echo $extension_options_name; ?>[<?php echo WPSOLR_Option::OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY; ?>]'
+					       placeholder="Enter your Google Map API key ..."
+					       value="<?php echo empty( $extension_options[ WPSOLR_Option::OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY ] ) ? '' : $extension_options[ WPSOLR_Option::OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY ]; ?>"><span
+						class='fac_err'></span> <br>
 				</div>
 				<div class="clear"></div>
 			</div>

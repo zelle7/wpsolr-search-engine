@@ -41,11 +41,13 @@ class WPSOLR_Option {
 	/**
 	 * Retrieve and cache an option
 	 *
-	 * @param $option_name
+	 * @param string $option_name
+	 *
+	 * @param mixed $option_default_value
 	 *
 	 * @return array
 	 */
-	private function get_option( $option_name ) {
+	private function get_option( $option_name, $option_default_value = array() ) {
 
 		// Retrieve option in cache, or in database
 		if ( isset( $this->cached_options[ $option_name ] ) ) {
@@ -56,7 +58,7 @@ class WPSOLR_Option {
 		} else {
 
 			// Not in cache, retrieve option from database
-			$option = get_option( $option_name, null );
+			$option = get_option( $option_name, $option_default_value );
 
 			// Add option to cached options
 			$this->cached_options[ $option_name ] = $option;
@@ -238,13 +240,14 @@ class WPSOLR_Option {
 	const OPTION_SEARCH_SUGGEST_CONTENT_TYPE_NONE = 'suggest_content_type_none';
 	const OPTION_SEARCH_SUGGEST_JQUERY_SELECTOR = 'suggest_jquery_selector';
 	const OPTION_SEARCH_SUGGEST_CLASS_DEFAULT = 'search-field';
+	const OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG = 'ajax-search-slug';
 
 	/**
 	 * Get search options array
 	 * @return array
 	 */
 	public function get_option_search() {
-		return self::get_option( self::OPTION_SEARCH, array() );
+		return self::get_option( self::OPTION_SEARCH );
 	}
 
 	/**
@@ -412,6 +415,16 @@ class WPSOLR_Option {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Ajax search page slug
+	 * @return string
+	 */
+	public function get_search_ajax_search_page_slug() {
+		$result = $this->get_option_value( __FUNCTION__, self::OPTION_SEARCH, self::OPTION_SEARCH_AJAX_SEARCH_PAGE_SLUG, WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG );
+
+		return ! empty( $result ) ? $result : WPSolrSearchSolrClient::_SEARCH_PAGE_SLUG;
 	}
 
 	/***************************************************************************************************************
@@ -656,6 +669,7 @@ class WPSOLR_Option {
 	 */
 	const TRANSLATION_DOMAIN_FACET_LABEL = 'wpsolr facet label'; // Do not change
 	const TRANSLATION_DOMAIN_SORT_LABEL = 'wpsolr sort label'; // Do not change
+	const TRANSLATION_DOMAIN_GEOLOCATION_LABEL = 'wpsolr geolocation label'; // Do not change
 
 
 	/***************************************************************************************************************
@@ -726,5 +740,157 @@ class WPSOLR_Option {
 		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_TABLEPRESS, self::OPTION_TABLEPRESS_IS_INDEX_SHORTCODES ) );
 	}
 
+	/***************************************************************************************************************
+	 *
+	 * Geolocation options
+	 *
+	 **************************************************************************************************************/
+	const OPTION_GEOLOCATION = 'wdm_solr_geolocation';
+	const OPTION_GEOLOCATION_IS_ACTIVE = 'is_extension_active';
+	const OPTION_GEOLOCATION_JQUERY_SELECTOR = 'geo_jquery_selector';
+	const OPTION_GEOLOCATION_JQUERY_SELECTOR_USER_AGREEMENT = 'geo_jquery_selector_user_agreement';
+	const OPTION_GEOLOCATION_IS_SHOW_USER_AGREEMENT_AJAX = 'geo_is_show_user_agreement_ajax';
+	const OPTION_GEOLOCATION_IS_SHOW_USER_AGREEMENT_AJAX_IS_DEFAULT_YES = 'geo_is_show_user_agreement_ajax_is_default_yes';
+	const OPTION_GEOLOCATION_USER_AGREEMENT_LABEL = 'geo_user_agreement_label';
+	const OPTION_GEOLOCATION_DEFAULT_SORT = 'geo_default_sort';
+	const OPTION_GEOLOCATION_RESULT_DISTANCE_LABEL = 'geo_result_distance_label';
+	const OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES = 'geo_is_filter_empty_coordinates';
+
+	/**
+	 * Get geolocation options array
+	 * @return array
+	 */
+	public function get_option_geolocation() {
+		return self::get_option( self::OPTION_GEOLOCATION );
+	}
+
+	/**
+	 * Do show a user agreement checkbox on the ajax template ?
+	 * @return boolean
+	 */
+	public function get_option_geolocation_is_show_user_agreement_ajax() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_IS_SHOW_USER_AGREEMENT_AJAX ) );
+	}
+
+	/**
+	 * User agreement checkbox on the ajax template is preselected ?
+	 * @return boolean
+	 */
+	public function get_option_geolocation_is_show_user_agreement_ajax_is_default_yes() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_IS_SHOW_USER_AGREEMENT_AJAX_IS_DEFAULT_YES ) );
+	}
+
+	/**
+	 * Geolocation jquery selector of search box(es)
+	 * @return string
+	 */
+	public function get_option_geolocation_jquery_selector() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_JQUERY_SELECTOR, '' );
+	}
+
+	/**
+	 * Geolocation jquery selector of user agreement checkbox
+	 * @return string
+	 */
+	public function get_option_geolocation_selector_user_aggreement() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_JQUERY_SELECTOR_USER_AGREEMENT, '' );
+	}
+
+	/**
+	 * Geolocation user agreement label
+	 * @return string
+	 */
+	public function get_option_geolocation_user_aggreement_label() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_USER_AGREEMENT_LABEL, '' );
+	}
+
+	/**
+	 * Geolocation default sort
+	 * @return string
+	 */
+	public function get_option_geolocation_default_sort() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_DEFAULT_SORT, '' );
+	}
+
+	/**
+	 * Geolocation text used to show distance on each result
+	 * @return string
+	 */
+	public function get_option_geolocation_result_distance_label() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_RESULT_DISTANCE_LABEL, '' );
+	}
+
+	/**
+	 * Remove empty coordinates from results ?
+	 * @return boolean
+	 */
+	public function get_option_geolocation_is_filter_results_with_empty_coordinates() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_GEOLOCATION, self::OPTION_GEOLOCATION_IS_FILTER_EMPTY_COORDINATES ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Woocommerce
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PLUGIN_WOOCOMMERCE = 'wdm_solr_extension_woocommerce_data';
+	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH = 'is_replace_admin_orders_search';
+	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS = 'is_replace_sort_items';
+	const OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_PRODUCT_CATEGORY_SEARCH = 'is_replace_product_category_search';
+
+	/**
+	 * Get all WooCommerce options
+	 *
+	 * @param array $default_value
+	 *
+	 * @return array
+	 */
+	public function get_option_plugin_woocommerce() {
+		return self::get_option( self::OPTION_PLUGIN_WOOCOMMERCE, array() );
+	}
+
+	/**
+	 * Replace the WooCommerce orders search ?
+	 *
+	 * @return bool
+	 */
+	public function get_option_plugin_woocommerce_is_replace_admin_orders_search() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_ADMIN_ORDERS_SEARCH ) );
+	}
+
+	/**
+	 * Replace the WooCommerce sort items ?
+	 *
+	 * @return bool
+	 */
+	public function get_option_plugin_woocommerce_is_replace_sort_items() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_SORT_ITEMS ) );
+	}
+
+
+	/**
+	 * Replace the WooCommerce product category search ?
+	 *
+	 * @return bool
+	 */
+	public function get_option_plugin_woocommerce_is_replace_product_category_search() {
+		return ! $this->is_empty( $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_WOOCOMMERCE, self::OPTION_PLUGIN_WOOCOMMERCE_IS_REPLACE_PRODUCT_CATEGORY_SEARCH ) );
+	}
+
+	/***************************************************************************************************************
+	 *
+	 * Plugin Acf
+	 *
+	 **************************************************************************************************************/
+	const OPTION_PLUGIN_ACF = 'wdm_solr_extension_acf_data';
+	const OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY = 'google_map_api_key';
+
+	/**
+	 * Get the google map api used by ACF for it's fields
+	 * @return string
+	 */
+	public function get_plugin_acf_google_map_api_key() {
+		return $this->get_option_value( __FUNCTION__, self::OPTION_PLUGIN_ACF, self::OPTION_PLUGIN_ACF_GOOGLE_MAP_API_KEY, '' );
+	}
 
 }

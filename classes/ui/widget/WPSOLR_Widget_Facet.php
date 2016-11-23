@@ -26,16 +26,21 @@ class WPSOLR_Widget_Facet extends WPSOLR_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		if ( WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search() && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() && WPSOLR_Query_Parameters::is_wp_search() ) {
+		$is_replace_by_wpsolr_query = WPSOLR_Global::getOption()->get_search_is_replace_default_wp_search() && WPSOLR_Global::getOption()->get_search_is_use_current_theme_search_template() && WPSOLR_Query_Parameters::is_wp_search();
+		$is_replace_by_wpsolr_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_IS_REPLACE_BY_WPSOLR_QUERY, $is_replace_by_wpsolr_query );
+
+		if ( $is_replace_by_wpsolr_query ) {
 
 			echo $args['before_widget'];
 
 			$results = WPSOLR_Global::getSolrClient()->display_results( WPSOLR_Global::getQuery() );
 
+			$facets_to_display = apply_filters( WpSolrFilters::WPSOLR_FILTER_FACETS_TO_DISPLAY, WPSOLR_Global::getOption()->get_facets_to_display() );
+
 			echo '<div id="res_facets">' . WPSOLR_UI_Facets::Build(
 					WPSOLR_Data_Facets::get_data(
 						WPSOLR_Global::getQuery()->get_filter_query_fields_group_by_name(),
-						WPSOLR_Global::getOption()->get_facets_to_display(),
+						$facets_to_display,
 						$results[1] ),
 					OptionLocalization::get_options() ) . '</div>';
 

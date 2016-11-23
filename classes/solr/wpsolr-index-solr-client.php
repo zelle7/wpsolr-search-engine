@@ -10,8 +10,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	const TABLE_POSTS = 'posts';
 	const CONTENT_SEPARATOR = ' ';
 
-	const ERROR_SANITIZED_MESSAGE = 'Value %s of field "%s" of post->ID=%s ("%s") is not of type "%s". Check out field\'s definition in WPSOLR data settings (tab 2.2) .';
-
 	protected $solr_indexing_options;
 
 	/**
@@ -202,7 +200,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return integer Nb documents remaining to index
 	 */
-	public function count_nb_documents_to_be_indexed() {
+	public function get_count_nb_documents_to_be_indexed() {
 
 		return $this->index_data( 0, null );
 
@@ -215,7 +213,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function index_data( $batch_size = 100, $post = null, $is_debug_indexing = false ) {
+	public function index_data( $batch_size = 100, $post = null, $is_debug_indexing = false, $is_only_exclude_ids = false ) {
 
 		global $wpdb;
 
@@ -224,20 +222,19 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 		// Last post date set in previous call. We begin with posts published after.
 		// Reset the last post date is reindexing is required.
-		$lastPostDate = $this->get_last_post_date_indexed();
+		$last_post_date_indexed = $this->get_last_post_date_indexed();
 
 		$query_from       = $wpdb->prefix . self::TABLE_POSTS . ' AS ' . self::TABLE_POSTS;
 		$query_join_stmt  = '';
 		$query_where_stmt = '';
 
-		$client      = $this->solarium_client;
-		$updateQuery = $client->createUpdate();
+		$client       = $this->solarium_client;
+		$update_query = $client->createUpdate();
 		// Get body of attachment
 		$solarium_extract_query = $client->createExtract();
 
-		$post_types = str_replace( ",", "','", $this->solr_indexing_options['p_types'] );
+		$post_types = str_replace( ',', "','", $this->solr_indexing_options['p_types'] );
 		$exclude_id = $this->solr_indexing_options['exclude_ids'];
-		$ex_ids     = array();
 		$ex_ids     = explode( ',', $exclude_id );
 
 		// Build the WHERE clause
@@ -246,14 +243,16 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		$where_p = " post_type in ('$post_types') ";
 
 		// Build the attachment types clause
-		$attachment_types = str_replace( ",", "','", $this->solr_indexing_options['attachment_types'] );
-		if ( isset( $attachment_types ) && ( $attachment_types != '' ) ) {
+		$attachment_types = str_replace( ',', "','", $this->solr_indexing_options['attachment_types'] );
+		if ( isset( $attachment_types ) && ( '' !== $attachment_types ) ) {
 			$where_a = " ( post_status='publish' OR post_status='inherit' ) AND post_type='attachment' AND post_mime_type in ('$attachment_types') ";
 		}
 
 
 		if ( isset( $where_p ) ) {
-			$query_where_stmt = "post_status='publish' AND ( $where_p )";
+			$index_post_statuses = implode( ',', apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_STATUSES_TO_INDEX, array( 'publish' ) ) );
+			$index_post_statuses = str_replace( ',', "','", $index_post_statuses );
+			$query_where_stmt    = "post_status IN ('$index_post_statuses') AND ( $where_p )";
 			if ( isset( $where_a ) ) {
 				$query_where_stmt = "( $query_where_stmt ) OR ( $where_a )";
 			}
@@ -261,22 +260,38 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$query_where_stmt = $where_a;
 		}
 
-		if ( $batch_size == 0 ) {
+		if ( 0 === $batch_size ) {
 			// count only
-			$query_select_stmt = "count(ID) as TOTAL";
+			$query_select_stmt = 'count(ID) as TOTAL';
 		} else {
-			$query_select_stmt = "ID, post_modified, post_parent, post_type";
+			$query_select_stmt = 'ID, post_modified, post_parent, post_type';
 		}
 
 		if ( isset( $post ) ) {
 			// Add condition on the $post
-			$query_where_stmt = " ID = %d " . " AND ( $query_where_stmt ) ";
+
+			$query_where_stmt = " ID = %d AND ( $query_where_stmt ) ";
+		} elseif ( $is_only_exclude_ids ) {
+			// No condition on the date for $is_only_exclude_ids
+
+			$query_where_stmt = " ( $query_where_stmt ) ";
 		} else {
 			// Condition on the date only for the batch, not for individual posts
-			$query_where_stmt = " post_modified > %s " . " AND ( $query_where_stmt ) ";
+
+			$query_where_stmt = ' post_modified > %s ' . " AND ( $query_where_stmt ) ";
 		}
 
-		$query_order_by_stmt = "post_modified ASC";
+		// Excluded ids from SQL
+		$blacklisted_ids = $this->get_blacklisted_ids();
+		if ( $is_debug_indexing && ( count( $blacklisted_ids ) > 0 ) ) {
+			$this->add_debug_line( $debug_text, null, array(
+				'Posts excluded from the index' => implode( ',', $blacklisted_ids ),
+			) );
+		}
+		$query_where_stmt .= $this->get_sql_statemetnt_blacklisted_ids( $blacklisted_ids, $is_only_exclude_ids );
+
+
+		$query_order_by_stmt = 'post_modified ASC';
 
 		// Filter the query
 		$query_statements = apply_filters( WpSolrFilters::WPSOLR_FILTER_SQL_QUERY_STATEMENT,
@@ -295,8 +310,15 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 		// Generate query string from the query statements
-		$query = sprintf( 'SELECT %s FROM %s %s WHERE %s ORDER BY %s LIMIT %s',
-			$query_statements['SELECT'], $query_statements['FROM'], $query_statements['JOIN'], $query_statements['WHERE'], $query_statements['ORDER'], $query_statements['LIMIT'] === 0 ? 1 : $query_statements['LIMIT'] );
+		$query = sprintf(
+			'SELECT %s FROM %s %s WHERE %s ORDER BY %s %s',
+			$query_statements['SELECT'],
+			$query_statements['FROM'],
+			$query_statements['JOIN'],
+			$query_statements['WHERE'],
+			$query_statements['ORDER'],
+			0 === $query_statements['LIMIT'] ? '' : 'LIMIT ' . $query_statements['LIMIT']
+		);
 
 
 		$documents     = array();
@@ -312,33 +334,37 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			if ( isset( $post ) ) {
 
 				if ( $is_debug_indexing ) {
-					$this->add_debug_line( $debug_text, 'Query document with post->ID', Array(
+					$this->add_debug_line( $debug_text, 'Query document with post->ID', array(
 						'Query'   => $query,
-						'Post ID' => $post->ID
+						'Post ID' => $post->ID,
 					) );
 				}
 
 				$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $post->ID ), ARRAY_A );
 
+			} elseif ( $is_only_exclude_ids ) {
+
+				$ids_array = $wpdb->get_results( $query, ARRAY_A );
+
 			} else {
 
 				if ( $is_debug_indexing ) {
-					$this->add_debug_line( $debug_text, 'Query documents from last post date', Array(
+					$this->add_debug_line( $debug_text, 'Query documents from last post date', array(
 						'Query'          => $query,
-						'Last post date' => $lastPostDate
+						'Last post date' => $last_post_date_indexed,
 					) );
 				}
 
-				$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $lastPostDate ), ARRAY_A );
+				$ids_array = $wpdb->get_results( $wpdb->prepare( $query, $last_post_date_indexed ), ARRAY_A );
 			}
 
-			if ( $batch_size == 0 ) {
+			if ( 0 === $batch_size ) {
 
 				$nb_docs = $ids_array[0]['TOTAL'];
 
 				if ( $is_debug_indexing ) {
-					$this->add_debug_line( $debug_text, 'End of loop', Array(
-						'Number of documents in database to be indexed' => $nb_docs
+					$this->add_debug_line( $debug_text, 'End of loop', array(
+						$is_only_exclude_ids ? 'Number of documents in database excluded from indexing' : 'Number of documents in database to be indexed' => $nb_docs,
 					) );
 				}
 
@@ -348,9 +374,9 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 
 			// Aggregate current batch IDs in one Solr update statement
-			$postcount = count( $ids_array );
+			$post_count = count( $ids_array );
 
-			if ( $postcount == 0 ) {
+			if ( 0 === $post_count ) {
 				// No more documents to index, stop now by exiting the loop
 
 				if ( $is_debug_indexing ) {
@@ -364,69 +390,66 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			// For the batch, update the last post date with current post's date
 			if ( ! isset( $post ) ) {
 				// In 2 steps to be valid in PHP 5.3
-				$lastPost     = end( $ids_array );
-				$lastPostDate = $lastPost['post_modified'];
+				$last_post              = end( $ids_array );
+				$last_post_date_indexed = $last_post['post_modified'];
 			}
 
-			for ( $idx = 0; $idx < $postcount; $idx ++ ) {
+			for ( $idx = 0; $idx < $post_count; $idx ++ ) {
 				$postid = $ids_array[ $idx ]['ID'];
 
-				// If post is not on blacklist, and post is not marked as not indexed
-				if ( ! in_array( $postid, $ex_ids, true ) && ( ! WPSOLR_Metabox::get_metabox_is_do_not_index( $postid ) ) ) {
-					// If post is not an attachment
-					if ( $ids_array[ $idx ]['post_type'] !== 'attachment' ) {
+				// If post is not an attachment
+				if ( 'attachment' !== $ids_array[ $idx ]['post_type'] ) {
 
-						// Count this post
-						$doc_count ++;
+					// Count this post
+					$doc_count ++;
 
-						// Customize the attachment body, if attachments are linked to the current post
-						$post_attachments = apply_filters( WpSolrFilters::WPSOLR_FILTER_GET_POST_ATTACHMENTS, array(), $postid );
+					// Customize the attachment body, if attachments are linked to the current post
+					$post_attachments = apply_filters( WpSolrFilters::WPSOLR_FILTER_GET_POST_ATTACHMENTS, array(), $postid );
 
-						// Get the attachments body with a Solr Tika extract query
-						$attachment_body = '';
-						foreach ( $post_attachments as $post_attachment ) {
-							$attachment_body .= ( empty( $attachment_body ) ? '' : '. ' ) . self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, $post_attachment );
-						}
-
-
-						// Get the posts data
-						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ), $attachment_body );
-
-						if ( $is_debug_indexing ) {
-							$this->add_debug_line( $debug_text, null, Array(
-								'Post to be sent' => json_encode( $document->getFields(), JSON_PRETTY_PRINT )
-							) );
-						}
-
-						$documents[] = $document;
-
-					} else {
-						// Post is of type "attachment"
-
-						if ( $is_debug_indexing ) {
-							$this->add_debug_line( $debug_text, null, Array(
-								'Post ID to be indexed (attachment)' => $postid
-							) );
-						}
-
-						// Count this post
-						$doc_count ++;
-
-						// Get the attachments body with a Solr Tika extract query
-						$attachment_body = self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, array( 'post_id' => $postid ) );
-
-						// Get the posts data
-						$document = self::create_solr_document_from_post_or_attachment( $updateQuery, get_post( $postid ), $attachment_body );
-
-						if ( $is_debug_indexing ) {
-							$this->add_debug_line( $debug_text, null, Array(
-								'Attachment to be sent' => json_encode( $document->getFields(), JSON_PRETTY_PRINT )
-							) );
-						}
-
-						$documents[] = $document;
-
+					// Get the attachments body with a Solr Tika extract query
+					$attachment_body = '';
+					foreach ( $post_attachments as $post_attachment ) {
+						$attachment_body .= ( empty( $attachment_body ) ? '' : '. ' ) . self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, $post_attachment );
 					}
+
+
+					// Get the posts data
+					$document = self::create_solr_document_from_post_or_attachment( $update_query, get_post( $postid ), $attachment_body );
+
+					if ( $is_debug_indexing ) {
+						$this->add_debug_line( $debug_text, null, array(
+							'Post to be sent' => wp_json_encode( $document->getFields(), JSON_PRETTY_PRINT ),
+						) );
+					}
+
+					$documents[] = $document;
+
+				} else {
+					// Post is of type "attachment"
+
+					if ( $is_debug_indexing ) {
+						$this->add_debug_line( $debug_text, null, array(
+							'Post ID to be indexed (attachment)' => $postid,
+						) );
+					}
+
+					// Count this post
+					$doc_count ++;
+
+					// Get the attachments body with a Solr Tika extract query
+					$attachment_body = self::extract_attachment_text_by_calling_solr_tika( $solarium_extract_query, array( 'post_id' => $postid ) );
+
+					// Get the posts data
+					$document = self::create_solr_document_from_post_or_attachment( $update_query, get_post( $postid ), $attachment_body );
+
+					if ( $is_debug_indexing ) {
+						$this->add_debug_line( $debug_text, null, array(
+							'Attachment to be sent' => wp_json_encode( $document->getFields(), JSON_PRETTY_PRINT ),
+						) );
+					}
+
+					$documents[] = $document;
+
 				}
 			}
 
@@ -443,13 +466,13 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			// Send batch documents to Solr
 			try {
 
-				$res_final = self::send_posts_or_attachments_to_solr_index( $updateQuery, $documents );
+				$res_final = self::send_posts_or_attachments_to_solr_index( $update_query, $documents );
 
 			} catch ( Exception $e ) {
 
 				if ( $is_debug_indexing ) {
 					// Echo debug text now, else it will be hidden by the exception
-					echo $debug_text;
+					echo esc_html( $debug_text );
 				}
 
 				// Continue
@@ -457,13 +480,13 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 			// Solr error, or only $post to index: exit loop
-			if ( ( ! $res_final ) OR isset( $post ) ) {
+			if ( ( ! $res_final ) || isset( $post ) ) {
 				break;
 			}
 
 			if ( ! isset( $post ) ) {
 				// Store last post date sent to Solr (for batch only)
-				$this->set_last_post_date_indexed( $lastPostDate );
+				$this->set_last_post_date_indexed( $last_post_date_indexed );
 			}
 
 			// AJAX: one loop by ajax call
@@ -476,7 +499,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			'nb_results'        => $doc_count,
 			'status'            => $status,
 			'indexing_complete' => $no_more_posts,
-			'debug_text'        => $is_debug_indexing ? $debug_text : null
+			'debug_text'        => $is_debug_indexing ? $debug_text : null,
 		);
 
 	}
@@ -577,7 +600,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 		}
 		foreach ( $aTaxo as $a ) {
 
-			if ( substr( $a, ( strlen( $a ) - 4 ), strlen( $a ) ) == "_str" ) {
+			if ( WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING === substr( $a, ( strlen( $a ) - 4 ), strlen( $a ) ) ) {
 				$a = substr( $a, 0, ( strlen( $a ) - 4 ) );
 			}
 
@@ -633,9 +656,10 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_BLOG_NAME_STR ] = $this->galaxy_slave_filter_value;
 		}
 
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]    = $this->generate_unique_post_id( $pid );
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]   = $pid;
-		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ] = $ptitle;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_ID ]       = $this->generate_unique_post_id( $pid );
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_PID ]      = $pid;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_TITLE ]    = $ptitle;
+		$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_STATUS_S ] = $post_to_index->post_status;
 
 		if ( isset( $this->solr_indexing_options['p_excerpt'] ) && ( ! empty( $pexcerpt ) ) ) {
 
@@ -698,8 +722,8 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 				$terms = get_the_terms( $post_to_index->ID, $parent );
 				if ( (array) $terms === $terms ) {
 					$parent    = strtolower( str_replace( ' ', '_', $parent ) );
-					$nm1       = $parent . '_str';
-					$nm2       = $parent . '_srch';
+					$nm1       = $parent . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+					$nm2       = $parent . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1;
 					$nm1_array = array();
 
 					$taxonomy_non_flat_hierarchies = array();
@@ -787,7 +811,7 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 
 				foreach ( (array) $custom_fields as $field_name_with_str_ending ) {
 
-					$field_name = $this->get_field_without_str_ending( $field_name_with_str_ending );
+					$field_name = WpSolrSchema::get_field_without_str_ending( $field_name_with_str_ending );
 
 					if ( isset( $post_custom_fields[ $field_name ] ) ) {
 						$field = (array) $post_custom_fields[ $field_name ];
@@ -795,14 +819,14 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 						$field_name = strtolower( str_replace( ' ', '_', $field_name ) );
 
 						// Add custom field array of values
-						//$nm1       = $field_name . '_str';
-						$nm1       = $this->replace_field_name_extension( $field_name_with_str_ending );
-						$nm2       = $field_name . '_srch';
+						//$nm1       = $field_name . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING;
+						$nm1       = WpSolrSchema::replace_field_name_extension( $field_name_with_str_ending );
+						$nm2       = $field_name . WpSolrSchema::_SOLR_DYNAMIC_TYPE_STRING1;
 						$array_nm1 = array();
 						$array_nm2 = array();
 						foreach ( $field as $field_value ) {
 
-							$field_value_sanitized = $this->get_sanitized_value( $post, $field_name_with_str_ending, $field_value );
+							$field_value_sanitized = WpSolrSchema::get_sanitized_value( $post, $field_name_with_str_ending, $field_value );
 
 							// Only index the field if it has a value.
 							if ( ! empty( $field_value_sanitized ) ) {
@@ -829,138 +853,6 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 			}
 
 		}
-
-	}
-
-	/**
-	 * Sanitize any value, based on it's Solr extension type
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 *
-	 * @return mixed
-	 */
-	public function get_sanitized_value( $post, $field_name, $value ) {
-
-		$field_type = $this->get_custom_field_dynamic_type( $field_name );
-
-		try {
-			switch ( $field_type ) {
-
-				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_FLOAT:
-					$result = $this->get_sanitized_float_value( $post, $field_name, $value, $field_type );
-					break;
-
-				case WpSolrSchema::_SOLR_DYNAMIC_TYPE_INTEGER:
-					$result = $this->get_sanitized_integer_value( $post, $field_name, $value, $field_type );
-					break;
-
-				default:
-					$result = strip_tags( $value );
-					break;
-			}
-		} catch ( Exception $e ) {
-
-			$result                        = '';
-			$field_error_conversion_action = $this->get_custom_field_error_conversion_action( $field_name );
-
-			if ( WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_CONVERSION_ERROR_ACTION_THROW_ERROR === $field_error_conversion_action ) {
-				// Throw error if this field is configured to do that.
-				throw $e;
-			}
-		}
-
-		return $result;
-
-	}
-
-	/**
-	 * Sanitize a float value
-	 * Try to convert it to a float, else throw an exception.
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 * @param string $field_type
-	 *
-	 * @return float
-	 * @throws Exception
-	 */
-	public
-	function get_sanitized_float_value(
-		$post, $field_name, $value, $field_type
-	) {
-
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-		if ( ! is_numeric( $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		if ( ! is_int( 0 + $value ) && ! is_float( 0 + $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		return floatval( $value );
-	}
-
-	/**
-	 * Sanitize an integer value
-	 * Try to convert it to an integer, else throw an exception.
-	 *
-	 * @param WP_Post $post
-	 * @param string $field_name
-	 * @param string $value
-	 * @param string $field_type
-	 *
-	 * @return int
-	 */
-	public
-	function get_sanitized_integer_value(
-		$post, $field_name, $value, $field_type
-	) {
-
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-		if ( ! is_numeric( $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		if ( ! is_int( 0 + $value ) ) {
-			$this->throw_sanitized_error( $post, $field_name, $value, $field_type );
-		}
-
-		return intval( $value );
-	}
-
-	/**
-	 * @param \WP_Post $post
-	 * @param string $field_name
-	 * @param $value
-	 * @param string $field_type
-	 *
-	 * @throws \Exception
-	 */
-	protected
-	function throw_sanitized_error(
-		$post, $field_name, $value, $field_type
-	) {
-
-		throw new \Exception(
-			sprintf(
-				self::ERROR_SANITIZED_MESSAGE,
-				$value,
-				$this->get_field_without_str_ending( $field_name ),
-				empty( $post ) ? 'unknown' : $post->ID,
-				empty( $post ) ? 'unknown' : $post->post_title,
-				WpSolrSchema::get_solr_dynamic_entension_id_label( $field_type )
-			)
-		);
 
 	}
 
@@ -1077,7 +969,53 @@ class WPSolrIndexSolrClient extends WPSolrAbstractSolrClient {
 				$solarium_document_for_update[ WpSolrSchema::_FIELD_NAME_POST_HREF_STR ] = $url;
 			}
 		}
-
 	}
 
+	/**
+	 * Generate a SQL restriction on all blacklisted post ids
+	 *
+	 * @param array $blacklisted_ids Array of post ids blaclisted
+	 *
+	 * @param bool $is_only_exclude_ids Do we find only excluded posts ?
+	 *
+	 * @return string
+	 */
+	private function get_sql_statemetnt_blacklisted_ids( $blacklisted_ids, $is_only_exclude_ids = false ) {
+
+		if ( empty( $blacklisted_ids ) ) {
+
+			$result = $is_only_exclude_ids ? ' AND (1 = 2) ' : '';
+
+		} else {
+
+			$result = sprintf( $is_only_exclude_ids ? ' AND ID IN (%s) ' : ' AND ID NOT IN (%s) ', implode( ',', $blacklisted_ids ) );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get blacklisted post ids
+	 * @return array
+	 */
+	public function get_blacklisted_ids() {
+
+		$excluded_meta_ids = WPSOLR_Metabox::get_blacklisted_ids();
+		$excluded_list_ids = empty( $this->solr_indexing_options['exclude_ids'] ) ? array() : explode( ',', $this->solr_indexing_options['exclude_ids'] );
+
+		$all_excluded_ids = array_merge( $excluded_meta_ids, $excluded_list_ids );
+
+		return $all_excluded_ids;
+	}
+
+	/**
+	 * Get count of blacklisted post ids
+	 * @return int
+	 */
+	public function get_count_blacklisted_ids() {
+
+		$result = $this->index_data( 0, null, false, true );
+
+		return $result;
+	}
 }

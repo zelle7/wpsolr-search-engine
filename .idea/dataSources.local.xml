@@ -5,7 +5,6 @@
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <secret-storage>master_key</secret-storage>
       <user-name>external</user-name>
-      <introspection-scope>dev-wpsolr-search-engine:*</introspection-scope>
       <resolve-scope>dev-wpsolr-search-engine:*|local_eostisolr_api:</resolve-scope>
     </data-source>
   </component>

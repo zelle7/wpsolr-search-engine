@@ -68,7 +68,6 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	const PARAMETER_FACET_LIMIT = 'limit';
 	const PARAMETER_FACET_MIN_COUNT = 'min_count';
 
-
 	// Create using a configuration
 	static function create_from_solarium_config( $solarium_config ) {
 
@@ -197,7 +196,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	static function get_search_page() {
 
 		// Let other plugins (POLYLANG, ...) modify the search page slug
-		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, WPSOLR_Global::getOption()->get_search_ajax_search_page_slug() );
 
 		// Search page is found by it's path (hard-coded).
 		$search_page = get_page_by_path( $search_page_slug );
@@ -229,7 +228,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	static function create_default_search_page() {
 
 		// Let other plugins (POLYLANG, ...) modify the search page slug
-		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, self::_SEARCH_PAGE_SLUG );
+		$search_page_slug = apply_filters( WpSolrFilters::WPSOLR_FILTER_SEARCH_PAGE_SLUG, WPSOLR_Global::getOption()->get_search_ajax_search_page_slug() );
 
 		$_search_page = array(
 			'post_type'      => 'page',
@@ -339,7 +338,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		/*
 		* Add sort field(s)
 		*/
-		$this->add_sort_field( $solarium_query, $wpsolr_query->get_wpsolr_sort() );
+		$this->add_sort_field( $solarium_query, $wpsolr_query );
 
 		/*
 		* Add facet fields
@@ -376,15 +375,17 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		/*
 		 * Add fields
 		 */
-		$this->add_fields( $solarium_query );
+		$this->add_fields( $solarium_query, $wpsolr_query );
 
 
-		// Filter to change the solarium query
+		// Action to change the solarium query
 		do_action( WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY,
 			array(
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY => $solarium_query,
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS   => $wpsolr_query->get_wpsolr_query(),
-				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER    => wp_get_current_user(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_WPSOLR_QUERY    => $wpsolr_query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_QUERY  => $solarium_query,
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_TERMS    => $wpsolr_query->get_wpsolr_query(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SEARCH_USER     => wp_get_current_user(),
+				WpSolrFilters::WPSOLR_ACTION_SOLARIUM_QUERY__PARAM_SOLARIUM_CLIENT => $this,
 			)
 		);
 
@@ -511,7 +512,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 				// _price_str => _price_f
 				// title => title
-				$fact = $this->replace_field_name_extension( $fact );
+				$fact = WpSolrSchema::replace_field_name_extension( $fact );
 
 				$facet_res = $resultset->getFacetSet()->getFacet( "$fact" );
 
@@ -651,6 +652,11 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			}
 
+			$append_custom_html = apply_filters( WpSolrFilters::WPSOLR_FILTER_SOLR_RESULTS_APPEND_CUSTOM_HTML, '', get_current_user_id(), $document, $wpsolr_query );
+			if ( isset( $append_custom_html ) ) {
+				$msg .= $append_custom_html;
+			}
+
 			// Informative bloc - Bottom right
 			$msg .= "<div class='p_misc'>";
 			$msg .= "<span class='pauthor'>" . sprintf( OptionLocalization::get_term( $localization_options, 'results_row_by_author' ), $auth ) . "</span>";
@@ -735,7 +741,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			foreach ( $field_names as $facet_with_str_extension ) {
 
-				$facet = $this->replace_field_name_extension( $facet_with_str_extension );
+				$facet = WpSolrSchema::replace_field_name_extension( $facet_with_str_extension );
 
 				$fact = $this->get_facet_hierarchy_name( WpSolrSchema::_FIELD_NAME_FLAT_HIERARCHY, $facet );
 
@@ -833,7 +839,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 			if ( ! empty( $filter_query_field ) ) {
 
-				$filter_query_field_array = explode( ':', $filter_query_field );
+				$filter_query_field_array = explode( ':', $filter_query_field, 2 );
 
 				$filter_query_field_name  = strtolower( $filter_query_field_array[0] );
 				$filter_query_field_value = isset( $filter_query_field_array[1] ) ? $filter_query_field_array[1] : '';
@@ -847,7 +853,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 					// _price_str => _price_f
 					// title => title
-					$filter_query_field_name = $this->replace_field_name_extension( $filter_query_field_name );
+					$filter_query_field_name = WpSolrSchema::replace_field_name_extension( $filter_query_field_name );
 
 					$fac_fd = "$filter_query_field_name";
 
@@ -897,12 +903,15 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 * Add sort field to the solarium query
 	 *
 	 * @param Query $solarium_query
-	 * @param string $sort_field_name
+	 * @param WPSOLR_Query $wpsolr_query
 	 */
 	private
 	function add_sort_field(
-		Query $solarium_query, $sort_field_name = self::SORT_CODE_BY_RELEVANCY_DESC
+		Query $solarium_query,
+		WPSOLR_Query $wpsolr_query
 	) {
+
+		$sort_field_name = $wpsolr_query->get_wpsolr_sort();
 
 		switch ( $sort_field_name ) {
 
@@ -930,7 +939,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 				// A custom field
 
 				// Get field name without _asc or _desc ('price_str_asc' => 'price_str')
-				$sort_field_without_order = $this->get_field_without_sort_order_ending( $sort_field_name );
+				$sort_field_without_order = WpSolrSchema::get_field_without_sort_order_ending( $sort_field_name );
 
 				if ( $this->get_is_field_sortable( $sort_field_without_order ) ) {
 					// extract asc or desc ('price_str_asc' => 'asc')
@@ -940,8 +949,9 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 
 						case $solarium_query::SORT_DESC:
 						case $solarium_query::SORT_ASC:
-							$solarium_query->addSort( $this->replace_field_name_extension( $sort_field_without_order ), $sort_field_order );
-							break;
+
+							// Standard sort field
+							$solarium_query->addSort( WpSolrSchema::replace_field_name_extension( $sort_field_without_order ), $sort_field_order );
 					}
 				}
 
@@ -949,25 +959,8 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 		}
 
 		// Let a chance to add custom sort options
-		$solarium_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_SORT, $solarium_query, $sort_field_name );
+		$solarium_query = apply_filters( WpSolrFilters::WPSOLR_FILTER_SORT, $solarium_query, $sort_field_name, $wpsolr_query );
 	}
-
-	/**
-	 * Get field without ending '_asc' or '_desc' ('price_str_asc' => 'price_str', 'price_str_desc' => 'price_str')
-	 *
-	 * @param string $field_name_with_order Field name (like 'price_str_asc')
-	 *
-	 * @return string
-	 */
-	public function get_field_without_sort_order_ending( $field_name_with_order ) {
-
-		$result = $field_name_with_order;
-		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . Query::SORT_ASC );
-		$result = WPSOLR_Regexp::remove_string_at_the_end( $result, '_' . Query::SORT_DESC );
-
-		return $result;
-	}
-
 
 	/**
 	 * Is a field sortable ?
@@ -976,7 +969,10 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return bool
 	 */
-	public function get_is_field_sortable( $field_name ) {
+	public
+	function get_is_field_sortable(
+		$field_name
+	) {
 
 		return ( ! empty( $this->custom_field_properties[ $field_name ] )
 		         && ! empty( $this->custom_field_properties[ $field_name ][ WPSOLR_Option::OPTION_INDEX_CUSTOM_FIELD_PROPERTY_SOLR_TYPE ] )
@@ -990,27 +986,33 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 * We do not ask for 'content', because it can be huge for attachments, and is anyway replaced by highlighting.
 	 *
 	 * @param Query $solarium_query
-	 * @param array $field_names
+	 * @param WPSOLR_Query $wpsolr_query
+	 *
+	 * @internal param array $field_names
 	 */
 	private
 	function add_fields(
-		Query $solarium_query
+		Query $solarium_query, WPSOLR_Query $wpsolr_query
 	) {
 
 		// We add '*' to dynamic fields, else they are not returned by Solr (Solr bug ?)
 		$solarium_query->setFields(
-			array(
-				WpSolrSchema::_FIELD_NAME_ID,
-				WpSolrSchema::_FIELD_NAME_PID,
-				WpSolrSchema::_FIELD_NAME_TITLE,
-				WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
-				WpSolrSchema::_FIELD_NAME_COMMENTS,
-				WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
-				WpSolrSchema::_FIELD_NAME_DISPLAY_MODIFIED,
-				'*' . WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
-				WpSolrSchema::_FIELD_NAME_AUTHOR,
-				'*' . WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR,
-				'*' . WpSolrSchema::_FIELD_NAME_POST_HREF_STR,
+			apply_filters(
+				WpSolrFilters::WPSOLR_FILTER_FIELDS,
+				array(
+					WpSolrSchema::_FIELD_NAME_ID,
+					WpSolrSchema::_FIELD_NAME_PID,
+					WpSolrSchema::_FIELD_NAME_TITLE,
+					WpSolrSchema::_FIELD_NAME_NUMBER_OF_COMMENTS,
+					WpSolrSchema::_FIELD_NAME_COMMENTS,
+					WpSolrSchema::_FIELD_NAME_DISPLAY_DATE,
+					WpSolrSchema::_FIELD_NAME_DISPLAY_MODIFIED,
+					'*' . WpSolrSchema::_FIELD_NAME_CATEGORIES_STR,
+					WpSolrSchema::_FIELD_NAME_AUTHOR,
+					'*' . WpSolrSchema::_FIELD_NAME_POST_THUMBNAIL_HREF_STR,
+					'*' . WpSolrSchema::_FIELD_NAME_POST_HREF_STR,
+				),
+				$wpsolr_query
 			)
 		);
 	}
@@ -1190,7 +1192,7 @@ class WPSolrSearchSolrClient extends WPSolrAbstractSolrClient {
 	 *
 	 * @return string Facet name with hierarch or not
 	 */
-	private
+	public
 	function get_facet_hierarchy_name(
 		$hierarchy_field_name, $facet_name
 	) {
