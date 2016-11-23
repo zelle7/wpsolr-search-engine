@@ -148,7 +148,7 @@ function add_remove_document_to_solr_index( $post_id, $post ) {
 	try {
 		$index_post_statuses = apply_filters( WpSolrFilters::WPSOLR_FILTER_POST_STATUSES_TO_INDEX, array( 'publish' ), $post );
 
-		if ( in_array( $post->post_status, $index_post_statuses, true ) ) {
+		if ( in_array( $post->post_status, $index_post_statuses, true )  && !WPSOLR_Metabox::get_metabox_is_do_not_index($post_id)) {
 			// post published, add/update it from Solr index
 
 			$solr = WPSolrIndexSolrClient::create_from_post( $post );
